@@ -1,0 +1,9 @@
+Online users,[Name, Admin?1:0]*
+
+Offline users,[Name]*
+
+Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in chat
+
+Heartbeat
+
+Null terminated I think, possibly '.'

@@ -1,0 +1,5 @@
+MainTimeline::Send()
+30 sec heartbeat (frame178!)
+sound 13 is the most awesome one
+http://www.duelingnetwork.com/news.txt for news
+I might have seen a crossdomain.xml; that would be excellent to have
