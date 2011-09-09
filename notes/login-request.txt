@@ -26,3 +26,6 @@ Date: Tue, 06 Sep 2011 21:41:13 GMT
 Connection: close
 
 Logged in,simonlindholm,2ab96390c7dbe3439de74d0c9b0b1767,false
+
+
+Refer to 2ab96390c7dbe3439de74d0c9b0b1767 as LoginToken

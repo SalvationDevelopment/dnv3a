@@ -1,9 +1,29 @@
-Online users,[Name, Admin?1:0]*
+The concatenation of the socket messages defined a (potentially infinite) list
+of null-terminated parts, events. (So events can span several messages, even if
+they usually do not.)
+Each event is a comma-separated list with the first value being the event type.
+Commas in the data are escaped as \, backslashes as \\.
 
-Offline users,[Name]*
+List of events:
 
-Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in chat
 
-Heartbeat
+Outgoing:
 
-Null terminated I think, possibly '.'
+* Connect6,[Username],[LoginToken],[32-byte random hex]
+
+* Get deck data -> "Get deck data" event returned
+
+* Heartbeat -> heartbeat returned (see frame178)
+
+
+Ingoing:
+
+* Online users,[Name, Admin?1:0]*
+
+* Offline users,[Name]*
+
+* Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in chat
+
+* Heartbeat
+
+* Friends[,Name]*

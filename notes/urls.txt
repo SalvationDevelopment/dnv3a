@@ -1,0 +1,9 @@
+/news.txt?date=Fri%20Sep%209%2016%3A23%3A36%20GMT%2B0200%202011
+(news.txt also works - HTML format but missing styling, could be used as iframe)
+
+MainTimeline:
+            this.URL_START = "http://www.duelingnetwork.com:8080/Dueling_Network/";
+            this.HOSTNAME = "duelingnetwork.com";
+            this.CARD_START = this.URL_START + "images/cards/";
+            this.AVATAR_START = this.URL_START + "images/avatars/";
+            this.BACK_START = this.URL_START + "images/backs/";

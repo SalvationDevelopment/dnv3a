@@ -1597,24 +1597,20 @@
             return;
         }// end function
 
-        public function random(param1:int) : int
+        public function random(to:int) : int
         {
-            return Math.floor(Math.random() * param1);
+            return Math.floor(Math.random() * to);
         }// end function
 
         public function randomHex() : String
         {
-            var _loc_3:int = 0;
-            var _loc_1:String = "";
-            var _loc_2:* = 0;
-            while (_loc_2 < 32)
-            {
+            var ret = "";
+            for (var i = 0; i < 32; ++i) {
                 
-                _loc_3 = this.random(16);
-                _loc_1 = _loc_1 + (_loc_3 < 10 ? (_loc_3.toString()) : (String.fromCharCode(_loc_3 + 87)));
-                _loc_2 = _loc_2 + 1;
+                var dig = this.random(16);
+                ret += (dig < 10 ? (dig.toString()) : (String.fromCharCode(dig + 87)));
             }
-            return _loc_1;
+            return ret;
         }// end function
 
         public function Connect()
@@ -8738,14 +8734,10 @@
 
         public function watchDuelStart()
         {
-            var _loc_1:Array = null;
-            var _loc_2:String = null;
             var _loc_3:Boolean = false;
             var _loc_4:Array = null;
             var _loc_5:DuelCard = null;
             var _loc_6:DuelCard = null;
-            var _loc_7:int = 0;
-            var _loc_8:String = null;
             var _loc_9:String = null;
             var _loc_10:String = null;
             var _loc_11:Boolean = false;
@@ -8753,42 +8745,37 @@
             var _loc_13:Boolean = false;
             var _loc_14:Boolean = false;
             var _loc_15:DuelCard = null;
-            _loc_1 = this.duel_args;
+            var duelArgs:Array = this.duel_args;
             this.duel_args = null;
-            _loc_2 = _loc_1[0];
-            this.my_turn = _loc_1[1] == "true";
-            this.phase_mc.setPhase(_loc_2, this.my_turn);
-            _loc_3 = _loc_1[2] == "true";
-            this.lp_bottom_mc.points = _loc_1[3];
-            this.lp_top_mc.points = _loc_1[4];
-            this.status1_mc.status = _loc_1[5];
-            this.status2_mc.status = _loc_1[6];
+            var phase = duelArgs[0];
+            this.my_turn = duelArgs[1] == "true";
+            this.phase_mc.setPhase(phase, this.my_turn);
+            _loc_3 = duelArgs[2] == "true";
+            this.lp_bottom_mc.points = duelArgs[3];
+            this.lp_top_mc.points = duelArgs[4];
+            this.status1_mc.status = duelArgs[5];
+            this.status2_mc.status = duelArgs[6];
             _loc_4 = [null, null];
             _loc_5 = null;
             _loc_6 = null;
-            _loc_7 = 7;
-            while (_loc_7 < _loc_1.length)
+
+            var i = 7;
+            while (i < duelArgs.length)
             {
-                
-                _loc_8 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_9 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_10 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_11 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_12 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_13 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_14 = _loc_1[_loc_7] == "true";
-                _loc_7++;
+				// Load a card
+                var _loc_8 = duelArgs[i++];
+                _loc_9 = duelArgs[i++];
+                _loc_10 = duelArgs[i++];
+                _loc_11 = duelArgs[i++] == "true";
+                _loc_12 = duelArgs[i++] == "true";
+                _loc_13 = duelArgs[i++] == "true";
+                _loc_14 = duelArgs[i++] == "true";
                 _loc_15 = new DuelCard(_loc_13 ? (this.back_loader1) : (this.back_loader2));
+
                 if (_loc_14)
                 {
-                    this.initDuelCard(_loc_15, _loc_1.slice(_loc_7, _loc_7 + 16));
-                    _loc_7 = _loc_7 + 16;
+                    this.initDuelCard(_loc_15, duelArgs.slice(i, i + 16));
+                    i += 16;
                 }
                 _loc_15.id = _loc_9;
                 if (_loc_8 == "underlay1" || _loc_8 == "underlay2")
@@ -8832,18 +8819,10 @@
                     this.cards_mc.finishFieldCard(_loc_15, false, false);
                 }
             }
-            _loc_7 = _loc_3 ? (0) : (1);
-            _loc_15 = _loc_4[_loc_7];
-            if (_loc_15 == null)
-            {
-                _loc_7 = _loc_3 ? (1) : (0);
-                _loc_15 = _loc_4[_loc_7];
-                if (_loc_15 != null)
-                {
-                    this.cards_mc.loadFieldBackground(_loc_15);
-                }
-            }
-            else
+            _loc_15 = _loc_4[_loc_3 ? 0 : 1];
+            if (!_loc_15) _loc_15 = _loc_4[_loc_3 ? 1 : 0];
+
+			if (_loc_15 != null)
             {
                 this.cards_mc.loadFieldBackground(_loc_15);
             }
