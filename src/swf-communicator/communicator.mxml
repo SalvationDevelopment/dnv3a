@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	width="100%" height="100%"
+	creationComplete="init()">
+
+	<mx:Script>
+		<![CDATA[
+			import flash.external.ExternalInterface;
+
+			private function init():void {
+				var socket:XMLSocket;
+
+				function respStatus(st:String):void {
+					ExternalInterface.call("communicatorResponseStatus", st);
+				}
+
+				function dataHandler(e:DataEvent):void {
+					ExternalInterface.call("communicatorResponse", e.data);
+				}
+
+				function openSocketFromJS():void {
+					socket = new XMLSocket();
+					socket.timeout = 5000;
+					socket.addEventListener(Event.CONNECT, function():void { respStatus('connected'); });
+					socket.addEventListener(Event.CLOSE, function():void { respStatus('close'); });
+					socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, function():void { respStatus('securityerror'); });
+					socket.addEventListener(IOErrorEvent.IO_ERROR, function():void { respStatus('ioerror'); });
+					socket.addEventListener(DataEvent.DATA, dataHandler);
+					socket.connect("duelingnetwork.com", 1234);
+				}
+
+				function closeSocketFromJS():void {
+					if (socket && socket.connected) {
+						socket.close();
+						socket = null;
+					}
+				}
+
+				function sendMessageFromJS(msg:String):void {
+					if (socket && socket.connected) {
+						socket.send(msg);
+					}
+				}
+
+				ExternalInterface.addCallback("open", openSocketFromJS);
+				ExternalInterface.addCallback("close", closeSocketFromJS);
+				ExternalInterface.addCallback("sendMessage", sendMessageFromJS);
+				ExternalInterface.call("communicatorInitialized");
+				trace("end");
+			}
+		]]>
+	</mx:Script>
+	<mx:Panel width="50%" height="50%">
+		<mx:TextArea width="100%" height="100%" id="logger">
+			<mx:text>message</mx:text>
+		</mx:TextArea>
+	</mx:Panel>
+</mx:Application>
