@@ -7,3 +7,13 @@ MainTimeline:
             this.CARD_START = this.URL_START + "images/cards/";
             this.AVATAR_START = this.URL_START + "images/avatars/";
             this.BACK_START = this.URL_START + "images/backs/";
+
+http://www.youtube.com/watch?v=uYwykrhvhR8 has the intro.
+(Also http://www.duelingnetwork.com:8080/Dueling_Network/overlap_low.mp3, but
+the volume is low.)
+
+http://www.duelingnetwork.com:8080/Dueling_Network/images/cards/<card number>.scf
+
+http://www.duelingnetwork.com:8080/Dueling_Network/images/avatars/<required rating>/<id>.jpg
+(e.g. http://www.duelingnetwork.com:8080/Dueling_Network/images/avatars/10/1.jpg)
+Ratings 0, 10, 25, 50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 2000, 10000

@@ -15,6 +15,8 @@ Outgoing:
 
 * Heartbeat -> heartbeat returned (see frame178)
 
+* Private message,[Receiver],[Message]
+
 
 Ingoing:
 
@@ -24,10 +26,14 @@ Ingoing:
 
 * Offline users,[Name]*
 
-* Chat unlock -> You can use the (global?) chat, I think
+* Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
 * Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
 
 * Heartbeat
 
 * Friends[,Name]*
+
+* Chat error,[Reason, e.g. "Invalid request"], invalid request on unicode...
+
+* Private message,[From],[To],[Message],[Admin?1:0 probably]

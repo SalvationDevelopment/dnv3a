@@ -532,44 +532,25 @@
         {
             var _loc_1:* = Capabilities.version;
             var _loc_2:* = _loc_1.split(" ");
-            if (_loc_2.length < 2)
-            {
-                return false;
-            }
-            var _loc_3:* = _loc_2[1].split(",");
-            var _loc_4:* = _loc_3[0];
-            if (_loc_3.length == 0 || _loc_4 < 10)
-            {
-                return false;
-            }
-            if (_loc_4 > 10)
-            {
-                return true;
-            }
-            _loc_4 = _loc_3[1];
-            if (_loc_3.length < 2 || _loc_4 < 1)
-            {
-                return false;
-            }
-            if (_loc_4 > 1)
-            {
-                return true;
-            }
-            _loc_4 = _loc_3[2];
-            if (_loc_3.length < 3 || _loc_4 < 52)
-            {
-                return false;
-            }
-            if (_loc_4 > 52)
-            {
-                return true;
-            }
-            _loc_4 = _loc_3[3];
-            if (_loc_3.length < 4 || _loc_4 < 14)
-            {
-                return false;
-            }
+            if (_loc_2.length < 2) return false;
+            var parts:* = _loc_2[1].split(",");
+
+            var part:* = parts[0];
+            if (parts.length == 0 || part < 10) return false;
+            if (part > 10) return true;
+
+            part = parts[1];
+            if (parts.length < 2 || part < 1) return false;
+            if (part > 1) return true;
+
+            part = parts[2];
+            if (parts.length < 3 || part < 52) return false;
+            if (part > 52) return true;
+
+            part = parts[3];
+            if (parts.length < 4 || part < 14) return false;
             return true;
+
         }// end function
 
         public function getUrlStart()
@@ -1620,12 +1601,12 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect6", this.username, this.password, this.session_id];
+            var connectCommand:Array = ["Connect6", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
-                _loc_2.push("Administrate");
+                connectCommand.push("Administrate");
             }
-            this.Send(_loc_2);
+            this.Send(connectCommand);
             this.got_heartbeat = true;
             this.heartbeat_timer.start();
             return;
@@ -2479,23 +2460,14 @@
             return -1;
         }// end function
 
-        public function updateFriend(param1:String, param2:Boolean)
+        public function updateFriend(name:String, add:Boolean)
         {
-            if (param2)
-            {
-                this.friends[param1] = true;
-            }
-            else
-            {
-                this.friends[param1] = undefined;
-            }
-            var _loc_3:* = this.userDelete(param1);
-            if (_loc_3 == null)
-            {
+            this.friends[name] = (add ? true: undefined);
+            var person:* = this.userDelete(name);
+            if (person == null)
                 return;
-            }
-            _loc_3.friend = param2;
-            this.userInsert(_loc_3);
+            person.friend = add;
+            this.userInsert(name);
             this.updateListColors();
             return;
         }// end function
@@ -3656,7 +3628,7 @@
             _loc_2[2] = this.decklist_cb.selectedItem.data;
             _loc_2[3] = this.host_mc.duel_note_txt.text;
             _loc_2[4] = this.host_mc.duel_password_txt.text;
-            this.Send(_loc_2);
+            this.Send(_loc_2); // Duel hosting
             this.lock();
             return;
         }// end function
@@ -3742,7 +3714,7 @@
                 param1 = "";
             }
             this.join_arr.push(param1);
-            this.Send(this.join_arr);
+            this.Send(this.join_arr); // Join duel
             this.join_arr = null;
             this.lock();
             return;
@@ -5082,7 +5054,7 @@
                 }
                 _loc_2.push(this.decklist_cb.dataProvider.getItemAt(_loc_3).data);
             }
-            this.Send(_loc_2);
+            this.Send(_loc_2); // Deck deletion
             this.lock();
             return;
         }// end function
@@ -5173,7 +5145,7 @@
                 }
                 _loc_5 = _loc_5 + 1;
             }
-            this.Send(_loc_3);
+            this.Send(_loc_3); // Save deck
             this.save_deck_callback = param1;
             this.lock();
             return;
@@ -6073,36 +6045,31 @@
             return;
         }// end function
 
-        public function setGalleryAvatar(param1:MovieClip, param2:String)
+        public function setGalleryAvatar(avatar:MovieClip, url:String)
         {
-            var _loc_3:int = 0;
-            var _loc_4:Boolean = false;
-            var _loc_5:Boolean = false;
-            param1.visible = true;
-            _loc_3 = int(param2.substr(0, param2.indexOf("/")));
-            _loc_4 = _loc_3 > this.num_wins;
-            param1.disable(_loc_4 ? (_loc_3) : (-1));
-            param1.setPicture(this.AVATAR_START, param2);
-            _loc_5 = param2 == this.my_avatar;
-            param1.setOutline(_loc_5);
-            if (_loc_5)
-            {
-                this.outlined_avatar = param1;
+            var winsRequired:int = 0;
+            var lowWins:Boolean = false;
+            avatar.visible = true;
+            winsRequired = int(url.substr(0, url.indexOf("/")));
+            lowWins = winsRequired > this.num_wins;
+            avatar.disable(lowWins ? winsRequired : (-1));
+            avatar.setPicture(this.AVATAR_START, url);
+            var sameAvatar = (url == this.my_avatar);
+            avatar.setOutline(sameAvatar);
+            if (sameAvatar) {
+                this.outlined_avatar = avatar;
             }
-            else if (this.outlined_avatar == param1)
-            {
+            else if (this.outlined_avatar == avatar) {
                 this.outlined_avatar = null;
             }
-            if (_loc_4)
-            {
-                param1.removeEventListener(MouseEvent.CLICK, this.avatarClickE);
+            if (lowWins) {
+                avatar.removeEventListener(MouseEvent.CLICK, this.avatarClickE);
             }
-            else
-            {
-                param1.addEventListener(MouseEvent.CLICK, this.avatarClickE);
+            else {
+                avatar.addEventListener(MouseEvent.CLICK, this.avatarClickE);
             }
-            param1.buttonMode = !_loc_4;
-            param1.mouseChildren = _loc_4;
+            avatar.buttonMode = !lowWins;
+            avatar.mouseChildren = lowWins;
             return;
         }// end function
 
@@ -6175,9 +6142,9 @@
             return;
         }// end function
 
-        public function myProfileExit(param1:Boolean)
+        public function myProfileExit(save:Boolean)
         {
-            if (param1)
+            if (save)
             {
                 this.saveAvatarAndProfileE();
                 this.my_profile_exiting = true;
@@ -6189,20 +6156,20 @@
             return;
         }// end function
 
-        public function myProfileExit2(param1:Boolean)
+        public function myProfileExit2(stay:Boolean)
         {
-            if (!param1)
+            if (!stay)
             {
                 this.returnToMainE();
             }
             return;
         }// end function
 
-        public function setCardBack(param1:String)
+        public function setCardBack(back:String)
         {
-            var _loc_2:int = 0;
-            var _loc_3:Boolean = false;
-            this.my_back = param1;
+            var repRequired:int = 0;
+            var lowRep:Boolean = false;
+            this.my_back = back;
             if (this.my_back == "")
             {
                 this.back_mc.disable(-1);
@@ -6213,11 +6180,11 @@
             }
             else
             {
-                _loc_2 = int(this.my_back.substr(0, this.my_back.indexOf("/")));
-                _loc_3 = _loc_2 > this.num_rep;
-                this.back_mc.disable(_loc_3 ? (_loc_2) : (-1));
+                repRequired = int(this.my_back.substr(0, this.my_back.indexOf("/")));
+                lowRep = (repRequired > this.num_rep);
+                this.back_mc.disable(lowRep ? rep : -1);
                 this.back_mc.setBack(this.BACK_START, this.my_back);
-                this.save_profile_btn.enabled = this.my_back == this.saved_back || !_loc_3;
+                this.save_profile_btn.enabled = this.my_back == this.saved_back || !lowRep;
                 this.color1_cp.visible = true;
                 this.color2_cp.visible = true;
             }
@@ -6226,9 +6193,7 @@
 
         public function backLeftE(event:MouseEvent)
         {
-            var _loc_2:String = this;
-            var _loc_3:* = this.card_back_idx - 1;
-            _loc_2.card_back_idx = _loc_3;
+			--this.card_back_idx;
             this.back_left_btn.visible = this.card_back_idx > 0;
             this.back_right_btn.visible = this.card_back_idx < (this.backs.length - 1);
             this.setCardBack(this.backs[this.card_back_idx]);
@@ -6237,9 +6202,7 @@
 
         public function backRightE(event:MouseEvent)
         {
-            var _loc_2:String = this;
-            var _loc_3:* = this.card_back_idx + 1;
-            _loc_2.card_back_idx = _loc_3;
+			++this.card_back_idx;
             this.back_left_btn.visible = this.card_back_idx > 0;
             this.back_right_btn.visible = this.card_back_idx < (this.backs.length - 1);
             this.setCardBack(this.backs[this.card_back_idx]);
@@ -9040,7 +9003,7 @@
             }
             else
             {
-                this.Send(_loc_3);
+                this.Send(_loc_3); // Card click
             }
             return;
         }// end function
@@ -9209,7 +9172,7 @@
             {
                 _loc_2.push(this.auto_draw_cb.selected);
             }
-            this.Send(_loc_2);
+            this.Send(_loc_2); // Phase change
             return;
         }// end function
 
