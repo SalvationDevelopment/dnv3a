@@ -19,7 +19,7 @@ var heartbeatTimer = null;
 function readSocketMessage(ar) {
 	messages.push(ar);
 	var ev = ar[0];
-	if (ev === 'Offline users' || ev === 'Online users') return; // Quite annoying.
+	// if (ev === 'Offline users' || ev === 'Online users') return; // Quite annoying.
 	console.log('Read: ', ar);
 }
 
@@ -32,19 +32,31 @@ function start(user, token) {
 	var sock = DuelingNetworkCommunicator.openSocket(readSocketMessage, socketError);
 	window.sock = sock;
 	sock.send(['Connect6', user, token, randHex()]);
-	setTimeout(function() {
-		sock.send(['Heartbeat']);
-	}, 1200);
+	// setTimeout(function() {
+		// sock.send(['Heartbeat']);
+	// }, 1200);
 	heartbeatTimer = setInterval(function() {
 		sock.send(['Heartbeat']);
 	}, 30000);
 	// setTimeout(function() { sock.close(); }, 50000);
 }
 
+var connect = null;
+
+function openConnectPage(user, token) {
+	var page = document.getElementById('connectpage');
+	page.hidden = false;
+	connect = function() {
+		page.hidden = true;
+		start(user, token);
+	};
+}
+
 $(function() {
 	DuelingNetworkCommunicator.autologin(function(error, user, token, admin) {
 		if (error === null) {
 			console.log('Autologin: ', arguments);
+			openConnectPage(user, token);
 			// alert('Autologin succeeded: ' + user + ', ' + token + ', ' + admin + '\n\nPress OK to connect.');
 			// start(user, token);
 		}
@@ -62,7 +74,7 @@ function login(f) {
 		if (error === null) {
 			document.getElementById('loginpage').hidden = true;
 			console.log('Login: ', arguments);
-			alert('Login succeeded: ' + user + ', ' + token + ', ' + admin + '\n\nPress OK to connect.');
+			openConnectPage(user, token);
 			start(user, token);
 		}
 		else {
@@ -80,6 +92,9 @@ function login(f) {
 		<label><input type="checkbox" name="remember"> Remember me</label>
 		<input type="submit" value="Login!">
 	</form>
+</div>
+<div id="connectpage" hidden>
+	<input type="button" value="Connect!" onclick="connect();">
 </div>
 </body>
 </html>

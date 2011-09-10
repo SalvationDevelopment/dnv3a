@@ -83,10 +83,11 @@ var ext = {
 			});
 
 			ret.close = function() {
-				ret.con.close();
+				if (ret.con) ret.con.close();
+				ret.con = null;
 			};
 			ret.send = function(ar) {
-				ret.con.send(arrayToString(ar) + '\0');
+				if (ret.con) ret.con.send(arrayToString(ar) + '\0');
 			}
 
 			doc.addEventListener('unload', function() {

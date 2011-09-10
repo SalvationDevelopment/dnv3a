@@ -8,19 +8,15 @@ const NS_BINDING_ABORTED = 0x804b0002;
 
 function SocketCom(callback) {
 	var ThreadManager = Cc["@mozilla.org/thread-manager;1"].getService();
-	var ConsoleService = Cc['@mozilla.org/consoleservice;1'].getService(Ci.nsIConsoleService);
-	function log(str) {
-		ConsoleService.logStringMessage('SocketCom: ' + str);
-	}
 	Cu.import("resource://gre/modules/NetUtil.jsm");
 
 	var readData = '';
-	var input = null, output = null;
+	var input = null, output = null, closed = false;
 	var reader = {
 		onInputStreamReady: function(input) {
+			var avail, ind;
 			try {
 				input.available();
-				var avail, ind;
 				while (avail = input.available()) {
 					readData += NetUtil.readInputStreamToString(input, avail);
 				}
@@ -31,7 +27,8 @@ function SocketCom(callback) {
 				input.asyncWait(reader, 0, 0, ThreadManager.mainThread);
 			}
 			catch(e) {
-				callback('close', e.name);
+				if (!closed) callback('close', e.name);
+				closed = true;
 			}
 		}
 	};
@@ -44,7 +41,8 @@ function SocketCom(callback) {
 	input.asyncWait(reader, 0, 0, ThreadManager.mainThread);
 
 	this.close = function() {
-		socket.close(NS_BINDING_ABORTED); // I hope that's right, but there's no documentation
+		closed = true;
+		socket.close(NS_BINDING_ABORTED);
 	};
 	this.send = function(data) {
 		if (!output) return false;
