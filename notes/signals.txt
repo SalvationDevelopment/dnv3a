@@ -18,11 +18,15 @@ Outgoing:
 
 Ingoing:
 
+* Connected,[Admin?1:0 I think]
+
 * Online users,[Name, Admin?1:0]*
 
 * Offline users,[Name]*
 
-* Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in chat
+* Chat unlock -> You can use the (global?) chat, I think
+
+* Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
 
 * Heartbeat
 

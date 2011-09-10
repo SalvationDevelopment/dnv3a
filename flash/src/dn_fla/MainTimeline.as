@@ -844,29 +844,28 @@
             return;
         }// end function
 
-        public function stringToArray(param1:String) : Array
+        public function stringToArray(str:String) : Array
         {
-            var _loc_5:String = null;
-            var _loc_2:* = new Array();
-            var _loc_3:int = 0;
-            var _loc_4:* = 0;
-            while (_loc_4 < param1.length)
+            var ret:* = new Array();
+            var partStart:int = 0;
+            var i:* = 0;
+            while (i < str.length)
             {
                 
-                _loc_5 = param1.charAt(_loc_4);
-                if (_loc_5 == "\\")
+                var ch = str.charAt(i);
+                if (ch == "\\")
                 {
-                    _loc_4 = _loc_4 + 1;
+                    ++i;
                 }
-                else if (_loc_5 == ",")
+                else if (ch == ",")
                 {
-                    _loc_2.push(this.replaceAll(this.replaceAll(param1.substring(_loc_3, _loc_4), "\\\\", "\\"), "\\,", ","));
-                    _loc_3 = _loc_4 + 1;
+                    ret.push(this.replaceAll(this.replaceAll(str.substring(partStart, i), "\\\\", "\\"), "\\,", ","));
+                    partStart = i + 1;
                 }
-                _loc_4 = _loc_4 + 1;
+				++i;
             }
-            _loc_2.push(this.replaceAll(this.replaceAll(param1.substring(_loc_3), "\\\\", "\\"), "\\,", ","));
-            return _loc_2;
+            ret.push(this.replaceAll(this.replaceAll(str.substring(partStart), "\\\\", "\\"), "\\,", ","));
+            return ret;
         }// end function
 
         public function arrayToString(param1:Array) : String
