@@ -7,10 +7,49 @@
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
 <script>
 
-window.Communicator = null;
+window.Communicator = {};
+Communicator.initialize = function() {
+	var swf = $('#swf_communicator')[0];
+	var resp = null, statusHandler = null;
+	Communicator = {
+		open: function(respCb, statusCb) {
+			resp = respCb;
+			statusHandler = statusCb;
+			swf.open();
+		},
+		send: function(ar) {
+			swf.sendMessage(arrayToString(ar));
+		},
+		close: function() {
+			swf.close();
+		},
+		_response: function(enc) {
+			var pos = 0, ch, dec = '';
+			while (pos < enc.length) {
+				ch = enc.charAt(pos);
+				if (ch === 'U') {
+					var to = enc.indexOf('U', pos+1);
+					if (to === -1) break;
+					dec += String.fromCharCode(parseInt(enc.substring(pos+1, to), 10));
+					pos = to+1;
+				}
+				else {
+					dec += String.fromCharCode(parseInt(enc.substr(pos, 2), 16));
+					pos += 2;
+				}
+			}
+			window.messages.push(dec);
+			resp(stringToArray(dec));
+		},
+		_responseStatus: function(st) {
+			statusHandler(st);
+		}
+	};
+	init();
+};
+
 
 function dateToFlashFormat(d) {
-
 	// Something like "Fri Sep 9 23:11 GMT+0200 2011".
 	var dateStr = d.toDateString(); // "Fri Sep 9 2011"
 	var timeStrParts = d.toTimeString().split(' '); // ["23:11:40", "GMT+0200", "(CEST)"]
@@ -47,7 +86,7 @@ function arrayToString(ar) {
 	var len = ar.length, escArray = [];
 	if (typeof len !== 'number') throw 'Not an array.';
 	for (var i = 0; i < len; ++i) {
-		var s = ar[i];
+		var s = ar[i].toString();
 		if (typeof s !== 'string') throw 'Not a string array';
 		escArray.push(s.replace(/\\/g, '\\\\').replace(/,/g, '\\,'));
 	}
@@ -70,6 +109,9 @@ window.messages = [];
 function readSocketMessage(ar) {
 	// messages.push(ar);
 	var ev = ar[0];
+	if (ev === 'Heartbeat') {
+		hasHeartbeat = true;
+	}
 	if (ev === 'Offline users' || ev === 'Online users') return; // Quite annoying.
 	console.log('Read: ', ar);
 }
@@ -85,19 +127,19 @@ function disconnected() {
 	console.log("DC");
 }
 
-function openConnectPage(user, token) {
+function openConnectPage(user, pass) {
 	$('#loadingpage').hide();
 	var page = $('#connectpage');
 	page.show();
 	connect = function() {
 		page.hide();
-		initConnection(user, token);
+		initConnection(user, pass);
 	};
 }
 
-function initConnection(user, token) {
+function initConnection(user, pass) {
 	function startConnection() {
-		Communicator.send(['Connect6', user, token, randHex()]);
+		Communicator.send(['Connect6', user, randHex(), randHex()]);
 		heartbeatTimer = setInterval(function() {
 			if (hasHeartbeat) {
 				Communicator.send(['Heartbeat']);
@@ -123,38 +165,12 @@ function initConnection(user, token) {
 function init() {
 	// TODO: Get these through a userscript.
 	var user = "simonlindholm";
-	var token = "6dd2c164d0fc501d3fc869a0d100fe8b";
 
-	openConnectPage(user, token);
+	openConnectPage(user);
 }
 
 $(function() {
 	$("#loadingpage").show();
-	window.communicatorInitialized = function() {
-		var swf = $('#swf_communicator')[0];
-		var resp = null, statusHandler = null;
-		window.Communicator = {
-			open: function(respCb, statusCb) {
-				resp = respCb;
-				statusHandler = statusCb;
-				swf.open();
-			},
-			send: function(ar) {
-				swf.sendMessage(arrayToString(ar));
-			},
-			close: function() {
-				swf.close();
-			}
-		};
-		window.communicatorResponse = function(str) {
-			window.messages.push(str);
-			resp(stringToArray(str));
-		};
-		window.communicatorResponseStatus = function(st) {
-			statusHandler(st);
-		};
-		init();
-	};
 	function flashLoaded(e) {
 		if (!e.success) {
 			// Flash error blah.
