@@ -22,6 +22,8 @@ Ingoing:
 
 * Connected,[Admin?1:0 I think]
 
+* Timed out -> socket 'close' will come shortly
+
 * Online users,[Name, Admin?1:0]*
 
 * Offline users,[Name]*
@@ -34,6 +36,6 @@ Ingoing:
 
 * Friends[,Name]*
 
-* Chat error,[Reason, e.g. "Invalid request"], invalid request on unicode...
+* Chat error,[Reason, e.g. "Invalid request" which happens on Unicode...]
 
 * Private message,[From],[To],[Message],[Admin?1:0 probably]

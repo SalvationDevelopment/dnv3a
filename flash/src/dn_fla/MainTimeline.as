@@ -843,7 +843,7 @@
                     ret.push(this.replaceAll(this.replaceAll(str.substring(partStart, i), "\\\\", "\\"), "\\,", ","));
                     partStart = i + 1;
                 }
-				++i;
+                ++i;
             }
             ret.push(this.replaceAll(this.replaceAll(str.substring(partStart), "\\\\", "\\"), "\\,", ","));
             return ret;
@@ -1941,70 +1941,62 @@
 
         public function escapeHtmlWithLinks(param1:String) : String
         {
-            var _loc_5:int = 0;
-            var _loc_6:int = 0;
-            var _loc_2:* = this.escapeHtml(param1);
-            var _loc_3:String = "";
-            var _loc_4:* = _loc_2;
+            var sp:int = 0;
+            var text:* = this.escapeHtml(param1);
+            var out:String = "";
+            var left:* = text;
             while (true)
             {
-                
-                _loc_5 = _loc_4.search("http://[!-~]|https://[!-~]|ftp://[!-~]|www\\.[!-~]");
-                if (_loc_5 < 0)
+                var urlPos:int = left.search("http://[!-~]|https://[!-~]|ftp://[!-~]|www\\.[!-~]");
+                if (urlPos < 0)
                 {
-                    _loc_3 = _loc_3 + _loc_4;
+                    out += left;
                     break;
                 }
-                if (_loc_5 > 0 && _loc_4.charAt((_loc_5 - 1)) != " ")
+                if (urlPos > 0 && left.charAt((urlPos - 1)) != " ")
                 {
-                    _loc_6 = _loc_4.indexOf(" ", _loc_5);
-                    if (_loc_6 < 0)
+                    var sp:int = left.indexOf(" ", urlPos);
+                    if (sp < 0)
                     {
-                        _loc_3 = _loc_3 + _loc_4;
+                        out += left;
                         break;
                     }
                     else
                     {
-                        _loc_3 = _loc_3 + _loc_4.substring(0, _loc_6);
-                        _loc_4 = _loc_4.substring(_loc_6);
+                        out += left.substring(0, sp);
+                        left = left.substring(sp);
                         continue;
                     }
                 }
-                _loc_3 = _loc_3 + _loc_4.substring(0, _loc_5);
-                _loc_6 = _loc_4.indexOf(" ", _loc_5);
-                if (_loc_6 < 0)
+                out += left.substring(0, urlPos);
+                left = left.substring(urlPos);
+                var sp:int = left.indexOf(" ");
+                if (sp < 0)
                 {
-                    _loc_3 = _loc_3 + this.urlToLink(_loc_4.substring(_loc_5));
+                    out += this.urlToLink(left);
                     break;
-                    continue;
                 }
-                _loc_3 = _loc_3 + this.urlToLink(_loc_4.substring(_loc_5, _loc_6));
-                _loc_4 = _loc_4.substring(_loc_6);
+                out += this.urlToLink(left.substring(0, sp));
+                left = left.substring(sp);
             }
-            return _loc_3;
+            return out;
         }// end function
 
-        public function urlToLink(param1:String) : String
+        public function urlToLink(urlText:String) : String
         {
-            var _loc_2:String = null;
-            if (param1.substring(0, 7) == "http://")
+            var prefix:String = "";
+            if (urlText.substring(0, 7) == "http://" ||
+                urlText.substring(0, 8) == "https://" ||
+                urlText.substring(0, 6) == "ftp://")
             {
-                _loc_2 = "";
-            }
-            else if (param1.substring(0, 8) == "https://")
-            {
-                _loc_2 = "";
-            }
-            else if (param1.substring(0, 6) == "ftp://")
-            {
-                _loc_2 = "";
+                prefix = "";
             }
             else
             {
-                _loc_2 = "http://";
+                prefix = "http://";
             }
-            var _loc_3:* = _loc_2 + this.replaceAll(param1, "\"", "&quot;");
-            return "<font color=\"#0000FF\"><u><a href=\"" + _loc_3 + "\" target=\"_blank\">" + param1 + "</a></u></font>";
+            var url:String = prefix + this.replaceAll(urlText, "\"", "&quot;");
+            return "<font color=\"#0000FF\"><u><a href=\"" + url + "\" target=\"_blank\">" + urlText + "</a></u></font>";
         }// end function
 
         public function escapeAndColorSender(param1:String, param2:String) : String
@@ -6193,7 +6185,7 @@
 
         public function backLeftE(event:MouseEvent)
         {
-			--this.card_back_idx;
+            --this.card_back_idx;
             this.back_left_btn.visible = this.card_back_idx > 0;
             this.back_right_btn.visible = this.card_back_idx < (this.backs.length - 1);
             this.setCardBack(this.backs[this.card_back_idx]);
@@ -6202,7 +6194,7 @@
 
         public function backRightE(event:MouseEvent)
         {
-			++this.card_back_idx;
+            ++this.card_back_idx;
             this.back_left_btn.visible = this.card_back_idx > 0;
             this.back_right_btn.visible = this.card_back_idx < (this.backs.length - 1);
             this.setCardBack(this.backs[this.card_back_idx]);
@@ -8724,7 +8716,7 @@
             var i = 7;
             while (i < duelArgs.length)
             {
-				// Load a card
+                // Load a card
                 var _loc_8 = duelArgs[i++];
                 _loc_9 = duelArgs[i++];
                 _loc_10 = duelArgs[i++];
@@ -8784,7 +8776,7 @@
             _loc_15 = _loc_4[_loc_3 ? 0 : 1];
             if (!_loc_15) _loc_15 = _loc_4[_loc_3 ? 1 : 0];
 
-			if (_loc_15 != null)
+            if (_loc_15 != null)
             {
                 this.cards_mc.loadFieldBackground(_loc_15);
             }
