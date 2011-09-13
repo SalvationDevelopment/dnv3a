@@ -5,49 +5,8 @@
 <title>Dueling Network v3.a</title>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
+<script src="communicator.js" type="text/javascript"></script>
 <script>
-
-window.Communicator = {};
-Communicator.initialize = function() {
-	var swf = $('#swf_communicator')[0];
-	var resp = null, statusHandler = null;
-	Communicator = {
-		open: function(respCb, statusCb) {
-			resp = respCb;
-			statusHandler = statusCb;
-			swf.open();
-		},
-		send: function(ar) {
-			swf.sendMessage(arrayToString(ar));
-		},
-		close: function() {
-			swf.close();
-		},
-		_response: function(enc) {
-			var pos = 0, ch, dec = '';
-			while (pos < enc.length) {
-				ch = enc.charAt(pos);
-				if (ch === 'U') {
-					var to = enc.indexOf('U', pos+1);
-					if (to === -1) break;
-					dec += String.fromCharCode(parseInt(enc.substring(pos+1, to), 10));
-					pos = to+1;
-				}
-				else {
-					dec += String.fromCharCode(parseInt(enc.substr(pos, 2), 16));
-					pos += 2;
-				}
-			}
-			window.messages.push(dec);
-			resp(stringToArray(dec));
-		},
-		_responseStatus: function(st) {
-			statusHandler(st);
-		}
-	};
-	init();
-};
-
 
 function dateToFlashFormat(d) {
 	// Something like "Fri Sep 9 23:11 GMT+0200 2011".
@@ -171,18 +130,16 @@ function init() {
 
 $(function() {
 	$("#loadingpage").show();
-	function flashLoaded(e) {
-		if (!e.success) {
-			// Flash error blah.
-			alert('Flash failed to load.');
+	Communicator.setup(function(loaded) {
+		if (loaded) {
+			init();
 		}
-	}
-
-	var flashvars = {};
-	var params = {allowscriptaccess: 'always'};
-	var attributes = {};
-	swfobject.embedSWF("http://simonsoftware.se/dn/communicator.swf", "swf_communicator", "0", "0", "10.0.0", false, flashvars, params, attributes, flashLoaded);
+		else {
+			alert("Flash could not load!");
+		}
+	});
 });
+
 </script>
 </head>
 <body>

@@ -59,7 +59,7 @@
 				ExternalInterface.addCallback("open", openSocketFromJS);
 				ExternalInterface.addCallback("close", closeSocketFromJS);
 				ExternalInterface.addCallback("sendMessage", sendMessageFromJS);
-				ExternalInterface.call("Communicator.initialize");
+				ExternalInterface.call("Communicator._initialize");
 			}
 		]]>
 	</mx:Script>
