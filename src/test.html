@@ -3,155 +3,43 @@
 <head>
 <meta charset="utf-8">
 <title>Dueling Network v3.a</title>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js" type="text/javascript"></script>
-<script src="communicator.js" type="text/javascript"></script>
-<script>
-
-function dateToFlashFormat(d) {
-	// Something like "Fri Sep 9 23:11 GMT+0200 2011".
-	var dateStr = d.toDateString(); // "Fri Sep 9 2011"
-	var timeStrParts = d.toTimeString().split(' '); // ["23:11:40", "GMT+0200", "(CEST)"]
-	var ret = dateStr.substr(0, dateStr.lastIndexOf(' ')) + ' ';
-	ret += timeStrParts[0].slice(0, -3) + ' ';
-	ret += timeStrParts[1] + ' ';
-	ret += d.getFullYear();
-	return ret;
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+<script src="js/communicator.js"></script>
+<script src="js/core.js"></script>
+<script src="js/errorview.js"></script>
+<script src="js/loadingview.js"></script>
+<script src="js/loginview.js"></script>
+<script src="js/menuview.js"></script>
+<script src="js/main.js"></script>
+<style>
+.view {
+	display: none;
 }
-
-function stringToArray(str) {
-	var ar = [], cur = '';
-	if (str === '') return ar;
-	var i = 0;
-	while (i < str.length) {
-		var ch = str[i++];
-		if (ch === '\\') {
-			if (i === str.length) return []; // silent error
-			cur += str[i++];
-		}
-		else if (ch === ',') {
-			ar.push(cur);
-			cur = '';
-		}
-		else {
-			cur += ch;
-		}
-	}
-	ar.push(cur);
-	return ar;
+.view.active {
+	display: block;
+	position: absolute;
+	top: 0px; left: 0px;
+	width: 100%; height: 100%;
 }
-
-function arrayToString(ar) {
-	var len = ar.length, escArray = [];
-	if (typeof len !== 'number') throw 'Not an array.';
-	for (var i = 0; i < len; ++i) {
-		var s = ar[i].toString();
-		if (typeof s !== 'string') throw 'Not a string array';
-		escArray.push(s.replace(/\\/g, '\\\\').replace(/,/g, '\\,'));
-	}
-	return escArray.join(',');
-}
-
-function randHex() {
-	var ret = '';
-	for (var i = 0; i < 32; ++i) {
-		ret += Math.floor(Math.random() * 16).toString(16);
-	}
-	return ret;
-}
-
-
-var heartbeatTimer = null;
-var hasHeartbeat = true;
-
-window.messages = [];
-function readSocketMessage(ar) {
-	// messages.push(ar);
-	var ev = ar[0];
-	if (ev === 'Heartbeat') {
-		hasHeartbeat = true;
-	}
-	if (ev === 'Offline users' || ev === 'Online users') return; // Quite annoying.
-	console.log('Read: ', ar);
-}
-
-function socketError(e) {
-	console.error('Socket error: ', e);
-	disconnected();
-}
-
-function disconnected() {
-	if (heartbeatTimer !== null) clearInterval(heartbeatTimer);
-	heartbeatTimer = null;
-	console.log("DC");
-}
-
-function openConnectPage(user, pass) {
-	$('#loadingpage').hide();
-	var page = $('#connectpage');
-	page.show();
-	connect = function() {
-		page.hide();
-		initConnection(user, pass);
-	};
-}
-
-function initConnection(user, pass) {
-	function startConnection() {
-		Communicator.send(['Connect6', user, randHex(), randHex()]);
-		heartbeatTimer = setInterval(function() {
-			if (hasHeartbeat) {
-				Communicator.send(['Heartbeat']);
-				hasHeartbeat = false;
-			}
-			else {
-				disconnected();
-			}
-		}, 30000);
-		// setTimeout(function() { Communicator.send(['Heartbeat']); }, 1200);
-	}
-	function socketStatus(st) {
-		if (st === 'connected') {
-			startConnection();
-		}
-		else {
-			socketError(st);
-		}
-	}
-	Communicator.open(readSocketMessage, socketStatus);
-}
-
-function init() {
-	// TODO: Get these through a userscript.
-	var user = "simonlindholm";
-
-	openConnectPage(user);
-}
-
-$(function() {
-	$("#loadingpage").show();
-	Communicator.setup(function(loaded) {
-		if (loaded) {
-			init();
-		}
-		else {
-			alert("Flash could not load!");
-		}
-	});
-});
-
-</script>
+</style>
 </head>
 <body>
 <noscript>
 	This page relies on JavaScript, please enable it.
 </noscript>
-<div id="loadingpage" hidden>
+<div id="loginview" class="view">
+	<form action="" onsubmit="LoginView.login(this);">
+		<label>Username: <input type="text" name="username"></label>
+		<label>Password: <input type="password" name="pwd"></label>
+		<label><input type="checkbox" name="remember"> Remember me</label>
+		<input type="submit" value="Login!">
+	</form>
+</div>
+<div id="loadingview" class="view">
 	<p>Loading...</p>
 </div>
-<div id="swf_communicator" hidden></div>
-<div id="connectpage" hidden>
-	<input type="button" value="Connect!" onclick="connect();">
-</div>
+<div id="errorview" class="view"></div>
+<div id="menuview" class="view">Please imagine a menu here.</div>
 </body>
 </html>
