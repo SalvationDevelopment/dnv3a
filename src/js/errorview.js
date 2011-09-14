@@ -1,5 +1,6 @@
 
 ;(function() {
+"use strict";
 
 function ErrorView(err) {
 	$('#' + this.id).text(err);

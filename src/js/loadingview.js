@@ -1,5 +1,6 @@
 
 ;(function() {
+"use strict";
 
 function LoadingView() {}
 LoadingView.prototype = new View();

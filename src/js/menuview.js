@@ -1,5 +1,6 @@
 
 ;(function() {
+"use strict";
 
 function MenuView() {}
 MenuView.prototype = new View();

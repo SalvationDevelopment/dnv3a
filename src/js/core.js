@@ -1,5 +1,6 @@
 
 ;(function() {
+"use strict";
 
 // An abstract 'view' class - exactly one view is active at a time and
 // represents a fullscreen activity like 'Deck Constructor' or 'Duel'.

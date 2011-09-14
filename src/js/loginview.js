@@ -1,5 +1,6 @@
 
 ;(function() {
+"use strict";
 
 function login(f) {
 	var user = f.username.value;
