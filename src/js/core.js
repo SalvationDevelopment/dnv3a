@@ -92,7 +92,7 @@ function handleMessage(msg) {
 		return;
 
 	// TODO: Handle chat etc. properly.
-	console.warning('Interesting message: ', ev, data);
+	console.warn('Interesting message: ', ev, data);
 }
 
 function lostConnection() {

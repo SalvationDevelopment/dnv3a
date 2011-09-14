@@ -7,7 +7,7 @@ MenuView.prototype = new View();
 MenuView.prototype.id = 'menuview';
 MenuView.prototype.handleMessage = function(ev, data) {
 	if (ev === 'Global message') {
-		console.log('[' + msg[2] + '] Message from ' + msg[0] + ': ' + msg[1]);
+		console.log('[' + data[2] + '] Message from ' + data[0] + ': ' + data[1]);
 		return true;
 	}
 

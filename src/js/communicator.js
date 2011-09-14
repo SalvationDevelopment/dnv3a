@@ -82,7 +82,6 @@ Communicator.setup = function(ready) {
 					pos += 2;
 				}
 			}
-			window.messages.push(dec);
 			resp(stringToArray(dec));
 		};
 		Communicator._responseStatus = function(st) {
