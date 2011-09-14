@@ -54,19 +54,19 @@ var Heartbeat = {
 		}
 	},
 	start: function(lost) {
-		if (timer !== null) {
+		if (this.timer !== null) {
 			this.has = true;
 			this.lost = lost;
 			this.timer = setInterval(this.beat, 30000);
 		}
 	},
 	stop: function() {
-		if (timer !== null) {
+		if (this.timer !== null) {
 			clearInterval(this.timer);
 			this.timer = null;
 			this.lost = null;
 		}
-	},
+	}
 };
 
 
