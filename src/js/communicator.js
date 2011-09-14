@@ -52,7 +52,6 @@ Communicator.setup = function(ready) {
 		throw "Communicator.setup() should only be called once!";
 	};
 	Communicator._initialize = function() {
-		alert('init'); // XXX
 		var swf = document.getElementById('swf_communicator');
 		var resp = null, statusHandler = null;
 		delete Communicator._initialize;

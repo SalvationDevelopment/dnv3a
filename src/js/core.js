@@ -20,8 +20,6 @@ View.prototype.id = null;
 window.View = View;
 
 
-
-
 var currentView = null;
 function setView(view) {
 	if (currentView !== null) {
@@ -32,7 +30,6 @@ function setView(view) {
 	$('#'+currentView.id).addClass('active');
 }
 window.setView = setView;
-window.getc = function() currentView;
 
 var Heartbeat = {
 	has: null,
@@ -156,6 +153,7 @@ function connect(user, pass, callback) {
 			Heartbeat.start(lostConnection);
 		}
 		else {
+			// TODO: Give some error if not in login phase.
 			callback('socket');
 		}
 	}
