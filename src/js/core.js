@@ -55,10 +55,10 @@ var Heartbeat = {
 		}
 	},
 	start: function(lost) {
-		if (this.timer !== null) {
+		if (this.timer === null) {
 			this.has = true;
 			this.lost = lost;
-			this.timer = setInterval(this.beat, 30000);
+			this.timer = setInterval(this.beat.bind(this), 30000);
 		}
 	},
 	stop: function() {
@@ -139,18 +139,10 @@ function connect(user, pass, callback) {
 		return true;
 	}
 
-	function randHex() {
-		var ret = '';
-		for (var i = 0; i < 32; ++i) {
-			ret += Math.floor(Math.random() * 16).toString(16);
-		}
-		return ret;
-	}
-
 	function socketStatus(st) {
 		if (st === 'connected') {
 			connectListener = connectedListener;
-			Communicator.send(['Connect6', user, randHex(), randHex()]);
+			Communicator.send(['Connect6', user, randHex32(), randHex32()]);
 			Heartbeat.start(lostConnection);
 		}
 		else {
