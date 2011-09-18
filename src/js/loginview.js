@@ -23,18 +23,18 @@ function login(f) {
 	});
 }
 
-function LoginView() {
-	var f = $('#' + this.id + '>form');
-	if (f.data('loaded') !== 'yes') {
-		f.data('loaded', 'yes');
+window.LoginView = View.extend({
+	id: 'loginview',
+	init: function() {
+		this._super();
+	},
+	loadUI: function() {
+		var f = this.ui.children('form');
 		f.submit(function() {
 			login(this);
 			return false;
 		});
 	}
-}
-LoginView.prototype = new View();
-LoginView.prototype.id = 'loginview';
-window.LoginView = LoginView;
+});
 
 })();

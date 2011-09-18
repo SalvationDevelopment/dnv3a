@@ -2,12 +2,12 @@
 ;(function() {
 "use strict";
 
-function ErrorView(err) {
-	// TODO: Disconnect I guess.
-	$('#' + this.id).text(err);
-}
-ErrorView.prototype = new View();
-ErrorView.prototype.id = 'errorview';
-window.ErrorView = ErrorView;
+window.ErrorView = View.extend({
+	id: 'errorview',
+	init: function(err) {
+		this._super();
+		this.ui.text(err);
+	}
+});
 
 })();

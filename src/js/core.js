@@ -4,21 +4,35 @@
 
 // An abstract 'view' class - exactly one view is active at a time and
 // represents a fullscreen activity like 'Deck Constructor' or 'Duel'.
-function View() {}
+window.View = Class.extend({
 
-// A destructor function, called when the view is replaced by another.
-View.prototype.close = function() {};
+	// A destructor function, called when the view is replaced by another.
+	close: function() {},
 
-// The message handler function, called when a socket message is received.
-// Should return a boolean indicating whether event was handled by the view;
-// if so, it does not bubble on to the global message handler or generate an
-// error.
-View.prototype.handleMessage = function(ev, data) { return false; };
+	// The message handler function, called when a socket message is received.
+	// Should return a boolean indicating whether event was handled by the
+	// view; if so, it does not bubble on to the global message handler or
+	// generate an error.
+	handleMessage: function(ev, data) { return false; },
 
-// The id of the related DOM element.
-View.prototype.id = null;
+	// A virtual function meant to setup a view's UI. It is called from the
+	// View constructor the first time the class is constructed.
+	loadUI: function() {},
 
-window.View = View;
+	// The id of the related DOM element.
+	id: null,
+
+	// The DOM element. Equal to $('#' + id) and set by the View constructor.
+	ui: null,
+
+	init: function() {
+		this.ui = $('#'+this.id);
+		if (this.ui.data('loaded') !== 'yes') {
+			this.ui.data('loaded', 'yes');
+			this.loadUI();
+		}
+	}
+});
 
 
 var currentView = null;
