@@ -10,38 +10,31 @@
 <script src="js/communicator.js"></script>
 <script src="js/core.js"></script>
 <script src="js/errorview.js"></script>
-<script src="js/loadingview.js"></script>
 <script src="js/loginview.js"></script>
 <script src="js/menuview.js"></script>
 <script src="js/main.js"></script>
-<style>
-.view {
-	display: none;
-}
-.view.active {
-	display: block;
-	position: absolute;
-	top: 0px; left: 0px;
-	width: 100%; height: 100%;
-}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <noscript>
 	This page relies on JavaScript, please enable it.
 </noscript>
+<div id="views">
 <div id="loginview" class="view">
-	<form action="">
-		<label>Username: <input type="text" name="username"></label><br>
-		<label>Password: <input type="password" name="pwd"></label><br>
-		<label><input type="checkbox" name="remember"> Remember me</label><br>
-		<input type="submit" value="Login!">
-	</form>
-</div>
-<div id="loadingview" class="view">
-	<p>Loading...</p>
+	<div class="midbox">
+		<form action="">
+			<label class="row"><span>Username:</span><input type="text" name="username"></label>
+			<label class="row"><span>Password:</span><input type="password" name="pwd"></label>
+			<label><input type="checkbox" name="remember"> Remember me</label>
+			<input type="submit" value="Login!">
+		</form>
+		<div id="loadingstatus">
+			<img alt=""><span></span>
+		</div>
+	</div>
 </div>
 <div id="errorview" class="view"></div>
 <div id="menuview" class="view">Please imagine a menu here.</div>
+</div>
 </body>
 </html>

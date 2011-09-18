@@ -46,6 +46,7 @@ function setView(view) {
 }
 window.setView = setView;
 
+
 var Heartbeat = {
 	has: null,
 	timer: null,
@@ -87,7 +88,7 @@ var Heartbeat = {
 
 var connectListener = null;
 var heartbeatListener = null;
-window.messages = [];
+window.messages = []; // for debugging
 function handleMessage(msg) {
 	window.messages.push(msg);
 	if (msg.length === 0) return;
