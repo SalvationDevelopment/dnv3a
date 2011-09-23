@@ -15,6 +15,12 @@ window.View = Class.extend({
 	// generate an error.
 	handleMessage: function(ev, data) { return false; },
 
+	// A virtual function called when there is an error (such as the socket
+	// closing, or the server not responding to heartbeats).
+	handleError: function(err) {
+		window.setView(new ErrorView("Lost connection! (oh noes)"));
+	},
+
 	// A virtual function meant to setup a view's UI. It is called from the
 	// View constructor the first time the class is constructed.
 	loadUI: function() {},
@@ -36,21 +42,21 @@ window.View = Class.extend({
 
 
 var currentView = null;
-function setView(view) {
+window.setView = function(view) {
 	if (currentView !== null) {
 		currentView.close();
 		$('#'+currentView.id).removeClass('active');
 	}
 	currentView = view;
 	$('#'+currentView.id).addClass('active');
-}
-window.setView = setView;
+};
 
 
 var Heartbeat = {
 	has: null,
 	timer: null,
 	lost: null,
+
 	listener: function(ev, data) {
 		if (ev === 'Heartbeat') {
 			this.has = true;
@@ -58,7 +64,10 @@ var Heartbeat = {
 		}
 		return false;
 	},
+
 	beat: function() {
+		// TODO: Check for responses after a shorter time, and at least
+		// indicate possibly disconnection.
 		if (!this.has) {
 			var cb = this.lost;
 			this.stop();
@@ -69,6 +78,7 @@ var Heartbeat = {
 			this.has = false;
 		}
 	},
+
 	start: function(lost) {
 		if (this.timer === null) {
 			this.has = true;
@@ -76,8 +86,10 @@ var Heartbeat = {
 			this.timer = setInterval(this.beat.bind(this), 30000);
 		}
 	},
+
 	stop: function() {
 		if (this.timer !== null) {
+			Communicator.close();
 			clearInterval(this.timer);
 			this.timer = null;
 			this.lost = null;
@@ -86,7 +98,6 @@ var Heartbeat = {
 };
 
 
-var connectListener = null;
 var heartbeatListener = null;
 window.messages = []; // for debugging
 function handleMessage(msg) {
@@ -95,8 +106,6 @@ function handleMessage(msg) {
 	var ev = msg[0];
 	var data = msg.slice(1);
 	if (Heartbeat.listener(ev, data))
-		return;
-	if (connectListener && connectListener(ev, data))
 		return;
 	if (currentView.handleMessage(ev, data))
 		return;
@@ -111,64 +120,27 @@ function handleMessage(msg) {
 }
 
 function lostConnection() {
-	Communicator.close();
-	setView(new ErrorView("Lost connection! (oh noes)"));
+	currentView.handleError('lost-connection');
 }
 
-function connect(user, pass, callback) {
-	// Yup. This is how you log in to DuelingNetwork.
-	// XXX: Maybe this should go in LoginView.
-
-	function close(err) {
-		connectListener = null;
-		Heartbeat.stop();
-		Communicator.close();
-		callback(err);
-	}
-
-	function pwdListener(ev, data) {
-		if (ev === 'Change password') {
-			connectListener = null;
-			callback('success');
-			return true;
-		}
-		if (ev === 'Error' && data[0] === 'Invalid current password') {
-			close('password');
-			return true;
-		}
-		return false;
-	}
-
-	function connectedListener(ev, data) {
-		if (ev === 'Connected' && data.length >= 1) {
-			// TODO: Do something with this?
-			var admin = parseInt(data[0], 10);
-
-			connectListener = pwdListener;
-			Communicator.send(['Change password', pass, pass]);
-			return true;
-		}
-
-		// If the first response isn't 'Connected', we're doomed. DOOMED.
-		close('badconnect');
-		return true;
-	}
-
+Communicator.openConnection = function(success) {
 	function socketStatus(st) {
 		if (st === 'connected') {
-			connectListener = connectedListener;
-			Communicator.send(['Connect6', user, randHex32(), randHex32()]);
 			Heartbeat.start(lostConnection);
+			success();
 		}
 		else {
-			// TODO: Give some error if not in login phase.
-			callback('socket');
+			Heartbeat.stop();
+			currentView.handleError(st);
 		}
 	}
 
 	Communicator.open(handleMessage, socketStatus);
-}
-window.connect = connect;
+};
+
+Communicator.closeConnection = function() {
+	Heartbeat.stop();
+	Communicator.close();
+};
 
 })();
-

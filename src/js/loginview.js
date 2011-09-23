@@ -5,6 +5,8 @@
 window.LoginView = View.extend({
 	id: 'loginview',
 	loaded: false,
+	loginHandler: null,
+
 	init: function() {
 		this._super();
 		this.setStatus(true, 0, "");
@@ -15,16 +17,16 @@ window.LoginView = View.extend({
 			uinput.focus();
 		});
 
-		var that = this;
 		Communicator.setup(function(loaded) {
 			if (loaded) {
-				that.loaded = true;
+				this.loaded = true;
 			}
 			else {
-				that.setStatus(false, 2, "Flash could not load.");
+				this.setStatus(false, 2, "Flash could not load.");
 			}
-		});
+		}.bind(this));
 	},
+
 	loadUI: function() {
 		var f = this.ui.find('form');
 		var that = this;
@@ -33,6 +35,7 @@ window.LoginView = View.extend({
 			return false;
 		});
 	},
+
 	setStatus: function(active, st, text) {
 		var submit = this.ui.find('input[type=submit]');
 		var loading = $('#loadingstatus');
@@ -50,6 +53,7 @@ window.LoginView = View.extend({
 		else
 			loading.slideDown("slow");
 	},
+
 	login: function(f) {
 		if (!this.loaded) return;
 
@@ -61,23 +65,69 @@ window.LoginView = View.extend({
 
 		// TODO: Remember usernames.
 
-		var that = this;
 		this.setStatus(false, 1, "Logging in...");
-		window.connect(user, pass, function(status) {
-			if (status === 'success') {
-				setView(new MenuView());
+		this.connect(user, pass);
+	},
+
+	handleError: function(err) {
+		if (err === 'password') {
+			this.setStatus(true, 2, "Wrong password.");
+		}
+		else if (err === 'close') {
+			this.setStatus(true, 2, "Invalid username.");
+		}
+		else {
+			this.setStatus(true, 2, "Socket error (" + err + ").");
+		}
+	},
+
+	handleMessage: function(ev, data) {
+		if (this.loginHandler) {
+			return this.loginHandler(ev, data);
+		}
+		return false;
+	},
+
+	connect: function(user, pass) {
+		// Yup. This is how you log in to DuelingNetwork.
+
+		function connectedListener(ev, data) {
+			if (ev === 'Connected' && data.length >= 1) {
+				// TODO: Do something with this?
+				var admin = parseInt(data[0], 10);
+
+				this.loginHandler = pwdListener;
+				Communicator.send(['Change password', pass, pass]);
+				return true;
 			}
-			else if (status === 'password') {
-				that.setStatus(true, 2, "Wrong password.");
+
+			// The first response must be 'Connected', fail otherwise.
+			Communicator.closeConnection();
+			this.handleError('badconnect');
+			return true;
+		}
+
+		function pwdListener(ev, data) {
+			if (ev === 'Change password') {
+				this.loginSuccess();
+				return true;
 			}
-			else if (status === 'badconnect') {
-				that.setStatus(false, 2, "Bad signals.");
-				alert("Bad signals.");
+			if (ev === 'Error' && data[0] === 'Invalid current password') {
+				Communicator.closeConnection();
+				this.handleError('password');
+				return true;
 			}
-			else if (status === 'socket') {
-				that.setStatus(false, 2, "Socket error.");
-			}
-		});
+			return false;
+		}
+
+		Communicator.openConnection(function() {
+			this.loginHandler = connectedListener;
+			Communicator.send(['Connect6', user, randHex32(), randHex32()]);
+		}.bind(this));
+	},
+
+	loginSuccess: function() {
+		setView(new MenuView());
 	}
 });
 
