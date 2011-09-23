@@ -29,13 +29,13 @@ class Communicator {
 		respStatus('connected');
 	}
 	private function closeListener(e) {
-		respStatus('connected');
+		respStatus('close');
 	}
 	private function secErrorListener(e) {
-		respStatus('connected');
+		respStatus('sec-error');
 	}
 	private function ioErrorListener(e) {
-		respStatus('connected');
+		respStatus('io-error');
 	}
 
 	private function openSocketFromJS() {
