@@ -2,6 +2,25 @@
 ;(function() {
 "use strict";
 
+window.CSS = {
+	setBorderRadius: function(jq, val) {
+		jq.css({
+			'border-radius': val,
+			'-moz-border-radius': val,
+			'-webkit-border-radius': val,
+			'-o-border-radius': val,
+			'-ms-border-radius': val
+		});
+	},
+	setBorderBox: function(jq) {
+		jq.css({
+			'box-sizing': 'border-box',
+			'-moz-box-sizing': 'border-box',
+			'-webkit-box-sizing': 'border-box'
+		});
+	}
+};
+
 window.randTo = function(to) {
 	return Math.floor(Math.random() * 16);
 };

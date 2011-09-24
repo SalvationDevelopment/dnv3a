@@ -98,7 +98,6 @@ var Heartbeat = {
 };
 
 
-var heartbeatListener = null;
 window.messages = []; // for debugging
 function handleMessage(msg) {
 	window.messages.push(msg);
@@ -109,13 +108,13 @@ function handleMessage(msg) {
 		return;
 	if (currentView.handleMessage(ev, data))
 		return;
+	if (ChatManager.handleMessage(ev, data))
+		return;
 
+	// Avoid spam in the console
 	if (ev === 'Online users' || ev === 'Offline users')
 		return;
-	if (ev === 'Chat unlock')
-		return;
 
-	// TODO: Handle chat etc. properly.
 	console.warn('Interesting message: ', ev, data);
 }
 

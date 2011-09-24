@@ -9,6 +9,7 @@ window.LoginView = View.extend({
 
 	init: function() {
 		this._super();
+		Sidebar.close();
 		this.setStatus(true, 0, "");
 
 		// Give the username field focus right after the view has been shown.
@@ -128,6 +129,10 @@ window.LoginView = View.extend({
 
 	loginSuccess: function() {
 		setView(new MenuView());
+		Sidebar.open();
+
+		// Show the global chat.
+		ChatManager.openGlobalChat();
 	}
 });
 

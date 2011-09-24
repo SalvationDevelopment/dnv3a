@@ -19,7 +19,7 @@ $(function() {
 		var rat = h/w, nh = h, nw = w;
 		if (rat > HWRAT) nh = w * HWRAT;
 		else nw = h / HWRAT;
-		$("#views").css({
+		$("#fullscreen").css({
 			width: nw,
 			height: nh,
 			left: (w - nw)/2,
