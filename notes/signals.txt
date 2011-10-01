@@ -1,4 +1,4 @@
-The concatenation of the socket messages defined a (potentially infinite) list
+The concatenation of the socket messages defines a (potentially infinite) list
 of null-terminated parts, events. (So events can span several messages, even if
 they usually do not.)
 Each event is a comma-separated list with the first value being the event type.
@@ -6,36 +6,44 @@ Commas in the data are escaped as \, backslashes as \\.
 
 List of events:
 
+Legend:
+
++ = we handle it
+ModStatus = 0 for regular users, >0 for mods in increasing order of importance
+  I think
+LoginToken = token gotten from the login, equal to md5(password)
+
 
 Outgoing:
 
-* Connect6,[Username],[LoginToken],[32-byte random hex]
++ Connect6,[Username],[LoginToken],[32-byte random hex] (there is actually no
+  need to send a valid LoginToken)
+
++ Heartbeat -> "Heartbeat" event returned (used for testing disconnects)
 
 * Get deck data -> "Get deck data" event returned
-
-* Heartbeat -> heartbeat returned (see frame178)
 
 * Private message,[Receiver],[Message]
 
 
 Ingoing:
 
-* Connected,[Admin?1:0 I think]
++ Connected,[ModStatus?]
+
++ Heartbeat
+
++ Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
 
 * Timed out -> socket 'close' will come shortly
 
-* Online users,[Name, Admin?1:0]*
+* Online users,[Name, ModStatus?]*
 
 * Offline users,[Name]*
 
 * Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
-* Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
-
-* Heartbeat
-
 * Friends[,Name]*
 
 * Chat error,[Reason, e.g. "Invalid request" which happens on Unicode...]
 
-* Private message,[From],[To],[Message],[Admin?1:0 probably]
+* Private message,[From],[To],[Message],[ModStatus?]

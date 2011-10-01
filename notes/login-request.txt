@@ -30,5 +30,3 @@ Logged in,simonlindholm,2ab96390c7dbe3439de74d0c9b0b1767,false
 Format:
 
 [Logged in/Not logged in],[Username],[LoginToken],[admin]
-
-(2ab96390c7dbe3439de74d0c9b0b1767 is a LoginToken)

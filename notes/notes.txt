@@ -1,5 +1,3 @@
 MainTimeline::Send()
 sound 13 is the most awesome one
-http://www.duelingnetwork.com/news.txt for news
-Flash sockets work I think due to niceness on port 843
 Filter on (ip.src == 96.127.138.2) || (ip.dst == 96.127.138.2)
