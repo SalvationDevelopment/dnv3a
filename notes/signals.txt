@@ -16,8 +16,7 @@ LoginToken = token gotten from the login, equal to md5(password)
 
 Outgoing:
 
-+ Connect6,[Username],[LoginToken],[32-byte random hex] (there is actually no
-  need to send a valid LoginToken)
++ Connect8,[Username],[LoginToken],[32-byte random hex]
 
 + Heartbeat -> "Heartbeat" event returned (used for testing disconnects)
 

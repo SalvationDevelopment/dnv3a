@@ -5,7 +5,6 @@
 window.LoginView = View.extend({
 	id: 'loginview',
 	loaded: false,
-	loginHandler: null,
 
 	init: function() {
 		this._super();
@@ -83,48 +82,25 @@ window.LoginView = View.extend({
 	},
 
 	handleMessage: function(ev, data) {
-		if (this.loginHandler) {
-			return this.loginHandler(ev, data);
+		if (ev === 'Connected' && data.length >= 1) {
+			// TODO: Do something with this?
+			var admin = parseInt(data[0], 10);
+
+			this.loginSuccess();
+			return true;
 		}
-		return false;
+		else {
+			// Anything else must mean we have an incorrect password.
+			Communicator.closeConnection();
+			this.handleError('password');
+		}
+		return true;
 	},
 
 	connect: function(user, pass) {
-		// Yup. This is how you log in to DuelingNetwork.
-
-		function connectedListener(ev, data) {
-			if (ev === 'Connected' && data.length >= 1) {
-				// TODO: Do something with this?
-				var admin = parseInt(data[0], 10);
-
-				this.loginHandler = pwdListener;
-				Communicator.send(['Change password', pass, pass]);
-				return true;
-			}
-
-			// The first response must be 'Connected', fail otherwise.
-			Communicator.closeConnection();
-			this.handleError('badconnect');
-			return true;
-		}
-
-		function pwdListener(ev, data) {
-			if (ev === 'Change password') {
-				this.loginSuccess();
-				return true;
-			}
-			if (ev === 'Error' && data[0] === 'Invalid current password') {
-				Communicator.closeConnection();
-				this.handleError('password');
-				return true;
-			}
-			return false;
-		}
-
 		Communicator.openConnection(function() {
-			this.loginHandler = connectedListener;
-			Communicator.send(['Connect6', user, randHex32(), randHex32()]);
-		}.bind(this));
+			Communicator.send(['Connect8', user, hex_md5(pass), randHex32()]);
+		});
 	},
 
 	loginSuccess: function() {
