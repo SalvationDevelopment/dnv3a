@@ -99,7 +99,7 @@ window.LoginView = View.extend({
 
 	connect: function(user, pass) {
 		Communicator.openConnection(function() {
-			Communicator.send(['Connect8', user, hex_md5(pass), randHex32()]);
+			Communicator.send(['Connect9', user, hex_md5(pass), randHex32()]);
 		});
 	},
 
