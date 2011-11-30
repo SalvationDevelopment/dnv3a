@@ -22,7 +22,11 @@
 
         public function previewE(event:MouseEvent, param2 = null)
         {
-            var _loc_3:* = event == null ? (Front(param2.front_mc)) : (Front(event.currentTarget.front_mc));
+            if (event != null)
+            {
+                param2 = event.currentTarget;
+            }
+            var _loc_3:* = Front(param2.front_mc);
             if (this.fronts[0].id == _loc_3.id)
             {
                 return;

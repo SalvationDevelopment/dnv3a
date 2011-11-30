@@ -165,9 +165,17 @@
             return;
         }// end function
 
-        public function initializeFromArray(param1:Array)
+        public function initializeFromArray(param1:Array, param2:ByteArray = null)
         {
-            this.initialize(param1[0], param1[1], param1[2], param1[3], param1[4], param1[5], param1[6], param1[7], param1[8], param1[9], param1[10], param1[11], param1[12]);
+            if (param2 == null)
+            {
+                this.initialize(param1[0], param1[1], param1[2], param1[3], param1[4], param1[5], param1[6], param1[7], param1[8], param1[9], param1[10], param1[11], param1[12]);
+            }
+            else
+            {
+                this.initialize(param1[0], param1[1], param1[2], null, param1[4], param1[5], param1[6], param1[7], param1[8], param1[9], param1[10], param1[11], param1[12]);
+                this.loadPictureBytes(param1[3], param2);
+            }
             return;
         }// end function
 

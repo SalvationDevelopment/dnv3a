@@ -23,8 +23,10 @@
 
     dynamic public class MainTimeline extends MovieClip
     {
+        public var rematch_btn:Button;
         public var content_sp:ScrollPane;
         public var admin_status_mc:MovieClip;
+        public var comp_username_txt:TextInput;
         public var cancel_duel_btn:Button;
         public var back_mc:MovieClip;
         public var ranking_txt:TextField;
@@ -36,6 +38,7 @@
         public var page_txt:TextField;
         public var tu_sp:ScrollPane;
         public var watch_chat_tooltip_mc:MovieClip;
+        public var calls_mc:MovieClip;
         public var msg_mc:MovieClip;
         public var forgot_password_box_mc:MovieClip;
         public var fp_out_of_date_mc:MovieClip;
@@ -59,6 +62,7 @@
         public var coin_btn:SimpleButton;
         public var gone2_mc:MovieClip;
         public var admin2_exit_btn:Button;
+        public var check_comp_btn:Button;
         public var ban_note_txt:TextArea;
         public var color1_cp:ColorPicker;
         public var back_left_btn:SimpleButton;
@@ -77,6 +81,7 @@
         public var leaderboard_mc:MovieClip;
         public var login_box_mc:MovieClip;
         public var donate_btn:SimpleButton;
+        public var reset_btn:Button;
         public var die_mc:MovieClip;
         public var show_hand_btn:SimpleButton;
         public var auto_draw_cb:CheckBox;
@@ -94,6 +99,7 @@
         public var deck23_mc:DeckCard;
         public var deck12_mc:DeckCard;
         public var deck1_mc:DeckCard;
+        public var call_btn:MovieClip;
         public var watch_icon_mc:MovieClip;
         public var confirm_mc:MovieClip;
         public var days_rb:RadioButton;
@@ -115,6 +121,8 @@
         public var watch_rb:RadioButton;
         public var au_sp:ScrollPane;
         public var online_users_mc:MovieClip;
+        public var screenshot_btn:MovieClip;
+        public var siding_hidden_mc:MovieClip;
         public var defeat_btn:Button;
         public var gone1_mc:MovieClip;
         public var status2_mc:MovieClip;
@@ -129,12 +137,15 @@
         public var rename_btn:Button;
         public var search_btn:Button;
         public var card2_cb:ComboBox;
+        public var call_icon_mc:MovieClip;
         public var profile_btn:SimpleButton;
+        public var camera_flash_mc:MovieClip;
         public var title_mc:MovieClip;
         public var die_btn:SimpleButton;
         public var avatar2_mc:SquarePicture;
         public var rock1_mc:MovieClip;
         public var by_rating_heading_mc:MovieClip;
+        public var comp_alts_txt:TextArea;
         public var alts_txt:TextArea;
         public var current_txt:TextInput;
         public var deck_hidden_mc:MovieClip;
@@ -147,6 +158,7 @@
         public var private_icon_mc:MovieClip;
         public var main_exit_btn:SimpleButton;
         public var admin_btn:SimpleButton;
+        public var invalid_load_context_mc:MovieClip;
         public var fade_mc:MovieClip;
         public var field_mc:SquarePicture;
         public var kick2_btn:Button;
@@ -165,12 +177,14 @@
         public var deck5_mc:DeckCard;
         public var rating_upper_txt:TextInput;
         public var online_btn:MovieClip;
+        public var call_tooltip_mc:MovieClip;
         public var room_btn:SimpleButton;
+        public var combo_mc:MovieClip;
         public var logged_in_box_mc:MovieClip;
+        public var call_admin_btn:Button;
         public var rating_rep1_mc:MovieClip;
         public var status1_mc:MovieClip;
         public var by_reputation_heading_mc:MovieClip;
-        public var time_left_txt:TextField;
         public var back_right_btn:SimpleButton;
         public var icon3_mc:MovieClip;
         public var registered_txt:TextField;
@@ -191,6 +205,7 @@
         public var public_chat_tooltip_mc:MovieClip;
         public var input_mc:MovieClip;
         public var progress_mc:MovieClip;
+        public var siding1_mc:MovieClip;
         public var phase_mc:MovieClip;
         public var rating_rep2_mc:MovieClip;
         public var avatar1_mc:SquarePicture;
@@ -210,8 +225,8 @@
         public var defl_txt:TextInput;
         public var decklist_cb:ComboBox;
         public var mute_btn:MovieClip;
+        public var done_siding_btn:Button;
         public var lp_top_mc:MovieClip;
-        public var ass_btn:Button;
         public var kick1_btn:Button;
         public var username1_mc:MovieClip;
         public var by_wins_heading_mc:MovieClip;
@@ -228,6 +243,7 @@
         public var public_icon_mc:MovieClip;
         public var chat_hidden_mc:MovieClip;
         public var skip_intro_btn:SimpleButton;
+        public var black_mc:MovieClip;
         public var hand_shuffle_btn:SimpleButton;
         public var lp_bottom_mc:MovieClip;
         public var duel_hidden_mc:MovieClip;
@@ -251,6 +267,7 @@
         public var filter_username_txt:TextInput;
         public var duel_rb:RadioButton;
         public var host_bg_mc:MovieClip;
+        public var siding2_mc:MovieClip;
         public var coin_mc:MovieClip;
         public var days_txt:TextInput;
         public var left_btn:SimpleButton;
@@ -293,8 +310,9 @@
         public var defh_txt:TextInput;
         public var type2_cb:ComboBox;
         public var tot_pages_txt:TextField;
-        public var admin_admin_btn:SimpleButton;
         public var admin_duel_btn:SimpleButton;
+        public var admin_admin_btn:SimpleButton;
+        public var siding_in_progress_mc:MovieClip;
         public var cards_mc:MovieClip;
         public var scissors1_mc:MovieClip;
         public var paper1_mc:MovieClip;
@@ -322,6 +340,7 @@
         public var token_btn:SimpleButton;
         public var first_mc:MovieClip;
         public var over_mc:MovieClip;
+        public var reset_stats_mc:MovieClip;
         public var change_btn:Button;
         public var save_profile_btn:Button;
         public var profile_exit_btn:Button;
@@ -337,7 +356,9 @@
         public var deck19_mc:DeckCard;
         public var room_exit_btn:Button;
         public var public_btn:MovieClip;
+        public var swap_btn:Button;
         public var draw_btn:Button;
+        public var super_ban_mc:MovieClip;
         public var strikes_txt:TextField;
         public var color2_cp:ColorPicker;
         public var search10_mc:SearchCard;
@@ -353,16 +374,18 @@
         public var news_txt:TextArea;
         public var __setPropDict:Dictionary;
         public var __lastFrameProp:int = -1;
-        public var COMPONENT_FONT:String;
-        public var COMPONENT_SIZE:int;
+        public var dn_id:String;
         public var URL_START:String;
         public var HOSTNAME:String;
         public var CARD_START:Object;
         public var AVATAR_START:Object;
         public var BACK_START:Object;
         public var bgmusic:Sound;
+        public var COMPONENT_FONT:String;
+        public var COMPONENT_SIZE:int;
         public var display_box_callback:Function;
         public var input_callback:Function;
+        public var combo_callback:Function;
         public var confirm_callback:Function;
         public var lock_has_saved_focus:Boolean;
         public var lock_saved_focus:InteractiveObject;
@@ -476,6 +499,7 @@
         public var back_loader1:BackLoader;
         public var back_loader2:BackLoader;
         public var duel_over:Boolean;
+        public var no_duel_winner:Boolean;
         public var watchHtmlText:String;
         public var watchHtmlLines:int;
         public var duelHtmlText:String;
@@ -496,7 +520,6 @@
         public var current_tween_block:Boolean;
         public var tweens_finished:int;
         public var TP_TWEEN_TIME:Number;
-        public var pick_turn:Boolean;
         public var tp_going_first:Boolean;
         public var DUEL_TWEEN_TIME:Number;
         public var COIN_UP_TIME:Number;
@@ -508,13 +531,48 @@
         public var confirm_send_arr:Array;
         public var die_timer:Timer;
         public var reveal_card:DuelCard;
+        public var siding_deck_orig:Array;
+        public var siding_side_orig:Array;
+        public var siding_extra_orig:Array;
+        public var deck_in:int;
+        public var deck_out:int;
+        public var extra_in:int;
+        public var extra_out:int;
 
         public function MainTimeline()
         {
             this.__setPropDict = new Dictionary(true);
-            addFrameScript(0, this.frame1, 1, this.frame2, 2, this.frame3, 141, this.frame142, 176, this.frame177, 177, this.frame178, 185, this.frame186, 186, this.frame187, 187, this.frame188, 188, this.frame189, 189, this.frame190, 190, this.frame191, 191, this.frame192, 192, this.frame193, 193, this.frame194, 194, this.frame195, 195, this.frame196, 196, this.frame197, 197, this.frame198);
+            addFrameScript(0, this.frame1, 1, this.frame2, 2, this.frame3, 141, this.frame142, 176, this.frame177, 177, this.frame178, 185, this.frame186, 186, this.frame187, 188, this.frame189, 189, this.frame190, 190, this.frame191, 191, this.frame192, 192, this.frame193, 193, this.frame194, 194, this.frame195, 195, this.frame196, 196, this.frame197, 197, this.frame198, 198, this.frame199, 199, this.frame200);
             addEventListener(Event.ADDED_TO_STAGE, this.__setPerspectiveProjection_);
             addEventListener(Event.FRAME_CONSTRUCTED, this.__setProp_handler, false, 0, true);
+            return;
+        }// end function
+
+        public function getDnId() : String
+        {
+            var _loc_1:* = SharedObject.getLocal("dn_id");
+            var _loc_2:* = _loc_1.data.id;
+            if (_loc_2 == null)
+            {
+                _loc_2 = this.randomHex();
+                _loc_1.data.id = _loc_2;
+            }
+            return _loc_2;
+        }// end function
+
+        public function bufferFailE(event:IOErrorEvent)
+        {
+            this.bgmusic = null;
+            return;
+        }// end function
+
+        public function doneBufferingE(event:Event)
+        {
+            if (this.bgmusic == null || !this.bgmusic.isBuffering && framesLoaded >= 2)
+            {
+                gotoAndPlay("intro");
+                removeEventListener(Event.ENTER_FRAME, this.doneBufferingE);
+            }
             return;
         }// end function
 
@@ -606,31 +664,27 @@
             return _loc_3.substring(0, _loc_4);
         }// end function
 
-        public function bufferFailE(event:IOErrorEvent)
-        {
-            this.bgmusic = null;
-            return;
-        }// end function
-
-        public function doneBufferingE(event:Event)
-        {
-            if (this.bgmusic == null || !this.bgmusic.isBuffering && framesLoaded >= 2)
-            {
-                gotoAndPlay("intro");
-                removeEventListener(Event.ENTER_FRAME, this.doneBufferingE);
-            }
-            return;
-        }// end function
-
         public function trackEvent(param1:String, param2:String, param3)
         {
-            ExternalInterface.call("trackEvent", param1, param2, param3);
+            try
+            {
+                ExternalInterface.call("trackEvent", param1, param2, param3);
+            }
+            catch (e:Error)
+            {
+            }
             return;
         }// end function
 
         public function track(param1:String)
         {
-            ExternalInterface.call("track", param1);
+            try
+            {
+                ExternalInterface.call("track", param1);
+            }
+            catch (e:Error)
+            {
+            }
             return;
         }// end function
 
@@ -666,6 +720,7 @@
         public function displayBox(param1:String, param2:String, param3:Function)
         {
             this.input_mc.visible = false;
+            this.combo_mc.visible = false;
             this.confirm_mc.visible = false;
             this.unlock(false);
             this.msg_mc.visible = true;
@@ -705,6 +760,7 @@
         public function getInput(param1:String, param2:String, param3:String, param4:int, param5:Function)
         {
             this.msg_mc.visible = false;
+            this.combo_mc.visible = false;
             this.confirm_mc.visible = false;
             this.unlock(false);
             this.input_mc.visible = true;
@@ -714,6 +770,55 @@
             this.input_mc.input_txt.maxChars = param4;
             this.input_mc.input_txt.setFocus();
             this.input_callback = param5;
+            this.lock();
+            return;
+        }// end function
+
+        public function comboOK(event:MouseEvent = null)
+        {
+            this.unlock(false);
+            this.combo_mc.visible = false;
+            if (this.combo_callback != null)
+            {
+                this.combo_callback(this.combo_mc.combo_cb.selectedItem.data);
+            }
+            return;
+        }// end function
+
+        public function comboCancel(event:MouseEvent)
+        {
+            this.unlock(false);
+            this.combo_mc.visible = false;
+            if (this.combo_callback != null)
+            {
+                this.combo_callback(null);
+            }
+            return;
+        }// end function
+
+        public function comboKeyDownListener(event:KeyboardEvent)
+        {
+            if (event.keyCode == 9)
+            {
+                this.keyDownListener(event);
+            }
+            return;
+        }// end function
+
+        public function getComboInput(param1:String, param2:String, param3:Array, param4:int, param5:Function)
+        {
+            this.msg_mc.visible = false;
+            this.input_mc.visible = false;
+            this.confirm_mc.visible = false;
+            this.unlock(false);
+            this.combo_mc.visible = true;
+            this.combo_mc.title_txt.text = param1;
+            this.combo_mc.text_txt.text = param2;
+            this.combo_mc.combo_cb.dataProvider = new DataProvider(param3);
+            this.combo_mc.combo_cb.selectedIndex = param4;
+            this.combo_mc.combo_cb.setFocus();
+            this.combo_callback = param5;
+            this.combo_mc.fixTextField();
             this.lock();
             return;
         }// end function
@@ -744,6 +849,7 @@
         {
             this.msg_mc.visible = false;
             this.input_mc.visible = false;
+            this.combo_mc.visible = false;
             this.unlock(false);
             this.confirm_mc.visible = true;
             this.confirm_mc.title_txt.text = param1;
@@ -774,6 +880,18 @@
                     case this.input_mc.input_txt.textField:
                     case this.input_mc.OK_btn:
                     case this.input_mc.cancel_btn:
+                    {
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                switch(stage.focus)
+                {
+                    case this.combo_mc.combo_cb:
+                    case this.combo_mc.OK_btn:
+                    case this.combo_mc.cancel_btn:
                     {
                     }
                     default:
@@ -931,6 +1049,10 @@
                         {
                             this.inputOK();
                         }
+                        else if (this.combo_mc.visible)
+                        {
+                            this.comboOK();
+                        }
                         else if (this.confirm_mc.visible)
                         {
                             this.confirmYes();
@@ -943,6 +1065,11 @@
                     else if (stage.focus == this.input_mc.input_txt.textField)
                     {
                         this.inputOK();
+                        _loc_3 = true;
+                    }
+                    else if (stage.focus == this.combo_mc.combo_cb)
+                    {
+                        this.comboOK();
                         _loc_3 = true;
                     }
                     if (!_loc_3)
@@ -969,6 +1096,14 @@
                 }
                 default:
                 {
+                    if (event.ctrlKey)
+                    {
+                        break;
+                    }
+                    if (this.msg_mc.visible || this.input_mc.visible || this.combo_mc.visible || this.confirm_mc.visible)
+                    {
+                        break;
+                    }
                     if (_loc_2 == 32 || _loc_2 >= 65 && _loc_2 <= 90 || _loc_2 >= 186 && _loc_2 <= 192 || _loc_2 >= 219 && _loc_2 <= 222 || _loc_2 == 106 || _loc_2 == 107 || _loc_2 >= 109 && _loc_2 <= 111)
                     {
                         _loc_4 = false;
@@ -1032,6 +1167,22 @@
                         break;
                     }
                     case this.input_mc.OK_btn:
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                        break;
+                    }
+                }
+                switch(this.current_focus)
+                {
+                    case this.combo_mc.combo_cb:
+                    {
+                        break;
+                    }
+                    case this.combo_mc.OK_btn:
                     {
                         break;
                     }
@@ -1143,18 +1294,17 @@
             var _loc_1:* = new URLRequest(this.URL_START + "logged_in.do");
             _loc_1.method = URLRequestMethod.POST;
             var _loc_2:* = new URLVariables();
+            _loc_2.dn_id = this.dn_id;
             _loc_2.date = new Date();
             _loc_1.data = _loc_2;
             this.logged_in_loader.addEventListener(Event.COMPLETE, this.logged_in_complete);
             this.logged_in_loader.addEventListener(IOErrorEvent.IO_ERROR, this.io_errorE);
             this.logged_in_loader.load(_loc_1);
-            this.lock(true);
             return;
         }// end function
 
         public function logged_in_complete(event:Event)
         {
-            this.unlock();
             var _loc_2:* = this.stringToArray(this.logged_in_loader.data);
             if ((_loc_2.length == 1 || _loc_2.length == 2) && _loc_2[0] == "Not logged in")
             {
@@ -1179,10 +1329,12 @@
             }
             else if (_loc_2.length == 2 && _loc_2[0] == "Error")
             {
+                this.showLogin();
                 this.displayError(_loc_2[1]);
             }
             else
             {
+                this.showLogin();
                 this.displayError("Malformed server response");
             }
             return;
@@ -1197,6 +1349,7 @@
             _loc_3.username = this.login_box_mc.username_txt.text;
             _loc_3.password = this.login_box_mc.password_txt.text;
             _loc_3.remember_me = this.login_box_mc.remember_me_cb.selected;
+            _loc_3.dn_id = this.dn_id;
             _loc_3.date = new Date();
             _loc_2.data = _loc_3;
             this.login_loader.addEventListener(Event.COMPLETE, this.login_complete);
@@ -1302,6 +1455,7 @@
             _loc_3.username = this.register_box_mc.username_txt.text;
             _loc_3.password = this.register_box_mc.password_txt.text;
             _loc_3.email = this.register_box_mc.email_txt.text;
+            _loc_3.dn_id = this.dn_id;
             _loc_3.date = new Date();
             _loc_2.data = _loc_3;
             this.register_loader.addEventListener(Event.COMPLETE, this.register_complete);
@@ -1375,6 +1529,7 @@
             }
             else if (_loc_2[0] == "Error")
             {
+                this.showLogin();
                 if (_loc_2.length == 2)
                 {
                     this.displayError(_loc_2[1]);
@@ -1386,6 +1541,7 @@
             }
             else
             {
+                this.showLogin();
                 this.displayError("Malformed server response");
             }
             return;
@@ -1454,13 +1610,19 @@
 
         public function loadNewsComplete(event:Event)
         {
-            this.news_txt.htmlText = this.news_loader.data;
+            if (this.news_txt != null)
+            {
+                this.news_txt.htmlText = this.news_loader.data;
+            }
             return;
         }// end function
 
         public function loadNewsError(event:IOErrorEvent)
         {
-            this.news_txt.htmlText = "<b>Failed to load news</b>";
+            if (this.news_txt != null)
+            {
+                this.news_txt.htmlText = "<b>Failed to load news</b>";
+            }
             return;
         }// end function
 
@@ -1643,7 +1805,7 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect6", this.username, this.password, this.session_id];
+            var _loc_2:Array = ["Connect9", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
                 _loc_2.push("Administrate");
@@ -1664,6 +1826,7 @@
             this.friends = null;
             this.msg_mc.visible = false;
             this.input_mc.visible = false;
+            this.combo_mc.visible = false;
             this.confirm_mc.visible = false;
             this.unlock(false);
             return;
@@ -1697,6 +1860,7 @@
             var _loc_3:Boolean = false;
             var _loc_4:int = 0;
             var _loc_5:String = null;
+            var _loc_6:Array = null;
             var _loc_2:* = this.stringToArray(event.data);
             if (_loc_2.lentgth == 0)
             {
@@ -1834,6 +1998,42 @@
                     }
                     break;
                 }
+                case "Answer call":
+                {
+                    this.trackEvent("Admin", "Answer call", this.username);
+                }
+                case "Watch duel":
+                {
+                    _loc_2.reverse();
+                    _loc_2.pop();
+                    _loc_2.reverse();
+                    this.watchDuelResponse(_loc_2);
+                    break;
+                }
+                case "Add admin calls":
+                {
+                    _loc_4 = 1;
+                    while (_loc_4 < _loc_2.length)
+                    {
+                        
+                        _loc_6 = [_loc_2[_loc_4], _loc_2[(_loc_4 + 1)], _loc_2[_loc_4 + 2]];
+                        this.calls_mc.addCall(this.arrayToString(_loc_6), _loc_6);
+                        _loc_4 = _loc_4 + 3;
+                    }
+                    break;
+                }
+                case "Remove admin calls":
+                {
+                    _loc_4 = 1;
+                    while (_loc_4 < _loc_2.length)
+                    {
+                        
+                        _loc_6 = [_loc_2[_loc_4], _loc_2[(_loc_4 + 1)], _loc_2[_loc_4 + 2]];
+                        this.calls_mc.removeCall(this.arrayToString(_loc_6));
+                        _loc_4 = _loc_4 + 3;
+                    }
+                    break;
+                }
                 case "Message":
                 {
                     if (_loc_2.length == 2)
@@ -1913,15 +2113,31 @@
             return;
         }// end function
 
-        public function getX()
+        public function watchDuelResponse(param1:Array)
         {
-            var _loc_1:Array = [this.public_chat_mc, this.online_users_mc, this.private_chat_mc];
+            this.unlock();
+            if (currentFrameLabel == "room_start")
+            {
+                this.Send(["Unsubscribe"]);
+            }
+            var _loc_2:* = param1[0];
+            var _loc_3:* = param1;
+            _loc_3.reverse();
+            _loc_3.pop();
+            _loc_3.reverse();
+            this.gotoDuel(_loc_2, false, false, _loc_3);
+            return;
+        }// end function
+
+        public function getX() : Number
+        {
+            var _loc_1:Array = [this.online_users_mc, this.calls_mc, this.public_chat_mc, this.private_chat_mc];
             if (this.watch_chat_mc != null)
             {
                 _loc_1.push(this.watch_chat_mc);
             }
-            var _loc_2:Array = [3, 206, 409, 612];
-            var _loc_3:Array = [true, true, true, true];
+            var _loc_2:Array = [3, 206, 409, 612, 815];
+            var _loc_3:Array = [true, true, true, true, true];
             var _loc_4:* = 0;
             while (_loc_4 < _loc_1.length)
             {
@@ -1971,7 +2187,7 @@
                 }
                 _loc_4 = _loc_4 + 1;
             }
-            return null;
+            return -1;
         }// end function
 
         public function escapeHtml(param1:String) : String
@@ -2315,8 +2531,8 @@
             var _loc_2:* = this.online_users_mc.users_mc;
             _loc_2.drawNow();
             var _loc_3:* = _loc_2.verticalScrollPosition / 20;
-            var _loc_4:* = _loc_3 + 25;
-            if (_loc_3 + 25 > _loc_2.length)
+            var _loc_4:* = _loc_3 + 21;
+            if (_loc_3 + 21 > _loc_2.length)
             {
                 _loc_4 = _loc_2.length;
             }
@@ -2523,6 +2739,45 @@
             return;
         }// end function
 
+        public function toggleCallsE(event:MouseEvent)
+        {
+            if (this.calls_mc.visible)
+            {
+                this.calls_mc.visible = false;
+            }
+            else
+            {
+                if (!this.calls_mc.remember_position)
+                {
+                    this.calls_mc.x = this.getX();
+                }
+                this.calls_mc.visible = true;
+                this.chat_hidden_mc.addChild(this.calls_mc);
+                this.calls_mc.calls_mc.setFocus();
+                this.calls_mc.calls_mc.drawFocus(false);
+            }
+            return;
+        }// end function
+
+        public function answerCallE(event:MouseEvent = null)
+        {
+            if (this.calls_mc.calls_mc.selectedIndex < 0)
+            {
+                return;
+            }
+            this.Send(["Answer call", this.calls_mc.calls_mc.selectedItem.data]);
+            return;
+        }// end function
+
+        public function callListKeyboardHandlerE(event:KeyboardEvent)
+        {
+            if (event.keyCode == 13)
+            {
+                this.answerCallE();
+            }
+            return;
+        }// end function
+
         public function togglePrivateE(event:MouseEvent = null)
         {
             var _loc_2:Object = null;
@@ -2605,14 +2860,14 @@
             _loc_9.x = 0;
             _loc_9.y = 30;
             _loc_9.width = 200;
-            _loc_9.height = 454;
+            _loc_9.height = 379;
             _loc_9.editable = false;
             _loc_10 = new TextInput();
             _loc_10.x = 0;
-            _loc_10.y = 487;
+            _loc_10.y = 412;
             _loc_10.width = 200;
             _loc_10.height = 22;
-            _loc_10.maxChars = 200;
+            _loc_10.maxChars = this.admin ? (500) : (200);
             _loc_10.restrict = " -~";
             _loc_11 = {label:param1, data:param1, cout_txt:_loc_9, cout:"", cin_txt:_loc_10, num_lines:0, new_msg:false};
             this.private_chat_mc.user_mc.dataProvider.addItemAt(_loc_11, _loc_3);
@@ -2902,6 +3157,10 @@
 
         public function chatLock()
         {
+            if (this.admin)
+            {
+                return;
+            }
             this.chat_lock = true;
             var _loc_1:* = new TextFormat();
             _loc_1.font = this.COMPONENT_FONT;
@@ -3065,7 +3324,13 @@
 
         public function setTitle(param1:String)
         {
-            ExternalInterface.call("setTitle", param1);
+            try
+            {
+                ExternalInterface.call("setTitle", param1);
+            }
+            catch (e:Error)
+            {
+            }
             return;
         }// end function
 
@@ -3091,6 +3356,24 @@
             if (this.online_users_tooltip_mc != null)
             {
                 this.online_users_tooltip_mc.visible = false;
+            }
+            return;
+        }// end function
+
+        public function showCallTooltipE(event:MouseEvent)
+        {
+            if (this.call_tooltip_mc != null)
+            {
+                this.call_tooltip_mc.visible = true;
+            }
+            return;
+        }// end function
+
+        public function hideCallTooltipE(event:MouseEvent)
+        {
+            if (this.call_tooltip_mc != null)
+            {
+                this.call_tooltip_mc.visible = false;
             }
             return;
         }// end function
@@ -3161,14 +3444,15 @@
             var leaderboardClickE:Function;
             leaderboardClickE = function (event:MouseEvent)
             {
-                var _loc_2:* = new URLRequest("http://www.trollandtoad.com/Yu-Gi-Oh%21-Cards/4736p1n10.html?associateid=124_2");
+                var _loc_2:* = new URLRequest("http://www.coretcg.com/");
                 navigateToURL(_loc_2, "_blank");
-                trackEvent("Ad", "Click", "Leaderboard");
+                trackEvent("Ad", "Click", "CoretcgLeaderboard");
                 return;
             }// end function
             ;
             stage.focus = null;
             this.track("main_menu");
+            this.leaderboard_mc.addChild(new CoretcgLeaderboard());
             this.leaderboard_mc.addEventListener(MouseEvent.CLICK, leaderboardClickE);
             this.enter_handler = null;
             this.incoming_handler = null;
@@ -3249,9 +3533,26 @@
 
         public function bannerClickE(event:MouseEvent)
         {
-            var _loc_2:* = new URLRequest("http://www.trollandtoad.com/Yu-Gi-Oh%21-Cards/4736p1n10.html?associateid=124_1");
-            navigateToURL(_loc_2, "_blank");
-            this.trackEvent("Ad", "Click", "Banner");
+            var _loc_2:String = null;
+            var _loc_3:String = null;
+            switch(event.target.name)
+            {
+                case "facebook_btn":
+                {
+                    break;
+                }
+                case "buying_btn":
+                {
+                    break;
+                }
+                default:
+                {
+                    break;
+                    break;
+                }
+            }
+            navigateToURL(new URLRequest(_loc_2), "_blank");
+            this.trackEvent("Ad", "Click", _loc_3);
             return;
         }// end function
 
@@ -3398,11 +3699,6 @@
                             {
                                 this.alternateOffer(_loc_3[0], _loc_3[1]);
                             }
-                            break;
-                        }
-                        case "Watch duel":
-                        {
-                            this.watchDuelResponse(_loc_3);
                             break;
                         }
                         case "Accept joiner":
@@ -3827,19 +4123,6 @@
                 this.au_sp.source.setEnabled(true);
             }
             this.tu_sp.source.setEnabled(true);
-            return;
-        }// end function
-
-        public function watchDuelResponse(param1:Array)
-        {
-            this.unlock();
-            this.Send(["Unsubscribe"]);
-            var _loc_2:* = param1[0];
-            var _loc_3:* = param1;
-            _loc_3.reverse();
-            _loc_3.pop();
-            _loc_3.reverse();
-            this.gotoDuel(_loc_2, false, this.entering_rated_duel, _loc_3);
             return;
         }// end function
 
@@ -5648,6 +5931,18 @@
             return;
         }// end function
 
+        public function deckCleanupE(event:Event)
+        {
+            this.deck = null;
+            this.side = null;
+            this.extra = null;
+            this.search = null;
+            this.saved_deck = null;
+            this.saved_side = null;
+            this.saved_extra = null;
+            return;
+        }// end function
+
         public function profileEnterHandler()
         {
             switch(stage.focus)
@@ -5699,11 +5994,6 @@
                     case "Ranking":
                     {
                         this.getRankingResponse(_loc_3);
-                        break;
-                    }
-                    case "Watch duel":
-                    {
-                        this.profileWatchDuelResponse(_loc_3);
                         break;
                     }
                     default:
@@ -5855,18 +6145,6 @@
             return;
         }// end function
 
-        public function profileWatchDuelResponse(param1:Array)
-        {
-            this.unlock();
-            var _loc_2:* = param1[0];
-            var _loc_3:* = param1;
-            _loc_3.reverse();
-            _loc_3.pop();
-            _loc_3.reverse();
-            this.gotoDuel(_loc_2, false, false, _loc_3);
-            return;
-        }// end function
-
         public function myProfileEnterHandler()
         {
             switch(stage.focus)
@@ -5955,14 +6233,17 @@
 
         public function avatarLeftE(event:Event)
         {
+            var _loc_2:Number = NaN;
+            var _loc_3:Number = NaN;
+            var _loc_4:* = undefined;
             var _loc_5:MovieClip = null;
-            var _loc_2:* = this.avatar_gallery[0].x + this.SCROLL_AMOUNT;
+            _loc_2 = this.avatar_gallery[0].x + this.SCROLL_AMOUNT;
             if (this.avatar_cursor == 0)
             {
                 _loc_2 = Math.min(_loc_2, this.GALLERY_LEFT_JUSTIFY);
             }
-            var _loc_3:Number = 0;
-            var _loc_4:* = 0;
+            _loc_3 = 0;
+            _loc_4 = 0;
             while (_loc_4 < this.avatar_gallery.length)
             {
                 
@@ -5993,14 +6274,17 @@
 
         public function avatarRightE(event:Event)
         {
+            var _loc_2:Number = NaN;
+            var _loc_3:Number = NaN;
+            var _loc_4:* = undefined;
             var _loc_5:MovieClip = null;
-            var _loc_2:* = this.avatar_gallery[0].x - this.SCROLL_AMOUNT;
+            _loc_2 = this.avatar_gallery[0].x - this.SCROLL_AMOUNT;
             if (this.avatar_cursor == this.avatars.length - 7)
             {
                 _loc_2 = Math.max(_loc_2, this.GALLERY_RIGHT_JUSTIFY);
             }
-            var _loc_3:Number = 0;
-            var _loc_4:* = 0;
+            _loc_3 = 0;
+            _loc_4 = 0;
             while (_loc_4 < this.avatar_gallery.length)
             {
                 
@@ -6031,8 +6315,9 @@
 
         public function avatarsAndProfile()
         {
+            var _loc_1:* = undefined;
             this.Send(["Avatars and profile"]);
-            var _loc_1:* = 0;
+            _loc_1 = 0;
             while (_loc_1 < this.avatar_gallery.length)
             {
                 
@@ -6052,6 +6337,8 @@
 
         public function avatarsAndProfileResponse(param1:Array)
         {
+            var _loc_2:int = 0;
+            var _loc_3:int = 0;
             var _loc_4:int = 0;
             var _loc_5:Number = NaN;
             var _loc_6:Number = NaN;
@@ -6075,8 +6362,8 @@
             this.profile_txt.text = _loc_8;
             this.num_wins = param1[5];
             this.num_rep = param1[6];
-            var _loc_2:* = param1[param1.length - 2];
-            var _loc_3:* = param1[(param1.length - 1)];
+            _loc_2 = param1[param1.length - 2];
+            _loc_3 = param1[(param1.length - 1)];
             this.avatars = param1.slice(7, _loc_2 + 7);
             this.backs = param1.slice(_loc_2 + 7, _loc_2 + _loc_3 + 7);
             this.backs.reverse();
@@ -6542,9 +6829,8 @@
         {
             this.unlock();
             this.status_txt.text = param1[0];
-            this.time_left_txt.text = param1[1];
+            this.strikes_txt.text = param1[1];
             this.ban_note_txt.text = param1[2];
-            this.strikes_txt.text = param1[3];
             return;
         }// end function
 
@@ -6642,6 +6928,7 @@
         public function kickUserResponse(param1:Array)
         {
             this.unlock();
+            this.trackEvent("Admin Kick", this.username, this.ban_username);
             this.displayMessage(this.ban_username + " has been kicked");
             return;
         }// end function
@@ -6662,7 +6949,7 @@
         public function adminCancelDuelResponse(param1:Array)
         {
             this.unlock();
-            this.displayMessage(this.ban_username + "\'s duel has been cancelled");
+            this.displayMessage(this.ban_username + "\'s duel has been canceled");
             return;
         }// end function
 
@@ -6696,6 +6983,12 @@
                     this.ipCheckE();
                     break;
                 }
+                case this.comp_username_txt.textField:
+                case this.check_comp_btn:
+                {
+                    this.computerCheckE();
+                    break;
+                }
                 case this.admin_status_mc.username_txt.textField:
                 {
                     this.getAdminE();
@@ -6705,6 +6998,18 @@
                 case this.admin_status_mc.save_btn:
                 {
                     this.setAdminE();
+                    break;
+                }
+                case this.reset_stats_mc.username_txt.textField:
+                case this.reset_stats_mc.reset_btn:
+                {
+                    this.resetStatsE();
+                    break;
+                }
+                case this.super_ban_mc.username_txt.textField:
+                case this.super_ban_mc.ban_btn:
+                {
+                    this.superBanE();
                     break;
                 }
                 default:
@@ -6733,6 +7038,11 @@
                         this.ipCheckResponse(_loc_3);
                         break;
                     }
+                    case "Computer check":
+                    {
+                        this.computerCheckResponse(_loc_3);
+                        break;
+                    }
                     case "Get admin":
                     {
                         this.getAdminResponse(_loc_3);
@@ -6741,6 +7051,16 @@
                     case "Set admin":
                     {
                         this.setAdminResponse(_loc_3);
+                        break;
+                    }
+                    case "Reset stats":
+                    {
+                        this.resetStatsResponse(_loc_3);
+                        break;
+                    }
+                    case "Super ban":
+                    {
+                        this.superBanResponse(_loc_3);
                         break;
                     }
                     default:
@@ -6774,6 +7094,25 @@
         {
             this.unlock();
             this.alts_txt.text = param1[0];
+            return;
+        }// end function
+
+        public function computerCheckE(event:MouseEvent = null)
+        {
+            if (this.comp_username_txt.text == "")
+            {
+                this.displayError("Username is blank");
+                return;
+            }
+            this.Send(["Computer check", this.comp_username_txt.text]);
+            this.lock();
+            return;
+        }// end function
+
+        public function computerCheckResponse(param1:Array)
+        {
+            this.unlock();
+            this.comp_alts_txt.text = param1[0];
             return;
         }// end function
 
@@ -6840,6 +7179,44 @@
         {
             this.unlock();
             this.displayMessage(this.admin_status_mc.username_txt.text + "\'s admin status has been saved");
+            return;
+        }// end function
+
+        public function resetStatsE(event:MouseEvent = null)
+        {
+            if (this.reset_stats_mc.username_txt.text == "")
+            {
+                this.displayError("Username is blank");
+                return;
+            }
+            this.Send(["Reset stats", this.reset_stats_mc.username_txt.text]);
+            this.lock();
+            return;
+        }// end function
+
+        public function resetStatsResponse(param1:Array)
+        {
+            this.unlock();
+            this.displayMessage(this.reset_stats_mc.username_txt.text + "\'s stats have been reset");
+            return;
+        }// end function
+
+        public function superBanE(event:MouseEvent = null)
+        {
+            if (this.super_ban_mc.username_txt.text == "")
+            {
+                this.displayError("Username is blank");
+                return;
+            }
+            this.Send(["Super ban", this.super_ban_mc.username_txt.text]);
+            this.lock();
+            return;
+        }// end function
+
+        public function superBanResponse(param1:Array)
+        {
+            this.unlock();
+            this.displayMessage(this.super_ban_mc.username_txt.text + " has been super banned");
             return;
         }// end function
 
@@ -6967,6 +7344,7 @@
             this.duelist = param2;
             this.rated_duel = param3;
             this.duel_args = param4;
+            gotoAndStop("blank");
             switch(param1)
             {
                 case "Rock-paper-scissors":
@@ -6984,6 +7362,11 @@
                     gotoAndStop("duel_start");
                     break;
                 }
+                case "Siding":
+                {
+                    gotoAndStop("siding_start");
+                    break;
+                }
                 default:
                 {
                     break;
@@ -6994,57 +7377,88 @@
 
         public function duelCommonInitialize() : Array
         {
-            var _loc_1:String = null;
-            var _loc_2:String = null;
-            var _loc_3:String = null;
-            var _loc_4:int = 0;
-            var _loc_5:int = 0;
-            var _loc_6:* = undefined;
-            var _loc_7:* = undefined;
-            var _loc_8:String = null;
-            var _loc_9:String = null;
-            var _loc_10:String = null;
-            var _loc_11:int = 0;
-            var _loc_12:int = 0;
-            var _loc_13:* = undefined;
-            var _loc_14:* = undefined;
-            var _loc_15:String = null;
-            var _loc_16:Array = null;
-            var _loc_17:Array = null;
-            this.preloadPictures();
+            var username1:String;
+            var avatar1:String;
+            var back1:String;
+            var color11:int;
+            var color21:int;
+            var rating1:*;
+            var reputation1:*;
+            var username2:String;
+            var avatar2:String;
+            var back2:String;
+            var color12:int;
+            var color22:int;
+            var rating2:*;
+            var reputation2:*;
+            var watcher_list_str:String;
+            var watcher_list:Array;
+            var remaining_args:Array;
+            var startWatchersPrivateE:Function;
+            var watcherListKeyboardHandlerE:Function;
+            startWatchersPrivateE = function (event:MouseEvent = null)
+            {
+                if (watchers_mc.watchers_mc.selectedIndex < 0)
+                {
+                    return;
+                }
+                if (watchers_mc.watchers_mc.selectedItem.data == username)
+                {
+                    displayError("You cannot open a private chat with yourself");
+                    return;
+                }
+                openPrivateChat(watchers_mc.watchers_mc.selectedItem.data);
+                return;
+            }// end function
+            ;
+            watcherListKeyboardHandlerE = function (event:KeyboardEvent)
+            {
+                if (event.keyCode == 13)
+                {
+                    startWatchersPrivateE();
+                }
+                return;
+            }// end function
+            ;
+            if (currentFrameLabel != "siding_start")
+            {
+                this.preloadPictures();
+            }
             this.duel_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.clearPicturesE);
             this.duel_starting = false;
-            _loc_1 = this.duel_args[0];
-            _loc_2 = this.duel_args[1];
-            _loc_3 = this.duel_args[2];
-            _loc_4 = this.duel_args[3];
-            _loc_5 = this.duel_args[4];
-            _loc_6 = this.duel_args[5];
-            _loc_7 = this.duel_args[6];
-            _loc_8 = this.duel_args[7];
-            _loc_9 = this.duel_args[8];
-            _loc_10 = this.duel_args[9];
-            _loc_11 = this.duel_args[10];
-            _loc_12 = this.duel_args[11];
-            _loc_13 = this.duel_args[12];
-            _loc_14 = this.duel_args[13];
-            _loc_15 = this.duel_args[14];
-            _loc_16 = _loc_15 == "" ? ([]) : (this.stringToArray(_loc_15));
-            _loc_17 = this.duel_args.slice(15);
+            username1 = this.duel_args[0];
+            avatar1 = this.duel_args[1];
+            back1 = this.duel_args[2];
+            color11 = this.duel_args[3];
+            color21 = this.duel_args[4];
+            rating1 = this.duel_args[5];
+            reputation1 = this.duel_args[6];
+            username2 = this.duel_args[7];
+            avatar2 = this.duel_args[8];
+            back2 = this.duel_args[9];
+            color12 = this.duel_args[10];
+            color22 = this.duel_args[11];
+            rating2 = this.duel_args[12];
+            reputation2 = this.duel_args[13];
+            watcher_list_str = this.duel_args[14];
+            watcher_list = watcher_list_str == "" ? ([]) : (this.stringToArray(watcher_list_str));
+            remaining_args = this.duel_args.slice(15);
             this.duel_args = null;
-            this.username1_mc.setUsername(_loc_1);
-            this.username2_mc.setUsername(_loc_8);
-            this.avatar1_mc.setPicture(_loc_2 == "" ? ("") : (this.AVATAR_START + _loc_2));
+            this.username1_mc.setUsername(username1);
+            this.username2_mc.setUsername(username2);
+            this.avatar1_mc.setPicture(avatar1 == "" ? ("") : (this.AVATAR_START + avatar1));
             this.gone1_mc.visible = false;
-            this.avatar2_mc.setPicture(_loc_9 == "" ? ("") : (this.AVATAR_START + _loc_9));
+            this.avatar2_mc.setPicture(avatar2 == "" ? ("") : (this.AVATAR_START + avatar2));
             this.gone2_mc.visible = false;
-            this.back_loader1 = new BackLoader(this.BACK_START, _loc_3, _loc_4, _loc_5);
-            this.back_loader2 = new BackLoader(this.BACK_START, _loc_10, _loc_11, _loc_12);
-            this.rating_rep1_mc.setRatingRep(_loc_6, _loc_7);
-            this.rating_rep2_mc.setRatingRep(_loc_13, _loc_14);
+            this.back_loader1 = new BackLoader(this.BACK_START, back1, color11, color21);
+            this.back_loader2 = new BackLoader(this.BACK_START, back2, color12, color22);
+            this.rating_rep1_mc.setRatingRep(rating1, reputation1);
+            this.rating_rep2_mc.setRatingRep(rating2, reputation2);
             this.status1_mc.status = "";
             this.status2_mc.status = "";
-            this.watchers_mc.initialize(_loc_16, this.COMPONENT_FONT, this.COMPONENT_SIZE);
+            this.watchers_mc.initialize(watcher_list, this.COMPONENT_FONT, this.COMPONENT_SIZE);
+            this.watchers_mc.watchers_mc.addEventListener(MouseEvent.DOUBLE_CLICK, startWatchersPrivateE);
+            this.watchers_mc.watchers_mc.addEventListener(KeyboardEvent.KEY_DOWN, watcherListKeyboardHandlerE);
             this.watch_btn.visible = true;
             this.watch_icon_mc.visible = true;
             this.watch_btn.addEventListener(MouseEvent.MOUSE_OVER, this.showWatchTooltipE);
@@ -7063,6 +7477,11 @@
                 this.duel_chat_mc.cout_txt.height = this.duel_chat_mc.cout_txt.height + 25;
                 this.cin_txt.visible = false;
             }
+            if (this.admin)
+            {
+                this.cin_txt.maxChars = 500;
+                this.watch_chat_mc.cin_txt.maxChars = 500;
+            }
             this.watchHtmlText = "";
             this.watchHtmlLines = 0;
             this.duelHtmlText = "";
@@ -7075,13 +7494,15 @@
                 this.draw_btn.useHandCursor = true;
                 if (this.rated_duel)
                 {
-                    this.ass_btn.addEventListener(MouseEvent.CLICK, this.duelAssE);
-                    this.ass_btn.useHandCursor = true;
+                    this.call_admin_btn.addEventListener(MouseEvent.CLICK, this.duelCallAdminE);
+                    this.call_admin_btn.useHandCursor = true;
                 }
                 else
                 {
-                    this.ass_btn.enabled = false;
+                    this.call_admin_btn.enabled = false;
                 }
+                this.rematch_btn.addEventListener(MouseEvent.CLICK, this.offerRematchE);
+                this.rematch_btn.useHandCursor = true;
             }
             else if (this.admin)
             {
@@ -7092,18 +7513,19 @@
                 this.cancel_duel_btn.addEventListener(MouseEvent.CLICK, this.duelCancelDuelE);
                 this.cancel_duel_btn.useHandCursor = true;
             }
+            this.rematch_btn.visible = false;
             this.duel_quit_btn.addEventListener(MouseEvent.CLICK, this.duelQuitE);
             this.duel_quit_btn.useHandCursor = true;
-            this.tween_functions = [];
-            this.tween_args = [];
-            this.tween_blocks = [];
+            if (currentFrameLabel != "siding_start")
+            {
+                this.tweensInit();
+            }
             this.duel_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.stopTweensE);
-            this.pick_turn = false;
             this.enter_handler = this.duelEnterHandler;
             this.incoming_handler = this.duelIncomingHandler;
             this.duel_over = false;
             this.over_mc.visible = false;
-            return _loc_17;
+            return remaining_args;
         }// end function
 
         public function removeWatchChatE(event:Event)
@@ -7115,15 +7537,18 @@
             return;
         }// end function
 
-        public function setDuelOver(param1:String)
+        public function setDuelOver(param1:String, param2:Boolean = false, param3:Boolean = false)
         {
             this.duel_over = true;
+            this.no_duel_winner = param3;
             this.defeat_btn.enabled = false;
             this.draw_btn.enabled = false;
-            this.ass_btn.enabled = false;
-            this.kick1_btn.enabled = false;
-            this.kick2_btn.enabled = false;
-            this.cancel_duel_btn.enabled = false;
+            this.call_admin_btn.enabled = false;
+            if (this.duelist && !param2)
+            {
+                this.call_admin_btn.visible = false;
+                this.rematch_btn.visible = true;
+            }
             if (!this.duelist)
             {
                 this.over_mc.text_txt.text = param1;
@@ -7142,6 +7567,11 @@
                 {
                     this.first_mc.clickHandler = null;
                     this.second_mc.clickHandler = null;
+                    break;
+                }
+                case "siding_start":
+                {
+                    this.disableSiding();
                     break;
                 }
                 default:
@@ -7213,9 +7643,14 @@
                     this.offerDrawE();
                     break;
                 }
-                case this.ass_btn:
+                case this.call_admin_btn:
                 {
-                    this.duelAssE();
+                    this.duelCallAdminE();
+                    break;
+                }
+                case this.rematch_btn:
+                {
+                    this.offerRematchE();
                     break;
                 }
                 case this.duel_quit_btn:
@@ -7248,6 +7683,22 @@
                         }
                         this.life_points_mc.lp_txt.text = "";
                     }
+                    else if (this.done_siding_btn != null && stage.focus == this.done_siding_btn)
+                    {
+                        this.doneSidingE();
+                    }
+                    else if (this.swap_btn != null && stage.focus == this.swap_btn)
+                    {
+                        this.swapSidingE();
+                    }
+                    else if (this.sort_btn != null && stage.focus == this.sort_btn)
+                    {
+                        this.sortSidingE();
+                    }
+                    else if (this.reset_btn != null && stage.focus == this.reset_btn)
+                    {
+                        this.resetSidingE();
+                    }
                     break;
                     break;
                 }
@@ -7270,6 +7721,7 @@
         {
             var _loc_2:String = null;
             var _loc_3:Array = null;
+            var _loc_4:String = null;
             if (param1 != null)
             {
                 _loc_2 = param1[0];
@@ -7282,11 +7734,19 @@
                     case "Add watcher":
                     {
                         this.watchers_mc.addUser(_loc_3[0], _loc_3[1]);
+                        if (this.call_admin_btn.label == "Call Admin")
+                        {
+                            this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
+                        }
                         break;
                     }
                     case "Remove watcher":
                     {
                         this.watchers_mc.removeUser(_loc_3[0]);
+                        if (this.call_admin_btn.label == "Call Admin")
+                        {
+                            this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
+                        }
                         break;
                     }
                     case "Watch message":
@@ -7349,19 +7809,44 @@
                         this.drawResponse(_loc_3);
                         break;
                     }
-                    case "Ass":
+                    case "Call admin":
                     {
-                        this.assResponse(_loc_3);
+                        this.callAdminResponse(_loc_3);
                         break;
                     }
-                    case "Assed":
+                    case "Offer rematch":
                     {
-                        this.assedResponse(_loc_3);
+                        this.offerRematchResponse(_loc_3);
                         break;
                     }
-                    case "Cancelled":
+                    case "Offered rematch":
                     {
-                        this.cancelledResponse(_loc_3);
+                        this.offeredRematchResponse(_loc_3);
+                        break;
+                    }
+                    case "Revoke rematch":
+                    {
+                        this.revokeRematchResponse(_loc_3);
+                        break;
+                    }
+                    case "Revoked rematch":
+                    {
+                        this.revokedRematchResponse(_loc_3);
+                        break;
+                    }
+                    case "Rematch":
+                    {
+                        this.rematchResponse(_loc_3);
+                        break;
+                    }
+                    case "Cancel call":
+                    {
+                        this.cancelCallResponse(_loc_3);
+                        break;
+                    }
+                    case "Canceled":
+                    {
+                        this.canceledResponse(_loc_3);
                         break;
                     }
                     case "Duel start":
@@ -7372,6 +7857,37 @@
                     case "Duel":
                     {
                         this.duelAction(_loc_3);
+                        break;
+                    }
+                    case "Done siding":
+                    {
+                        _loc_4 = _loc_3[0];
+                        if (_loc_4 == this.username)
+                        {
+                            this.done_siding_btn.visible = false;
+                        }
+                        if (_loc_4 == this.username1_mc.username_txt.text)
+                        {
+                            this.siding1_mc.visible = true;
+                        }
+                        else if (_loc_4 == this.username2_mc.username_txt.text)
+                        {
+                            this.siding2_mc.visible = true;
+                        }
+                        break;
+                    }
+                    case "Go to rock-paper-scissors":
+                    {
+                        this.preloadPictures();
+                        this.tweensInit();
+                        gotoAndStop("rps_start");
+                        break;
+                    }
+                    case "Go to turn pick":
+                    {
+                        this.preloadPictures();
+                        this.tweensInit();
+                        this.addTurnPickTweens(_loc_3[0] == this.username);
                         break;
                     }
                     default:
@@ -7593,7 +8109,7 @@
                     _loc_7 = new GameSuccessSound();
                     _loc_7.play();
                 }
-                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.\n\n" + _loc_4 + " wins!");
+                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.\n\n" + _loc_4 + " wins!", true);
             }
             else if (!this.duel_over)
             {
@@ -7603,7 +8119,7 @@
                 }
                 _loc_7 = new GameFailureSound();
                 _loc_7.play();
-                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.");
+                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.", true);
             }
             if (_loc_3)
             {
@@ -7613,6 +8129,7 @@
             {
                 this.gone1_mc.visible = true;
             }
+            this.rematch_btn.enabled = false;
             this.duelChatAddLine(_loc_2 + " has left the duel");
             return;
         }// end function
@@ -7823,97 +8340,172 @@
             }
             _loc_2 = new GameSuccessSound();
             _loc_2.play();
-            this.setDuelOver("The players have agreed on a draw.");
+            this.setDuelOver("The players have agreed on a draw.", false, true);
             return;
         }// end function
 
-        public function duelAssE(event:MouseEvent = null)
+        public function duelCallAdminE(event:MouseEvent = null)
         {
-            this.getConfirmation("Anti-Sportsmanship Spirit", "Punish your opponent with a reputation reduction for unsportsmanlike behavior. Use as last resort. It will cost you the duel and some reputation. Proceed?", this.duelAss);
+            var _loc_2:String = null;
+            _loc_2 = this.call_admin_btn.label;
+            if (_loc_2 == "Cancel Call")
+            {
+                this.Send(["Cancel call"]);
+            }
+            else
+            {
+                this.getComboInput("Call Admin", "Select your issue:", ["Ruling", "Cheating", "Harassment", "AFK", "Glitch"], 0, this.duelCallAdmin);
+            }
             return;
         }// end function
 
-        public function duelAss(param1:Boolean)
+        public function duelCallAdmin(param1:String)
+        {
+            if (param1 != null)
+            {
+                this.Send(["Call admin", param1]);
+            }
+            return;
+        }// end function
+
+        public function callAdminResponse(param1:Array)
+        {
+            var _loc_2:String = null;
+            _loc_2 = param1[0];
+            this.call_admin_btn.label = "Cancel Call";
+            this.call_admin_btn.enabled = _loc_2 == this.username;
+            this.duelChatAddLine(_loc_2 + " has called an admin");
+            return;
+        }// end function
+
+        public function cancelCallResponse(param1:Array)
+        {
+            this.call_admin_btn.label = "Call Admin";
+            this.call_admin_btn.enabled = this.watchers_mc.num_admins_online == 0;
+            if (param1.length > 0)
+            {
+                this.duelChatAddLine(param1[0] + " has canceled his admin call");
+            }
+            return;
+        }// end function
+
+        public function offerRematchE(event:MouseEvent = null)
+        {
+            var _loc_2:String = null;
+            var _loc_3:String = null;
+            _loc_2 = this.rematch_btn.label;
+            _loc_3 = this.rated_duel ? (" Your rematch will be a rated duel.") : ("");
+            if (_loc_2 == "Revoke Rematch")
+            {
+                this.Send(["Revoke rematch"]);
+            }
+            else if (_loc_2 == "Accept Rematch")
+            {
+                this.getConfirmation("Accept Rematch Offer", "Are you sure you want to accept?" + _loc_3, this.acceptRematch);
+            }
+            else
+            {
+                this.getConfirmation("Offer Rematch", "Are you sure you want to make a rematch offer?" + _loc_3, this.offerRematch);
+            }
+            return;
+        }// end function
+
+        public function offerRematch(param1:Boolean)
         {
             if (param1)
             {
-                this.Send(["Ass"]);
+                this.Send(["Offer rematch"]);
             }
             return;
         }// end function
 
-        public function assResponse(param1:Array)
+        public function acceptRematch(param1:Boolean)
+        {
+            if (param1)
+            {
+                this.Send(["Accept rematch"]);
+            }
+            return;
+        }// end function
+
+        public function offerRematchResponse(param1:Array)
         {
             var _loc_2:String = null;
-            var _loc_3:String = null;
-            var _loc_4:* = undefined;
-            var _loc_5:* = undefined;
-            var _loc_6:* = undefined;
-            var _loc_7:* = undefined;
-            var _loc_8:Sound = null;
-            var _loc_9:* = undefined;
-            var _loc_10:* = undefined;
-            var _loc_11:* = undefined;
             _loc_2 = this.username1_mc.username_txt.text;
-            _loc_3 = this.username2_mc.username_txt.text;
-            _loc_4 = param1[0];
-            _loc_5 = param1[1];
-            _loc_6 = param1[2];
-            _loc_7 = param1[3];
             if (this.duelist)
             {
-                _loc_9 = this.rating_rep1_mc.rating - _loc_4;
-                _loc_10 = this.rating_rep1_mc.reputation - _loc_5;
-                _loc_11 = this.rating_rep2_mc.reputation - _loc_7;
-                this.displayMessageWithTitle("Anti-Sportsmanship Spirit", "You have deemed your opponent\'s behavior unsportsmanlike. You get a loss and your rating is reduced by " + _loc_9 + ". Your reputation is reduced by " + _loc_10 + ". Your opponent\'s reputation is reduced by " + _loc_11 + ".");
+                this.rematch_btn.label = "Revoke Rematch";
             }
-            _loc_8 = new GameFailureSound();
-            _loc_8.play();
-            this.setDuelOver("The duel has come to an end because " + _loc_2 + " deemed " + _loc_3 + " to be unsportsmanlike.");
-            this.rating_rep1_mc.setRatingRep(_loc_4, _loc_5);
-            this.rating_rep2_mc.setRatingRep(_loc_6, _loc_7);
+            this.duelChatAddLine(_loc_2 + " has made a rematch offer");
             return;
         }// end function
 
-        public function assedResponse(param1:Array)
+        public function offeredRematchResponse(param1:Array)
         {
             var _loc_2:String = null;
-            var _loc_3:String = null;
-            var _loc_4:* = undefined;
-            var _loc_5:* = undefined;
-            var _loc_6:* = undefined;
-            var _loc_7:* = undefined;
-            var _loc_8:Sound = null;
-            var _loc_9:* = undefined;
             _loc_2 = this.username2_mc.username_txt.text;
-            _loc_3 = this.username1_mc.username_txt.text;
-            _loc_4 = param1[0];
-            _loc_5 = param1[1];
-            _loc_6 = param1[2];
-            _loc_7 = param1[3];
             if (this.duelist)
             {
-                _loc_9 = this.rating_rep1_mc.reputation - _loc_5;
-                this.displayMessageWithTitle("Anti-Sportsmanship Spirit", "Your opponent deemed your behavior unsportsmanlike. You get the win, but your reputation is reduced by " + _loc_9 + ".");
+                this.rematch_btn.label = "Accept Rematch";
             }
-            _loc_8 = new GameFailureSound();
-            _loc_8.play();
-            this.setDuelOver("The duel has come to an end because " + _loc_2 + " deemed " + _loc_3 + " to be unsportsmanlike.");
-            this.rating_rep1_mc.setRatingRep(_loc_4, _loc_5);
-            this.rating_rep2_mc.setRatingRep(_loc_6, _loc_7);
+            this.duelChatAddLine(_loc_2 + " has made a rematch offer");
             return;
         }// end function
 
-        public function cancelledResponse(param1:Array)
+        public function revokeRematchResponse(param1:Array)
+        {
+            var _loc_2:String = null;
+            _loc_2 = this.username1_mc.username_txt.text;
+            if (this.duelist)
+            {
+                this.rematch_btn.label = "Offer Rematch";
+            }
+            this.duelChatAddLine(_loc_2 + " has revoked his rematch offer");
+            return;
+        }// end function
+
+        public function revokedRematchResponse(param1:Array)
+        {
+            var _loc_2:String = null;
+            _loc_2 = this.username2_mc.username_txt.text;
+            if (this.duelist)
+            {
+                this.rematch_btn.label = "Offer Rematch";
+            }
+            this.duelChatAddLine(_loc_2 + " has revoked his rematch offer");
+            return;
+        }// end function
+
+        public function rematchResponse(param1:Array)
+        {
+            this.duelChatAddLine("Siding for next duel has begun");
+            this.stopTweensE();
+            this.rematch_btn.visible = false;
+            this.duel_over = false;
+            this.over_mc.visible = false;
+            this.defeat_btn.enabled = true;
+            this.draw_btn.enabled = true;
+            this.draw_btn.label = "Offer Draw";
+            this.call_admin_btn.enabled = this.rated_duel && this.watchers_mc.num_admins_online == 0;
+            this.call_admin_btn.label = "Call Admin";
+            this.rematch_btn.label = "Offer Rematch";
+            this.status1_mc.status = "";
+            this.status2_mc.status = "";
+            this.gotoSiding(param1);
+            this.clearPicturesE();
+            return;
+        }// end function
+
+        public function canceledResponse(param1:Array)
         {
             var _loc_2:Sound = null;
             if (this.duelist)
             {
-                this.displayMessageWithTitle("Duel Cancelled", "The duel has been cancelled by an administrator. Ratings and reputations are unaffected.");
+                this.displayMessageWithTitle("Duel Canceled", "The duel has been canceled by an administrator. Ratings and experiences are unaffected.");
             }
             _loc_2 = new GameFailureSound();
             _loc_2.play();
-            this.setDuelOver("The duel has been cancelled by an administrator.");
+            this.setDuelOver("The duel has been canceled by an administrator.", false, true);
             return;
         }// end function
 
@@ -7930,7 +8522,11 @@
             {
                 if (this.rated_duel)
                 {
-                    if (this.rps_stage == 0)
+                    if (currentFrameLabel == "siding_start")
+                    {
+                        _loc_5 = this.no_duel_winner || !this.siding1_mc.visible ? (_loc_2) : (_loc_3);
+                    }
+                    else if (this.rps_stage == 0)
                     {
                         _loc_5 = _loc_2;
                     }
@@ -8008,7 +8604,7 @@
             return;
         }// end function
 
-        public function clearPicturesE(event:Event)
+        public function clearPicturesE(event:Event = null)
         {
             if (this.pictures_socket != null && this.pictures_socket.connected)
             {
@@ -8070,6 +8666,18 @@
             return;
         }// end function
 
+        public function initSideCard(param1:SideCard, param2:Array)
+        {
+            var _loc_3:ByteArray = null;
+            if (param2[3] != "")
+            {
+                param2[3] = this.CARD_START + param2[3];
+            }
+            _loc_3 = this.getPreloadPicture(param2[13], param2[14], param2[15]);
+            param1.initialize(param2, _loc_3);
+            return;
+        }// end function
+
         public function kick1E(event:MouseEvent = null)
         {
             this.getConfirmation("Kick Host", "Are you sure you want to kick " + this.username1_mc.username_txt.text + "?", this.kick1);
@@ -8081,6 +8689,7 @@
             if (param1)
             {
                 this.Send(["Kick user", this.username1_mc.username_txt.text]);
+                this.trackEvent("Admin Kick", this.username, this.username1_mc.username_txt.text);
             }
             return;
         }// end function
@@ -8096,6 +8705,7 @@
             if (param1)
             {
                 this.Send(["Kick user", this.username2_mc.username_txt.text]);
+                this.trackEvent("Admin Kick", this.username, this.username2_mc.username_txt.text);
             }
             return;
         }// end function
@@ -8272,6 +8882,7 @@
             var _loc_2:Array = null;
             var _loc_3:MovieClip = null;
             var _loc_4:Boolean = false;
+            var _loc_5:Boolean = false;
             if (param1.length == 2)
             {
                 this.rps_bottom_target = this.rpsStringToTargetBottom(param1[0]);
@@ -8321,11 +8932,12 @@
                         break;
                     }
                 }
+                _loc_5 = false;
                 if (_loc_4)
                 {
                     if (this.duelist)
                     {
-                        this.pick_turn = true;
+                        _loc_5 = true;
                     }
                     this.addTweens(this.rpsTweenWin1, _loc_2);
                     this.addTweens(this.rpsTweenWin2, _loc_2);
@@ -8339,7 +8951,7 @@
                     this.addPause(2000);
                     this.addTweens(this.rpsTweenLose3, _loc_2);
                 }
-                this.addTweens(this.rpsTweenNext);
+                this.addTurnPickTweens(_loc_5);
             }
             this.rps_bottom_target = null;
             return;
@@ -8551,15 +9163,18 @@
 
         public function rpsTweenClickable(param1) : Array
         {
-            this.rock1_mc.clickHandler = this.rpsChooseE;
-            this.paper1_mc.clickHandler = this.rpsChooseE;
-            this.scissors1_mc.clickHandler = this.rpsChooseE;
-            return [];
-        }// end function
-
-        public function rpsTweenNext(param1) : Array
-        {
-            gotoAndStop("tp_start");
+            if (this.duel_over)
+            {
+                this.rock1_mc.clickHandler = null;
+                this.paper1_mc.clickHandler = null;
+                this.scissors1_mc.clickHandler = null;
+            }
+            else
+            {
+                this.rock1_mc.clickHandler = this.rpsChooseE;
+                this.paper1_mc.clickHandler = this.rpsChooseE;
+                this.scissors1_mc.clickHandler = this.rpsChooseE;
+            }
             return [];
         }// end function
 
@@ -8706,7 +9321,15 @@
             return;
         }// end function
 
-        public function stopTweensE(event:Event)
+        public function tweensInit()
+        {
+            this.tween_functions = [];
+            this.tween_args = [];
+            this.tween_blocks = [];
+            return;
+        }// end function
+
+        public function stopTweensE(event:Event = null)
         {
             var _loc_2:* = undefined;
             this.tween_functions = null;
@@ -8726,15 +9349,29 @@
             return;
         }// end function
 
+        public function addTurnPickTweens(param1:Boolean)
+        {
+            this.addTweens(this.tpTweenStart);
+            if (!this.duel_over && param1)
+            {
+                this.addTweens(this.tpTweenClickable);
+            }
+            return;
+        }// end function
+
         public function tpTweenStart(param1) : Array
         {
+            gotoAndStop("tp_start");
             return [new Tween(this.first_mc, "y", None.easeNone, -199.4, this.first_mc.y, this.TP_TWEEN_TIME, true), new Tween(this.second_mc, "y", None.easeNone, 839.4, this.second_mc.y, this.TP_TWEEN_TIME, true)];
         }// end function
 
         public function tpTweenClickable(param1) : Array
         {
-            this.first_mc.clickHandler = this.tpChooseE;
-            this.second_mc.clickHandler = this.tpChooseE;
+            if (!this.duel_over)
+            {
+                this.first_mc.clickHandler = this.tpChooseE;
+                this.second_mc.clickHandler = this.tpChooseE;
+            }
             return [];
         }// end function
 
@@ -9688,6 +10325,704 @@
             return;
         }// end function
 
+        public function gotoSiding(param1:Array)
+        {
+            this.duel_screen_args = param1;
+            gotoAndStop("siding_start");
+            return;
+        }// end function
+
+        public function sidingEnter()
+        {
+            var args:Array;
+            var i:int;
+            var done_username:String;
+            var arr_idx:int;
+            var sideCleanupE:Function;
+            var card:SideCard;
+            if (this.duelist)
+            {
+                this.siding_in_progress_mc.visible = false;
+            }
+            else
+            {
+                this.done_siding_btn.visible = false;
+                this.swap_btn.visible = false;
+                this.sort_btn.visible = false;
+                this.reset_btn.visible = false;
+            }
+            this.siding1_mc.visible = false;
+            this.siding2_mc.visible = false;
+            if (this.duel_screen_args == null)
+            {
+                args = this.duel_args;
+                this.duel_args = null;
+                i;
+                while (i < args.length)
+                {
+                    
+                    done_username = args[i];
+                    if (done_username == this.username1_mc.username_txt.text)
+                    {
+                        this.siding1_mc.visible = true;
+                    }
+                    else if (done_username == this.username2_mc.username_txt.text)
+                    {
+                        this.siding2_mc.visible = true;
+                    }
+                    i = (i + 1);
+                }
+            }
+            else
+            {
+                args = this.duel_screen_args;
+                this.duel_screen_args = null;
+                if (this.duelist)
+                {
+                    sideCleanupE = function (event:Event)
+            {
+                deck = null;
+                side = null;
+                extra = null;
+                siding_deck_orig = null;
+                siding_side_orig = null;
+                siding_extra_orig = null;
+                return;
+            }// end function
+            ;
+                    this.deck = new Array(int(args[0]));
+                    arr_idx;
+                    i;
+                    while (i < this.deck.length)
+                    {
+                        
+                        card = new SideCard();
+                        card.area = "deck";
+                        card.idx = i;
+                        this.initSideCard(card, args.slice(arr_idx, arr_idx + 16));
+                        card.tabEnabled = false;
+                        card.buttonMode = true;
+                        card.addEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                        this.siding_hidden_mc.addChild(card);
+                        card.addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
+                        card.addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
+                        this.deck[i] = card;
+                        arr_idx = arr_idx + 16;
+                        i = (i + 1);
+                    }
+                    this.siding_deck_orig = this.deck.concat();
+                    this.arrangeDeck();
+                    this.side = new Array(int(args[arr_idx]));
+                    arr_idx = (arr_idx + 1);
+                    i;
+                    while (i < this.side.length)
+                    {
+                        
+                        card = new SideCard();
+                        card.area = "side";
+                        card.idx = i;
+                        this.initSideCard(card, args.slice(arr_idx, arr_idx + 16));
+                        card.tabEnabled = false;
+                        card.buttonMode = true;
+                        card.addEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                        this.siding_hidden_mc.addChild(card);
+                        card.addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
+                        card.addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
+                        this.side[i] = card;
+                        arr_idx = arr_idx + 16;
+                        i = (i + 1);
+                    }
+                    this.siding_side_orig = this.side.concat();
+                    this.arrangeSide();
+                    this.extra = new Array(int(args[arr_idx]));
+                    arr_idx = (arr_idx + 1);
+                    i;
+                    while (i < this.extra.length)
+                    {
+                        
+                        card = new SideCard();
+                        card.area = "extra";
+                        card.idx = i;
+                        this.initSideCard(card, args.slice(arr_idx, arr_idx + 16));
+                        card.tabEnabled = false;
+                        card.buttonMode = true;
+                        card.addEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                        this.siding_hidden_mc.addChild(card);
+                        card.addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
+                        card.addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
+                        this.extra[i] = card;
+                        arr_idx = arr_idx + 16;
+                        i = (i + 1);
+                    }
+                    this.siding_extra_orig = this.extra.concat();
+                    this.arrangeExtra();
+                    this.done_siding_btn.useHandCursor = true;
+                    this.done_siding_btn.addEventListener(MouseEvent.CLICK, this.doneSidingE);
+                    this.swap_btn.useHandCursor = true;
+                    this.swap_btn.addEventListener(MouseEvent.CLICK, this.swapSidingE);
+                    this.deck_in = 0;
+                    this.deck_out = 0;
+                    this.extra_in = 0;
+                    this.extra_out = 0;
+                    this.swap_btn.enabled = false;
+                    this.sort_btn.useHandCursor = true;
+                    this.sort_btn.addEventListener(MouseEvent.CLICK, this.sortSidingE);
+                    this.reset_btn.useHandCursor = true;
+                    this.reset_btn.addEventListener(MouseEvent.CLICK, this.resetSidingE);
+                    this.siding_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, sideCleanupE);
+                }
+            }
+            return;
+        }// end function
+
+        public function arrangeDeck(param1:int = 0)
+        {
+            var _loc_2:int = 0;
+            var _loc_3:int = 0;
+            var _loc_4:int = 0;
+            var _loc_5:int = 0;
+            var _loc_6:int = 0;
+            var _loc_7:int = 0;
+            var _loc_8:SideCard = null;
+            _loc_2 = param1;
+            while (_loc_2 < this.deck.length)
+            {
+                
+                _loc_8 = this.deck[_loc_2];
+                _loc_8.x = 271 + _loc_2 % 10 * 55;
+                _loc_8.y = 43.25 + int(_loc_2 / 10) * 77.5;
+                _loc_8.width = 50;
+                _loc_8.height = 72.5;
+                _loc_2++;
+            }
+            _loc_3 = 0;
+            _loc_4 = 0;
+            _loc_5 = 0;
+            _loc_6 = 0;
+            _loc_7 = 0;
+            _loc_2 = 0;
+            while (_loc_2 < this.deck.length)
+            {
+                
+                switch(this.deck[_loc_2].front_mc.card)
+                {
+                    case "normal":
+                    {
+                        _loc_3++;
+                        break;
+                    }
+                    case "effect":
+                    {
+                        _loc_4++;
+                        break;
+                    }
+                    case "ritual":
+                    {
+                        _loc_5++;
+                        break;
+                    }
+                    case "spell":
+                    {
+                        _loc_6++;
+                        break;
+                    }
+                    case "trap":
+                    {
+                        _loc_7++;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                _loc_2++;
+            }
+            this.total_count_txt.text = "" + this.deck.length;
+            this.normal_count_txt.text = "" + _loc_3;
+            this.effect_count_txt.text = "" + _loc_4;
+            this.ritual_count_txt.text = "" + _loc_5;
+            this.spell_count_txt.text = "" + _loc_6;
+            this.trap_count_txt.text = "" + _loc_7;
+            return;
+        }// end function
+
+        public function arrangeSide(param1:int = 0)
+        {
+            var _loc_2:int = 0;
+            var _loc_3:SideCard = null;
+            _loc_2 = param1;
+            while (_loc_2 < this.side.length)
+            {
+                
+                _loc_3 = this.side[_loc_2];
+                _loc_3.x = 262 + _loc_2 * 36.65;
+                _loc_3.y = 513.25;
+                _loc_3.width = 33.3;
+                _loc_3.height = 48.3;
+                _loc_2++;
+            }
+            return;
+        }// end function
+
+        public function arrangeExtra(param1:int = 0)
+        {
+            var _loc_2:int = 0;
+            var _loc_3:SideCard = null;
+            _loc_2 = param1;
+            while (_loc_2 < this.extra.length)
+            {
+                
+                _loc_3 = this.extra[_loc_2];
+                _loc_3.x = 262 + _loc_2 * 36.65;
+                _loc_3.y = 595.75;
+                _loc_3.width = 33.3;
+                _loc_3.height = 48.3;
+                _loc_2++;
+            }
+            return;
+        }// end function
+
+        public function selectSidingCardE(event:MouseEvent)
+        {
+            var _loc_2:SideCard = null;
+            var _loc_3:String = null;
+            _loc_2 = SideCard(event.currentTarget);
+            switch(_loc_2.area)
+            {
+                case "deck":
+                {
+                    if (_loc_2.glow == null)
+                    {
+                        _loc_2.glow = "side";
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.deck_out + 1;
+                        _loc_4.deck_out = _loc_5;
+                    }
+                    else
+                    {
+                        _loc_2.glow = null;
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.deck_out - 1;
+                        _loc_4.deck_out = _loc_5;
+                    }
+                    break;
+                }
+                case "side":
+                {
+                    _loc_3 = _loc_2.front_mc.card;
+                    if (_loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz")
+                    {
+                        if (_loc_2.glow == null)
+                        {
+                            _loc_2.glow = "extra";
+                            var _loc_4:String = this;
+                            var _loc_5:* = this.extra_in + 1;
+                            _loc_4.extra_in = _loc_5;
+                        }
+                        else
+                        {
+                            _loc_2.glow = null;
+                            var _loc_4:String = this;
+                            var _loc_5:* = this.extra_in - 1;
+                            _loc_4.extra_in = _loc_5;
+                        }
+                    }
+                    else if (_loc_2.glow == null)
+                    {
+                        _loc_2.glow = "deck";
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.deck_in + 1;
+                        _loc_4.deck_in = _loc_5;
+                    }
+                    else
+                    {
+                        _loc_2.glow = null;
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.deck_in - 1;
+                        _loc_4.deck_in = _loc_5;
+                    }
+                    break;
+                }
+                case "extra":
+                {
+                    if (_loc_2.glow == null)
+                    {
+                        _loc_2.glow = "side";
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.extra_out + 1;
+                        _loc_4.extra_out = _loc_5;
+                    }
+                    else
+                    {
+                        _loc_2.glow = null;
+                        var _loc_4:String = this;
+                        var _loc_5:* = this.extra_out - 1;
+                        _loc_4.extra_out = _loc_5;
+                    }
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
+            }
+            if (this.deck_in == 0 && this.extra_in == 0)
+            {
+                this.swap_btn.enabled = false;
+            }
+            else
+            {
+                this.swap_btn.enabled = this.deck_in == this.deck_out && this.extra_in == this.extra_out;
+            }
+            return;
+        }// end function
+
+        public function doneSidingE(event:MouseEvent = null)
+        {
+            this.getConfirmation("Done Siding", "Are you sure you are done siding? Further siding will not be possible.", this.doneSiding);
+            return;
+        }// end function
+
+        public function doneSiding(param1:Boolean)
+        {
+            var _loc_2:Array = null;
+            var _loc_3:int = 0;
+            if (!param1)
+            {
+                return;
+            }
+            _loc_2 = ["Done siding"];
+            _loc_2.push(this.deck.length);
+            _loc_3 = 0;
+            while (_loc_3 < this.deck.length)
+            {
+                
+                _loc_2.push(this.deck[_loc_3].front_mc.id);
+                _loc_3++;
+            }
+            _loc_2.push(this.side.length);
+            _loc_3 = 0;
+            while (_loc_3 < this.side.length)
+            {
+                
+                _loc_2.push(this.side[_loc_3].front_mc.id);
+                _loc_3++;
+            }
+            _loc_2.push(this.extra.length);
+            _loc_3 = 0;
+            while (_loc_3 < this.extra.length)
+            {
+                
+                _loc_2.push(this.extra[_loc_3].front_mc.id);
+                _loc_3++;
+            }
+            this.Send(_loc_2);
+            this.disableSiding();
+            return;
+        }// end function
+
+        public function swapSidingE(event:MouseEvent = null)
+        {
+            var _loc_2:int = 0;
+            var _loc_3:int = 0;
+            var _loc_4:int = 0;
+            var _loc_5:SideCard = null;
+            var _loc_6:Boolean = false;
+            var _loc_7:SideCard = null;
+            var _loc_8:String = null;
+            var _loc_9:int = 0;
+            _loc_2 = 0;
+            _loc_3 = 0;
+            _loc_4 = 0;
+            while (_loc_4 < this.side.length)
+            {
+                
+                _loc_5 = this.side[_loc_4];
+                _loc_6 = false;
+                if (_loc_5.glow == "deck")
+                {
+                    while (_loc_2 < this.deck.length)
+                    {
+                        
+                        _loc_7 = this.deck[_loc_2];
+                        if (_loc_7.glow == "side")
+                        {
+                            _loc_6 = true;
+                            _loc_2++;
+                            break;
+                        }
+                        _loc_2++;
+                    }
+                }
+                else if (_loc_5.glow == "extra")
+                {
+                    while (_loc_3 < this.extra.length)
+                    {
+                        
+                        _loc_7 = this.extra[_loc_3];
+                        if (_loc_7.glow == "side")
+                        {
+                            _loc_6 = true;
+                            _loc_3++;
+                            break;
+                        }
+                        _loc_3++;
+                    }
+                }
+                if (_loc_6)
+                {
+                    _loc_8 = _loc_5.area;
+                    _loc_5.area = _loc_7.area;
+                    _loc_7.area = _loc_8;
+                    _loc_9 = _loc_5.idx;
+                    _loc_5.idx = _loc_7.idx;
+                    _loc_7.idx = _loc_9;
+                    this[_loc_5.area][_loc_5.idx] = _loc_5;
+                    this[_loc_7.area][_loc_7.idx] = _loc_7;
+                    _loc_5.glow = null;
+                    _loc_7.glow = null;
+                }
+                _loc_4++;
+            }
+            this.arrangeDeck();
+            this.arrangeSide();
+            this.arrangeExtra();
+            this.deck_in = 0;
+            this.deck_out = 0;
+            this.extra_in = 0;
+            this.extra_out = 0;
+            this.swap_btn.enabled = false;
+            return;
+        }// end function
+
+        public function sortSidingE(event:MouseEvent = null)
+        {
+            var i:int;
+            var comp:Function;
+            var e:* = event;
+            comp = function (param1:SideCard, param2:SideCard)
+            {
+                var _loc_3:int = 0;
+                var _loc_4:int = 0;
+                var _loc_5:String = null;
+                var _loc_6:String = null;
+                _loc_3 = card_rank(param1.front_mc.card);
+                _loc_4 = card_rank(param2.front_mc.card);
+                if (_loc_3 < _loc_4)
+                {
+                    return -1;
+                }
+                if (_loc_3 > _loc_4)
+                {
+                    return 1;
+                }
+                _loc_5 = param1.front_mc.card_name.toUpperCase();
+                _loc_6 = param2.front_mc.card_name.toUpperCase();
+                if (_loc_5 < _loc_6)
+                {
+                    return -1;
+                }
+                if (_loc_5 > _loc_6)
+                {
+                    return 1;
+                }
+                if (param1.front_mc.id < param2.front_mc.id)
+                {
+                    return -1;
+                }
+                if (param1.front_mc.id > param2.front_mc.id)
+                {
+                    return 1;
+                }
+                if (param1.glow == null && param2.glow != null)
+                {
+                    return -1;
+                }
+                if (param1.glow != null && param2.glow == null)
+                {
+                    return 1;
+                }
+                return 0;
+            }// end function
+            ;
+            var card_rank:* = function (param1:String) : int
+            {
+                switch(param1)
+                {
+                    case "normal":
+                    {
+                        return 0;
+                    }
+                    case "effect":
+                    {
+                        return 1;
+                    }
+                    case "ritual":
+                    {
+                        return 2;
+                    }
+                    case "spell":
+                    {
+                        return 3;
+                    }
+                    case "trap":
+                    {
+                        return 4;
+                    }
+                    case "fusion":
+                    {
+                        return 5;
+                    }
+                    case "synchro":
+                    {
+                        return 6;
+                    }
+                    case "xyz":
+                    {
+                        return 7;
+                    }
+                    default:
+                    {
+                        return int.MAX_VALUE;
+                        ;
+                    }
+                }
+            }// end function
+            ;
+            this.deck.sort(comp);
+            i;
+            while (i < this.deck.length)
+            {
+                
+                this.deck[i].idx = i;
+                i = (i + 1);
+            }
+            this.side.sort(comp);
+            i;
+            while (i < this.side.length)
+            {
+                
+                this.side[i].idx = i;
+                i = (i + 1);
+            }
+            this.extra.sort(comp);
+            i;
+            while (i < this.extra.length)
+            {
+                
+                this.extra[i].idx = i;
+                i = (i + 1);
+            }
+            this.arrangeDeck();
+            this.arrangeSide();
+            this.arrangeExtra();
+            return;
+        }// end function
+
+        public function resetSidingE(event:MouseEvent = null)
+        {
+            this.getConfirmation("Reset Deck", "Are you sure you want to undo all swaps performed during the current siding?", this.resetSiding);
+            return;
+        }// end function
+
+        public function resetSiding(param1:Boolean)
+        {
+            var _loc_2:int = 0;
+            var _loc_3:SideCard = null;
+            if (!param1)
+            {
+                return;
+            }
+            _loc_2 = 0;
+            while (_loc_2 < this.siding_deck_orig.length)
+            {
+                
+                _loc_3 = this.siding_deck_orig[_loc_2];
+                this.deck[_loc_2] = _loc_3;
+                _loc_3.area = "deck";
+                _loc_3.idx = _loc_2;
+                _loc_3.glow = null;
+                _loc_2++;
+            }
+            _loc_2 = 0;
+            while (_loc_2 < this.siding_side_orig.length)
+            {
+                
+                _loc_3 = this.siding_side_orig[_loc_2];
+                this.side[_loc_2] = _loc_3;
+                _loc_3.area = "side";
+                _loc_3.idx = _loc_2;
+                _loc_3.glow = null;
+                _loc_2++;
+            }
+            _loc_2 = 0;
+            while (_loc_2 < this.siding_extra_orig.length)
+            {
+                
+                _loc_3 = this.siding_extra_orig[_loc_2];
+                this.extra[_loc_2] = _loc_3;
+                _loc_3.area = "extra";
+                _loc_3.idx = _loc_2;
+                _loc_3.glow = null;
+                _loc_2++;
+            }
+            this.arrangeDeck();
+            this.arrangeSide();
+            this.arrangeExtra();
+            this.deck_in = 0;
+            this.deck_out = 0;
+            this.extra_in = 0;
+            this.extra_out = 0;
+            this.swap_btn.enabled = false;
+            return;
+        }// end function
+
+        public function disableSiding()
+        {
+            var _loc_1:int = 0;
+            var _loc_2:SideCard = null;
+            if (!this.duelist)
+            {
+                return;
+            }
+            this.swap_btn.enabled = false;
+            this.sort_btn.enabled = false;
+            this.reset_btn.enabled = false;
+            this.done_siding_btn.enabled = false;
+            _loc_1 = 0;
+            while (_loc_1 < this.deck.length)
+            {
+                
+                _loc_2 = this.deck[_loc_1];
+                _loc_2.glow = null;
+                _loc_2.buttonMode = false;
+                _loc_2.removeEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                _loc_1++;
+            }
+            _loc_1 = 0;
+            while (_loc_1 < this.side.length)
+            {
+                
+                _loc_2 = this.side[_loc_1];
+                _loc_2.glow = null;
+                _loc_2.buttonMode = false;
+                _loc_2.removeEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                _loc_1++;
+            }
+            _loc_1 = 0;
+            while (_loc_1 < this.extra.length)
+            {
+                
+                _loc_2 = this.extra[_loc_1];
+                _loc_2.glow = null;
+                _loc_2.buttonMode = false;
+                _loc_2.removeEventListener(MouseEvent.CLICK, this.selectSidingCardE);
+                _loc_1++;
+            }
+            return;
+        }// end function
+
         public function __setPerspectiveProjection_(event:Event) : void
         {
             root.transform.perspectiveProjection.fieldOfView = 122.012;
@@ -9729,11 +11064,11 @@
             return;
         }// end function
 
-        function __setProp_ar_sp_dn_room_187()
+        function __setProp_ar_sp_dn_room_188()
         {
-            if (this.__setPropDict[this.ar_sp] == undefined || int(this.__setPropDict[this.ar_sp]) != 188)
+            if (this.__setPropDict[this.ar_sp] == undefined || int(this.__setPropDict[this.ar_sp]) != 189)
             {
-                this.__setPropDict[this.ar_sp] = 188;
+                this.__setPropDict[this.ar_sp] = 189;
                 try
                 {
                     this.ar_sp["componentInspectorSetting"] = true;
@@ -9762,11 +11097,11 @@
             return;
         }// end function
 
-        function __setProp_au_sp_dn_room_187()
+        function __setProp_au_sp_dn_room_188()
         {
-            if (this.__setPropDict[this.au_sp] == undefined || int(this.__setPropDict[this.au_sp]) != 188)
+            if (this.__setPropDict[this.au_sp] == undefined || int(this.__setPropDict[this.au_sp]) != 189)
             {
-                this.__setPropDict[this.au_sp] = 188;
+                this.__setPropDict[this.au_sp] = 189;
                 try
                 {
                     this.au_sp["componentInspectorSetting"] = true;
@@ -9795,11 +11130,11 @@
             return;
         }// end function
 
-        function __setProp_tu_sp_dn_room_187()
+        function __setProp_tu_sp_dn_room_188()
         {
-            if (this.__setPropDict[this.tu_sp] == undefined || int(this.__setPropDict[this.tu_sp]) != 188)
+            if (this.__setPropDict[this.tu_sp] == undefined || int(this.__setPropDict[this.tu_sp]) != 189)
             {
-                this.__setPropDict[this.tu_sp] = 188;
+                this.__setPropDict[this.tu_sp] = 189;
                 try
                 {
                     this.tu_sp["componentInspectorSetting"] = true;
@@ -9828,11 +11163,11 @@
             return;
         }// end function
 
-        function __setProp_duel_rb_dn_room_187()
+        function __setProp_duel_rb_dn_room_188()
         {
-            if (this.__setPropDict[this.duel_rb] == undefined || int(this.__setPropDict[this.duel_rb]) != 188)
+            if (this.__setPropDict[this.duel_rb] == undefined || int(this.__setPropDict[this.duel_rb]) != 189)
             {
-                this.__setPropDict[this.duel_rb] = 188;
+                this.__setPropDict[this.duel_rb] = 189;
                 try
                 {
                     this.duel_rb["componentInspectorSetting"] = true;
@@ -9858,11 +11193,11 @@
             return;
         }// end function
 
-        function __setProp_watch_rb_dn_room_187()
+        function __setProp_watch_rb_dn_room_188()
         {
-            if (this.__setPropDict[this.watch_rb] == undefined || int(this.__setPropDict[this.watch_rb]) != 188)
+            if (this.__setPropDict[this.watch_rb] == undefined || int(this.__setPropDict[this.watch_rb]) != 189)
             {
-                this.__setPropDict[this.watch_rb] = 188;
+                this.__setPropDict[this.watch_rb] = 189;
                 try
                 {
                     this.watch_rb["componentInspectorSetting"] = true;
@@ -9888,11 +11223,11 @@
             return;
         }// end function
 
-        function __setProp_filter_username_txt_dn_room_187()
+        function __setProp_filter_username_txt_dn_room_188()
         {
-            if (this.__setPropDict[this.filter_username_txt] == undefined || int(this.__setPropDict[this.filter_username_txt]) != 188)
+            if (this.__setPropDict[this.filter_username_txt] == undefined || int(this.__setPropDict[this.filter_username_txt]) != 189)
             {
-                this.__setPropDict[this.filter_username_txt] = 188;
+                this.__setPropDict[this.filter_username_txt] = 189;
                 try
                 {
                     this.filter_username_txt["componentInspectorSetting"] = true;
@@ -9918,11 +11253,11 @@
             return;
         }// end function
 
-        function __setProp_rating_lower_txt_dn_room_187()
+        function __setProp_rating_lower_txt_dn_room_188()
         {
-            if (this.__setPropDict[this.rating_lower_txt] == undefined || int(this.__setPropDict[this.rating_lower_txt]) != 188)
+            if (this.__setPropDict[this.rating_lower_txt] == undefined || int(this.__setPropDict[this.rating_lower_txt]) != 189)
             {
-                this.__setPropDict[this.rating_lower_txt] = 188;
+                this.__setPropDict[this.rating_lower_txt] = 189;
                 try
                 {
                     this.rating_lower_txt["componentInspectorSetting"] = true;
@@ -9948,11 +11283,11 @@
             return;
         }// end function
 
-        function __setProp_rating_upper_txt_dn_room_187()
+        function __setProp_rating_upper_txt_dn_room_188()
         {
-            if (this.__setPropDict[this.rating_upper_txt] == undefined || int(this.__setPropDict[this.rating_upper_txt]) != 188)
+            if (this.__setPropDict[this.rating_upper_txt] == undefined || int(this.__setPropDict[this.rating_upper_txt]) != 189)
             {
-                this.__setPropDict[this.rating_upper_txt] = 188;
+                this.__setPropDict[this.rating_upper_txt] = 189;
                 try
                 {
                     this.rating_upper_txt["componentInspectorSetting"] = true;
@@ -9978,11 +11313,11 @@
             return;
         }// end function
 
-        function __setProp_rep_lower_txt_dn_room_187()
+        function __setProp_rep_lower_txt_dn_room_188()
         {
-            if (this.__setPropDict[this.rep_lower_txt] == undefined || int(this.__setPropDict[this.rep_lower_txt]) != 188)
+            if (this.__setPropDict[this.rep_lower_txt] == undefined || int(this.__setPropDict[this.rep_lower_txt]) != 189)
             {
-                this.__setPropDict[this.rep_lower_txt] = 188;
+                this.__setPropDict[this.rep_lower_txt] = 189;
                 try
                 {
                     this.rep_lower_txt["componentInspectorSetting"] = true;
@@ -10008,11 +11343,11 @@
             return;
         }// end function
 
-        function __setProp_rep_upper_txt_dn_room_187()
+        function __setProp_rep_upper_txt_dn_room_188()
         {
-            if (this.__setPropDict[this.rep_upper_txt] == undefined || int(this.__setPropDict[this.rep_upper_txt]) != 188)
+            if (this.__setPropDict[this.rep_upper_txt] == undefined || int(this.__setPropDict[this.rep_upper_txt]) != 189)
             {
-                this.__setPropDict[this.rep_upper_txt] = 188;
+                this.__setPropDict[this.rep_upper_txt] = 189;
                 try
                 {
                     this.rep_upper_txt["componentInspectorSetting"] = true;
@@ -10038,11 +11373,11 @@
             return;
         }// end function
 
-        function __setProp_room_exit_btn_dn_exit_187()
+        function __setProp_room_exit_btn_dn_exit_188()
         {
-            if (this.__setPropDict[this.room_exit_btn] == undefined || int(this.__setPropDict[this.room_exit_btn]) != 188)
+            if (this.__setPropDict[this.room_exit_btn] == undefined || int(this.__setPropDict[this.room_exit_btn]) != 189)
             {
-                this.__setPropDict[this.room_exit_btn] = 188;
+                this.__setPropDict[this.room_exit_btn] = 189;
                 try
                 {
                     this.room_exit_btn["componentInspectorSetting"] = true;
@@ -10068,11 +11403,11 @@
             return;
         }// end function
 
-        function __setProp_name_txt_dn_deck_188()
+        function __setProp_name_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.name_txt] == undefined || int(this.__setPropDict[this.name_txt]) != 189)
+            if (this.__setPropDict[this.name_txt] == undefined || int(this.__setPropDict[this.name_txt]) != 190)
             {
-                this.__setPropDict[this.name_txt] = 189;
+                this.__setPropDict[this.name_txt] = 190;
                 try
                 {
                     this.name_txt["componentInspectorSetting"] = true;
@@ -10098,11 +11433,11 @@
             return;
         }// end function
 
-        function __setProp_desc_txt_dn_deck_188()
+        function __setProp_desc_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.desc_txt] == undefined || int(this.__setPropDict[this.desc_txt]) != 189)
+            if (this.__setPropDict[this.desc_txt] == undefined || int(this.__setPropDict[this.desc_txt]) != 190)
             {
-                this.__setPropDict[this.desc_txt] = 189;
+                this.__setPropDict[this.desc_txt] = 190;
                 try
                 {
                     this.desc_txt["componentInspectorSetting"] = true;
@@ -10128,7 +11463,7 @@
             return;
         }// end function
 
-        function __setProp_card_cb_dn_deck_188()
+        function __setProp_card_cb_dn_deck_189()
         {
             var _loc_1:DataProvider = null;
             var _loc_2:SimpleCollectionItem = null;
@@ -10136,9 +11471,9 @@
             var _loc_4:Object = null;
             var _loc_5:int = 0;
             var _loc_6:* = undefined;
-            if (this.__setPropDict[this.card_cb] == undefined || int(this.__setPropDict[this.card_cb]) != 189)
+            if (this.__setPropDict[this.card_cb] == undefined || int(this.__setPropDict[this.card_cb]) != 190)
             {
-                this.__setPropDict[this.card_cb] = 189;
+                this.__setPropDict[this.card_cb] = 190;
                 try
                 {
                     this.card_cb["componentInspectorSetting"] = true;
@@ -10180,7 +11515,7 @@
             return;
         }// end function
 
-        function __setProp_card2_cb_dn_deck_188()
+        function __setProp_card2_cb_dn_deck_189()
         {
             var _loc_1:DataProvider = null;
             var _loc_2:SimpleCollectionItem = null;
@@ -10188,9 +11523,9 @@
             var _loc_4:Object = null;
             var _loc_5:int = 0;
             var _loc_6:* = undefined;
-            if (this.__setPropDict[this.card2_cb] == undefined || int(this.__setPropDict[this.card2_cb]) != 189)
+            if (this.__setPropDict[this.card2_cb] == undefined || int(this.__setPropDict[this.card2_cb]) != 190)
             {
-                this.__setPropDict[this.card2_cb] = 189;
+                this.__setPropDict[this.card2_cb] = 190;
                 try
                 {
                     this.card2_cb["componentInspectorSetting"] = true;
@@ -10232,7 +11567,7 @@
             return;
         }// end function
 
-        function __setProp_type_cb_dn_deck_188()
+        function __setProp_type_cb_dn_deck_189()
         {
             var _loc_1:DataProvider = null;
             var _loc_2:SimpleCollectionItem = null;
@@ -10240,9 +11575,9 @@
             var _loc_4:Object = null;
             var _loc_5:int = 0;
             var _loc_6:* = undefined;
-            if (this.__setPropDict[this.type_cb] == undefined || int(this.__setPropDict[this.type_cb]) != 189)
+            if (this.__setPropDict[this.type_cb] == undefined || int(this.__setPropDict[this.type_cb]) != 190)
             {
-                this.__setPropDict[this.type_cb] = 189;
+                this.__setPropDict[this.type_cb] = 190;
                 try
                 {
                     this.type_cb["componentInspectorSetting"] = true;
@@ -10284,7 +11619,7 @@
             return;
         }// end function
 
-        function __setProp_type2_cb_dn_deck_188()
+        function __setProp_type2_cb_dn_deck_189()
         {
             var _loc_1:DataProvider = null;
             var _loc_2:SimpleCollectionItem = null;
@@ -10292,9 +11627,9 @@
             var _loc_4:Object = null;
             var _loc_5:int = 0;
             var _loc_6:* = undefined;
-            if (this.__setPropDict[this.type2_cb] == undefined || int(this.__setPropDict[this.type2_cb]) != 189)
+            if (this.__setPropDict[this.type2_cb] == undefined || int(this.__setPropDict[this.type2_cb]) != 190)
             {
-                this.__setPropDict[this.type2_cb] = 189;
+                this.__setPropDict[this.type2_cb] = 190;
                 try
                 {
                     this.type2_cb["componentInspectorSetting"] = true;
@@ -10336,7 +11671,7 @@
             return;
         }// end function
 
-        function __setProp_attrib_cb_dn_deck_188()
+        function __setProp_attrib_cb_dn_deck_189()
         {
             var _loc_1:DataProvider = null;
             var _loc_2:SimpleCollectionItem = null;
@@ -10344,9 +11679,9 @@
             var _loc_4:Object = null;
             var _loc_5:int = 0;
             var _loc_6:* = undefined;
-            if (this.__setPropDict[this.attrib_cb] == undefined || int(this.__setPropDict[this.attrib_cb]) != 189)
+            if (this.__setPropDict[this.attrib_cb] == undefined || int(this.__setPropDict[this.attrib_cb]) != 190)
             {
-                this.__setPropDict[this.attrib_cb] = 189;
+                this.__setPropDict[this.attrib_cb] = 190;
                 try
                 {
                     this.attrib_cb["componentInspectorSetting"] = true;
@@ -10388,11 +11723,11 @@
             return;
         }// end function
 
-        function __setProp_lvll_txt_dn_deck_188()
+        function __setProp_lvll_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.lvll_txt] == undefined || int(this.__setPropDict[this.lvll_txt]) != 189)
+            if (this.__setPropDict[this.lvll_txt] == undefined || int(this.__setPropDict[this.lvll_txt]) != 190)
             {
-                this.__setPropDict[this.lvll_txt] = 189;
+                this.__setPropDict[this.lvll_txt] = 190;
                 try
                 {
                     this.lvll_txt["componentInspectorSetting"] = true;
@@ -10418,11 +11753,11 @@
             return;
         }// end function
 
-        function __setProp_lvlh_txt_dn_deck_188()
+        function __setProp_lvlh_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.lvlh_txt] == undefined || int(this.__setPropDict[this.lvlh_txt]) != 189)
+            if (this.__setPropDict[this.lvlh_txt] == undefined || int(this.__setPropDict[this.lvlh_txt]) != 190)
             {
-                this.__setPropDict[this.lvlh_txt] = 189;
+                this.__setPropDict[this.lvlh_txt] = 190;
                 try
                 {
                     this.lvlh_txt["componentInspectorSetting"] = true;
@@ -10448,11 +11783,11 @@
             return;
         }// end function
 
-        function __setProp_atkl_txt_dn_deck_188()
+        function __setProp_atkl_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.atkl_txt] == undefined || int(this.__setPropDict[this.atkl_txt]) != 189)
+            if (this.__setPropDict[this.atkl_txt] == undefined || int(this.__setPropDict[this.atkl_txt]) != 190)
             {
-                this.__setPropDict[this.atkl_txt] = 189;
+                this.__setPropDict[this.atkl_txt] = 190;
                 try
                 {
                     this.atkl_txt["componentInspectorSetting"] = true;
@@ -10478,11 +11813,11 @@
             return;
         }// end function
 
-        function __setProp_atkh_txt_dn_deck_188()
+        function __setProp_atkh_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.atkh_txt] == undefined || int(this.__setPropDict[this.atkh_txt]) != 189)
+            if (this.__setPropDict[this.atkh_txt] == undefined || int(this.__setPropDict[this.atkh_txt]) != 190)
             {
-                this.__setPropDict[this.atkh_txt] = 189;
+                this.__setPropDict[this.atkh_txt] = 190;
                 try
                 {
                     this.atkh_txt["componentInspectorSetting"] = true;
@@ -10508,11 +11843,11 @@
             return;
         }// end function
 
-        function __setProp_defl_txt_dn_deck_188()
+        function __setProp_defl_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.defl_txt] == undefined || int(this.__setPropDict[this.defl_txt]) != 189)
+            if (this.__setPropDict[this.defl_txt] == undefined || int(this.__setPropDict[this.defl_txt]) != 190)
             {
-                this.__setPropDict[this.defl_txt] = 189;
+                this.__setPropDict[this.defl_txt] = 190;
                 try
                 {
                     this.defl_txt["componentInspectorSetting"] = true;
@@ -10538,11 +11873,11 @@
             return;
         }// end function
 
-        function __setProp_defh_txt_dn_deck_188()
+        function __setProp_defh_txt_dn_deck_189()
         {
-            if (this.__setPropDict[this.defh_txt] == undefined || int(this.__setPropDict[this.defh_txt]) != 189)
+            if (this.__setPropDict[this.defh_txt] == undefined || int(this.__setPropDict[this.defh_txt]) != 190)
             {
-                this.__setPropDict[this.defh_txt] = 189;
+                this.__setPropDict[this.defh_txt] = 190;
                 try
                 {
                     this.defh_txt["componentInspectorSetting"] = true;
@@ -10568,11 +11903,11 @@
             return;
         }// end function
 
-        function __setProp_search_btn_dn_deck_188()
+        function __setProp_search_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.search_btn] == undefined || int(this.__setPropDict[this.search_btn]) != 189)
+            if (this.__setPropDict[this.search_btn] == undefined || int(this.__setPropDict[this.search_btn]) != 190)
             {
-                this.__setPropDict[this.search_btn] = 189;
+                this.__setPropDict[this.search_btn] = 190;
                 try
                 {
                     this.search_btn["componentInspectorSetting"] = true;
@@ -10598,11 +11933,11 @@
             return;
         }// end function
 
-        function __setProp_clear_btn_dn_deck_188()
+        function __setProp_clear_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.clear_btn] == undefined || int(this.__setPropDict[this.clear_btn]) != 189)
+            if (this.__setPropDict[this.clear_btn] == undefined || int(this.__setPropDict[this.clear_btn]) != 190)
             {
-                this.__setPropDict[this.clear_btn] = 189;
+                this.__setPropDict[this.clear_btn] = 190;
                 try
                 {
                     this.clear_btn["componentInspectorSetting"] = true;
@@ -10628,11 +11963,11 @@
             return;
         }// end function
 
-        function __setProp_sort_btn_dn_deck_188()
+        function __setProp_sort_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.sort_btn] == undefined || int(this.__setPropDict[this.sort_btn]) != 189)
+            if (this.__setPropDict[this.sort_btn] == undefined || int(this.__setPropDict[this.sort_btn]) != 190)
             {
-                this.__setPropDict[this.sort_btn] = 189;
+                this.__setPropDict[this.sort_btn] = 190;
                 try
                 {
                     this.sort_btn["componentInspectorSetting"] = true;
@@ -10658,11 +11993,11 @@
             return;
         }// end function
 
-        function __setProp_new_btn_dn_deck_188()
+        function __setProp_new_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.new_btn] == undefined || int(this.__setPropDict[this.new_btn]) != 189)
+            if (this.__setPropDict[this.new_btn] == undefined || int(this.__setPropDict[this.new_btn]) != 190)
             {
-                this.__setPropDict[this.new_btn] = 189;
+                this.__setPropDict[this.new_btn] = 190;
                 try
                 {
                     this.new_btn["componentInspectorSetting"] = true;
@@ -10688,11 +12023,11 @@
             return;
         }// end function
 
-        function __setProp_rename_btn_dn_deck_188()
+        function __setProp_rename_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.rename_btn] == undefined || int(this.__setPropDict[this.rename_btn]) != 189)
+            if (this.__setPropDict[this.rename_btn] == undefined || int(this.__setPropDict[this.rename_btn]) != 190)
             {
-                this.__setPropDict[this.rename_btn] = 189;
+                this.__setPropDict[this.rename_btn] = 190;
                 try
                 {
                     this.rename_btn["componentInspectorSetting"] = true;
@@ -10718,11 +12053,11 @@
             return;
         }// end function
 
-        function __setProp_delete_btn_dn_deck_188()
+        function __setProp_delete_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.delete_btn] == undefined || int(this.__setPropDict[this.delete_btn]) != 189)
+            if (this.__setPropDict[this.delete_btn] == undefined || int(this.__setPropDict[this.delete_btn]) != 190)
             {
-                this.__setPropDict[this.delete_btn] = 189;
+                this.__setPropDict[this.delete_btn] = 190;
                 try
                 {
                     this.delete_btn["componentInspectorSetting"] = true;
@@ -10748,11 +12083,11 @@
             return;
         }// end function
 
-        function __setProp_save_btn_dn_deck_188()
+        function __setProp_save_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.save_btn] == undefined || int(this.__setPropDict[this.save_btn]) != 189)
+            if (this.__setPropDict[this.save_btn] == undefined || int(this.__setPropDict[this.save_btn]) != 190)
             {
-                this.__setPropDict[this.save_btn] = 189;
+                this.__setPropDict[this.save_btn] = 190;
                 try
                 {
                     this.save_btn["componentInspectorSetting"] = true;
@@ -10778,11 +12113,11 @@
             return;
         }// end function
 
-        function __setProp_default_btn_dn_deck_188()
+        function __setProp_default_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.default_btn] == undefined || int(this.__setPropDict[this.default_btn]) != 189)
+            if (this.__setPropDict[this.default_btn] == undefined || int(this.__setPropDict[this.default_btn]) != 190)
             {
-                this.__setPropDict[this.default_btn] = 189;
+                this.__setPropDict[this.default_btn] = 190;
                 try
                 {
                     this.default_btn["componentInspectorSetting"] = true;
@@ -10808,11 +12143,11 @@
             return;
         }// end function
 
-        function __setProp_deck_exit_btn_dn_deck_188()
+        function __setProp_deck_exit_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.deck_exit_btn] == undefined || int(this.__setPropDict[this.deck_exit_btn]) != 189)
+            if (this.__setPropDict[this.deck_exit_btn] == undefined || int(this.__setPropDict[this.deck_exit_btn]) != 190)
             {
-                this.__setPropDict[this.deck_exit_btn] = 189;
+                this.__setPropDict[this.deck_exit_btn] = 190;
                 try
                 {
                     this.deck_exit_btn["componentInspectorSetting"] = true;
@@ -10838,11 +12173,11 @@
             return;
         }// end function
 
-        function __setProp_username_txt_dn_profile_189()
+        function __setProp_username_txt_dn_profile_190()
         {
-            if (this.__setPropDict[this.username_txt] == undefined || int(this.__setPropDict[this.username_txt]) != 190)
+            if (this.__setPropDict[this.username_txt] == undefined || int(this.__setPropDict[this.username_txt]) != 191)
             {
-                this.__setPropDict[this.username_txt] = 190;
+                this.__setPropDict[this.username_txt] = 191;
                 try
                 {
                     this.username_txt["componentInspectorSetting"] = true;
@@ -10868,11 +12203,11 @@
             return;
         }// end function
 
-        function __setProp_profile_txt_dn_profile_189()
+        function __setProp_profile_txt_dn_profile_190()
         {
-            if (this.__setPropDict[this.profile_txt] == undefined || int(this.__setPropDict[this.profile_txt]) != 190)
+            if (this.__setPropDict[this.profile_txt] == undefined || int(this.__setPropDict[this.profile_txt]) != 191)
             {
-                this.__setPropDict[this.profile_txt] = 190;
+                this.__setPropDict[this.profile_txt] = 191;
                 try
                 {
                     this.profile_txt["componentInspectorSetting"] = true;
@@ -10902,11 +12237,11 @@
             return;
         }// end function
 
-        function __setProp_profile_exit_btn_dn_profile_189()
+        function __setProp_profile_exit_btn_dn_profile_190()
         {
-            if (this.__setPropDict[this.profile_exit_btn] == undefined || int(this.__setPropDict[this.profile_exit_btn]) != 190)
+            if (this.__setPropDict[this.profile_exit_btn] == undefined || int(this.__setPropDict[this.profile_exit_btn]) != 191)
             {
-                this.__setPropDict[this.profile_exit_btn] = 190;
+                this.__setPropDict[this.profile_exit_btn] = 191;
                 try
                 {
                     this.profile_exit_btn["componentInspectorSetting"] = true;
@@ -10932,11 +12267,11 @@
             return;
         }// end function
 
-        function __setProp_profile_txt_dn_profile_190()
+        function __setProp_profile_txt_dn_profile_191()
         {
-            if (this.__setPropDict[this.profile_txt] == undefined || int(this.__setPropDict[this.profile_txt]) != 191)
+            if (this.__setPropDict[this.profile_txt] == undefined || int(this.__setPropDict[this.profile_txt]) != 192)
             {
-                this.__setPropDict[this.profile_txt] = 191;
+                this.__setPropDict[this.profile_txt] = 192;
                 try
                 {
                     this.profile_txt["componentInspectorSetting"] = true;
@@ -10966,11 +12301,11 @@
             return;
         }// end function
 
-        function __setProp_save_profile_btn_dn_buttons_190()
+        function __setProp_save_profile_btn_dn_buttons_191()
         {
-            if (this.__setPropDict[this.save_profile_btn] == undefined || int(this.__setPropDict[this.save_profile_btn]) != 191)
+            if (this.__setPropDict[this.save_profile_btn] == undefined || int(this.__setPropDict[this.save_profile_btn]) != 192)
             {
-                this.__setPropDict[this.save_profile_btn] = 191;
+                this.__setPropDict[this.save_profile_btn] = 192;
                 try
                 {
                     this.save_profile_btn["componentInspectorSetting"] = true;
@@ -10996,11 +12331,11 @@
             return;
         }// end function
 
-        function __setProp_my_profile_exit_btn_dn_buttons_190()
+        function __setProp_my_profile_exit_btn_dn_buttons_191()
         {
-            if (this.__setPropDict[this.my_profile_exit_btn] == undefined || int(this.__setPropDict[this.my_profile_exit_btn]) != 191)
+            if (this.__setPropDict[this.my_profile_exit_btn] == undefined || int(this.__setPropDict[this.my_profile_exit_btn]) != 192)
             {
-                this.__setPropDict[this.my_profile_exit_btn] = 191;
+                this.__setPropDict[this.my_profile_exit_btn] = 192;
                 try
                 {
                     this.my_profile_exit_btn["componentInspectorSetting"] = true;
@@ -11026,11 +12361,11 @@
             return;
         }// end function
 
-        function __setProp_password_exit_btn_dn_password_191()
+        function __setProp_password_exit_btn_dn_password_192()
         {
-            if (this.__setPropDict[this.password_exit_btn] == undefined || int(this.__setPropDict[this.password_exit_btn]) != 192)
+            if (this.__setPropDict[this.password_exit_btn] == undefined || int(this.__setPropDict[this.password_exit_btn]) != 193)
             {
-                this.__setPropDict[this.password_exit_btn] = 192;
+                this.__setPropDict[this.password_exit_btn] = 193;
                 try
                 {
                     this.password_exit_btn["componentInspectorSetting"] = true;
@@ -11056,11 +12391,11 @@
             return;
         }// end function
 
-        function __setProp_current_txt_dn_password_191()
+        function __setProp_current_txt_dn_password_192()
         {
-            if (this.__setPropDict[this.current_txt] == undefined || int(this.__setPropDict[this.current_txt]) != 192)
+            if (this.__setPropDict[this.current_txt] == undefined || int(this.__setPropDict[this.current_txt]) != 193)
             {
-                this.__setPropDict[this.current_txt] = 192;
+                this.__setPropDict[this.current_txt] = 193;
                 try
                 {
                     this.current_txt["componentInspectorSetting"] = true;
@@ -11086,11 +12421,11 @@
             return;
         }// end function
 
-        function __setProp_new_txt_dn_password_191()
+        function __setProp_new_txt_dn_password_192()
         {
-            if (this.__setPropDict[this.new_txt] == undefined || int(this.__setPropDict[this.new_txt]) != 192)
+            if (this.__setPropDict[this.new_txt] == undefined || int(this.__setPropDict[this.new_txt]) != 193)
             {
-                this.__setPropDict[this.new_txt] = 192;
+                this.__setPropDict[this.new_txt] = 193;
                 try
                 {
                     this.new_txt["componentInspectorSetting"] = true;
@@ -11116,11 +12451,11 @@
             return;
         }// end function
 
-        function __setProp_confirm_txt_dn_password_191()
+        function __setProp_confirm_txt_dn_password_192()
         {
-            if (this.__setPropDict[this.confirm_txt] == undefined || int(this.__setPropDict[this.confirm_txt]) != 192)
+            if (this.__setPropDict[this.confirm_txt] == undefined || int(this.__setPropDict[this.confirm_txt]) != 193)
             {
-                this.__setPropDict[this.confirm_txt] = 192;
+                this.__setPropDict[this.confirm_txt] = 193;
                 try
                 {
                     this.confirm_txt["componentInspectorSetting"] = true;
@@ -11146,11 +12481,11 @@
             return;
         }// end function
 
-        function __setProp_change_btn_dn_password_191()
+        function __setProp_change_btn_dn_password_192()
         {
-            if (this.__setPropDict[this.change_btn] == undefined || int(this.__setPropDict[this.change_btn]) != 192)
+            if (this.__setPropDict[this.change_btn] == undefined || int(this.__setPropDict[this.change_btn]) != 193)
             {
-                this.__setPropDict[this.change_btn] = 192;
+                this.__setPropDict[this.change_btn] = 193;
                 try
                 {
                     this.change_btn["componentInspectorSetting"] = true;
@@ -11176,11 +12511,11 @@
             return;
         }// end function
 
-        function __setProp_status_username_txt_dn_admin_192()
+        function __setProp_status_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.status_username_txt] == undefined || int(this.__setPropDict[this.status_username_txt]) != 193)
+            if (this.__setPropDict[this.status_username_txt] == undefined || int(this.__setPropDict[this.status_username_txt]) != 194)
             {
-                this.__setPropDict[this.status_username_txt] = 193;
+                this.__setPropDict[this.status_username_txt] = 194;
                 try
                 {
                     this.status_username_txt["componentInspectorSetting"] = true;
@@ -11206,11 +12541,11 @@
             return;
         }// end function
 
-        function __setProp_get_ban_status_btn_dn_admin_192()
+        function __setProp_get_ban_status_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.get_ban_status_btn] == undefined || int(this.__setPropDict[this.get_ban_status_btn]) != 193)
+            if (this.__setPropDict[this.get_ban_status_btn] == undefined || int(this.__setPropDict[this.get_ban_status_btn]) != 194)
             {
-                this.__setPropDict[this.get_ban_status_btn] = 193;
+                this.__setPropDict[this.get_ban_status_btn] = 194;
                 try
                 {
                     this.get_ban_status_btn["componentInspectorSetting"] = true;
@@ -11236,11 +12571,11 @@
             return;
         }// end function
 
-        function __setProp_ban_note_txt_dn_admin_192()
+        function __setProp_ban_note_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.ban_note_txt] == undefined || int(this.__setPropDict[this.ban_note_txt]) != 193)
+            if (this.__setPropDict[this.ban_note_txt] == undefined || int(this.__setPropDict[this.ban_note_txt]) != 194)
             {
-                this.__setPropDict[this.ban_note_txt] = 193;
+                this.__setPropDict[this.ban_note_txt] = 194;
                 try
                 {
                     this.ban_note_txt["componentInspectorSetting"] = true;
@@ -11270,11 +12605,11 @@
             return;
         }// end function
 
-        function __setProp_ban_username_txt_dn_admin_192()
+        function __setProp_ban_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.ban_username_txt] == undefined || int(this.__setPropDict[this.ban_username_txt]) != 193)
+            if (this.__setPropDict[this.ban_username_txt] == undefined || int(this.__setPropDict[this.ban_username_txt]) != 194)
             {
-                this.__setPropDict[this.ban_username_txt] = 193;
+                this.__setPropDict[this.ban_username_txt] = 194;
                 try
                 {
                     this.ban_username_txt["componentInspectorSetting"] = true;
@@ -11300,11 +12635,11 @@
             return;
         }// end function
 
-        function __setProp_days_rb_dn_admin_192()
+        function __setProp_days_rb_dn_admin_193()
         {
-            if (this.__setPropDict[this.days_rb] == undefined || int(this.__setPropDict[this.days_rb]) != 193)
+            if (this.__setPropDict[this.days_rb] == undefined || int(this.__setPropDict[this.days_rb]) != 194)
             {
-                this.__setPropDict[this.days_rb] = 193;
+                this.__setPropDict[this.days_rb] = 194;
                 try
                 {
                     this.days_rb["componentInspectorSetting"] = true;
@@ -11330,11 +12665,11 @@
             return;
         }// end function
 
-        function __setProp_forever_rb_dn_admin_192()
+        function __setProp_forever_rb_dn_admin_193()
         {
-            if (this.__setPropDict[this.forever_rb] == undefined || int(this.__setPropDict[this.forever_rb]) != 193)
+            if (this.__setPropDict[this.forever_rb] == undefined || int(this.__setPropDict[this.forever_rb]) != 194)
             {
-                this.__setPropDict[this.forever_rb] = 193;
+                this.__setPropDict[this.forever_rb] = 194;
                 try
                 {
                     this.forever_rb["componentInspectorSetting"] = true;
@@ -11360,11 +12695,11 @@
             return;
         }// end function
 
-        function __setProp_days_txt_dn_admin_192()
+        function __setProp_days_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.days_txt] == undefined || int(this.__setPropDict[this.days_txt]) != 193)
+            if (this.__setPropDict[this.days_txt] == undefined || int(this.__setPropDict[this.days_txt]) != 194)
             {
-                this.__setPropDict[this.days_txt] = 193;
+                this.__setPropDict[this.days_txt] = 194;
                 try
                 {
                     this.days_txt["componentInspectorSetting"] = true;
@@ -11390,11 +12725,11 @@
             return;
         }// end function
 
-        function __setProp_reason_txt_dn_admin_192()
+        function __setProp_reason_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.reason_txt] == undefined || int(this.__setPropDict[this.reason_txt]) != 193)
+            if (this.__setPropDict[this.reason_txt] == undefined || int(this.__setPropDict[this.reason_txt]) != 194)
             {
-                this.__setPropDict[this.reason_txt] = 193;
+                this.__setPropDict[this.reason_txt] = 194;
                 try
                 {
                     this.reason_txt["componentInspectorSetting"] = true;
@@ -11420,11 +12755,11 @@
             return;
         }// end function
 
-        function __setProp_increment_strikes_cb_dn_admin_192()
+        function __setProp_increment_strikes_cb_dn_admin_193()
         {
-            if (this.__setPropDict[this.increment_strikes_cb] == undefined || int(this.__setPropDict[this.increment_strikes_cb]) != 193)
+            if (this.__setPropDict[this.increment_strikes_cb] == undefined || int(this.__setPropDict[this.increment_strikes_cb]) != 194)
             {
-                this.__setPropDict[this.increment_strikes_cb] = 193;
+                this.__setPropDict[this.increment_strikes_cb] = 194;
                 try
                 {
                     this.increment_strikes_cb["componentInspectorSetting"] = true;
@@ -11448,11 +12783,11 @@
             return;
         }// end function
 
-        function __setProp_ban_user_btn_dn_admin_192()
+        function __setProp_ban_user_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.ban_user_btn] == undefined || int(this.__setPropDict[this.ban_user_btn]) != 193)
+            if (this.__setPropDict[this.ban_user_btn] == undefined || int(this.__setPropDict[this.ban_user_btn]) != 194)
             {
-                this.__setPropDict[this.ban_user_btn] = 193;
+                this.__setPropDict[this.ban_user_btn] = 194;
                 try
                 {
                     this.ban_user_btn["componentInspectorSetting"] = true;
@@ -11478,11 +12813,11 @@
             return;
         }// end function
 
-        function __setProp_unban_username_txt_dn_admin_192()
+        function __setProp_unban_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.unban_username_txt] == undefined || int(this.__setPropDict[this.unban_username_txt]) != 193)
+            if (this.__setPropDict[this.unban_username_txt] == undefined || int(this.__setPropDict[this.unban_username_txt]) != 194)
             {
-                this.__setPropDict[this.unban_username_txt] = 193;
+                this.__setPropDict[this.unban_username_txt] = 194;
                 try
                 {
                     this.unban_username_txt["componentInspectorSetting"] = true;
@@ -11508,11 +12843,11 @@
             return;
         }// end function
 
-        function __setProp_decrement_strikes_cb_dn_admin_192()
+        function __setProp_decrement_strikes_cb_dn_admin_193()
         {
-            if (this.__setPropDict[this.decrement_strikes_cb] == undefined || int(this.__setPropDict[this.decrement_strikes_cb]) != 193)
+            if (this.__setPropDict[this.decrement_strikes_cb] == undefined || int(this.__setPropDict[this.decrement_strikes_cb]) != 194)
             {
-                this.__setPropDict[this.decrement_strikes_cb] = 193;
+                this.__setPropDict[this.decrement_strikes_cb] = 194;
                 try
                 {
                     this.decrement_strikes_cb["componentInspectorSetting"] = true;
@@ -11536,11 +12871,11 @@
             return;
         }// end function
 
-        function __setProp_unban_user_btn_dn_admin_192()
+        function __setProp_unban_user_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.unban_user_btn] == undefined || int(this.__setPropDict[this.unban_user_btn]) != 193)
+            if (this.__setPropDict[this.unban_user_btn] == undefined || int(this.__setPropDict[this.unban_user_btn]) != 194)
             {
-                this.__setPropDict[this.unban_user_btn] = 193;
+                this.__setPropDict[this.unban_user_btn] = 194;
                 try
                 {
                     this.unban_user_btn["componentInspectorSetting"] = true;
@@ -11566,11 +12901,11 @@
             return;
         }// end function
 
-        function __setProp_kick_username_txt_dn_admin_192()
+        function __setProp_kick_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.kick_username_txt] == undefined || int(this.__setPropDict[this.kick_username_txt]) != 193)
+            if (this.__setPropDict[this.kick_username_txt] == undefined || int(this.__setPropDict[this.kick_username_txt]) != 194)
             {
-                this.__setPropDict[this.kick_username_txt] = 193;
+                this.__setPropDict[this.kick_username_txt] = 194;
                 try
                 {
                     this.kick_username_txt["componentInspectorSetting"] = true;
@@ -11596,11 +12931,11 @@
             return;
         }// end function
 
-        function __setProp_kick_user_btn_dn_admin_192()
+        function __setProp_kick_user_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.kick_user_btn] == undefined || int(this.__setPropDict[this.kick_user_btn]) != 193)
+            if (this.__setPropDict[this.kick_user_btn] == undefined || int(this.__setPropDict[this.kick_user_btn]) != 194)
             {
-                this.__setPropDict[this.kick_user_btn] = 193;
+                this.__setPropDict[this.kick_user_btn] = 194;
                 try
                 {
                     this.kick_user_btn["componentInspectorSetting"] = true;
@@ -11626,11 +12961,11 @@
             return;
         }// end function
 
-        function __setProp_cancel_username_txt_dn_admin_192()
+        function __setProp_cancel_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.cancel_username_txt] == undefined || int(this.__setPropDict[this.cancel_username_txt]) != 193)
+            if (this.__setPropDict[this.cancel_username_txt] == undefined || int(this.__setPropDict[this.cancel_username_txt]) != 194)
             {
-                this.__setPropDict[this.cancel_username_txt] = 193;
+                this.__setPropDict[this.cancel_username_txt] = 194;
                 try
                 {
                     this.cancel_username_txt["componentInspectorSetting"] = true;
@@ -11656,11 +12991,11 @@
             return;
         }// end function
 
-        function __setProp_cancel_duel_btn_dn_admin_192()
+        function __setProp_cancel_duel_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.cancel_duel_btn] == undefined || int(this.__setPropDict[this.cancel_duel_btn]) != 193)
+            if (this.__setPropDict[this.cancel_duel_btn] == undefined || int(this.__setPropDict[this.cancel_duel_btn]) != 194)
             {
-                this.__setPropDict[this.cancel_duel_btn] = 193;
+                this.__setPropDict[this.cancel_duel_btn] = 194;
                 try
                 {
                     this.cancel_duel_btn["componentInspectorSetting"] = true;
@@ -11686,11 +13021,11 @@
             return;
         }// end function
 
-        function __setProp_warning_username_txt_dn_admin_192()
+        function __setProp_warning_username_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.warning_username_txt] == undefined || int(this.__setPropDict[this.warning_username_txt]) != 193)
+            if (this.__setPropDict[this.warning_username_txt] == undefined || int(this.__setPropDict[this.warning_username_txt]) != 194)
             {
-                this.__setPropDict[this.warning_username_txt] = 193;
+                this.__setPropDict[this.warning_username_txt] = 194;
                 try
                 {
                     this.warning_username_txt["componentInspectorSetting"] = true;
@@ -11716,11 +13051,11 @@
             return;
         }// end function
 
-        function __setProp_warning_txt_dn_admin_192()
+        function __setProp_warning_txt_dn_admin_193()
         {
-            if (this.__setPropDict[this.warning_txt] == undefined || int(this.__setPropDict[this.warning_txt]) != 193)
+            if (this.__setPropDict[this.warning_txt] == undefined || int(this.__setPropDict[this.warning_txt]) != 194)
             {
-                this.__setPropDict[this.warning_txt] = 193;
+                this.__setPropDict[this.warning_txt] = 194;
                 try
                 {
                     this.warning_txt["componentInspectorSetting"] = true;
@@ -11746,11 +13081,11 @@
             return;
         }// end function
 
-        function __setProp_increment_strikes2_cb_dn_admin_192()
+        function __setProp_increment_strikes2_cb_dn_admin_193()
         {
-            if (this.__setPropDict[this.increment_strikes2_cb] == undefined || int(this.__setPropDict[this.increment_strikes2_cb]) != 193)
+            if (this.__setPropDict[this.increment_strikes2_cb] == undefined || int(this.__setPropDict[this.increment_strikes2_cb]) != 194)
             {
-                this.__setPropDict[this.increment_strikes2_cb] = 193;
+                this.__setPropDict[this.increment_strikes2_cb] = 194;
                 try
                 {
                     this.increment_strikes2_cb["componentInspectorSetting"] = true;
@@ -11774,11 +13109,11 @@
             return;
         }// end function
 
-        function __setProp_add_warning_btn_dn_admin_192()
+        function __setProp_add_warning_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.add_warning_btn] == undefined || int(this.__setPropDict[this.add_warning_btn]) != 193)
+            if (this.__setPropDict[this.add_warning_btn] == undefined || int(this.__setPropDict[this.add_warning_btn]) != 194)
             {
-                this.__setPropDict[this.add_warning_btn] = 193;
+                this.__setPropDict[this.add_warning_btn] = 194;
                 try
                 {
                     this.add_warning_btn["componentInspectorSetting"] = true;
@@ -11804,11 +13139,11 @@
             return;
         }// end function
 
-        function __setProp_admin_exit_btn_dn_admin_192()
+        function __setProp_admin_exit_btn_dn_admin_193()
         {
-            if (this.__setPropDict[this.admin_exit_btn] == undefined || int(this.__setPropDict[this.admin_exit_btn]) != 193)
+            if (this.__setPropDict[this.admin_exit_btn] == undefined || int(this.__setPropDict[this.admin_exit_btn]) != 194)
             {
-                this.__setPropDict[this.admin_exit_btn] = 193;
+                this.__setPropDict[this.admin_exit_btn] = 194;
                 try
                 {
                     this.admin_exit_btn["componentInspectorSetting"] = true;
@@ -11834,11 +13169,11 @@
             return;
         }// end function
 
-        function __setProp_ip_username_txt_dn_admin2_193()
+        function __setProp_ip_username_txt_dn_admin2_194()
         {
-            if (this.__setPropDict[this.ip_username_txt] == undefined || int(this.__setPropDict[this.ip_username_txt]) != 194)
+            if (this.__setPropDict[this.ip_username_txt] == undefined || int(this.__setPropDict[this.ip_username_txt]) != 195)
             {
-                this.__setPropDict[this.ip_username_txt] = 194;
+                this.__setPropDict[this.ip_username_txt] = 195;
                 try
                 {
                     this.ip_username_txt["componentInspectorSetting"] = true;
@@ -11864,11 +13199,11 @@
             return;
         }// end function
 
-        function __setProp_check_ip_btn_dn_admin2_193()
+        function __setProp_check_ip_btn_dn_admin2_194()
         {
-            if (this.__setPropDict[this.check_ip_btn] == undefined || int(this.__setPropDict[this.check_ip_btn]) != 194)
+            if (this.__setPropDict[this.check_ip_btn] == undefined || int(this.__setPropDict[this.check_ip_btn]) != 195)
             {
-                this.__setPropDict[this.check_ip_btn] = 194;
+                this.__setPropDict[this.check_ip_btn] = 195;
                 try
                 {
                     this.check_ip_btn["componentInspectorSetting"] = true;
@@ -11894,11 +13229,11 @@
             return;
         }// end function
 
-        function __setProp_alts_txt_dn_admin2_193()
+        function __setProp_alts_txt_dn_admin2_194()
         {
-            if (this.__setPropDict[this.alts_txt] == undefined || int(this.__setPropDict[this.alts_txt]) != 194)
+            if (this.__setPropDict[this.alts_txt] == undefined || int(this.__setPropDict[this.alts_txt]) != 195)
             {
-                this.__setPropDict[this.alts_txt] = 194;
+                this.__setPropDict[this.alts_txt] = 195;
                 try
                 {
                     this.alts_txt["componentInspectorSetting"] = true;
@@ -11928,11 +13263,105 @@
             return;
         }// end function
 
-        function __setProp_admin2_exit_btn_dn_admin2_193()
+        function __setProp_comp_username_txt_dn_admin2_194()
         {
-            if (this.__setPropDict[this.admin2_exit_btn] == undefined || int(this.__setPropDict[this.admin2_exit_btn]) != 194)
+            if (this.__setPropDict[this.comp_username_txt] == undefined || int(this.__setPropDict[this.comp_username_txt]) != 195)
             {
-                this.__setPropDict[this.admin2_exit_btn] = 194;
+                this.__setPropDict[this.comp_username_txt] = 195;
+                try
+                {
+                    this.comp_username_txt["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.comp_username_txt.displayAsPassword = false;
+                this.comp_username_txt.editable = true;
+                this.comp_username_txt.enabled = true;
+                this.comp_username_txt.maxChars = 20;
+                this.comp_username_txt.restrict = " -{}-~";
+                this.comp_username_txt.text = "";
+                this.comp_username_txt.visible = true;
+                try
+                {
+                    this.comp_username_txt["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_check_comp_btn_dn_admin2_194()
+        {
+            if (this.__setPropDict[this.check_comp_btn] == undefined || int(this.__setPropDict[this.check_comp_btn]) != 195)
+            {
+                this.__setPropDict[this.check_comp_btn] = 195;
+                try
+                {
+                    this.check_comp_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.check_comp_btn.emphasized = false;
+                this.check_comp_btn.enabled = true;
+                this.check_comp_btn.label = "Check Comp";
+                this.check_comp_btn.labelPlacement = "right";
+                this.check_comp_btn.selected = false;
+                this.check_comp_btn.toggle = false;
+                this.check_comp_btn.visible = true;
+                try
+                {
+                    this.check_comp_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_comp_alts_txt_dn_admin2_194()
+        {
+            if (this.__setPropDict[this.comp_alts_txt] == undefined || int(this.__setPropDict[this.comp_alts_txt]) != 195)
+            {
+                this.__setPropDict[this.comp_alts_txt] = 195;
+                try
+                {
+                    this.comp_alts_txt["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.comp_alts_txt.condenseWhite = false;
+                this.comp_alts_txt.editable = false;
+                this.comp_alts_txt.enabled = true;
+                this.comp_alts_txt.horizontalScrollPolicy = "auto";
+                this.comp_alts_txt.htmlText = "";
+                this.comp_alts_txt.maxChars = 0;
+                this.comp_alts_txt.restrict = "";
+                this.comp_alts_txt.text = "";
+                this.comp_alts_txt.verticalScrollPolicy = "auto";
+                this.comp_alts_txt.visible = true;
+                this.comp_alts_txt.wordWrap = true;
+                try
+                {
+                    this.comp_alts_txt["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_admin2_exit_btn_dn_admin2_194()
+        {
+            if (this.__setPropDict[this.admin2_exit_btn] == undefined || int(this.__setPropDict[this.admin2_exit_btn]) != 195)
+            {
+                this.__setPropDict[this.admin2_exit_btn] = 195;
                 try
                 {
                     this.admin2_exit_btn["componentInspectorSetting"] = true;
@@ -11958,11 +13387,11 @@
             return;
         }// end function
 
-        function __setProp_content_sp_dn_content_194()
+        function __setProp_content_sp_dn_content_195()
         {
-            if (this.__setPropDict[this.content_sp] == undefined || int(this.__setPropDict[this.content_sp]) != 195)
+            if (this.__setPropDict[this.content_sp] == undefined || int(this.__setPropDict[this.content_sp]) != 196)
             {
-                this.__setPropDict[this.content_sp] = 195;
+                this.__setPropDict[this.content_sp] = 196;
                 try
                 {
                     this.content_sp["componentInspectorSetting"] = true;
@@ -11991,11 +13420,11 @@
             return;
         }// end function
 
-        function __setProp_rankings_exit_btn_dn_exit_194()
+        function __setProp_rankings_exit_btn_dn_exit_195()
         {
-            if (this.__setPropDict[this.rankings_exit_btn] == undefined || int(this.__setPropDict[this.rankings_exit_btn]) != 195)
+            if (this.__setPropDict[this.rankings_exit_btn] == undefined || int(this.__setPropDict[this.rankings_exit_btn]) != 196)
             {
-                this.__setPropDict[this.rankings_exit_btn] = 195;
+                this.__setPropDict[this.rankings_exit_btn] = 196;
                 try
                 {
                     this.rankings_exit_btn["componentInspectorSetting"] = true;
@@ -12021,9 +13450,9 @@
             return;
         }// end function
 
-        function __setProp_cin_txt_dn_chat_195(param1:int)
+        function __setProp_cin_txt_dn_chat_196(param1:int)
         {
-            if (this.cin_txt != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.cin_txt] == undefined || !(int(this.__setPropDict[this.cin_txt]) >= 196 && int(this.__setPropDict[this.cin_txt]) <= 198)))
+            if (this.cin_txt != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.cin_txt] == undefined || !(int(this.__setPropDict[this.cin_txt]) >= 197 && int(this.__setPropDict[this.cin_txt]) <= 200)))
             {
                 this.__setPropDict[this.cin_txt] = param1;
                 try
@@ -12051,9 +13480,9 @@
             return;
         }// end function
 
-        function __setProp_kick2_btn_dn_buttons2_195(param1:int)
+        function __setProp_kick2_btn_dn_abtns_196(param1:int)
         {
-            if (this.kick2_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.kick2_btn] == undefined || !(int(this.__setPropDict[this.kick2_btn]) >= 196 && int(this.__setPropDict[this.kick2_btn]) <= 198)))
+            if (this.kick2_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.kick2_btn] == undefined || !(int(this.__setPropDict[this.kick2_btn]) >= 197 && int(this.__setPropDict[this.kick2_btn]) <= 200)))
             {
                 this.__setPropDict[this.kick2_btn] = param1;
                 try
@@ -12081,9 +13510,9 @@
             return;
         }// end function
 
-        function __setProp_kick1_btn_dn_buttons2_195(param1:int)
+        function __setProp_kick1_btn_dn_abtns_196(param1:int)
         {
-            if (this.kick1_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.kick1_btn] == undefined || !(int(this.__setPropDict[this.kick1_btn]) >= 196 && int(this.__setPropDict[this.kick1_btn]) <= 198)))
+            if (this.kick1_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.kick1_btn] == undefined || !(int(this.__setPropDict[this.kick1_btn]) >= 197 && int(this.__setPropDict[this.kick1_btn]) <= 200)))
             {
                 this.__setPropDict[this.kick1_btn] = param1;
                 try
@@ -12111,9 +13540,9 @@
             return;
         }// end function
 
-        function __setProp_cancel_duel_btn_dn_buttons2_195(param1:int)
+        function __setProp_cancel_duel_btn_dn_abtns_196(param1:int)
         {
-            if (this.cancel_duel_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.cancel_duel_btn] == undefined || !(int(this.__setPropDict[this.cancel_duel_btn]) >= 196 && int(this.__setPropDict[this.cancel_duel_btn]) <= 198)))
+            if (this.cancel_duel_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.cancel_duel_btn] == undefined || !(int(this.__setPropDict[this.cancel_duel_btn]) >= 197 && int(this.__setPropDict[this.cancel_duel_btn]) <= 200)))
             {
                 this.__setPropDict[this.cancel_duel_btn] = param1;
                 try
@@ -12141,9 +13570,9 @@
             return;
         }// end function
 
-        function __setProp_defeat_btn_dn_buttons_195(param1:int)
+        function __setProp_defeat_btn_dn_buttons_196(param1:int)
         {
-            if (this.defeat_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.defeat_btn] == undefined || !(int(this.__setPropDict[this.defeat_btn]) >= 196 && int(this.__setPropDict[this.defeat_btn]) <= 198)))
+            if (this.defeat_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.defeat_btn] == undefined || !(int(this.__setPropDict[this.defeat_btn]) >= 197 && int(this.__setPropDict[this.defeat_btn]) <= 200)))
             {
                 this.__setPropDict[this.defeat_btn] = param1;
                 try
@@ -12171,9 +13600,9 @@
             return;
         }// end function
 
-        function __setProp_draw_btn_dn_buttons_195(param1:int)
+        function __setProp_draw_btn_dn_buttons_196(param1:int)
         {
-            if (this.draw_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.draw_btn] == undefined || !(int(this.__setPropDict[this.draw_btn]) >= 196 && int(this.__setPropDict[this.draw_btn]) <= 198)))
+            if (this.draw_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.draw_btn] == undefined || !(int(this.__setPropDict[this.draw_btn]) >= 197 && int(this.__setPropDict[this.draw_btn]) <= 200)))
             {
                 this.__setPropDict[this.draw_btn] = param1;
                 try
@@ -12201,28 +13630,28 @@
             return;
         }// end function
 
-        function __setProp_ass_btn_dn_buttons_195(param1:int)
+        function __setProp_call_admin_btn_dn_buttons_196(param1:int)
         {
-            if (this.ass_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.ass_btn] == undefined || !(int(this.__setPropDict[this.ass_btn]) >= 196 && int(this.__setPropDict[this.ass_btn]) <= 198)))
+            if (this.call_admin_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.call_admin_btn] == undefined || !(int(this.__setPropDict[this.call_admin_btn]) >= 197 && int(this.__setPropDict[this.call_admin_btn]) <= 200)))
             {
-                this.__setPropDict[this.ass_btn] = param1;
+                this.__setPropDict[this.call_admin_btn] = param1;
                 try
                 {
-                    this.ass_btn["componentInspectorSetting"] = true;
+                    this.call_admin_btn["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.ass_btn.emphasized = false;
-                this.ass_btn.enabled = true;
-                this.ass_btn.label = "A.S.S.";
-                this.ass_btn.labelPlacement = "right";
-                this.ass_btn.selected = false;
-                this.ass_btn.toggle = false;
-                this.ass_btn.visible = true;
+                this.call_admin_btn.emphasized = false;
+                this.call_admin_btn.enabled = true;
+                this.call_admin_btn.label = "Call Admin";
+                this.call_admin_btn.labelPlacement = "right";
+                this.call_admin_btn.selected = false;
+                this.call_admin_btn.toggle = false;
+                this.call_admin_btn.visible = true;
                 try
                 {
-                    this.ass_btn["componentInspectorSetting"] = false;
+                    this.call_admin_btn["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -12231,9 +13660,39 @@
             return;
         }// end function
 
-        function __setProp_duel_quit_btn_dn_buttons_195(param1:int)
+        function __setProp_rematch_btn_dn_buttons_196(param1:int)
         {
-            if (this.duel_quit_btn != null && param1 >= 196 && param1 <= 198 && (this.__setPropDict[this.duel_quit_btn] == undefined || !(int(this.__setPropDict[this.duel_quit_btn]) >= 196 && int(this.__setPropDict[this.duel_quit_btn]) <= 198)))
+            if (this.rematch_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.rematch_btn] == undefined || !(int(this.__setPropDict[this.rematch_btn]) >= 197 && int(this.__setPropDict[this.rematch_btn]) <= 200)))
+            {
+                this.__setPropDict[this.rematch_btn] = param1;
+                try
+                {
+                    this.rematch_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.rematch_btn.emphasized = false;
+                this.rematch_btn.enabled = true;
+                this.rematch_btn.label = "Offer Rematch";
+                this.rematch_btn.labelPlacement = "right";
+                this.rematch_btn.selected = false;
+                this.rematch_btn.toggle = false;
+                this.rematch_btn.visible = true;
+                try
+                {
+                    this.rematch_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_duel_quit_btn_dn_buttons_196(param1:int)
+        {
+            if (this.duel_quit_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.duel_quit_btn] == undefined || !(int(this.__setPropDict[this.duel_quit_btn]) >= 197 && int(this.__setPropDict[this.duel_quit_btn]) <= 200)))
             {
                 this.__setPropDict[this.duel_quit_btn] = param1;
                 try
@@ -12261,11 +13720,11 @@
             return;
         }// end function
 
-        function __setProp_auto_draw_cb_dn_field_197()
+        function __setProp_auto_draw_cb_dn_field_198()
         {
-            if (this.__setPropDict[this.auto_draw_cb] == undefined || int(this.__setPropDict[this.auto_draw_cb]) != 198)
+            if (this.__setPropDict[this.auto_draw_cb] == undefined || int(this.__setPropDict[this.auto_draw_cb]) != 199)
             {
-                this.__setPropDict[this.auto_draw_cb] = 198;
+                this.__setPropDict[this.auto_draw_cb] = 199;
                 try
                 {
                     this.auto_draw_cb["componentInspectorSetting"] = true;
@@ -12289,6 +13748,126 @@
             return;
         }// end function
 
+        function __setProp_done_siding_btn_dn_deck_199()
+        {
+            if (this.__setPropDict[this.done_siding_btn] == undefined || int(this.__setPropDict[this.done_siding_btn]) != 200)
+            {
+                this.__setPropDict[this.done_siding_btn] = 200;
+                try
+                {
+                    this.done_siding_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.done_siding_btn.emphasized = false;
+                this.done_siding_btn.enabled = true;
+                this.done_siding_btn.label = "Done Siding";
+                this.done_siding_btn.labelPlacement = "right";
+                this.done_siding_btn.selected = false;
+                this.done_siding_btn.toggle = false;
+                this.done_siding_btn.visible = true;
+                try
+                {
+                    this.done_siding_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_swap_btn_dn_sbtns_199()
+        {
+            if (this.__setPropDict[this.swap_btn] == undefined || int(this.__setPropDict[this.swap_btn]) != 200)
+            {
+                this.__setPropDict[this.swap_btn] = 200;
+                try
+                {
+                    this.swap_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.swap_btn.emphasized = false;
+                this.swap_btn.enabled = true;
+                this.swap_btn.label = "Swap Cards";
+                this.swap_btn.labelPlacement = "right";
+                this.swap_btn.selected = false;
+                this.swap_btn.toggle = false;
+                this.swap_btn.visible = true;
+                try
+                {
+                    this.swap_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_sort_btn_dn_sbtns_199()
+        {
+            if (this.__setPropDict[this.sort_btn] == undefined || int(this.__setPropDict[this.sort_btn]) != 200)
+            {
+                this.__setPropDict[this.sort_btn] = 200;
+                try
+                {
+                    this.sort_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.sort_btn.emphasized = false;
+                this.sort_btn.enabled = true;
+                this.sort_btn.label = "Sort Deck";
+                this.sort_btn.labelPlacement = "right";
+                this.sort_btn.selected = false;
+                this.sort_btn.toggle = false;
+                this.sort_btn.visible = true;
+                try
+                {
+                    this.sort_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_reset_btn_dn_sbtns_199()
+        {
+            if (this.__setPropDict[this.reset_btn] == undefined || int(this.__setPropDict[this.reset_btn]) != 200)
+            {
+                this.__setPropDict[this.reset_btn] = 200;
+                try
+                {
+                    this.reset_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.reset_btn.emphasized = false;
+                this.reset_btn.enabled = true;
+                this.reset_btn.label = "Reset Deck";
+                this.reset_btn.labelPlacement = "right";
+                this.reset_btn.selected = false;
+                this.reset_btn.toggle = false;
+                this.reset_btn.visible = true;
+                try
+                {
+                    this.reset_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
         function __setProp_handler(param1:Object)
         {
             var _loc_2:int = 0;
@@ -12299,36 +13878,48 @@
             }
             this.__lastFrameProp = _loc_2;
             this.__setProp_news_txt_dn_news_1(_loc_2);
-            this.__setProp_cin_txt_dn_chat_195(_loc_2);
-            this.__setProp_kick2_btn_dn_buttons2_195(_loc_2);
-            this.__setProp_kick1_btn_dn_buttons2_195(_loc_2);
-            this.__setProp_cancel_duel_btn_dn_buttons2_195(_loc_2);
-            this.__setProp_defeat_btn_dn_buttons_195(_loc_2);
-            this.__setProp_draw_btn_dn_buttons_195(_loc_2);
-            this.__setProp_ass_btn_dn_buttons_195(_loc_2);
-            this.__setProp_duel_quit_btn_dn_buttons_195(_loc_2);
+            this.__setProp_cin_txt_dn_chat_196(_loc_2);
+            this.__setProp_kick2_btn_dn_abtns_196(_loc_2);
+            this.__setProp_kick1_btn_dn_abtns_196(_loc_2);
+            this.__setProp_cancel_duel_btn_dn_abtns_196(_loc_2);
+            this.__setProp_defeat_btn_dn_buttons_196(_loc_2);
+            this.__setProp_draw_btn_dn_buttons_196(_loc_2);
+            this.__setProp_call_admin_btn_dn_buttons_196(_loc_2);
+            this.__setProp_rematch_btn_dn_buttons_196(_loc_2);
+            this.__setProp_duel_quit_btn_dn_buttons_196(_loc_2);
             return;
         }// end function
 
         function frame1()
         {
+            this.dn_id = this.getDnId();
+            this.black_mc.visible = false;
+            this.invalid_load_context_mc.visible = false;
+            this.fp_out_of_date_mc.visible = false;
             stop();
-            this.COMPONENT_FONT = "MyArial";
-            this.COMPONENT_SIZE = 12;
-            this.setStyleManager();
-            this.URL_START = "http://www.duelingnetwork.com:8080/Dueling_Network/";
-            this.HOSTNAME = "duelingnetwork.com";
-            this.CARD_START = this.URL_START + "images/cards/";
-            this.AVATAR_START = this.URL_START + "images/avatars/";
-            this.BACK_START = this.URL_START + "images/backs/";
-            if (this.hasUpdatedFlashPlayer())
+            if (loaderInfo.url.indexOf("http://www.duelingnetwork.com/") != 0)
             {
-                this.fp_out_of_date_mc.visible = false;
+                this.invalid_load_context_mc.visible = true;
+            }
+            else if (!this.hasUpdatedFlashPlayer())
+            {
+                this.fp_out_of_date_mc.visible = true;
+            }
+            else
+            {
+                this.URL_START = "http://www.duelingnetwork.com:8080/Dueling_Network/";
+                this.HOSTNAME = "duelingnetwork.com";
+                this.CARD_START = this.URL_START + "images/cards/";
+                this.AVATAR_START = this.URL_START + "images/avatars/";
+                this.BACK_START = this.URL_START + "images/backs/";
                 this.bgmusic = new Sound();
-                this.bgmusic.load(new URLRequest(this.URL_START + "overlap_low.mp3"), new SoundLoaderContext());
+                this.bgmusic.load(new URLRequest(this.URL_START + "EndlessDream.mp3"), new SoundLoaderContext());
                 this.bgmusic.addEventListener(IOErrorEvent.IO_ERROR, this.bufferFailE);
                 addEventListener(Event.ENTER_FRAME, this.doneBufferingE);
             }
+            this.COMPONENT_FONT = "MyArial";
+            this.COMPONENT_SIZE = 12;
+            this.setStyleManager();
             return;
         }// end function
 
@@ -12340,6 +13931,11 @@
             this.input_mc.OK_btn.addEventListener(MouseEvent.CLICK, this.inputOK);
             this.input_mc.cancel_btn.addEventListener(MouseEvent.CLICK, this.inputCancel);
             this.input_callback = null;
+            this.combo_mc.visible = false;
+            this.combo_mc.OK_btn.addEventListener(MouseEvent.CLICK, this.comboOK);
+            this.combo_mc.cancel_btn.addEventListener(MouseEvent.CLICK, this.comboCancel);
+            this.combo_mc.combo_cb.addEventListener(KeyboardEvent.KEY_DOWN, this.comboKeyDownListener);
+            this.combo_callback = null;
             this.confirm_mc.visible = false;
             this.confirm_mc.yes_btn.addEventListener(MouseEvent.CLICK, this.confirmYes);
             this.confirm_mc.no_btn.addEventListener(MouseEvent.CLICK, this.confirmNo);
@@ -12402,6 +13998,8 @@
 
         function frame178()
         {
+            this.camera_flash_mc.visible = false;
+            Object(getChildByName("screenshot_btn")).camera_flash_mc = this.camera_flash_mc;
             stage.focus = null;
             this.enter_handler = null;
             this.heartbeat_timer = new Timer(30000);
@@ -12423,6 +14021,15 @@
         function frame186()
         {
             this.online_btn.setIcon(this.online_icon_mc);
+            if (this.admin)
+            {
+                this.call_btn.setIcon(this.call_icon_mc);
+            }
+            else
+            {
+                this.call_btn.visible = false;
+                this.call_icon_mc.visible = false;
+            }
             this.public_btn.setIcon(this.public_icon_mc);
             this.private_btn.setIcon(this.private_icon_mc);
             this.watch_btn.setIcon(this.watch_icon_mc);
@@ -12439,12 +14046,17 @@
             this.num_friends_online = 0;
             this.num_admins_online = 0;
             this.online_users_mc.users_mc.addEventListener(ScrollEvent.SCROLL, this.updateListColors);
+            this.call_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
+            this.calls_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
+            this.calls_mc.calls_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.answerCallE);
+            this.calls_mc.calls_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.callListKeyboardHandlerE);
             this.private_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
             this.private_chat_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
             this.private_chat_mc.exit_btn.addEventListener(MouseEvent.CLICK, this.removeCurrentPrivateE);
             this.private_chat_mc.user_mc.addEventListener(Event.CHANGE, this.changePrivateE);
             this.num_new_msgs = 0;
             this.private_chat_mc.user_mc.dropdown.addEventListener(ScrollEvent.SCROLL, this.updateDropdownColors);
+            this.chat_lock = false;
             this.public_chat_mc.cin_txt.drawNow();
             this.chatLock();
             this.title_usernames = new Object();
@@ -12456,21 +14068,33 @@
             this.title_timer.addEventListener(TimerEvent.TIMER, this.setNextTitle);
             this.chat_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.clearChatE);
             this.online_users_tooltip_mc.visible = false;
+            this.call_tooltip_mc.visible = false;
             this.watch_chat_tooltip_mc.visible = false;
             this.public_chat_tooltip_mc.visible = false;
             this.private_chat_tooltip_mc.visible = false;
             this.online_btn.addEventListener(MouseEvent.MOUSE_OVER, this.showOnlineTooltipE);
             this.online_btn.addEventListener(MouseEvent.MOUSE_OUT, this.hideOnlineTooltipE);
+            if (this.admin)
+            {
+                this.call_btn.addEventListener(MouseEvent.MOUSE_OVER, this.showCallTooltipE);
+                this.call_btn.addEventListener(MouseEvent.MOUSE_OUT, this.hideCallTooltipE);
+            }
             this.public_btn.addEventListener(MouseEvent.MOUSE_OVER, this.showPublicTooltipE);
             this.public_btn.addEventListener(MouseEvent.MOUSE_OUT, this.hidePublicTooltipE);
             this.private_btn.addEventListener(MouseEvent.MOUSE_OVER, this.showPrivateTooltipE);
             this.private_btn.addEventListener(MouseEvent.MOUSE_OUT, this.hidePrivateTooltipE);
-            this.public_chat_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.moveChatWindowToFrontE);
             this.online_users_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.moveChatWindowToFrontE);
+            this.calls_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.moveChatWindowToFrontE);
+            this.public_chat_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.moveChatWindowToFrontE);
             this.private_chat_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.moveChatWindowToFrontE);
-            this.chat_hidden_mc.addChild(this.public_chat_mc);
             this.chat_hidden_mc.addChild(this.online_users_mc);
+            this.chat_hidden_mc.addChild(this.calls_mc);
+            this.chat_hidden_mc.addChild(this.public_chat_mc);
             this.chat_hidden_mc.addChild(this.private_chat_mc);
+            if (this.admin)
+            {
+                this.public_chat_mc.cin_txt.maxChars = 500;
+            }
             this.initMain();
             return;
         }// end function
@@ -12481,21 +14105,23 @@
             return;
         }// end function
 
-        function frame188()
+        function frame189()
         {
-            this.__setProp_room_exit_btn_dn_exit_187();
-            this.__setProp_rep_upper_txt_dn_room_187();
-            this.__setProp_rep_lower_txt_dn_room_187();
-            this.__setProp_rating_upper_txt_dn_room_187();
-            this.__setProp_rating_lower_txt_dn_room_187();
-            this.__setProp_filter_username_txt_dn_room_187();
-            this.__setProp_watch_rb_dn_room_187();
-            this.__setProp_duel_rb_dn_room_187();
-            this.__setProp_tu_sp_dn_room_187();
-            this.__setProp_au_sp_dn_room_187();
-            this.__setProp_ar_sp_dn_room_187();
+            this.__setProp_room_exit_btn_dn_exit_188();
+            this.__setProp_rep_upper_txt_dn_room_188();
+            this.__setProp_rep_lower_txt_dn_room_188();
+            this.__setProp_rating_upper_txt_dn_room_188();
+            this.__setProp_rating_lower_txt_dn_room_188();
+            this.__setProp_filter_username_txt_dn_room_188();
+            this.__setProp_watch_rb_dn_room_188();
+            this.__setProp_duel_rb_dn_room_188();
+            this.__setProp_tu_sp_dn_room_188();
+            this.__setProp_au_sp_dn_room_188();
+            this.__setProp_ar_sp_dn_room_188();
             stage.focus = null;
             this.track("duel_room");
+            this.banner_mc.tat = Math.random() <= 0.75;
+            this.banner_mc.addChild(this.banner_mc.tat ? (new TatBanner()) : (new CoretcgBanner()));
             this.banner_mc.addEventListener(MouseEvent.CLICK, this.bannerClickE);
             this.enter_handler = this.roomEnterHandler;
             this.incoming_handler = this.roomIncomingHandler;
@@ -12534,30 +14160,30 @@
             return;
         }// end function
 
-        function frame189()
+        function frame190()
         {
-            this.__setProp_deck_exit_btn_dn_deck_188();
-            this.__setProp_default_btn_dn_deck_188();
-            this.__setProp_save_btn_dn_deck_188();
-            this.__setProp_delete_btn_dn_deck_188();
-            this.__setProp_rename_btn_dn_deck_188();
-            this.__setProp_new_btn_dn_deck_188();
-            this.__setProp_sort_btn_dn_deck_188();
-            this.__setProp_clear_btn_dn_deck_188();
-            this.__setProp_search_btn_dn_deck_188();
-            this.__setProp_defh_txt_dn_deck_188();
-            this.__setProp_defl_txt_dn_deck_188();
-            this.__setProp_atkh_txt_dn_deck_188();
-            this.__setProp_atkl_txt_dn_deck_188();
-            this.__setProp_lvlh_txt_dn_deck_188();
-            this.__setProp_lvll_txt_dn_deck_188();
-            this.__setProp_attrib_cb_dn_deck_188();
-            this.__setProp_type2_cb_dn_deck_188();
-            this.__setProp_type_cb_dn_deck_188();
-            this.__setProp_card2_cb_dn_deck_188();
-            this.__setProp_card_cb_dn_deck_188();
-            this.__setProp_desc_txt_dn_deck_188();
-            this.__setProp_name_txt_dn_deck_188();
+            this.__setProp_deck_exit_btn_dn_deck_189();
+            this.__setProp_default_btn_dn_deck_189();
+            this.__setProp_save_btn_dn_deck_189();
+            this.__setProp_delete_btn_dn_deck_189();
+            this.__setProp_rename_btn_dn_deck_189();
+            this.__setProp_new_btn_dn_deck_189();
+            this.__setProp_sort_btn_dn_deck_189();
+            this.__setProp_clear_btn_dn_deck_189();
+            this.__setProp_search_btn_dn_deck_189();
+            this.__setProp_defh_txt_dn_deck_189();
+            this.__setProp_defl_txt_dn_deck_189();
+            this.__setProp_atkh_txt_dn_deck_189();
+            this.__setProp_atkl_txt_dn_deck_189();
+            this.__setProp_lvlh_txt_dn_deck_189();
+            this.__setProp_lvll_txt_dn_deck_189();
+            this.__setProp_attrib_cb_dn_deck_189();
+            this.__setProp_type2_cb_dn_deck_189();
+            this.__setProp_type_cb_dn_deck_189();
+            this.__setProp_card2_cb_dn_deck_189();
+            this.__setProp_card_cb_dn_deck_189();
+            this.__setProp_desc_txt_dn_deck_189();
+            this.__setProp_name_txt_dn_deck_189();
             stage.focus = null;
             this.track("deck_constructor");
             this.enter_handler = this.deckEnterHandler;
@@ -12565,14 +14191,15 @@
             this.deck_init = false;
             this.initCards();
             this.default_deck_idx = -1;
+            this.deck_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.deckCleanupE);
             return;
         }// end function
 
-        function frame190()
+        function frame191()
         {
-            this.__setProp_profile_exit_btn_dn_profile_189();
-            this.__setProp_profile_txt_dn_profile_189();
-            this.__setProp_username_txt_dn_profile_189();
+            this.__setProp_profile_exit_btn_dn_profile_190();
+            this.__setProp_profile_txt_dn_profile_190();
+            this.__setProp_username_txt_dn_profile_190();
             stage.focus = null;
             this.track("profile_viewer");
             this.enter_handler = this.profileEnterHandler;
@@ -12602,11 +14229,11 @@
             return;
         }// end function
 
-        function frame191()
+        function frame192()
         {
-            this.__setProp_my_profile_exit_btn_dn_buttons_190();
-            this.__setProp_save_profile_btn_dn_buttons_190();
-            this.__setProp_profile_txt_dn_profile_190();
+            this.__setProp_my_profile_exit_btn_dn_buttons_191();
+            this.__setProp_save_profile_btn_dn_buttons_191();
+            this.__setProp_profile_txt_dn_profile_191();
             stage.focus = null;
             this.track("my_profile");
             this.enter_handler = this.myProfileEnterHandler;
@@ -12635,13 +14262,13 @@
             return;
         }// end function
 
-        function frame192()
+        function frame193()
         {
-            this.__setProp_change_btn_dn_password_191();
-            this.__setProp_confirm_txt_dn_password_191();
-            this.__setProp_new_txt_dn_password_191();
-            this.__setProp_current_txt_dn_password_191();
-            this.__setProp_password_exit_btn_dn_password_191();
+            this.__setProp_change_btn_dn_password_192();
+            this.__setProp_confirm_txt_dn_password_192();
+            this.__setProp_new_txt_dn_password_192();
+            this.__setProp_current_txt_dn_password_192();
+            this.__setProp_password_exit_btn_dn_password_192();
             stage.focus = null;
             this.track("password");
             this.enter_handler = this.changePasswordEnterHandler;
@@ -12654,30 +14281,30 @@
             return;
         }// end function
 
-        function frame193()
+        function frame194()
         {
-            this.__setProp_admin_exit_btn_dn_admin_192();
-            this.__setProp_add_warning_btn_dn_admin_192();
-            this.__setProp_increment_strikes2_cb_dn_admin_192();
-            this.__setProp_warning_txt_dn_admin_192();
-            this.__setProp_warning_username_txt_dn_admin_192();
-            this.__setProp_cancel_duel_btn_dn_admin_192();
-            this.__setProp_cancel_username_txt_dn_admin_192();
-            this.__setProp_kick_user_btn_dn_admin_192();
-            this.__setProp_kick_username_txt_dn_admin_192();
-            this.__setProp_unban_user_btn_dn_admin_192();
-            this.__setProp_decrement_strikes_cb_dn_admin_192();
-            this.__setProp_unban_username_txt_dn_admin_192();
-            this.__setProp_ban_user_btn_dn_admin_192();
-            this.__setProp_increment_strikes_cb_dn_admin_192();
-            this.__setProp_reason_txt_dn_admin_192();
-            this.__setProp_days_txt_dn_admin_192();
-            this.__setProp_forever_rb_dn_admin_192();
-            this.__setProp_days_rb_dn_admin_192();
-            this.__setProp_ban_username_txt_dn_admin_192();
-            this.__setProp_ban_note_txt_dn_admin_192();
-            this.__setProp_get_ban_status_btn_dn_admin_192();
-            this.__setProp_status_username_txt_dn_admin_192();
+            this.__setProp_admin_exit_btn_dn_admin_193();
+            this.__setProp_add_warning_btn_dn_admin_193();
+            this.__setProp_increment_strikes2_cb_dn_admin_193();
+            this.__setProp_warning_txt_dn_admin_193();
+            this.__setProp_warning_username_txt_dn_admin_193();
+            this.__setProp_cancel_duel_btn_dn_admin_193();
+            this.__setProp_cancel_username_txt_dn_admin_193();
+            this.__setProp_kick_user_btn_dn_admin_193();
+            this.__setProp_kick_username_txt_dn_admin_193();
+            this.__setProp_unban_user_btn_dn_admin_193();
+            this.__setProp_decrement_strikes_cb_dn_admin_193();
+            this.__setProp_unban_username_txt_dn_admin_193();
+            this.__setProp_ban_user_btn_dn_admin_193();
+            this.__setProp_increment_strikes_cb_dn_admin_193();
+            this.__setProp_reason_txt_dn_admin_193();
+            this.__setProp_days_txt_dn_admin_193();
+            this.__setProp_forever_rb_dn_admin_193();
+            this.__setProp_days_rb_dn_admin_193();
+            this.__setProp_ban_username_txt_dn_admin_193();
+            this.__setProp_ban_note_txt_dn_admin_193();
+            this.__setProp_get_ban_status_btn_dn_admin_193();
+            this.__setProp_status_username_txt_dn_admin_193();
             stage.focus = null;
             this.track("admin");
             this.enter_handler = this.adminEnterHandler;
@@ -12716,12 +14343,15 @@
             return;
         }// end function
 
-        function frame194()
+        function frame195()
         {
-            this.__setProp_admin2_exit_btn_dn_admin2_193();
-            this.__setProp_alts_txt_dn_admin2_193();
-            this.__setProp_check_ip_btn_dn_admin2_193();
-            this.__setProp_ip_username_txt_dn_admin2_193();
+            this.__setProp_admin2_exit_btn_dn_admin2_194();
+            this.__setProp_comp_alts_txt_dn_admin2_194();
+            this.__setProp_check_comp_btn_dn_admin2_194();
+            this.__setProp_comp_username_txt_dn_admin2_194();
+            this.__setProp_alts_txt_dn_admin2_194();
+            this.__setProp_check_ip_btn_dn_admin2_194();
+            this.__setProp_ip_username_txt_dn_admin2_194();
             stage.focus = null;
             this.track("admin2");
             this.enter_handler = this.admin2EnterHandler;
@@ -12729,8 +14359,14 @@
             this.ip_username_txt.setFocus();
             this.check_ip_btn.addEventListener(MouseEvent.CLICK, this.ipCheckE);
             this.check_ip_btn.useHandCursor = true;
+            this.check_comp_btn.addEventListener(MouseEvent.CLICK, this.computerCheckE);
+            this.check_comp_btn.useHandCursor = true;
             this.admin_status_mc.save_btn.addEventListener(MouseEvent.CLICK, this.setAdminE);
             this.admin_status_mc.save_btn.useHandCursor = true;
+            this.reset_stats_mc.reset_btn.addEventListener(MouseEvent.CLICK, this.resetStatsE);
+            this.reset_stats_mc.reset_btn.useHandCursor = true;
+            this.super_ban_mc.ban_btn.addEventListener(MouseEvent.CLICK, this.superBanE);
+            this.super_ban_mc.ban_btn.useHandCursor = true;
             this.admin2_exit_btn.addEventListener(MouseEvent.CLICK, this.returnToMainE);
             this.admin2_exit_btn.useHandCursor = true;
             this.prev_btn.addEventListener(MouseEvent.CLICK, this.adminPrevE);
@@ -12739,6 +14375,8 @@
             if (this.admin < 3)
             {
                 this.admin_status_mc.visible = false;
+                this.reset_stats_mc.visible = false;
+                this.super_ban_mc.visible = false;
             }
             this.admin_status_mc.status_cb.enabled = false;
             this.admin_status_mc.status_cb.prompt = " ";
@@ -12747,10 +14385,10 @@
             return;
         }// end function
 
-        function frame195()
+        function frame196()
         {
-            this.__setProp_rankings_exit_btn_dn_exit_194();
-            this.__setProp_content_sp_dn_content_194();
+            this.__setProp_rankings_exit_btn_dn_exit_195();
+            this.__setProp_content_sp_dn_content_195();
             stage.focus = null;
             this.track("ranking");
             this.enter_handler = this.rankingsEnterHandler;
@@ -12766,7 +14404,7 @@
             return;
         }// end function
 
-        function frame196()
+        function frame197()
         {
             if (this.duel_starting)
             {
@@ -12774,7 +14412,7 @@
             }
             this.defeat_btn.visible = false;
             this.draw_btn.visible = false;
-            this.ass_btn.visible = false;
+            this.call_admin_btn.visible = false;
             this.kick1_btn.visible = !this.duelist && this.admin;
             this.kick2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
@@ -12809,7 +14447,7 @@
             return;
         }// end function
 
-        function frame197()
+        function frame198()
         {
             if (this.duel_starting)
             {
@@ -12817,22 +14455,17 @@
             }
             this.defeat_btn.visible = this.duelist;
             this.draw_btn.visible = this.duelist;
-            this.ass_btn.visible = this.duelist;
+            this.call_admin_btn.visible = this.duelist;
             this.kick1_btn.visible = !this.duelist && this.admin;
             this.kick2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
             this.TP_TWEEN_TIME = 0.5;
-            this.addTweens(this.tpTweenStart);
-            if (this.duelist && this.pick_turn)
-            {
-                this.addTweens(this.tpTweenClickable);
-            }
             return;
         }// end function
 
-        function frame198()
+        function frame199()
         {
-            this.__setProp_auto_draw_cb_dn_field_197();
+            this.__setProp_auto_draw_cb_dn_field_198();
             if (this.duel_starting)
             {
                 this.duel_screen_args = null;
@@ -12840,7 +14473,7 @@
             }
             this.defeat_btn.visible = this.duelist;
             this.draw_btn.visible = this.duelist;
-            this.ass_btn.visible = this.duelist;
+            this.call_admin_btn.visible = this.duelist;
             this.kick1_btn.visible = !this.duelist && this.admin;
             this.kick2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
@@ -12851,6 +14484,27 @@
             this.DIE_BOUNCE_TIME = 1.5;
             this.makeAutoDrawWhite();
             this.duelScreenEnter();
+            return;
+        }// end function
+
+        function frame200()
+        {
+            this.__setProp_reset_btn_dn_sbtns_199();
+            this.__setProp_sort_btn_dn_sbtns_199();
+            this.__setProp_swap_btn_dn_sbtns_199();
+            this.__setProp_done_siding_btn_dn_deck_199();
+            if (this.duel_starting)
+            {
+                this.duel_screen_args = null;
+                this.duel_args = this.duelCommonInitialize();
+            }
+            this.defeat_btn.visible = false;
+            this.draw_btn.visible = false;
+            this.call_admin_btn.visible = false;
+            this.kick1_btn.visible = !this.duelist && this.admin;
+            this.kick2_btn.visible = !this.duelist && this.admin;
+            this.cancel_duel_btn.visible = !this.duelist && this.admin;
+            this.sidingEnter();
             return;
         }// end function
 

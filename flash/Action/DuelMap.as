@@ -270,7 +270,6 @@
             var _loc_3:DuelCard = null;
             var _loc_4:String = null;
             var _loc_5:Boolean = false;
-            var _loc_6:Boolean = false;
             var _loc_2:* = this.header.after;
             while (_loc_2 != this.header)
             {
@@ -278,8 +277,7 @@
                 _loc_3 = _loc_2.card;
                 _loc_4 = _loc_3.front_mc.card;
                 _loc_5 = _loc_4 == "token";
-                _loc_6 = _loc_4 == "xyz";
-                if (_loc_3.position >= 6 && !_loc_3.show_back && _loc_3.id != param1 && !_loc_5 && !_loc_6)
+                if (_loc_3.position >= 6 && !_loc_3.show_back && _loc_3.id != param1 && !_loc_5)
                 {
                     return true;
                 }
@@ -293,7 +291,6 @@
             var _loc_4:DuelCard = null;
             var _loc_5:String = null;
             var _loc_6:Boolean = false;
-            var _loc_7:Boolean = false;
             var _loc_2:String = null;
             var _loc_3:* = this.header.after;
             while (_loc_3 != this.header)
@@ -302,8 +299,7 @@
                 _loc_4 = _loc_3.card;
                 _loc_5 = _loc_4.front_mc.card;
                 _loc_6 = _loc_5 == "token";
-                _loc_7 = _loc_5 == "xyz";
-                if (_loc_4.position >= 6 && !_loc_4.show_back && _loc_4.id != param1 && !_loc_6 && !_loc_7)
+                if (_loc_4.position >= 6 && !_loc_4.show_back && _loc_4.id != param1 && !_loc_6)
                 {
                     if (_loc_2 != null)
                     {
