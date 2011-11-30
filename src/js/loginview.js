@@ -5,23 +5,38 @@
 window.LoginView = View.extend({
 	id: 'loginview',
 	loaded: false,
+	activeAutoLogin: null,
 
 	init: function() {
 		this._super();
 		Sidebar.close();
 		this.setStatus(true, 0, "");
+		this.setPasswordState(true);
 
-		// Give the username field focus right after the view has been shown.
-		var uinput = this.ui.find('input[name=username]');
-		setTimeout(function() {
-			uinput.focus();
-		});
+		// Try to login automatically. If it fails, give the username field
+		// focus right after the view has been shown.
+		if (!this.autoLogin()) {
+			var uinput = this.ui.find('input[name=username]');
+			setTimeout(function() {
+				uinput.focus();
+			});
+		}
+
+		if (!window.localStorage)
+			this.ui.find('input[name=remember]').hide();
 
 		Communicator.setup(function(loaded) {
 			if (loaded) {
+				if (this.activeAutoLogin) {
+					var user = this.activeAutoLogin.user;
+					var token = this.activeAutoLogin.token;
+					this.login(user, token);
+				}
 				this.loaded = true;
 			}
 			else {
+				if (this.activeAutoLogin)
+					this.setPasswordState(true);
 				this.setStatus(false, 2, "Flash could not load.");
 			}
 		}.bind(this));
@@ -31,9 +46,54 @@ window.LoginView = View.extend({
 		var f = this.ui.find('form');
 		var that = this;
 		f.submit(function() {
-			that.login(this);
+			that.loginPressed(this);
 			return false;
 		});
+	},
+
+	rememberLogin: function(user, token) {
+		var info = token + '|' + user;
+		localStorage.rememberedLogin = info;
+	},
+
+	autoLogin: function() {
+		if (!window.localStorage) return false;
+		var info = localStorage.rememberedLogin;
+		if (info === null) return false;
+		var pos = info.indexOf('|');
+		if (pos === -1) return false;
+
+		var user = info.substr(pos+1), token = info.substr(0, pos);
+		this.activeAutoLogin = {user: user, token: token};
+
+		var f = this.ui.find('form')[0];
+		f.remember.checked = true;
+		f.username.value = user;
+		f.pwd.value = '******';
+		this.setPasswordState(false);
+
+		return true;
+	},
+
+	setPasswordState: function(enabled) {
+		var pwd = this.ui.find('input[name=pwd]');
+		pwd.attr('disabled', !enabled);
+	},
+
+	resetAutoLogin: function() {
+		var f = this.ui.find('form')[0];
+		localStorage.removeItem('rememberedLogin');
+		if (this.activeAutoLogin) {
+			this.activeAutoLogin = null;
+			this.setPasswordState(true);
+			f.remember.checked = false;
+			f.username.value = '';
+			f.pwd.value = ''
+			f.username.focus();
+		}
+		else if ($(f.remember).is(':focus')) {
+			f.pwd.focus();
+		}
 	},
 
 	setStatus: function(active, st, text) {
@@ -54,24 +114,30 @@ window.LoginView = View.extend({
 			loading.slideDown("slow");
 	},
 
-	login: function(f) {
+	loginPressed: function(f) {
 		if (!this.loaded) return;
 
 		var user = f.username.value;
 		var pass = f.pwd.value;
+		var remember = f.remember.checked;
 
 		// Silently fail on empty usernames and passwords.
 		if (user === '' || pass === '') return;
 
-		// TODO: Remember usernames.
+		var token = hex_md5(pass); // Yup.
 
-		this.setStatus(false, 1, "Logging in...");
-		this.connect(user, pass);
+		if (remember)
+			this.rememberLogin(user, token);
+
+		this.login(user, token);
 	},
 
 	handleError: function(err) {
 		if (err === 'password') {
-			this.setStatus(true, 2, "Wrong password.");
+			if (this.activeAutoLogin)
+				this.setStatus(true, 2, "Couldn't log in.");
+			else
+				this.setStatus(true, 2, "Wrong password.");
 		}
 		else if (err === 'close') {
 			this.setStatus(true, 2, "Invalid username.");
@@ -79,6 +145,8 @@ window.LoginView = View.extend({
 		else {
 			this.setStatus(true, 2, "Socket error (" + err + ").");
 		}
+
+		this.resetAutoLogin();
 	},
 
 	handleMessage: function(ev, data) {
@@ -90,16 +158,18 @@ window.LoginView = View.extend({
 			return true;
 		}
 		else {
-			// Anything else must mean we have an incorrect password.
+			// Anything else mean we either have an incorrect password, or
+			// the protocol version we're using is too old.
 			Communicator.closeConnection();
 			this.handleError('password');
 		}
 		return true;
 	},
 
-	connect: function(user, pass) {
+	login: function(user, token) {
+		this.setStatus(false, 1, "Logging in...");
 		Communicator.openConnection(function() {
-			Communicator.send(['Connect9', user, hex_md5(pass), randHex32()]);
+			Communicator.send(['Connect9', user, token, randHex32()]);
 		});
 	},
 
