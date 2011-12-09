@@ -6,19 +6,19 @@ window.Sidebar = {
 	ui: null,
 	boxes: null,
 
-	open: function() {
-		if (this.ui) return;
+	init: function() {
 		this.boxes = [];
 		this.makeUI();
+	},
+
+	show: function() {
 		$('#sidebar').css('width', '20%').css('display', 'table-cell');
 		$('#views').css('width', '80%');
 	},
 
-	close: function() {
-		if (!this.ui) return;
+	hide: function() {
 		$('#sidebar').css('width', '0%').css('display', 'none');
 		$('#views').css('width', '100%');
-		// TODO: Unregister everything.
 	},
 
 	makeUI: function() {
@@ -34,6 +34,7 @@ window.Sidebar = {
 
 	add: function(param) {
 		var box = $("<div>");
+		param.box = box;
 		box.css({
 			'border': '2px solid black',
 			'height': '300px'
@@ -49,7 +50,7 @@ window.Sidebar = {
 			'background-color': 'blue'
 		});
 		CSS.setBorderBox(header);
-		var expandArrow = $("<span></span>");
+		var expandArrow = $("<span>");
 		header.append(expandArrow);
 		box.append(header);
 
@@ -77,7 +78,11 @@ window.Sidebar = {
 	},
 
 	remove: function(ind) {
+		var param = this.boxes[ind];
 		this.boxes[ind] = null;
+
+		console.assert(param !== null);
+		param.box.remove();
 	}
 };
 

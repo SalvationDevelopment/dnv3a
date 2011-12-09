@@ -7,39 +7,49 @@ window.LoginView = View.extend({
 	loaded: false,
 	activeAutoLogin: null,
 
-	init: function() {
+	init: function(first) {
 		this._super();
-		Sidebar.close();
+
+		// Set up a default UI state. We do nothing to the username field,
+		// it might be remembered by the browser.
 		this.setStatus(true, 0, "");
 		this.setPasswordState(true);
+		var f = this.ui.find('form')[0];
+		f.remember.checked = false;
+		f.pwd.value = '';
 
-		// Try to login automatically. If it fails, give the username field
-		// focus right after the view has been shown.
-		if (!this.autoLogin()) {
-			var uinput = this.ui.find('input[name=username]');
+		// Try to log in automatically if the login screen is loaded from the
+		// start. If this fails, give the username field focus right after the
+		// view has been shown.
+		if (!(first && this.autoLogin())) {
+			var uinput = this.ui.find('input[name=username]')[0];
 			setTimeout(function() {
 				uinput.focus();
+				uinput.selectionStart = uinput.value.length;
 			});
 		}
 
 		if (!window.localStorage)
 			this.ui.find('input[name=remember]').hide();
 
-		Communicator.setup(function(loaded) {
-			if (loaded) {
-				if (this.activeAutoLogin) {
-					var user = this.activeAutoLogin.user;
-					var token = this.activeAutoLogin.token;
-					this.login(user, token);
+		if (first) {
+			// Set up the communicator, and initiate the auto-login if needed.
+			Communicator.setup(function(loaded) {
+				if (loaded) {
+					if (this.activeAutoLogin) {
+						var user = this.activeAutoLogin.user;
+						var token = this.activeAutoLogin.token;
+						this.logIn(user, token);
+					}
+					this.loaded = true;
 				}
-				this.loaded = true;
-			}
-			else {
-				if (this.activeAutoLogin)
-					this.setPasswordState(true);
-				this.setStatus(false, 2, "Flash could not load.");
-			}
-		}.bind(this));
+				else {
+					if (this.activeAutoLogin)
+						this.setPasswordState(true);
+					this.setStatus(false, 2, "Flash could not load.");
+				}
+			}.bind(this));
+		}
 	},
 
 	loadUI: function() {
@@ -88,7 +98,7 @@ window.LoginView = View.extend({
 			this.setPasswordState(true);
 			f.remember.checked = false;
 			f.username.value = '';
-			f.pwd.value = ''
+			f.pwd.value = '';
 			f.username.focus();
 		}
 		else if ($(f.remember).is(':focus')) {
@@ -129,7 +139,7 @@ window.LoginView = View.extend({
 		if (remember)
 			this.rememberLogin(user, token);
 
-		this.login(user, token);
+		this.logIn(user, token);
 	},
 
 	handleError: function(err) {
@@ -166,7 +176,7 @@ window.LoginView = View.extend({
 		return true;
 	},
 
-	login: function(user, token) {
+	logIn: function(user, token) {
 		this.setStatus(false, 1, "Logging in...");
 		Communicator.openConnection(function() {
 			Communicator.send(['Connect9', user, token, randHex32()]);
@@ -174,11 +184,8 @@ window.LoginView = View.extend({
 	},
 
 	loginSuccess: function() {
+		setupLoggedInState();
 		setView(new MenuView());
-		Sidebar.open();
-
-		// Show the global chat.
-		ChatManager.openGlobalChat();
 	}
 });
 

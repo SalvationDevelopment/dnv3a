@@ -15,10 +15,11 @@ window.View = Class.extend({
 	// generate an error.
 	handleMessage: function(ev, data) { return false; },
 
-	// A virtual function called when there is an error (such as the socket
-	// closing, or the server not responding to heartbeats).
+	// A virtual function called when there is a network error (the socket
+	// closing prematurely, the server not responding to heartbeats, or so).
+	// The connection has been closed when this is called.
 	handleError: function(err) {
-		window.setView(new ErrorView("Lost connection! (oh noes)"));
+		setView(new ErrorView("Lost connection! (oh noes)"));
 	},
 
 	// A virtual function meant to setup a view's UI. It is called from the
@@ -67,7 +68,7 @@ var Heartbeat = {
 
 	beat: function() {
 		// TODO: Check for responses after a shorter time, and at least
-		// indicate possibly disconnection.
+		// indicate possible disconnection.
 		if (!this.has) {
 			var cb = this.lost;
 			this.stop();
@@ -119,6 +120,7 @@ function handleMessage(msg) {
 }
 
 function lostConnection() {
+	Communicator.closeConnection();
 	currentView.handleError('lost-connection');
 }
 

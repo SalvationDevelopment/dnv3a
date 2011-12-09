@@ -6,7 +6,7 @@ window.ErrorView = View.extend({
 	id: 'errorview',
 	init: function(err) {
 		this._super();
-		Sidebar.close();
+		destroyLoggedInState();
 		this.ui.text(err);
 	}
 });

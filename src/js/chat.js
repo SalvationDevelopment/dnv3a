@@ -62,6 +62,13 @@ window.ChatManager = {
 		return this.globalChat;
 	},
 
+	removeAllChats: function() {
+		if (this.globalChat) {
+			this.globalChat.close();
+			this.globalChat = null;
+		}
+	},
+
 	openUserChat: function(user) {
 		return;
 	},

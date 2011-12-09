@@ -21,6 +21,15 @@ window.CSS = {
 	}
 };
 
+if (!window.console) window.console = {};
+if (!console.assert) {
+	console.assert = function(condition) {
+		if (!condition)
+			throw "Assertion failed.";
+	};
+}
+
+
 window.randTo = function(to) {
 	return Math.floor(Math.random() * 16);
 };

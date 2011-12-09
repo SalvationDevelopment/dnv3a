@@ -2,8 +2,28 @@
 ;(function() {
 "use strict";
 
-$(function() {
+window.setupLoggedInState = function() {
+	Sidebar.show();
+	ChatManager.openGlobalChat();
+	Commands.show();
+};
+
+window.destroyLoggedInState = function() {
+	Commands.hide();
+	ChatManager.removeAllChats();
+	Sidebar.hide();
+};
+
+window.doLogout = function() {
+	destroyLoggedInState();
+	Communicator.closeConnection();
 	setView(new LoginView());
+};
+
+$(function() {
+	Sidebar.init();
+	Commands.init();
+	setView(new LoginView(true));
 
 	// Keep the view maximized with a constant aspect ratio.
 	$(window).resize(function() {
