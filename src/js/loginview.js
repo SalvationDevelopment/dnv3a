@@ -179,7 +179,7 @@ window.LoginView = View.extend({
 	logIn: function(user, token) {
 		this.setStatus(false, 1, "Logging in...");
 		Communicator.openConnection(function() {
-			Communicator.send(['Connect9', user, token, randHex32()]);
+			Communicator.send(['Connect10', user, token, randHex32()]);
 		});
 	},
 
