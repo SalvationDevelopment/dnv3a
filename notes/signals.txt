@@ -9,9 +9,12 @@ List of events:
 Legend:
 
 + = we handle it
-ModStatus = 0 for regular users, >0 for mods in increasing order of importance
-  I think
+ModStatus = 0 for regular users, >0 for mods in increasing order of importance I think
 LoginToken = token gotten from the login, equal to md5(password)
+DuelMode = ar/au/tu (advanced rated, etc.)
+UserTitle = Username in 99% of cases, otherwise "Username (Something|Something else)" (dunno)
+Rating = Format "1178/437" or so, or empty
+DuelListToken = 32 random hex-chars
 
 
 Outgoing:
@@ -19,6 +22,8 @@ Outgoing:
 + Connect8,[Username],[LoginToken],[32-byte random hex]
 
 + Heartbeat -> "Heartbeat" event returned (used for testing disconnects)
+
+* Load duel room -> "Load duel room" event returned (joining/messaging can happen in between)
 
 * Get deck data -> "Get deck data" event returned
 
@@ -32,6 +37,16 @@ Ingoing:
 + Heartbeat
 
 + Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
+
+* Load duel room,Selected Deck,[Deck name, IsAdvanced :bool]*
+
+* Add duels,[DuelMode,UserTitle,Rating,Duel note,Has password :bool,Allow watch :bool,DuelListToken]*
+
+* Add watches = just like 'Add duels', not sure if the same data carries over
+
+* Remove duels,[DuelMode,UserTitle,DuelListToken]*
+
+* Remove watches = like 'Remove duels'
 
 * Timed out -> socket 'close' will come shortly
 

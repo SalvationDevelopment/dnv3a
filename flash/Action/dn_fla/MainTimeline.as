@@ -3856,15 +3856,15 @@
                 this.duel_rb.selected = true;
                 this.enable_dueling = true;
                 _loc_2 = param1[0];
-                _loc_3 = 1;
-                while (_loc_3 < param1.length)
+                i = 1;
+                while (i < param1.length)
                 {
                     
-                    _loc_4 = param1[_loc_3];
-                    _loc_5 = param1[(_loc_3 + 1)] == "true";
+                    _loc_4 = param1[i];
+                    _loc_5 = param1[i + 1] == "true";
                     _loc_6 = {label:_loc_4, data:_loc_4, advanced:_loc_5};
                     this.decklist_cb.addItem(_loc_6);
-                    _loc_3 = _loc_3 + 2;
+                    i += 2;
                 }
                 this.decklist_cb.selectedIndex = _loc_2;
                 this.updateDropdownFont();
