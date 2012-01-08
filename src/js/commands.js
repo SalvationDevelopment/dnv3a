@@ -55,6 +55,7 @@ window.Commands = {
 
 	init: function() {
 		this.ui = $("#commands");
+		CSS.setBorderBox(this.ui);
 	}
 };
 

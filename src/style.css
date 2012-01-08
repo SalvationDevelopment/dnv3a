@@ -83,18 +83,24 @@ body {
 	padding: 4px;
 	height: 40%;
 	width: 30%;
+	overflow: auto;
 	border: 2px solid black;
 	border-radius: 4px 0 0 0;
 	background-color: lightgray;
 }
 
 #commands > h2 {
-	margin: 6px 1px;
+	margin: 4px 1px 6px;
 	font-size: 130%;
 }
 
 #commands > div > .key {
-	display: inline-block;
-	width: 15px;
 	font-weight: bold;
+}
+
+
+/* === Small screen sizes === */
+
+@media (max-width:500px), (max-height: 400px) {
+	/* TODO: Put something here? */
 }
