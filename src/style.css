@@ -35,6 +35,19 @@ body {
 }
 
 
+/* === Error view === */
+
+#error-holder {
+	position: absolute;
+	width: 100%;
+	top: 100px;
+	text-align: center;
+}
+
+#error-holder > h1 {
+	color: #FEA700;
+}
+
 /* === Login view === */
 
 #loginview {

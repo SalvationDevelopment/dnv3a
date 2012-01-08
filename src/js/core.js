@@ -19,7 +19,7 @@ window.View = Class.extend({
 	// closing prematurely, the server not responding to heartbeats, or so).
 	// The connection has been closed when this is called.
 	handleError: function(err) {
-		setView(new ErrorView("Lost connection! (oh noes)"));
+		setView(new ErrorView("The connection was lost."));
 	},
 
 	// A virtual function meant to setup a view's UI. It is called from the
@@ -48,7 +48,7 @@ window.setView = function(view) {
 		currentView.close();
 		$('#'+currentView.id).removeClass('active');
 	}
-	currentView = view;
+	window.dbgCurrentView = currentView = view;
 	$('#'+currentView.id).addClass('active');
 };
 

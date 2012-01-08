@@ -81,7 +81,7 @@ window.ChatManager = {
 		if (ev === 'Global message') {
 			// TODO: Make a better color choice.
 			var st = parseInt(data[2], 10);
-			var col = (st === 0 ? 'black' : 'blue');
+			var col = (st === 0 ? 'black' : 'darkblue');
 			this.openGlobalChat().addMessage(data[0], data[1], col);
 			return true;
 		}
