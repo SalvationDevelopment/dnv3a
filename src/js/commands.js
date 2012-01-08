@@ -2,29 +2,47 @@
 ;(function() {
 "use strict";
 
+function keyToString(key, shift) {
+	var ch = String.charCodeAt;
+	if (ch('A') <= key && key <= ch('Z')) {
+		return String.fromCharCode(key + (shift ? 0 : ch('a') - ch('A')));
+	}
+	if (key === 37) return "left";
+	if (key === 38) return "up";
+	if (key === 39) return "right";
+	if (key === 40) return "down";
+	return null;
+}
+
 window.Commands = {
 	ui: null,
+	obj: null,
 	map: {},
 
-	setMap: function(map) {
+	setMap: function(obj, ar) {
 		this.ui.find("div").remove();
-		this.map = map;
-		for (var key in map) {
+		this.obj = obj;
+		var map = {};
+		for (var i = 0; i < ar.length; ++i) {
+			var mapping = ar[i];
+			var key = mapping[0], text = mapping[1], func = mapping[2];
+			map[key] = func;
+
+			// Skip hidden entries.
+			if (text === "") continue;
+
 			$("<div>")
 				.append($("<span class='key'>").text(key))
-				.append(" - " + map[key][0])
+				.append(" - " + text)
 				.appendTo(this.ui);
 		}
+		this.map = map;
 	},
 
 	keydown: function(key, shift) {
-		var ch = String.charCodeAt;
-		if (ch('A') <= key && key <= ch('Z')) {
-			if (!shift)
-				key = String.fromCharCode(key + ch('a') - ch('A'));
-			if (this.map[key])
-				this.map[key][1]();
-		}
+		key = keyToString(key, shift);
+		if (key && this.map[key])
+			this.map[key].call(this.obj);
 	},
 
 	show: function() {

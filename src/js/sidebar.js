@@ -37,9 +37,9 @@ window.Sidebar = {
 		param.box = box;
 		box.css({
 			'border': '2px solid black',
-			'height': '300px'
+			'height': '300px',
+			'border-radius': '4px'
 		});
-		CSS.setBorderRadius(box, '4px');
 
 		var header = $("<div>");
 		header.text(param.title);

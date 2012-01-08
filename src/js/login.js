@@ -79,7 +79,7 @@ window.LoginView = View.extend({
 		var f = this.ui.find('form')[0];
 		f.remember.checked = true;
 		f.username.value = user;
-		f.pwd.value = '******';
+		f.pwd.value = "******";
 		this.setPasswordState(false);
 
 		return true;
@@ -165,7 +165,6 @@ window.LoginView = View.extend({
 			var admin = parseInt(data[0], 10);
 
 			this.loginSuccess();
-			return true;
 		}
 		else {
 			// Anything else mean we either have an incorrect password, or
