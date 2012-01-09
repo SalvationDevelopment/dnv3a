@@ -15,11 +15,7 @@ var Chat = Class.extend({
 	},
 
 	makeUI: function() {
-		this.ui = $("<div>");
-		this.ui.css({
-			'padding': '2px',
-			'font-size': '90%'
-		});
+		this.ui = $("<div>").addClass('chat');
 	},
 
 	close: function() {
@@ -27,24 +23,14 @@ var Chat = Class.extend({
 	},
 
 	addMessage: function(from, message, color) {
-		var line = $("<div>");
-
-		var name = $("<span>");
-		name.css({
-			'color': color,
-			'font-weight': 'bold'
-		});
-		name.text(from + ': ');
-		line.append(name);
-
-		var msg = $("<span>");
-		msg.text(message);
-		line.append(msg);
-
 		var el = this.ui[0];
 		var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
 
-		this.ui.append(line);
+		$("<div>").addClass('chat-line').append(
+			$("<span>").addClass('chat-author').css('color', color).text(from + ": ")
+		).append(
+			$("<span>").addClass('chat-message').text(message)
+		).appendTo(this.ui);
 
 		if (scrollToBottom)
 			el.scrollTop = el.scrollHeight;

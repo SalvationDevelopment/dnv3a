@@ -54,7 +54,7 @@ Ingoing:
 
 * Offline users,[Name]*
 
-* Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
++ Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
 + Friends[,Name]*
 

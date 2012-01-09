@@ -12,13 +12,6 @@ body {
 	width: 100%; height: 100%;
 }
 
-#sidebar {
-	display: none;
-	vertical-align: top;
-	width: 0%; height: 100%;
-	background-color: gray;
-}
-
 #views {
 	display: table-cell;
 	vertical-align: top;
@@ -35,6 +28,27 @@ body {
 }
 
 
+/* === Sidebar === */
+
+#sidebar {
+	display: none;
+	vertical-align: top;
+	width: 0%; height: 100%;
+	background-color: gray;
+}
+
+.chat {
+	padding: 2px;
+	font-size: 90%;
+}
+.chat-line {
+	word-wrap: break-word;
+}
+.chat-author {
+	font-weight: bold;
+}
+
+
 /* === Error view === */
 
 #error-holder {
@@ -47,6 +61,7 @@ body {
 #error-holder > h1 {
 	color: #FEA700;
 }
+
 
 /* === Login view === */
 
