@@ -107,13 +107,13 @@ function handleMessage(msg) {
 	var data = msg.slice(1);
 	if (Heartbeat.listener(ev, data))
 		return;
+	if (Users.handleMessage(ev, data))
+		return;
+	if (Friends.handleMessage(ev, data))
+		return;
 	if (currentView.handleMessage(ev, data))
 		return;
 	if (ChatManager.handleMessage(ev, data))
-		return;
-
-	// Avoid spam in the console
-	if (ev === 'Online users' || ev === 'Offline users')
 		return;
 
 	console.warn('Interesting message: ', ev, data);

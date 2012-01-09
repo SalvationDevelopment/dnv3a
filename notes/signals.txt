@@ -56,7 +56,7 @@ Ingoing:
 
 * Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
-* Friends[,Name]*
++ Friends[,Name]*
 
 * Chat error,[Reason, e.g. "Invalid request" which happens on Unicode...]
 
