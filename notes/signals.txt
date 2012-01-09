@@ -25,6 +25,10 @@ Outgoing:
 
 * Load duel room -> "Load duel room" event returned (joining/messaging can happen in between)
 
++ Add friend,Name
+
++ Delete friend,Name
+
 * Get deck data -> "Get deck data" event returned
 
 * Private message,[Receiver],[Message]
@@ -50,14 +54,24 @@ Ingoing:
 
 * Timed out -> socket 'close' will come shortly
 
-* Online users,[Name, ModStatus?]*
++ Online users,[Name, ModStatus?]*
 
-* Offline users,[Name]*
++ Offline users,[Name]*
+
++ Add friend,Name
 
 + Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
 + Friends[,Name]*
 
-* Chat error,[Reason, e.g. "Invalid request" which happens on Unicode...]
++ Add friend,Name
+
++ Delete friend,Name
+
+* Chat error[,Reason] -> E.g. "Invalid request" which happens on Unicode... Also unlocks the chat, unless the reason is "Quick chat" (= chatting when locked, presumably).
+
+* Async error[,Reason] -> E.g. "<user> is not your friend".
+
+* Error[,Reason]
 
 * Private message,[From],[To],[Message],[ModStatus?]
