@@ -3,6 +3,7 @@
 
 body {
 	background-color: black;
+	font-family: 'Trebuchet MS',sans-serif;
 }
 #fullscreen {
 	display: table;
@@ -39,7 +40,7 @@ body {
 
 .chat {
 	padding: 2px;
-	font-size: 90%;
+	font-size: 85%;
 }
 .chat-line {
 	word-wrap: break-word;
