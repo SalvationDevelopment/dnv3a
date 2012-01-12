@@ -41,8 +41,11 @@ window.Commands = {
 
 	keydown: function(key, shift) {
 		key = keyToString(key, shift);
-		if (key && this.map[key])
+		if (key && this.map[key]) {
 			this.map[key].call(this.obj);
+			return true;
+		}
+		return false;
 	},
 
 	show: function() {
@@ -68,7 +71,9 @@ $(document).keydown(function(ev) {
 	if (ev.target.nodeName === 'INPUT')
 		return;
 
-	Commands.keydown(ev.keyCode, ev.shiftKey);
+	var used = Commands.keydown(ev.keyCode, ev.shiftKey);
+	if (used)
+		ev.preventDefault();
 });
 
 })();
