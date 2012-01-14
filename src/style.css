@@ -80,6 +80,36 @@ body {
 	font-weight: bold;
 }
 
+.debug-holder {
+	/* border-box */
+	height: 100%;
+	padding-bottom: 22px;
+	position: relative;
+}
+.debug-cont {
+	/* border-box */
+	height: 100%;
+	overflow: auto;
+	font-size: 70%;
+}
+.debug-row {
+	white-space: nowrap;
+	overflow: hidden;
+}
+.debug-row.expand {
+	white-space: normal;
+	word-wrap: break-word;
+}
+.debug-ev {
+	font-weight: bold;
+}
+.debug-filter {
+	/* border-box */
+	width: 100%;
+	position: absolute;
+	height: 22px;
+}
+
 
 /* === Error view === */
 

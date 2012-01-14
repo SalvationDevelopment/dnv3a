@@ -36,6 +36,7 @@ window.LoginView = View.extend({
 			// Set up the communicator, and initiate the auto-login if needed.
 			Communicator.setup(function(loaded) {
 				if (loaded) {
+					Debug.interceptSentMessages();
 					if (this.activeAutoLogin) {
 						var user = this.activeAutoLogin.user;
 						var token = this.activeAutoLogin.token;

@@ -99,12 +99,11 @@ var Heartbeat = {
 };
 
 
-window.messages = []; // for debugging
 function handleMessage(msg) {
-	window.messages.push(msg);
 	if (msg.length === 0) return;
 	var ev = msg[0];
 	var data = msg.slice(1);
+	Debug.handleMessage(ev, data, false);
 	if (Heartbeat.listener(ev, data))
 		return;
 	if (Users.handleMessage(ev, data))

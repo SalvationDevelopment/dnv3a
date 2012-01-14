@@ -5,8 +5,12 @@
 if (!window.console) window.console = {};
 if (!console.assert) {
 	console.assert = function(condition) {
-		if (!condition)
-			throw "Assertion failed.";
+		if (!condition) {
+			var err = new Error("Assertion failure.");
+			var stack = e.stack || e.stacktrace || e.message;
+			console.error("Assertion failure: " + stack);
+			throw err;
+		}
 	};
 }
 

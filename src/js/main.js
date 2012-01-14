@@ -23,6 +23,7 @@ window.doLogout = function() {
 $(function() {
 	Sidebar.init();
 	Commands.init();
+	Debug.init();
 	setView(new LoginView(true));
 
 	// Keep the view maximized with a constant aspect ratio.
