@@ -28,6 +28,12 @@ body {
 	background-color: white;
 }
 
+.border-box {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
 
 /* === Sidebar === */
 
@@ -36,6 +42,31 @@ body {
 	vertical-align: top;
 	width: 0%; height: 100%;
 	background-color: gray;
+}
+.sidebar-ui {
+	/* border-box */
+	height: 100%;
+	border-right: 1px solid black;
+	padding: 7px;
+}
+.sidebar-box {
+	border: 2px solid black;
+	height: 300px;
+	border-radius: 4px;
+	margin-bottom: 7px;
+}
+.sidebar-title {
+	/* border-box */
+	height: 22px;
+	padding: 1px;
+	border-bottom: 1px solid black;
+	background-color: blue;
+}
+.sidebar-content {
+	/* border-box */
+	height: 278px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 
 .chat {
@@ -105,6 +136,7 @@ body {
 /* === Commands box === */
 
 #commands {
+	/* border-box */
 	display: none;
 	position: absolute;
 	right: 0px;

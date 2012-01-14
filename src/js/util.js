@@ -2,16 +2,6 @@
 ;(function() {
 "use strict";
 
-window.CSS = {
-	setBorderBox: function(jq) {
-		jq.css({
-			'box-sizing': 'border-box',
-			'-moz-box-sizing': 'border-box',
-			'-webkit-box-sizing': 'border-box'
-		});
-	}
-};
-
 if (!window.console) window.console = {};
 if (!console.assert) {
 	console.assert = function(condition) {

@@ -7,15 +7,12 @@ var Chat = Class.extend({
 	sidebarHandle: null,
 
 	init: function(title) {
-		this.makeUI();
+		this.ui = $("<div>").addClass('chat');
+
 		this.sidebarHandle = Sidebar.add({
 			title: title,
 			element: this.ui
 		});
-	},
-
-	makeUI: function() {
-		this.ui = $("<div>").addClass('chat');
 	},
 
 	close: function() {

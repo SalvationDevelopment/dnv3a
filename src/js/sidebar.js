@@ -5,10 +5,14 @@
 window.Sidebar = {
 	ui: null,
 	boxes: null,
+	ind: 0,
 
 	init: function() {
-		this.boxes = [];
-		this.makeUI();
+		this.boxes = {};
+		this.ind = 0;
+
+		this.ui = $('<div>').addClass('sidebar-ui border-box');
+		$('#sidebar').append(this.ui);
 	},
 
 	show: function() {
@@ -21,65 +25,25 @@ window.Sidebar = {
 		$('#views').css('width', '100%');
 	},
 
-	makeUI: function() {
-		var ui = this.ui = $("<div>");
-		ui.css({
-			'height': '100%',
-			'border-right': '1px solid black',
-			'padding': '7px'
-		});
-		CSS.setBorderBox(ui);
-		$("#sidebar").append(ui);
-	},
-
 	add: function(param) {
-		var box = $("<div>");
-		param.box = box;
-		box.css({
-			'border': '2px solid black',
-			'height': '300px',
-			'border-radius': '4px'
-		});
+		var box = param.box = $('<div>').addClass('sidebar-box');
 
-		var header = $("<div>");
-		header.text(param.title);
-		header.css({
-			'height': '22px',
-			'padding': '1px',
-			'border-bottom': '1px solid black',
-			'background-color': 'blue'
-		});
-		CSS.setBorderBox(header);
-		var expandArrow = $("<span>");
-		header.append(expandArrow);
-		box.append(header);
+		$("<div>").addClass('sidebar-title border-box').text(param.title)
+			.appendTo(box);
 
-		var content = param.element;
-		content.height(278);
-		content.css({
-			'overflow-y': 'auto',
-			'overflow-x': 'hidden'
-		});
-		CSS.setBorderBox(content);
-		box.append(content);
+		param.element.addClass('sidebar-content border-box').appendTo(box);
 
 		this.ui.append(box);
 
 		// Find an empty spot for the box in the list, and add it there.
-		var spot = this.boxes.indexOf(null);
-		if (spot === -1) {
-			spot = this.boxes.length;
-			this.boxes.push(param);
-		}
-		else {
-			this.boxes[spot] = param;
-		}
-		return spot;
+		var handle = 'handle' + (this.ind++);
+		this.boxes[handle] = param;
+		return handle;
 	},
 
-	remove: function(ind) {
-		var param = this.boxes[ind];
-		this.boxes[ind] = null;
+	remove: function(handle) {
+		var param = this.boxes[handle];
+		delete this.boxes[handle];
 
 		console.assert(param !== null);
 		param.box.remove();
