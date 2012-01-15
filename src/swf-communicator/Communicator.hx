@@ -9,19 +9,14 @@ class Communicator {
 	}
 
 	private function dataHandler(e:flash.events.DataEvent) {
-		// Use some sort of ugly encoding on the data, because
-		// ExternalInterface.call sucks.
-		var enc:String = "", data:String = e.data;
-		for (i in 0...data.length) {
-			var ch:Int = data.charCodeAt(i);
-			if (ch > 255) {
-				enc += 'U' + ch + 'U';
-			}
-			else {
-				enc += hex.charAt(ch >> 4);
-				enc += hex.charAt(ch & 15);
-			}
-		}
+		// ExternalInterface.call sucks, so we have to escape some of the
+		// characters (the more reliable method of encoding everything is
+		// too inefficient).
+		var enc:String = e.data
+			.split("%").join("%25")
+			.split("&").join("%26")
+			.split("\\").join("%5c");
+
 		ExternalInterface.call("Communicator._response", enc);
 	}
 

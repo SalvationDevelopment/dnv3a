@@ -67,22 +67,12 @@ Communicator.setup = function(ready) {
 		Communicator.close = function() {
 			swf.close();
 		};
-		Communicator._response = function(enc) {
-			var pos = 0, ch, dec = '';
-			while (pos < enc.length) {
-				ch = enc.charAt(pos);
-				if (ch === 'U') {
-					var to = enc.indexOf('U', pos+1);
-					if (to === -1) break;
-					dec += String.fromCharCode(parseInt(enc.substring(pos+1, to), 10));
-					pos = to+1;
-				}
-				else {
-					dec += String.fromCharCode(parseInt(enc.substr(pos, 2), 16));
-					pos += 2;
-				}
-			}
-			resp(stringToArray(dec));
+		Communicator._response = function(data) {
+			data = data
+				.replace(/%5c/g, "\\")
+				.replace(/%26/g, "&")
+				.replace(/%25/g, "%");
+			resp(stringToArray(data));
 		};
 		Communicator._responseStatus = function(st) {
 			statusHandler(st);
