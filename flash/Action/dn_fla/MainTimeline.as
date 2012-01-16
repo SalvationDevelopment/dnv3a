@@ -4034,13 +4034,13 @@
             return;
         }// end function
 
-        public function joinDuel(param1:String, param2:String, param3:String, param4:Boolean)
+        public function joinDuel(mode:String, title:String, token:String, pwd:Boolean)
         {
-            this.entering_rated_duel = param1.charAt(1) == "r";
+            this.entering_rated_duel = mode.charAt(1) == "r";
             if (this.duel_rb.selected)
             {
-                this.join_arr = ["Join duel", param1, this.decklist_cb.selectedItem.data, param2, param3];
-                if (param4)
+                this.join_arr = ["Join duel", mode, this.decklist_cb.selectedItem.data, title, token];
+                if (pwd)
                 {
                     this.getInput("Duel Password", "Enter duel password to join duel:", "", 0, this.performJoinDuel);
                 }
@@ -4051,8 +4051,8 @@
             }
             else if (this.watch_rb.selected)
             {
-                this.join_arr = ["Watch duel", param1, param2, param3];
-                if (!this.admin && param4)
+                this.join_arr = ["Watch duel", mode, title, token];
+                if (!this.admin && pwd)
                 {
                     this.getInput("Watch Password", "Enter watch password to watch duel:", "", 0, this.performJoinDuel);
                 }
@@ -4069,22 +4069,22 @@
             return;
         }// end function
 
-        public function performJoinDuel(param1:String, param2:Boolean = false)
+        public function performJoinDuel(pass:String, noPass:Boolean = false)
         {
-            if (param1 == null && !param2)
+            if (pass == null && !noPass)
             {
                 return;
             }
-            if (param1 == "" && !param2)
+            if (pass == "" && !noPass)
             {
                 this.displayError("Password not entered");
                 return;
             }
-            if (param2)
+            if (noPass)
             {
-                param1 = "";
+                pass = "";
             }
-            this.join_arr.push(param1);
+            this.join_arr.push(pass);
             this.Send(this.join_arr);
             this.join_arr = null;
             this.lock();

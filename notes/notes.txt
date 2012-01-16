@@ -1,3 +1,2 @@
-MainTimeline::Send()
 sound 13 is the most awesome one
 Filter on (ip.src == 96.127.138.2) || (ip.dst == 96.127.138.2)

@@ -11,7 +11,9 @@ Accept-Encoding: gzip,deflate,sdch
 Accept-Language: sv-SE,sv;q=0.8,en-US;q=0.6,en;q=0.4
 Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.3
 
-remember%5Fme=true&username=simonlindholm&password=hunter2&date=Tue%20Sep%206%2023%3A41%3A14%20GMT%2B0200%202011<EOF>
+dn%5Fid=332b945193039af4a3ebf5e96c41843c&remember%5Fme=true&username=simonlindholm&password=hunter2&date=Tue%20Sep%206%2023%3A41%3A14%20GMT%2B0200%202011<EOF>
+
+dn_id is a random hex value stored in a flash cookie, used for auto-login.
 
 
 ->
@@ -29,4 +31,8 @@ Logged in,simonlindholm,2ab96390c7dbe3439de74d0c9b0b1767,false
 
 Format:
 
-[Logged in/Not logged in],[Username],[LoginToken],[admin]
+(Logged in/Not logged in), Username, LoginToken, admin [, Message]
+
+On first join, the message is:
+Welcome to the Dueling Network! Enjoy your time here.
+                         - Black Luster Soldier
