@@ -54,6 +54,7 @@ body {
 	height: 300px;
 	border-radius: 4px;
 	margin-bottom: 7px;
+	position: relative;
 }
 .sidebar-title {
 	/* border-box */
@@ -64,7 +65,10 @@ body {
 }
 .sidebar-content {
 	/* border-box */
-	height: 278px;
+	position: absolute;
+	bottom: 0;
+	top: 22px;
+	width: 100%;
 	overflow-y: auto;
 	overflow-x: hidden;
 }
