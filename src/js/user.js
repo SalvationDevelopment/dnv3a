@@ -53,8 +53,8 @@ window.Users = {
 			for (var i = 0; i < data.length; ++i) {
 				var name = data[i];
 				var user = this.map[',' + name];
-				this.dispatch('offline', user);
 				delete this.map[',' + name];
+				this.dispatch('offline', user);
 			}
 			return true;
 		}
