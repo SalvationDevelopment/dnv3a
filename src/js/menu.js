@@ -17,9 +17,9 @@ window.MenuView = View.extend({
 		this._super();
 
 		Commands.setMap(this, [
-			['d', "Duel", this.goDuel],
-			['m', "Modify deck", this.goDeck],
-			['q', "Log out", doLogout],
+			[10, 'd', "Duel", this.goDuel],
+			[11, 'm', "Modify deck", this.goDeck],
+			[100, 'q', "Log out", doLogout],
 		]);
 	}
 });

@@ -14,6 +14,10 @@ function keyToString(key, shift) {
 	return null;
 }
 
+function compareCommandPriority(a, b) {
+	return a[0] - b[0];
+}
+
 window.Commands = {
 	ui: null,
 	obj: null,
@@ -23,9 +27,10 @@ window.Commands = {
 		this.ui.find("div").remove();
 		this.obj = obj;
 		var map = {};
+		ar.sort(compareCommandPriority);
 		for (var i = 0; i < ar.length; ++i) {
 			var mapping = ar[i];
-			var key = mapping[0], text = mapping[1], func = mapping[2];
+			var key = mapping[1], text = mapping[2], func = mapping[3];
 			map[key] = func;
 
 			// Skip hidden entries.
