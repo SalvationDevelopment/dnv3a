@@ -7,10 +7,20 @@ function keyToString(key, shift) {
 	if (ch('A') <= key && key <= ch('Z')) {
 		return String.fromCharCode(key + (shift ? 0 : ch('a') - ch('A')));
 	}
-	if (key === 37) return "left";
-	if (key === 38) return "up";
-	if (key === 39) return "right";
-	if (key === 40) return "down";
+	var name = null;
+	if (key === 9) name = 'tab';
+	else if (key === 13) name = 'enter';
+	else if (key === 27) name = 'escape';
+	else if (key === 37) name = 'left';
+	else if (key === 38) name = 'up';
+	else if (key === 39) name = 'right';
+	else if (key === 40) name = 'down';
+	else if (key === 191 || key === 109) name = '/'; // or '-'
+
+	if (name) {
+		if (shift) name = 'shift-' + name;
+		return name;
+	}
 	return null;
 }
 
@@ -22,15 +32,20 @@ window.Commands = {
 	ui: null,
 	obj: null,
 	map: {},
+	forceMap: {},
 
 	setMap: function(obj, ar) {
 		this.ui.find("div").remove();
 		this.obj = obj;
-		var map = {};
+		var map = {}, forceMap = {};
 		ar.sort(compareCommandPriority);
 		for (var i = 0; i < ar.length; ++i) {
 			var mapping = ar[i];
 			var key = mapping[1], text = mapping[2], func = mapping[3];
+			if (key.startsWith('force;')) {
+				key = key.substr(6);
+				forceMap[key] = true;
+			}
 			map[key] = func;
 
 			// Skip hidden entries.
@@ -42,12 +57,15 @@ window.Commands = {
 				.appendTo(this.ui);
 		}
 		this.map = map;
+		this.forceMap = forceMap;
 	},
 
-	keydown: function(key, shift) {
+	keydown: function(key, shift, ev, needForce) {
 		key = keyToString(key, shift);
 		if (key && this.map[key]) {
-			this.map[key].call(this.obj);
+			if (needForce && !this.forceMap[key])
+				return false;
+			this.map[key].call(this.obj, ev);
 			return true;
 		}
 		return false;
@@ -71,11 +89,10 @@ $(document).keydown(function(ev) {
 	if (ev.ctrlKey || ev.metaKey)
 		return;
 
-	// If input is already going somewhere, don't use it.
-	if (ev.target.nodeName === 'INPUT')
-		return;
+	// If input is already going somewhere, require force to use it.
+	var needForce = (ev.target.nodeName === 'INPUT');
 
-	var used = Commands.keydown(ev.keyCode, ev.shiftKey);
+	var used = Commands.keydown(ev.keyCode, ev.shiftKey, ev, needForce);
 	if (used)
 		ev.preventDefault();
 });
