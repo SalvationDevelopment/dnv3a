@@ -3,6 +3,7 @@
 
 body {
 	background-color: black;
+	color: black;
 	font-family: 'Trebuchet MS',sans-serif;
 }
 #fullscreen {
@@ -112,6 +113,10 @@ body {
 	width: 100%;
 	position: absolute;
 	height: 22px;
+	border: 0 solid black;
+	border-top-width: 1px;
+	border-radius: 0 0 2px 2px;
+	background-color: #f5f5f5;
 }
 
 
@@ -164,6 +169,220 @@ body {
 }
 #loginview label.row span {
 	display: table-cell;
+}
+
+
+/* === Matchmaking view === */
+
+#mm-header {
+	position: absolute;
+}
+
+#mm-header > h1 {
+	display: inline-block;
+	margin: 2px 11px 2px 7px;
+	font-size: 40px;
+	font-weight: normal;
+	color: white;
+	text-shadow: -1px 0 black, 0 1px 1px black, 1px 0 black, 0 -1px black;
+}
+#mm-header > h1.selected {
+	font-weight: bold;
+	color: black;
+	text-shadow: 1px 1px 1px #ccc;
+}
+
+#mm-main {
+	/* border-box */
+	position: relative;
+	width: 62.5%;
+	height: 100%;
+	margin-left: 3px;
+	padding: 56px 30px 66px 0;
+	/* 30px makes the spacing to footer and commands box equal -
+	66px - 39px + 3px = 30px. */
+}
+
+#mm-main-box {
+	/* border-box */
+	height: 100%;
+	border: 1px solid black;
+	position: relative;
+}
+
+#mm-side {
+	/* border-box */
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 0; /* set to 30% when visible */
+	height: 60%;
+	overflow: hidden;
+	padding-top: 56px;
+	padding-bottom: 30px;
+}
+
+#mm-side-cont {
+	/* border-box */
+	height: 100%;
+	background-color: #e7e7e7;
+	border: 2px solid black;
+	border-radius: 4px 0 0 4px;
+}
+
+#mm-search {
+	display: none;
+	width: 207px; 
+	position: relative;
+	margin: 0 auto;
+	padding-top: 2px;
+}
+#mm-search-field > input {
+	display: block;
+	width: 205px;
+	border: 1px solid black;
+	margin: 2px 0 7px auto;
+	height: 23px;
+}
+#mm-search-rating, #mm-search-exp {
+	text-align: center;
+	margin-bottom: 10px;
+}
+#mm-search-rating > input, #mm-search-exp > input {
+	position: absolute;
+	border: 1px solid black;
+	width: 43px;
+	height: 21px;
+}
+#mm-search-rating > input:first-of-type { left: 0; }
+#mm-search-rating > input:last-of-type { right: 0; }
+#mm-search-exp > input:first-of-type { left: 0; }
+#mm-search-exp > input:last-of-type { right: 0; }
+
+#mm-search-exp > input {
+	border: 1px solid black;
+	width: 43px;
+	height: 21px;
+}
+
+.mm-tab {
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	overflow: auto;
+}
+
+.mm-tab.host {
+	padding-top: 40px;
+	text-size: 120%;
+	width: 100%;
+	text-align: center;
+}
+
+.mm-table {
+	width: 100%;
+	table-layout: fixed;
+	white-space: nowrap;
+	border-collapse: collapse;
+	cursor: default;
+}
+
+.mm-table > thead {
+	text-align: left;
+}
+.mm-th-title {}
+.watch > .mm-th-note { width: 100px; }
+.mm-th-name { width: 150px; }
+.mm-th-note {}
+.mm-th-rating { width: 75px }
+.mm-th-icons { width: 24px; }
+
+/*
+.mm-table > tbody > tr {
+	border-top: 1px solid black;
+}
+*/
+
+.mm-table tr.selected {
+	background-color: lightblue;
+}
+.mm-table td {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.mm-table td:nth-child(n+3) {
+	/* The rating and icons should always be displayed fully. */
+	overflow: visible;
+}
+.icon-nowatch {
+	background-image: url("img/nowatch.png");
+	background-position: 1px 2px;
+	background-repeat: no-repeat;
+}
+.icon-pwd {
+	background-image: url("img/key.png");
+	background-position: 3px 4px;
+	background-repeat: no-repeat;
+}
+.icon-pwd.icon-nowatch {
+	background-image: url("img/key-nowatch.png");
+	background-position: 4px 2px;
+	background-repeat: no-repeat;
+}
+
+#mm-tabs {
+	position: absolute;
+	margin: 0;
+	padding-left: 1px;
+}
+
+#mm-tabs > li {
+	display: inline-block;
+	border: 1px solid black;
+	border-width: 1px;
+	border-radius: 0 0 5px 5px;
+	margin-left: 4px;
+	padding: 1px 3px;
+	background-color: #F5F5F5;
+	white-space: nowrap;
+	vertical-align: bottom;
+	position: relative;
+	z-index: 2;
+	top: -1px;
+}
+
+#mm-tabs > li.selected {
+	font-weight: bold;
+	border-top-width: 0;
+	padding-top: 2px;
+	background-color: white;
+}
+
+#mm-footer {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	left: 20%;
+	width: 50%;
+	height: 35px;
+	border: solid 0 black;
+	border-width: 2px 0;
+	background-color: lightgray;
+	/* Total height 39px */
+
+	/* Overlap the commands box slightly, and allow the deck to overlap everything else. */
+	z-index: 3;
+	padding-right: 2px;
+}
+
+#mm-footer-cont {
+	padding: 8px 0 0 4px;
+}
+
+#mm-deck {
+	position: absolute;
+	bottom: 5px;
+	margin-left: 3px;
 }
 
 

@@ -20,10 +20,19 @@ window.doLogout = function() {
 	setView(new LoginView());
 };
 
+function preload() {
+	new Image().src = "img/loading.gif";
+	new Image().src = "img/error.png";
+	new Image().src = "img/nowatch.png";
+	new Image().src = "img/key.png";
+	new Image().src = "img/key-nowatch.png";
+}
+
 $(function() {
 	Sidebar.init();
 	Commands.init();
 	Debug.init();
+	preload();
 	setView(new LoginView(true));
 
 	// Keep the view maximized with a constant aspect ratio.

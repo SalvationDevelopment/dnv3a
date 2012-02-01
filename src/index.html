@@ -19,6 +19,7 @@
 <script src="js/chat.js"></script>
 <script src="js/error.js"></script>
 <script src="js/login.js"></script>
+<script src="js/matchmaking.js"></script>
 <script src="js/menu.js"></script>
 <script src="js/debug.js"></script>
 <script src="js/main.js"></script>
@@ -30,9 +31,6 @@
 </noscript>
 <div id="fullscreen">
 <div id="sidebar"></div>
-<div id="commands">
-	<h2>Commands</h2>
-</div>
 <div id="views">
 <div id="loginview" class="view">
 	<div class="midbox">
@@ -54,6 +52,44 @@
 	</div>
 </div>
 <div id="menuview" class="view"></div>
+<div id="matchmakingview" class="view">
+	<div id="mm-header">
+		<h1><span>Duel</span> [D]</h1>
+		<h1><span>Watch</span> [W]</h1>
+	</div>
+	<div id="mm-main">
+		<div id="mm-main-box"></div>
+		<ul id="mm-tabs"></ul>
+	</div>
+	<div id="mm-footer">
+		<div id="mm-footer-cont">
+			Deck: <select id="mm-deck"></select>
+		</div>
+	</div>
+	<div id="mm-side">
+		<div id="mm-side-cont">
+			<div id="mm-search">
+				<div id="mm-search-field">
+					Username or note:
+					<input type="input">
+				</div>
+				<div id="mm-search-rating">
+					<input type="input">
+					≤ Rating ≤
+					<input type="input">
+				</div>
+				<div id="mm-search-exp">
+					<input type="input">
+					≤ Experience ≤
+					<input type="input">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+<div id="commands">
+	<h2>Commands</h2>
 </div>
 </div>
 </body>

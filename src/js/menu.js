@@ -6,7 +6,7 @@ window.MenuView = View.extend({
 	id: 'menuview',
 
 	goDuel: function() {
-		alert("My God, it's full of cards!");
+		setView(new MatchmakingView());
 	},
 
 	goDeck: function() {

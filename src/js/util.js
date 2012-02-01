@@ -27,6 +27,12 @@ window.randHex32 = function() {
 	return ret;
 };
 
+// Calculate a%b, returning something in [0, b) even if a is negative.
+window.modulo = function(a, b) {
+	var res = a%b;
+	return (res >= 0 ? res : res + b);
+};
+
 // Function.prototype.bind polyfill, taken from MDN.
 if (!Function.prototype.bind) {
 	Function.prototype.bind = function (oThis) {

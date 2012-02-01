@@ -23,7 +23,7 @@ Outgoing:
 
 + Heartbeat -> "Heartbeat" event returned (used for testing disconnects)
 
-* Load duel room -> "Load duel room" event returned (joining/messaging can happen in between)
++ Load duel room -> "Load duel room" event returned (joining/messaging can happen in between)
 
 + Add friend,Name
 
@@ -33,7 +33,7 @@ Outgoing:
 
 * Private message,[Receiver],[Message]
 
-* Watch duel,Mode,Title,Token,Password
++ Watch duel,Mode,Title,Token,Password
 
 * Join duel,Mode,Deck,Title,Token,Password
 
@@ -46,15 +46,15 @@ Incoming:
 
 + Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
 
-* Load duel room,Selected Deck,[Deck name, IsAdvanced :bool]*
++ Load duel room,Selected Deck,[Deck name, IsAdvanced :bool]*
 
-* Add duels,[DuelMode,UserTitle,Rating,Duel note,Has password :bool,Allow watch :bool,DuelListToken]*
++ Add duels,[DuelMode,UserTitle,Rating,Duel note,Has password :bool,Allow watch :bool,DuelListToken]*
 
-* Add watches = just like 'Add duels', not sure if the same data carries over
++ Add watches = just like 'Add duels', not sure if the same data carries over
 
-* Remove duels,[DuelMode,UserTitle,DuelListToken]*
++ Remove duels,[DuelMode,UserTitle,DuelListToken]*
 
-* Remove watches = like 'Remove duels'
++ Remove watches = like 'Remove duels'
 
 * Timed out -> socket 'close' will come shortly
 
