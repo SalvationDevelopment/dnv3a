@@ -655,7 +655,7 @@ window.MatchmakingView = View.extend({
 	activeTab: null,
 	Tabs: {'AR':0, 'AU':1, 'TU':2, 'FRIEND':3, 'HOST':4},
 
-	init: function() {
+	open: function() {
 		this._super();
 		this.tabHolder = $('#mm-tabs');
 		this.mainBox = $('#mm-main-box');

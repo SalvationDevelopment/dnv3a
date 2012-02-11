@@ -9,6 +9,10 @@ window.View = Class.extend({
 	// A destructor function, called when the view is replaced by another.
 	close: function() {},
 
+	// A constructor function, called when the view has been set (after
+	// close() has been called on the last view).
+	open: function() {},
+
 	// The message handler function, called when a socket message is received.
 	// Should return a boolean indicating whether event was handled by the
 	// view; if so, it does not bubble on to the global message handler or
@@ -50,6 +54,7 @@ window.setView = function(view) {
 	}
 	window.dbgCurrentView = currentView = view;
 	$('#'+currentView.id).addClass('active');
+	currentView.open();
 };
 
 

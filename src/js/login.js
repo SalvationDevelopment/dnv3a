@@ -5,11 +5,15 @@
 window.LoginView = View.extend({
 	id: 'loginview',
 	loaded: false,
+	first: null,
 	activeAutoLogin: null,
 
 	init: function(first) {
 		this._super();
+		this.first = first;
+	},
 
+	open: function() {
 		// Set up a default UI state. We do nothing to the username field,
 		// it might be remembered by the browser.
 		this.setStatus(true, 0, "");
@@ -21,7 +25,7 @@ window.LoginView = View.extend({
 		// Try to log in automatically if the login screen is loaded from the
 		// start. If this fails, give the username field focus right after the
 		// view has been shown.
-		if (!(first && this.autoLogin())) {
+		if (!(this.first && this.autoLogin())) {
 			var uinput = this.ui.find('input[name=username]')[0];
 			setTimeout(function() {
 				uinput.focus();
@@ -32,7 +36,7 @@ window.LoginView = View.extend({
 		if (!window.localStorage)
 			this.ui.find('input[name=remember]').hide();
 
-		if (first) {
+		if (this.first) {
 			// Set up the communicator, and initiate the auto-login if needed.
 			Communicator.setup(function(loaded) {
 				if (loaded) {

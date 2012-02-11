@@ -13,9 +13,7 @@ window.MenuView = View.extend({
 		alert("I'm sorry Dave. I'm afraid I can't do that.");
 	},
 
-	init: function() {
-		this._super();
-
+	open: function() {
 		Commands.setMap(this, [
 			[10, 'd', "Duel", this.goDuel],
 			[11, 'm', "Modify deck", this.goDeck],
