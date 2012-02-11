@@ -394,7 +394,7 @@ body {
 	position: absolute;
 	right: 0px;
 	bottom: 0px;
-	padding: 4px;
+	padding: 4px 1px 0 6px;
 	height: 260px;
 	width: 250px;
 	overflow: auto;
