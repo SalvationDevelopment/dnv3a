@@ -533,13 +533,20 @@ window.SearchPanel = Class.extend({
 	init: function(view) {
 		this.view = view;
 		this.ui = $('#mm-search').hide();
-		var update = view.setCommands.bind(view);
 		this.searchField = this.ui.find('#mm-search-field > input');
 		this.ratingFields = this.ui.find('#mm-search-rating > input');
 		this.expFields = this.ui.find('#mm-search-exp > input');
+		var that = this;
 		this.ui.find('input')
-			.focus(update).blur(update)
-			.on('input', this.changeFilter.bind(this));
+			.focus(view.setCommands.bind(view))
+			.on('input', this.changeFilter.bind(this))
+			.blur(function() {
+				// Close the search box if there is no active filter.
+				if (!that.nextFilter)
+					that.close();
+
+				view.setCommands();
+			});
 		this.clear();
 	},
 
@@ -566,9 +573,6 @@ window.SearchPanel = Class.extend({
 			[33, "<esc>", "Unfocus field"],
 			[0, 'force;escape', '', function(ev) { ev.target.blur(); }]
 		);
-
-		// TODO: If no fields are filled in, make the escape key hide the
-		// search panel?
 
 		// Prevent default tab behavior at the edges.
 		if (focused[0] === this.expFields[1])
