@@ -99,6 +99,20 @@ var Heartbeat = {
 };
 
 
+// Register a function for checking whether a message is just dropping in late,
+// in which case it should not show up as an "Interesting message".
+var lateMessageHandler = null;
+var lateMessageTimer = null;
+window.ignoreLateMessages = function(f) {
+	lateMessageHandler = f;
+	if (lateMessageTimer !== null)
+		clearTimeout(lateMessageTimer);
+	lateMessageTimer = setTimeout(function() {
+		lateMessageHandler = null;
+		lateMessageTimer = null;
+	}, 500);
+}
+
 function handleMessage(msg) {
 	if (msg.length === 0) return;
 	var ev = msg[0];
@@ -113,6 +127,9 @@ function handleMessage(msg) {
 	if (currentView.handleMessage(ev, data))
 		return;
 	if (ChatManager.handleMessage(ev, data))
+		return;
+
+	if (lateMessageHandler && lateMessageHandler(ev, data))
 		return;
 
 	console.warn('Interesting message: ', ev, data);

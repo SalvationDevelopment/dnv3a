@@ -695,8 +695,8 @@ window.MatchmakingView = View.extend({
 	},
 
 	goBack: function() {
+		ignoreLateMessages(this.ignoreLateMessage);
 		Communicator.send(['Exit duel room']);
-		// TODO: Handle late messages.
 		setView(new MenuView());
 	},
 
@@ -753,6 +753,7 @@ window.MatchmakingView = View.extend({
 
 	setWatch: function(watch) {
 		if (this.watch === watch) return;
+		ignoreLateMessages(this.ignoreLateMessage);
 		var lastTab = this.activeTab;
 		this.destroyMode();
 		this.watch = watch;
@@ -858,6 +859,11 @@ window.MatchmakingView = View.extend({
 		this.setCommands();
 	},
 
+	ignoreLateMessage: function(ev, data) {
+		return (ev === 'Add duels' || ev === 'Add watches' ||
+		        ev === 'Remove duels' || ev === 'Remove watches');
+	},
+
 	handleInitMessage: function(data) {
 		if (data.length <= 1) {
 			// No deck, go into watch mode and stay there.
@@ -902,18 +908,11 @@ window.MatchmakingView = View.extend({
 		if (ev === 'Watch duel') {
 			Communicator.send(['Unsubscribe']);
 			window.alert("Now watching a duel! See the console spam.");
-			// TODO: Handle late messages.
+			ignoreLateMessages(this.ignoreLateMessage);
 			return false;
 		}
 
-		if (ev === 'Add duels' || ev === 'Add watches') {
-			if (this.watch !== (ev === 'Add watches')) {
-				// Ignore dueling info of the wrong kind, that still appears for
-				// a few seconds after switching mode.
-				// TODO: Do this in a more proper way.
-				return true;
-			}
-
+		if (ev === (this.watch ? 'Add watches' : 'Add duels')) {
 			var first = !this.hasFirstDuels;
 			this.hasFirstDuels = true;
 
@@ -952,10 +951,7 @@ window.MatchmakingView = View.extend({
 
 			return true;
 		}
-		if (ev === 'Remove duels' || ev === 'Remove watches') {
-			if (this.watch !== (ev === 'Remove watches'))
-				return true;
-
+		if (ev === (this.watch ? 'Remove watches' : 'Remove duels')) {
 			for (var i = 0; i < data.length; ) {
 				var duel = {
 					mode: data[i++],
