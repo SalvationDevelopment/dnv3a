@@ -17,10 +17,12 @@ body {
 #views {
 	display: table-cell;
 	vertical-align: top;
+	position: relative;
 	width: 100%; height: 100%;
 }
 
 .view {
+	position: relative;
 	display: none;
 }
 .view.active {
@@ -195,12 +197,11 @@ body {
 #mm-main {
 	/* border-box */
 	position: relative;
-	width: 62.5%;
+	width: 100%;
 	height: 100%;
-	margin-left: 3px;
-	padding: 56px 30px 66px 0;
-	/* 30px makes the spacing to footer and commands box equal -
-	66px - 39px + 3px = 30px. */
+	padding: 56px 277px 66px 3px;
+	/* The values of 277px / 66px make the spacing to footer and commands box
+	both equal to 27px: 277px - 250px = 66px - 39px = 27px. */
 }
 
 #mm-main-box {
@@ -211,15 +212,14 @@ body {
 }
 
 #mm-side {
-	/* border-box */
 	position: absolute;
 	right: 0;
 	top: 0;
-	width: 0; /* set to 30% when visible */
-	height: 60%;
+	width: 0; /* set to 250px when visible */
+	bottom: 287px;
 	overflow: hidden;
 	padding-top: 56px;
-	padding-bottom: 30px;
+	/* 287px is 27px above the commands box, to use a common spacing everywhere. */
 }
 
 #mm-side-cont {
@@ -292,7 +292,7 @@ body {
 }
 .mm-th-title {}
 .watch > .mm-th-note { width: 100px; }
-.mm-th-name { width: 150px; }
+.mm-th-name { width: 25%; }
 .mm-th-note {}
 .mm-th-rating { width: 75px }
 .mm-th-icons { width: 24px; }
@@ -360,19 +360,16 @@ body {
 
 #mm-footer {
 	position: absolute;
+	z-index: 3;
 	bottom: 0;
 	left: 0;
-	left: 20%;
-	width: 50%;
+	right: 248px;
 	height: 35px;
 	border: solid 0 black;
 	border-width: 2px 0;
 	background-color: lightgray;
-	/* Total height 39px */
-
-	/* Overlap the commands box slightly, and allow the deck to overlap everything else. */
-	z-index: 3;
-	padding-right: 2px;
+	/* Total height 39px. The distance from the right is 2px less than the
+	width of the commands box, to overlap it slightly. */
 }
 
 #mm-footer-cont {
@@ -395,8 +392,8 @@ body {
 	right: 0px;
 	bottom: 0px;
 	padding: 4px;
-	height: 40%;
-	width: 30%;
+	height: 260px;
+	width: 250px;
 	overflow: auto;
 	border: 2px solid black;
 	border-radius: 4px 0 0 0;

@@ -551,7 +551,7 @@ window.SearchPanel = Class.extend({
 	open: function() {
 		this.isOpen = true;
 		this.ui.show();
-		$('#mm-side').stop().animate({width: '30%'}, 70);
+		$('#mm-side').stop().animate({width: 250}, 70);
 		this.searchField.focus();
 		this.view.setCommands();
 	},
@@ -673,7 +673,6 @@ window.MatchmakingView = View.extend({
 	loadUI: function() {
 		$('#mm-main').addClass('border-box');
 		$('#mm-main-box').addClass('border-box');
-		$('#mm-side').addClass('border-box');
 		$('#mm-side-cont').addClass('border-box');
 	},
 
