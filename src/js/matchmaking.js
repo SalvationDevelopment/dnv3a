@@ -188,7 +188,7 @@ var MatchTab = Tab.extend({
 	},
 
 	isSelection: function(sel) {
-		return (this.selection ? this.selection[0] === sel[0] : !!sel);
+		return (this.selection ? sel && this.selection[0] === sel[0] : !sel);
 	},
 
 	select: function(sel, scrollIntoView) {
