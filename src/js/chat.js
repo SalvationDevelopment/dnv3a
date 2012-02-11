@@ -2,6 +2,39 @@
 ;(function() {
 "use strict";
 
+function urlToLink(text) {
+	var url;
+	if (text.startsWith("http://") || text.startsWith("https://"))
+		url = text;
+	else
+		url = "http://" + text;
+	var attrHTML = url.replace(/"/g, "&quot;");
+	return "<a href=\"" + attrHTML + "\" target=\"_blank\">" + text + "</a>";
+}
+
+function linkify(text) {
+	var rest = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+	var out = "";
+
+	for (;;) {
+		var pos = rest.search(/( |\(|^)(http:\/\/|https:\/\/|www\.)/);
+		if (pos < 0) {
+			out += rest;
+			break;
+		}
+
+		if (/[ (]/.test(rest.charAt(pos))) ++pos;
+		out += rest.substr(0, pos);
+		rest = rest.substr(pos);
+
+		var end = rest.search(/$|,| |\.(\W|$)|\)(\.\W|\.$|[,!?)]|$)/);
+		if (/\?!/.test(rest.charAt(end-1))) --end;
+		out += urlToLink(rest.substr(0, end));
+		rest = rest.substr(end);
+	}
+	return out;
+}
+
 var Chat = Class.extend({
 	ui: null,
 	sidebarHandle: null,
@@ -26,7 +59,7 @@ var Chat = Class.extend({
 		$("<div>").addClass('chat-line').append(
 			$("<span>").addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
-			$("<span>").addClass('chat-message').text(message)
+			$("<span>").addClass('chat-message').html(linkify(message))
 		).appendTo(this.ui);
 
 		if (scrollToBottom)
