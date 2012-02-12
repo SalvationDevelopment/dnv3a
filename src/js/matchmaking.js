@@ -137,6 +137,9 @@ var MatchTab = Tab.extend({
 		var that = this;
 		var selectClickedRow = function(e) {
 			that.select($(this), (this === that.headSelection[0]));
+
+			// Fake focusing the row.
+			document.activeElement.blur();
 			e.preventDefault();
 		};
 		this.table.on('mousedown', 'tr', selectClickedRow);

@@ -3,13 +3,21 @@
  * MIT Licensed.
  */
 // Inspired by base2 and Prototype
-// Slightly modified for use in strict mode, from http://ejohn.org/blog/simple-javascript-inheritance/.
+// http://ejohn.org/blog/simple-javascript-inheritance/
+// Modifications:
+//  - Works in strict mode.
+//  - A function extendObject was added, to give |new (A.extend({...})| a nice syntax.
 (function(){
   "use strict";
-  var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/, extend;
+  var initializing = false, fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/,
+      extend, extendObject;
 
   // The base Class implementation (does nothing)
   window.Class = function(){};
+
+  Class.extendObject = extendObject = function(prop) {
+	  return new (this.extend(prop));
+  };
  
   // Create a new Class that inherits from this class
   Class.extend = extend = function(prop) {
@@ -60,6 +68,7 @@
 
     // And make this class extendable
     Class.extend = extend;
+    Class.extendObject = extendObject;
    
     return Class;
   };

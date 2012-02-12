@@ -38,6 +38,7 @@ function linkify(text) {
 var Chat = Class.extend({
 	ui: null,
 	sidebarHandle: null,
+	ignoreHandle: null,
 
 	init: function(title) {
 		this.ui = $("<div>").addClass('chat');
@@ -46,21 +47,43 @@ var Chat = Class.extend({
 			title: title,
 			element: this.ui
 		});
+		this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
 
 	close: function() {
 		Sidebar.remove(this.sidebarHandle);
+		IgnoreList.unlisten(this.ignoreHandle);
+	},
+
+	ignoreListener: function(ev, name) {
+		if (ev === 'add') {
+			this.ui.find('div').each(function() {
+				if ($(this).find('.chat-author').text() === name + ": ") {
+					$(this).remove();
+				}
+			});
+		}
 	},
 
 	addMessage: function(from, message, color) {
+		if (IgnoreList.has(from))
+			return;
+
 		var el = this.ui[0];
 		var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
 
-		$("<div>").addClass('chat-line').append(
+		var line = $('<div>').addClass('chat-line').append(
 			$("<span>").addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
 			$("<span>").addClass('chat-message').html(linkify(message))
 		).appendTo(this.ui);
+
+		line.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
+			var menu = $('#contextmenu').empty();
+			$('<menuitem>').attr('label', "Ignore user").click(function() {
+				IgnoreList.add(from);
+			}).appendTo(menu);
+		});
 
 		if (scrollToBottom)
 			el.scrollTop = el.scrollHeight;

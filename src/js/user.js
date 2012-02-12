@@ -16,20 +16,8 @@ window.User = Class.extend({
 	}
 });
 
-window.Users = {
+window.Users = Listenable.extendObject({
 	map: {},
-	cbMap: {},
-	cbInd: 0,
-
-	listen: function(callback) {
-		var handler = 'cb' + (this.cbInd++);
-		this.cbMap[handler] = callback;
-		return handler;
-	},
-
-	unlisten: function(handler) {
-		delete this.cbMap[handler];
-	},
 
 	isOnline: function(name) {
 		return (this.getUser(name) !== null);
@@ -61,37 +49,50 @@ window.Users = {
 	},
 
 	sendCurrentInfo: function(handler) {
-		var cb = this.cbMap[handler];
+		var cb = this.getSingleDispatcher(handler);
 		for (var ind in this.map) {
 			var user = this.map[ind];
 			cb('online', user);
 		}
+	}
+});
+
+window.IgnoreList = Listenable.extendObject({
+	list: [],
+	map: {},
+
+	has: function(name) {
+		return this.map.hasOwnProperty(',' + name);
 	},
 
-	dispatch: function() {
-		for (var cb in this.cbMap) {
-			var cb = this.cbMap[cb];
-			cb.apply(cb, arguments);
-		}
-	}
-};
+	add: function(name) {
+		this.map[',' + name] = true;
+		this.list.push(name);
+		this.dispatch('add', name);
+		this.save();
+	},
 
-window.Friends = {
+	save: function() {
+		try {
+			localStorage.dnIgnore = this.list.map(encodeURIComponent).join(',');
+		} catch(e) {}
+	},
+
+	load: function() {
+		try {
+			this.list = localStorage.dnIgnore.split(',').map(decodeURIComponent);
+			var that = this;
+			this.list.forEach(function(name) {
+				that.map[',' + name] = true;
+			});
+		} catch(e) {}
+	}
+});
+
+window.Friends = Listenable.extendObject({
 	loaded: false,
-	cbMap: {},
-	cbInd: 0,
 	map: {},
 	friends: [],
-
-	listen: function(callback) {
-		var handler = 'cb' + (this.cbInd++);
-		this.cbMap[handler] = callback;
-		return handler;
-	},
-
-	unlisten: function(handler) {
-		delete this.cbMap[handler];
-	},
 
 	isFriend: function(name) {
 		return !!this.map[',' + name];
@@ -163,20 +164,13 @@ window.Friends = {
 	},
 
 	sendCurrentInfo: function(handler) {
-		var cb = this.cbMap[handler];
+		var cb = this.getSingleDispatcher(handler);
 		this.friends.forEach(function(name) {
 			cb('friend', name);
 			var user = Users.getUser(name);
 			if (user) cb('online', user);
 		});
-	},
-
-	dispatch: function() {
-		for (var handler in this.cbMap) {
-			var cb = this.cbMap[handler];
-			cb.apply(cb, arguments);
-		}
 	}
-};
+});
 
 })();

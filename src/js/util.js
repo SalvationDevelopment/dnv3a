@@ -52,4 +52,34 @@ if (!Function.prototype.bind) {
 	};
 }
 
+window.Listenable = Class.extend({
+	cbMap: null,
+	cbInd: 0,
+
+	init: function() {
+		this.cbMap = {};
+	},
+
+	listen: function(callback) {
+		var handler = 'cb' + (this.cbInd++);
+		this.cbMap[handler] = callback;
+		return handler;
+	},
+
+	unlisten: function(handler) {
+		delete this.cbMap[handler];
+	},
+
+	dispatch: function() {
+		for (var handler in this.cbMap) {
+			var cb = this.cbMap[handler];
+			cb.apply(cb, arguments);
+		}
+	},
+
+	getSingleDispatcher: function(handler) {
+		return this.cbMap[handler];
+	}
+});
+
 })();
