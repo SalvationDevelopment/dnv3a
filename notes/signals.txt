@@ -42,6 +42,14 @@ Incoming:
 
 + Connected, {ModStatus}
 
++ Rejected -> Can't connect for whatever reason (incorrect username/password or wrong protocol, usually)
+
++ Already logged in
+
++ Banned
+
++ Over limit
+
 + Heartbeat
 
 + Global message, Name, Message, {ModStatus} -> message in global chat

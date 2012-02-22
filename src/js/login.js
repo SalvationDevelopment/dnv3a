@@ -95,9 +95,12 @@ window.LoginView = View.extend({
 		pwd.attr('disabled', !enabled);
 	},
 
+	removeAutoLogin: function() {
+		localStorage.removeItem('rememberedLogin');
+	},
+
 	resetAutoLogin: function() {
 		var f = this.ui.find('form')[0];
-		localStorage.removeItem('rememberedLogin');
 		if (this.activeAutoLogin) {
 			this.activeAutoLogin = null;
 			this.setPasswordState(true);
@@ -153,9 +156,20 @@ window.LoginView = View.extend({
 				this.setStatus(true, 2, "Couldn't log in.");
 			else
 				this.setStatus(true, 2, "Wrong password.");
+			this.removeAutoLogin();
 		}
 		else if (err === 'close') {
 			this.setStatus(true, 2, "Invalid username.");
+			this.removeAutoLogin();
+		}
+		else if (err === 'already') {
+			this.setStatus(true, 2, "Already logged in elsewhere.");
+		}
+		else if (err === 'banned') {
+			this.setStatus(true, 2, "You are banned.");
+		}
+		else if (err === 'limit') {
+			this.setStatus(true, 2, "The server is over capacity.");
 		}
 		else {
 			this.setStatus(true, 2, "Socket error (" + err + ").");
@@ -172,10 +186,21 @@ window.LoginView = View.extend({
 			this.loginSuccess();
 		}
 		else {
-			// Anything else mean we either have an incorrect password, or
-			// the protocol version we're using is too old.
 			Communicator.closeConnection();
-			this.handleError('password');
+			if (ev === 'Already logged in') {
+				this.handleError('already');
+			}
+			else if (ev === 'Banned') {
+				this.handleError('banned');
+			}
+			else if (ev === 'Over limit') {
+				this.handleError('limit');
+			}
+			else {
+				// We probably have an incorrect password, or the protocol
+				// version we're using is too old. Assume the former.
+				this.handleError('password');
+			}
 		}
 		return true;
 	},
