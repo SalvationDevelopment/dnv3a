@@ -12,72 +12,70 @@ Legend:
 ModStatus = 0 for regular users, >0 for mods in increasing order of importance I think
 LoginToken = token gotten from the login, equal to md5(password)
 DuelMode = ar/au/tu (advanced rated, etc.)
-UserTitle = Username in 99% of cases, otherwise "Username (Something|Something else)" (dunno)
+UserTitle = Username in duel mode, "User1 ({Rating}) | User2 ({Rating})" in watch mode
 Rating = Format "1178/437" or so, or empty
 DuelListToken = 32 random hex-chars
 
 
 Outgoing:
 
-+ Connect8,[Username],[LoginToken],[32-byte random hex]
++ Connect10, Username, {LoginToken}, 32-byte random hex
 
 + Heartbeat -> "Heartbeat" event returned (used for testing disconnects)
 
 + Load duel room -> "Load duel room" event returned (joining/messaging can happen in between)
 
-+ Add friend,Name
++ Add friend, Name
 
-+ Delete friend,Name
++ Delete friend, Name
 
 * Get deck data -> "Get deck data" event returned
 
-* Private message,[Receiver],[Message]
+* Private message, Receiver, Message
 
-+ Watch duel,Mode,Title,Token,Password
++ Watch duel, Mode, Title, Token, Password
 
-* Join duel,Mode,Deck,Title,Token,Password
+* Join duel, Mode, Deck, Title, Token, Password
 
 
 Incoming:
 
-+ Connected,[ModStatus?]
++ Connected, {ModStatus}
 
 + Heartbeat
 
-+ Global message,Name,Message,(0,1,2,3,4 depending on rank) -> message in global chat
++ Global message, Name, Message, {ModStatus} -> message in global chat
 
-+ Load duel room,Selected Deck,[Deck name, IsAdvanced :bool]*
++ Load duel room, Selected Deck, (Deck name, IsAdvanced :bool)*
 
-+ Add duels,[DuelMode,UserTitle,Rating,Duel note,Has password :bool,Allow watch :bool,DuelListToken]*
++ Add duels, ({DuelMode}, {UserTitle}, {Rating}, Duel note, Has password :bool, Allow watch :bool, {DuelListToken})*
 
-+ Add watches = just like 'Add duels', not sure if the same data carries over
++ Add watches = same format as 'Add duels', see matchmaking.js for details
 
-+ Remove duels,[DuelMode,UserTitle,DuelListToken]*
++ Remove duels, ({DuelMode}, {UserTitle}, {DuelListToken})*
 
 + Remove watches = like 'Remove duels'
 
 * Timed out -> socket 'close' will come shortly
 
-+ Online users,[Name, ModStatus?]*
++ Online users, (Name, {ModStatus})*
 
-+ Offline users,[Name]*
-
-+ Add friend,Name
++ Offline users, Name*
 
 + Chat unlock -> You can now chat again! (The chat is locked on start and after sending messages.)
 
-+ Friends[,Name]*
++ Friends, Name*
 
-+ Add friend,Name
++ Add friend, Name
 
-+ Delete friend,Name
++ Delete friend, Name
 
-* Chat error[,Reason] -> E.g. "Invalid request" which happens on Unicode... Also unlocks the chat, unless the reason is "Quick chat" (= chatting when locked, presumably).
+* Chat error [, Reason] -> E.g. "Invalid request" which happens on Unicode... Also unlocks the chat, unless the reason is "Quick chat" (= chatting when locked, presumably).
 
-* Async error[,Reason] -> E.g. "<user> is not your friend".
+* Async error [, Reason] -> E.g. "<user> is not your friend".
 
-* Error[,Reason]
+* Error [, Reason]
 
-* Private message,[From],[To],[Message],[ModStatus?]
+* Private message, From, To, Message, {ModStatus}
 
-* Leave duel,Reason[,Alternative Duel Offer Message]
+* Leave duel, Reason [, Alternative Duel Offer Message]
