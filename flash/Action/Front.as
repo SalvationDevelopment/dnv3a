@@ -205,7 +205,7 @@
 
         public function setName(param1:String)
         {
-            var _loc_6:String = null;
+            var _loc_7:String = null;
             if (this.name_width == undefined)
             {
                 this.name_width = this.name_txt.width;
@@ -219,24 +219,31 @@
             _loc_3.font = "Palatino Linotype";
             _loc_3.bold = true;
             _loc_3.size = 33;
-            var _loc_4:Boolean = false;
-            var _loc_5:* = 0;
-            while (_loc_5 < param1.length)
+            var _loc_4:* = new TextFormat();
+            new TextFormat().font = "MS UI Gothic";
+            _loc_4.size = 33;
+            var _loc_5:Boolean = false;
+            var _loc_6:* = 0;
+            while (_loc_6 < param1.length)
             {
                 
-                _loc_6 = param1.charAt(_loc_5);
-                if (_loc_6 > "~" && _loc_6 != "ã")
+                _loc_7 = param1.charAt(_loc_6);
+                if (_loc_7 == "☆")
                 {
-                    this.name_txt.setTextFormat(_loc_3, _loc_5, (_loc_5 + 1));
-                    _loc_4 = true;
+                    this.name_txt.setTextFormat(_loc_4, _loc_6, (_loc_6 + 1));
+                }
+                else if (_loc_7 > "~" && _loc_7 != "ã")
+                {
+                    this.name_txt.setTextFormat(_loc_3, _loc_6, (_loc_6 + 1));
+                    _loc_5 = true;
                 }
                 else
                 {
-                    this.name_txt.setTextFormat(_loc_2, _loc_5, (_loc_5 + 1));
+                    this.name_txt.setTextFormat(_loc_2, _loc_6, (_loc_6 + 1));
                 }
-                _loc_5 = _loc_5 + 1;
+                _loc_6 = _loc_6 + 1;
             }
-            if (_loc_4)
+            if (_loc_5)
             {
                 this.name_txt.y = this.name_y - 8;
             }

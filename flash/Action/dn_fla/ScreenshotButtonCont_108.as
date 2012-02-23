@@ -46,7 +46,6 @@
 
         public function screenshotComplete(event:Event)
         {
-            trace("complete");
             this.screenshot_btn.visible = true;
             this.camera_flash_mc.visible = false;
             this.camera_glow_mc.visible = false;
@@ -71,7 +70,6 @@
 
         public function screenshotError(event:IOErrorEvent = null)
         {
-            trace("error");
             this.screenshot_btn.visible = true;
             this.camera_flash_mc.visible = false;
             this.camera_glow_mc.visible = false;

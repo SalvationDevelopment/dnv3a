@@ -91,6 +91,18 @@
             return;
         }// end function
 
+        public function useBitmapData(param1:BitmapData)
+        {
+            this.uiloader_mc.visible = false;
+            this.progress_mc.visible = false;
+            this.removeBitmap();
+            this.bitmap = new Bitmap(param1, "auto", true);
+            this.bitmap.width = this.uiloader_mc.width;
+            this.bitmap.height = this.uiloader_mc.height;
+            addChild(this.bitmap);
+            return;
+        }// end function
+
         public function loadTokenPicture()
         {
             this.uiloader_mc.visible = false;

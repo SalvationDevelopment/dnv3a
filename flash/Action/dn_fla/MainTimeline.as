@@ -1,5 +1,6 @@
 ﻿package dn_fla
 {
+    import com.adobe.images.*;
     import com.hurlant.crypto.*;
     import com.hurlant.crypto.symmetric.*;
     import com.hurlant.util.*;
@@ -29,7 +30,9 @@
         public var comp_username_txt:TextInput;
         public var cancel_duel_btn:Button;
         public var back_mc:MovieClip;
+        public var avatar_browse_mc:MovieClip;
         public var ranking_txt:TextField;
+        public var puzzle_area_mc:MovieClip;
         public var search13_mc:SearchCard;
         public var search1_mc:SearchCard;
         public var extra5_mc:DeckCard;
@@ -46,6 +49,7 @@
         public var by_wins_mc:MovieClip;
         public var kick_user_btn:Button;
         public var unban_user_btn:Button;
+        public var back_browse_mc:MovieClip;
         public var delete_friend_btn:SimpleButton;
         public var draws_txt:TextField;
         public var key_mc:MovieClip;
@@ -64,8 +68,8 @@
         public var admin2_exit_btn:Button;
         public var check_comp_btn:Button;
         public var ban_note_txt:TextArea;
-        public var color1_cp:ColorPicker;
         public var back_left_btn:SimpleButton;
+        public var color1_cp:ColorPicker;
         public var search7_mc:SearchCard;
         public var side14_mc:DeckCard;
         public var deck59_mc:DeckCard;
@@ -143,6 +147,7 @@
         public var title_mc:MovieClip;
         public var die_btn:SimpleButton;
         public var avatar2_mc:SquarePicture;
+        public var avatar_back2_mc:MovieClip;
         public var rock1_mc:MovieClip;
         public var by_rating_heading_mc:MovieClip;
         public var comp_alts_txt:TextArea;
@@ -163,6 +168,7 @@
         public var field_mc:SquarePicture;
         public var kick2_btn:Button;
         public var watchers_mc:MovieClip;
+        public var avatar_back1_mc:MovieClip;
         public var check_ip_btn:Button;
         public var add_warning_btn:Button;
         public var right_btn:SimpleButton;
@@ -232,6 +238,7 @@
         public var by_wins_heading_mc:MovieClip;
         public var reason_txt:TextInput;
         public var icon1_mc:MovieClip;
+        public var puzzle_mc:MovieClip;
         public var extra2_mc:DeckCard;
         public var side3_mc:DeckCard;
         public var deck51_mc:DeckCard;
@@ -317,6 +324,7 @@
         public var scissors1_mc:MovieClip;
         public var paper1_mc:MovieClip;
         public var icon5_mc:MovieClip;
+        public var donation_reward_txt:TextField;
         public var send_pm_btn:SimpleButton;
         public var search16_mc:SearchCard;
         public var search2_mc:SearchCard;
@@ -361,6 +369,7 @@
         public var super_ban_mc:MovieClip;
         public var strikes_txt:TextField;
         public var color2_cp:ColorPicker;
+        public var redeem_donation_btn:Button;
         public var search10_mc:SearchCard;
         public var extra4_mc:DeckCard;
         public var side11_mc:DeckCard;
@@ -381,8 +390,6 @@
         public var AVATAR_START:Object;
         public var BACK_START:Object;
         public var bgmusic:Sound;
-        public var COMPONENT_FONT:String;
-        public var COMPONENT_SIZE:int;
         public var display_box_callback:Function;
         public var input_callback:Function;
         public var combo_callback:Function;
@@ -416,11 +423,6 @@
         public var connection_success:Boolean;
         public var incoming_handler:Function;
         public var admin:int;
-        public var friends:Object;
-        public var publicHtmlText:String;
-        public var publicHtmlLines:int;
-        public var num_friends_online:int;
-        public var num_admins_online:int;
         public var num_new_msgs:int;
         public var chat_lock:Boolean;
         public var title_usernames:Object;
@@ -434,6 +436,7 @@
         public var entering_rated_duel:Boolean;
         public var duelroom_rbg:RadioButtonGroup;
         public var join_arr:Array;
+        public var join_duel_kick:String;
         public var alternate_join_offer:String;
         public var deck_init:Boolean;
         public var deck:Array;
@@ -473,20 +476,21 @@
         public var saved_back_color1:int;
         public var saved_back_color2:int;
         public var saved_profile:String;
-        public var my_avatar:String;
+        public var new_avatar:String;
+        public var new_avatar2:String;
+        public var new_back:String;
+        public var new_back2:String;
         public var num_wins:int;
         public var num_rep:int;
         public var avatars:Array;
         public var backs:Array;
         public var outlined_avatar:MovieClip;
-        public var saving_avatar:String;
-        public var saving_back:String;
-        public var saving_back_color1:int;
-        public var saving_back_color2:int;
-        public var saving_profile:String;
         public var my_profile_exiting:Boolean;
-        public var my_back:String;
         public var card_back_idx:int;
+        public var browse_fr:FileReference;
+        public var browse_avatar:Boolean;
+        public var browse_loader:Loader;
+        public var browse_ba:ByteArray;
         public var ban_username:String;
         public var bantime_rbg:RadioButtonGroup;
         public var admin_username:String;
@@ -503,7 +507,6 @@
         public var watchHtmlText:String;
         public var watchHtmlLines:int;
         public var duelHtmlText:String;
-        public var duelHtmlLines:int;
         public var pictures_socket:Socket;
         public var preload_array:ByteArray;
         public var decrypted_preload:Object;
@@ -579,12 +582,12 @@
         public function setStyleManager()
         {
             var _loc_1:* = new TextFormat();
-            _loc_1.font = this.COMPONENT_FONT;
-            _loc_1.size = this.COMPONENT_SIZE;
+            _loc_1.font = Constants.COMPONENT_FONT;
+            _loc_1.size = Constants.COMPONENT_SIZE;
             _loc_1.color = 0;
             var _loc_2:* = new TextFormat();
-            _loc_2.font = this.COMPONENT_FONT;
-            _loc_2.size = this.COMPONENT_SIZE;
+            _loc_2.font = Constants.COMPONENT_FONT;
+            _loc_2.size = Constants.COMPONENT_SIZE;
             _loc_2.color = 8684420;
             StyleManager.setStyle("textFormat", _loc_1);
             StyleManager.setStyle("disabledTextFormat", _loc_2);
@@ -757,7 +760,7 @@
             return;
         }// end function
 
-        public function getInput(param1:String, param2:String, param3:String, param4:int, param5:Function)
+        public function getInput(param1:String, param2:String, param3:String, param4:int, param5:Function, param6:String = " -~")
         {
             this.msg_mc.visible = false;
             this.combo_mc.visible = false;
@@ -768,6 +771,7 @@
             this.input_mc.text_txt.text = param2;
             this.input_mc.input_txt.text = param3;
             this.input_mc.input_txt.maxChars = param4;
+            this.input_mc.input_txt.restrict = param6;
             this.input_mc.input_txt.setFocus();
             this.input_callback = param5;
             this.lock();
@@ -980,53 +984,6 @@
             return;
         }// end function
 
-        public function stringToArray(param1:String) : Array
-        {
-            var _loc_5:String = null;
-            var _loc_2:* = new Array();
-            var _loc_3:int = 0;
-            var _loc_4:* = 0;
-            while (_loc_4 < param1.length)
-            {
-                
-                _loc_5 = param1.charAt(_loc_4);
-                if (_loc_5 == "\\")
-                {
-                    _loc_4 = _loc_4 + 1;
-                }
-                else if (_loc_5 == ",")
-                {
-                    _loc_2.push(this.replaceAll(this.replaceAll(param1.substring(_loc_3, _loc_4), "\\\\", "\\"), "\\,", ","));
-                    _loc_3 = _loc_4 + 1;
-                }
-                _loc_4 = _loc_4 + 1;
-            }
-            _loc_2.push(this.replaceAll(this.replaceAll(param1.substring(_loc_3), "\\\\", "\\"), "\\,", ","));
-            return _loc_2;
-        }// end function
-
-        public function arrayToString(param1:Array) : String
-        {
-            var _loc_2:String = "";
-            var _loc_3:* = 0;
-            while (_loc_3 < param1.length)
-            {
-                
-                if (_loc_3 != 0)
-                {
-                    _loc_2 = _loc_2 + ",";
-                }
-                _loc_2 = _loc_2 + this.replaceAll(this.replaceAll(param1[_loc_3], "\\", "\\\\"), ",", "\\,");
-                _loc_3 = _loc_3 + 1;
-            }
-            return _loc_2;
-        }// end function
-
-        public function replaceAll(param1:String, param2:String, param3:String) : String
-        {
-            return param1.split(param2).join(param3);
-        }// end function
-
         public function keyDownListener(event:KeyboardEvent)
         {
             var _loc_3:Boolean = false;
@@ -1126,6 +1083,7 @@
                             _loc_5 = stage.focus;
                             switch(_loc_5)
                             {
+                                case this.online_users_mc.search_txt.textField:
                                 case this.watch_chat_mc.cin_txt.textField:
                                 case this.public_chat_mc.cin_txt.textField:
                                 case this.cin_txt.textField:
@@ -1305,7 +1263,7 @@
 
         public function logged_in_complete(event:Event)
         {
-            var _loc_2:* = this.stringToArray(this.logged_in_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.logged_in_loader.data);
             if ((_loc_2.length == 1 || _loc_2.length == 2) && _loc_2[0] == "Not logged in")
             {
                 this.showLogin();
@@ -1362,7 +1320,7 @@
         public function login_complete(event:Event)
         {
             this.unlock();
-            var _loc_2:* = this.stringToArray(this.login_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.login_loader.data);
             if ((_loc_2.length == 4 || _loc_2.length == 5) && _loc_2[0] == "Logged in")
             {
                 this.login_box_mc.username_txt.text = "";
@@ -1423,7 +1381,7 @@
         public function reconfirm_complete(event:Event)
         {
             this.unlock();
-            var _loc_2:* = this.stringToArray(this.reconfirm_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.reconfirm_loader.data);
             if (_loc_2.length == 2 && _loc_2[0] == "Reconfirm sent")
             {
                 this.displayMessage(_loc_2[1]);
@@ -1468,7 +1426,7 @@
         public function register_complete(event:Event)
         {
             this.unlock();
-            var _loc_2:* = this.stringToArray(this.register_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.register_loader.data);
             if ((_loc_2.length == 1 || _loc_2.length == 2) && _loc_2[0] == "Registered")
             {
                 this.register_box_mc.username_txt.text = "";
@@ -1516,7 +1474,7 @@
         public function logout_complete(event:Event)
         {
             this.unlock();
-            var _loc_2:* = this.stringToArray(this.logout_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.logout_loader.data);
             if ((_loc_2.length == 1 || _loc_2.length == 2) && _loc_2[0] == "Logged out")
             {
                 this.username = null;
@@ -1566,7 +1524,7 @@
         public function forgot_password_complete(event:Event)
         {
             this.unlock();
-            var _loc_2:* = this.stringToArray(this.forgot_password_loader.data);
+            var _loc_2:* = StringUtils.stringToArray(this.forgot_password_loader.data);
             if ((_loc_2.length == 1 || _loc_2.length == 2) && _loc_2[0] == "Forgot password sent")
             {
                 this.forgot_password_box_mc.email_txt.text = "";
@@ -1628,12 +1586,8 @@
 
         public function donateClickE(event:MouseEvent)
         {
-            var _loc_2:* = new URLRequest("https://www.paypal.com/cgi-bin/webscr");
-            _loc_2.method = URLRequestMethod.POST;
-            var _loc_3:* = new URLVariables();
-            _loc_3.cmd = "_s-xclick";
-            _loc_3.hosted_button_id = "7JPETKTMP2F5A";
-            _loc_2.data = _loc_3;
+            var _loc_2:* = new URLRequest("http://www.duelingnetwork.com/donate.html");
+            _loc_2.method = URLRequestMethod.GET;
             navigateToURL(_loc_2, "_blank");
             return;
         }// end function
@@ -1805,7 +1759,7 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect9", this.username, this.password, this.session_id];
+            var _loc_2:Array = ["Connect10", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
                 _loc_2.push("Administrate");
@@ -1823,7 +1777,8 @@
                 this.socket.close();
             }
             this.heartbeat_timer.stop();
-            this.friends = null;
+            this.enter_handler = null;
+            this.incoming_handler = null;
             this.msg_mc.visible = false;
             this.input_mc.visible = false;
             this.combo_mc.visible = false;
@@ -1834,7 +1789,7 @@
 
         public function Send(param1:Array)
         {
-            this.SendString(this.arrayToString(param1));
+            this.SendString(StringUtils.arrayToString(param1));
             return;
         }// end function
 
@@ -1857,11 +1812,12 @@
 
         public function dataHandler(event:DataEvent) : void
         {
-            var _loc_3:Boolean = false;
-            var _loc_4:int = 0;
-            var _loc_5:String = null;
+            var _loc_2:Array = null;
+            var _loc_3:String = null;
+            var _loc_4:Boolean = false;
+            var _loc_5:int = 0;
             var _loc_6:Array = null;
-            var _loc_2:* = this.stringToArray(event.data);
+            _loc_2 = StringUtils.stringToArray(event.data);
             if (_loc_2.lentgth == 0)
             {
                 this.displayError("Malformed server response");
@@ -1877,7 +1833,6 @@
                 case "Connected":
                 {
                     this.connection_success = true;
-                    this.friends = new Object();
                     this.admin = _loc_2[1];
                     gotoAndStop("main_start");
                     break;
@@ -1922,7 +1877,7 @@
                 {
                     if (_loc_2.length >= 4)
                     {
-                        this.publicChatPrint(_loc_2[1], _loc_2[2], _loc_2[3]);
+                        this.public_chat_mc.publicChatPrint(_loc_2[1], _loc_2[2], this.username, _loc_2[3]);
                     }
                     else
                     {
@@ -1944,23 +1899,22 @@
                 }
                 case "Online users":
                 {
-                    this.usersAdd(_loc_2.slice(1));
+                    this.online_users_mc.usersAdd(_loc_2.slice(1), this.private_chat_mc);
                     break;
                 }
                 case "Offline users":
                 {
-                    this.usersRemove(_loc_2.slice(1));
+                    this.online_users_mc.usersRemove(_loc_2.slice(1), this.private_chat_mc);
                     break;
                 }
                 case "Friends":
                 {
-                    _loc_4 = 1;
-                    while (_loc_4 < _loc_2.length)
+                    _loc_5 = 1;
+                    while (_loc_5 < _loc_2.length)
                     {
                         
-                        _loc_5 = _loc_2[_loc_4];
-                        this.updateFriend(_loc_5, true);
-                        _loc_4++;
+                        this.online_users_mc.updateFriend(_loc_2[_loc_5], true);
+                        _loc_5++;
                     }
                     break;
                 }
@@ -1971,10 +1925,10 @@
                         this.displayError("Malformed server response");
                         break;
                     }
-                    _loc_5 = _loc_2[1];
-                    this.updateFriend(_loc_5, true);
-                    this.displayMessage(_loc_5 + " is now your friend");
-                    if (this.add_friend_btn != null && this.profile_username == _loc_5)
+                    _loc_3 = _loc_2[1];
+                    this.online_users_mc.updateFriend(_loc_3, true);
+                    this.displayMessage(_loc_3 + " is now your friend");
+                    if (this.add_friend_btn != null && this.profile_username == _loc_3)
                     {
                         this.add_friend_btn.visible = false;
                         this.delete_friend_btn.visible = true;
@@ -1988,10 +1942,10 @@
                         this.displayError("Malformed server response");
                         break;
                     }
-                    _loc_5 = _loc_2[1];
-                    this.updateFriend(_loc_5, false);
-                    this.displayMessage(_loc_5 + " is no longer your friend");
-                    if (this.add_friend_btn != null && this.profile_username == _loc_5)
+                    _loc_3 = _loc_2[1];
+                    this.online_users_mc.updateFriend(_loc_3, false);
+                    this.displayMessage(_loc_3 + " is no longer your friend");
+                    if (this.add_friend_btn != null && this.profile_username == _loc_3)
                     {
                         this.add_friend_btn.visible = true;
                         this.delete_friend_btn.visible = false;
@@ -2012,25 +1966,25 @@
                 }
                 case "Add admin calls":
                 {
-                    _loc_4 = 1;
-                    while (_loc_4 < _loc_2.length)
+                    _loc_5 = 1;
+                    while (_loc_5 < _loc_2.length)
                     {
                         
-                        _loc_6 = [_loc_2[_loc_4], _loc_2[(_loc_4 + 1)], _loc_2[_loc_4 + 2]];
-                        this.calls_mc.addCall(this.arrayToString(_loc_6), _loc_6);
-                        _loc_4 = _loc_4 + 3;
+                        _loc_6 = [_loc_2[_loc_5], _loc_2[(_loc_5 + 1)], _loc_2[_loc_5 + 2]];
+                        this.calls_mc.addCall(StringUtils.arrayToString(_loc_6), _loc_6);
+                        _loc_5 = _loc_5 + 3;
                     }
                     break;
                 }
                 case "Remove admin calls":
                 {
-                    _loc_4 = 1;
-                    while (_loc_4 < _loc_2.length)
+                    _loc_5 = 1;
+                    while (_loc_5 < _loc_2.length)
                     {
                         
-                        _loc_6 = [_loc_2[_loc_4], _loc_2[(_loc_4 + 1)], _loc_2[_loc_4 + 2]];
-                        this.calls_mc.removeCall(this.arrayToString(_loc_6));
-                        _loc_4 = _loc_4 + 3;
+                        _loc_6 = [_loc_2[_loc_5], _loc_2[(_loc_5 + 1)], _loc_2[_loc_5 + 2]];
+                        this.calls_mc.removeCall(StringUtils.arrayToString(_loc_6));
+                        _loc_5 = _loc_5 + 3;
                     }
                     break;
                 }
@@ -2060,12 +2014,12 @@
                 }
                 case "Chat error":
                 {
-                    _loc_3 = true;
+                    _loc_4 = true;
                     if (_loc_2.length == 2)
                     {
                         if (_loc_2[1] == "Quick chat")
                         {
-                            _loc_3 = false;
+                            _loc_4 = false;
                         }
                         else
                         {
@@ -2076,7 +2030,7 @@
                     {
                         this.displayError("An unknown chat error has occurred");
                     }
-                    if (_loc_3)
+                    if (_loc_4)
                     {
                         this.chatUnlock();
                     }
@@ -2190,90 +2144,6 @@
             return -1;
         }// end function
 
-        public function escapeHtml(param1:String) : String
-        {
-            param1 = this.replaceAll(param1, "&", "&amp;");
-            param1 = this.replaceAll(param1, "<", "&lt;");
-            return param1;
-        }// end function
-
-        public function escapeHtmlWithLinks(param1:String) : String
-        {
-            var _loc_5:int = 0;
-            var _loc_6:int = 0;
-            var _loc_2:* = this.escapeHtml(param1);
-            var _loc_3:String = "";
-            var _loc_4:* = _loc_2;
-            while (true)
-            {
-                
-                _loc_5 = _loc_4.search("http://[!-~]|https://[!-~]|ftp://[!-~]|www\\.[!-~]");
-                if (_loc_5 < 0)
-                {
-                    _loc_3 = _loc_3 + _loc_4;
-                    break;
-                }
-                if (_loc_5 > 0 && _loc_4.charAt((_loc_5 - 1)) != " ")
-                {
-                    _loc_6 = _loc_4.indexOf(" ", _loc_5);
-                    if (_loc_6 < 0)
-                    {
-                        _loc_3 = _loc_3 + _loc_4;
-                        break;
-                    }
-                    else
-                    {
-                        _loc_3 = _loc_3 + _loc_4.substring(0, _loc_6);
-                        _loc_4 = _loc_4.substring(_loc_6);
-                        continue;
-                    }
-                }
-                _loc_3 = _loc_3 + _loc_4.substring(0, _loc_5);
-                _loc_6 = _loc_4.indexOf(" ", _loc_5);
-                if (_loc_6 < 0)
-                {
-                    _loc_3 = _loc_3 + this.urlToLink(_loc_4.substring(_loc_5));
-                    break;
-                    continue;
-                }
-                _loc_3 = _loc_3 + this.urlToLink(_loc_4.substring(_loc_5, _loc_6));
-                _loc_4 = _loc_4.substring(_loc_6);
-            }
-            return _loc_3;
-        }// end function
-
-        public function urlToLink(param1:String) : String
-        {
-            var _loc_2:String = null;
-            if (param1.substring(0, 7) == "http://")
-            {
-                _loc_2 = "";
-            }
-            else if (param1.substring(0, 8) == "https://")
-            {
-                _loc_2 = "";
-            }
-            else if (param1.substring(0, 6) == "ftp://")
-            {
-                _loc_2 = "";
-            }
-            else
-            {
-                _loc_2 = "http://";
-            }
-            var _loc_3:* = _loc_2 + this.replaceAll(param1, "\"", "&quot;");
-            return "<font color=\"#0000FF\"><u><a href=\"" + _loc_3 + "\" target=\"_blank\">" + param1 + "</a></u></font>";
-        }// end function
-
-        public function escapeAndColorSender(param1:String, param2:String) : String
-        {
-            if (param2 == null)
-            {
-                return "<b>" + this.escapeHtml(param1) + ":</b> ";
-            }
-            return "<font color=\"" + param2 + "\"><b>" + this.escapeHtml(param1) + ":</b></font> ";
-        }// end function
-
         public function chatEnterHandler()
         {
             var _loc_1:* = stage.focus;
@@ -2316,77 +2186,6 @@
             return;
         }// end function
 
-        public function publicChatPrint(param1:String, param2:String, param3:int)
-        {
-            var _loc_9:String = null;
-            var _loc_4:* = this.public_chat_mc.cout_txt.verticalScrollPosition;
-            var _loc_5:* = this.public_chat_mc.cout_txt.maxVerticalScrollPosition;
-            var _loc_6:* = _loc_4 == _loc_5;
-            var _loc_7:* = this.publicHtmlLines == 200;
-            if (this.publicHtmlLines == 200)
-            {
-                this.publicHtmlText = this.publicHtmlText.substr(this.publicHtmlText.indexOf("<br />") + 6);
-                this.public_chat_mc.cout_txt.htmlText = this.publicHtmlText;
-                this.public_chat_mc.cout_txt.verticalScrollPosition = _loc_4;
-                _loc_4 = _loc_4 - (_loc_5 - this.public_chat_mc.cout_txt.maxVerticalScrollPosition);
-                if (_loc_4 < 0)
-                {
-                    _loc_4 = 0;
-                }
-            }
-            else
-            {
-                var _loc_10:String = this;
-                var _loc_11:* = this.publicHtmlLines + 1;
-                _loc_10.publicHtmlLines = _loc_11;
-            }
-            switch(param3)
-            {
-                case 0:
-                {
-                    _loc_9 = param1 == this.username ? ("#FF0000") : ("#0000FF");
-                    break;
-                }
-                case 1:
-                {
-                    _loc_9 = "#009900";
-                    break;
-                }
-                case 2:
-                {
-                    _loc_9 = "#707070";
-                    break;
-                }
-                case 3:
-                {
-                    _loc_9 = "#CC9900";
-                    break;
-                }
-                case 4:
-                {
-                    _loc_9 = "#CC9900";
-                    break;
-                }
-                default:
-                {
-                    break;
-                }
-            }
-            var _loc_8:* = this.escapeAndColorSender(param1, _loc_9) + this.escapeHtmlWithLinks(param2);
-            if (this.publicHtmlText != "")
-            {
-                _loc_8 = "<br />" + _loc_8;
-            }
-            this.publicHtmlText = this.publicHtmlText + _loc_8;
-            this.public_chat_mc.cout_txt.htmlText = this.publicHtmlText;
-            this.public_chat_mc.cout_txt.verticalScrollPosition = _loc_4;
-            if (_loc_6)
-            {
-                this.public_chat_mc.cout_txt.verticalScrollPosition = this.public_chat_mc.cout_txt.maxVerticalScrollPosition;
-            }
-            return;
-        }// end function
-
         public function publicSendMessage()
         {
             if (this.chat_lock || this.public_chat_mc.cin_txt.text == "")
@@ -2413,8 +2212,7 @@
                 }
                 this.online_users_mc.visible = true;
                 this.chat_hidden_mc.addChild(this.online_users_mc);
-                this.online_users_mc.users_mc.setFocus();
-                this.online_users_mc.users_mc.drawFocus(false);
+                this.online_users_mc.search_txt.setFocus();
             }
             return;
         }// end function
@@ -2436,7 +2234,7 @@
 
         public function openPrivateChat(param1:String)
         {
-            var _loc_2:* = this.startPrivateChat(param1);
+            var _loc_2:* = this.private_chat_mc.startPrivateChat(param1, this.admin);
             this.restoreChat(_loc_2);
             if (!this.private_chat_mc.visible)
             {
@@ -2451,291 +2249,6 @@
             {
                 this.startPrivateE();
             }
-            return;
-        }// end function
-
-        public function usersAdd(param1:Array)
-        {
-            var _loc_2:* = undefined;
-            var _loc_3:Object = null;
-            var _loc_4:int = 0;
-            if (this.online_users_mc.users_mc.length == 0)
-            {
-                this.online_users_mc.users_mc.dataProvider = new DataProvider();
-                this.num_admins_online = 0;
-                _loc_2 = 0;
-                while (_loc_2 < param1.length)
-                {
-                    
-                    _loc_3 = {label:param1[_loc_2], data:param1[_loc_2], admin:int(param1[(_loc_2 + 1)])};
-                    if (_loc_3.admin)
-                    {
-                        var _loc_5:String = this;
-                        var _loc_6:* = this.num_admins_online + 1;
-                        _loc_5.num_admins_online = _loc_6;
-                    }
-                    this.online_users_mc.users_mc.addItem(_loc_3);
-                    _loc_2 = _loc_2 + 2;
-                }
-            }
-            else
-            {
-                _loc_2 = 0;
-                while (_loc_2 < param1.length)
-                {
-                    
-                    _loc_3 = {label:param1[_loc_2], data:param1[_loc_2], admin:int(param1[(_loc_2 + 1)]), friend:this.friends[param1[_loc_2]] == true};
-                    this.userInsert(_loc_3);
-                    _loc_4 = this.findPrivateChat(_loc_3.data);
-                    if (_loc_4 >= 0)
-                    {
-                        this.privateChatWriteLine(_loc_4, "<b>" + this.escapeHtml(_loc_3.data) + " has logged in</b>");
-                    }
-                    _loc_2 = _loc_2 + 2;
-                }
-            }
-            this.updateListColors();
-            this.online_users_mc.users_online_txt.text = "Users online: " + this.online_users_mc.users_mc.length;
-            return;
-        }// end function
-
-        public function userInsert(param1:Object)
-        {
-            var _loc_2:* = this.online_users_mc.users_mc.selectedIndex;
-            var _loc_3:* = this.userPlacementFind(param1);
-            this.online_users_mc.users_mc.dataProvider.addItemAt(param1, _loc_3);
-            if (param1.admin)
-            {
-                var _loc_4:String = this;
-                var _loc_5:* = this.num_admins_online + 1;
-                _loc_4.num_admins_online = _loc_5;
-            }
-            else if (param1.friend)
-            {
-                var _loc_4:String = this;
-                var _loc_5:* = this.num_friends_online + 1;
-                _loc_4.num_friends_online = _loc_5;
-            }
-            if (_loc_2 >= _loc_3)
-            {
-                this.online_users_mc.users_mc.selectedIndex = _loc_2 + 1;
-            }
-            return;
-        }// end function
-
-        public function updateListColors(event:Event = null)
-        {
-            var _loc_5:Object = null;
-            var _loc_6:CellRenderer = null;
-            var _loc_7:TextFormat = null;
-            var _loc_2:* = this.online_users_mc.users_mc;
-            _loc_2.drawNow();
-            var _loc_3:* = _loc_2.verticalScrollPosition / 20;
-            var _loc_4:* = _loc_3 + 21;
-            if (_loc_3 + 21 > _loc_2.length)
-            {
-                _loc_4 = _loc_2.length;
-            }
-            while (_loc_3 < _loc_4)
-            {
-                
-                _loc_5 = _loc_2.getItemAt(_loc_3);
-                _loc_6 = _loc_2.itemToCellRenderer(_loc_5) as CellRenderer;
-                _loc_7 = new TextFormat();
-                _loc_7.font = this.COMPONENT_FONT;
-                _loc_7.size = this.COMPONENT_SIZE;
-                switch(_loc_5.admin)
-                {
-                    case 0:
-                    {
-                        _loc_7.color = _loc_5.friend ? (255) : (0);
-                        break;
-                    }
-                    case 1:
-                    {
-                        _loc_7.color = 39168;
-                        break;
-                    }
-                    case 2:
-                    {
-                        _loc_7.color = 7368816;
-                        break;
-                    }
-                    case 3:
-                    {
-                        _loc_7.color = 13408512;
-                        break;
-                    }
-                    case 4:
-                    {
-                        _loc_7.color = 13408512;
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
-                }
-                _loc_6.setStyle("textFormat", _loc_7);
-                _loc_3++;
-            }
-            return;
-        }// end function
-
-        public function userPlacementFind(param1:Object) : int
-        {
-            var _loc_3:int = 0;
-            var _loc_4:int = 0;
-            var _loc_5:int = 0;
-            var _loc_2:* = param1.data.toUpperCase();
-            if (param1.admin)
-            {
-                _loc_3 = this.num_friends_online;
-                _loc_4 = this.num_friends_online + this.num_admins_online - 1;
-            }
-            else if (param1.friend)
-            {
-                _loc_3 = 0;
-                _loc_4 = this.num_friends_online - 1;
-            }
-            else
-            {
-                _loc_3 = this.num_friends_online + this.num_admins_online;
-                _loc_4 = this.online_users_mc.users_mc.length - 1;
-            }
-            while (_loc_3 <= _loc_4)
-            {
-                
-                _loc_5 = (_loc_3 + _loc_4) / 2;
-                if (_loc_2 < this.online_users_mc.users_mc.getItemAt(_loc_5).data.toUpperCase())
-                {
-                    _loc_4 = _loc_5 - 1;
-                    continue;
-                }
-                _loc_3 = _loc_5 + 1;
-            }
-            return _loc_3;
-        }// end function
-
-        public function usersRemove(param1:Array)
-        {
-            var _loc_3:Object = null;
-            var _loc_4:int = 0;
-            var _loc_2:* = 0;
-            while (_loc_2 < param1.length)
-            {
-                
-                _loc_3 = this.userDelete(param1[_loc_2]);
-                if (_loc_3 == null)
-                {
-                }
-                else
-                {
-                    _loc_4 = this.findPrivateChat(_loc_3.data);
-                    if (_loc_4 >= 0)
-                    {
-                        this.privateChatWriteLine(_loc_4, "<b>" + this.escapeHtml(_loc_3.data) + " has logged out</b>");
-                    }
-                }
-                _loc_2 = _loc_2 + 1;
-            }
-            this.updateListColors();
-            this.online_users_mc.users_online_txt.text = "Users online: " + this.online_users_mc.users_mc.length;
-            return;
-        }// end function
-
-        public function userDelete(param1:String) : Object
-        {
-            var _loc_2:* = this.userPositionFind(param1);
-            if (_loc_2 < 0)
-            {
-                return null;
-            }
-            var _loc_3:* = this.online_users_mc.users_mc.selectedIndex;
-            var _loc_4:* = this.online_users_mc.users_mc.dataProvider.removeItemAt(_loc_2);
-            if (this.online_users_mc.users_mc.dataProvider.removeItemAt(_loc_2).admin)
-            {
-                var _loc_5:String = this;
-                var _loc_6:* = this.num_admins_online - 1;
-                _loc_5.num_admins_online = _loc_6;
-            }
-            else if (_loc_4.friend)
-            {
-                var _loc_5:String = this;
-                var _loc_6:* = this.num_friends_online - 1;
-                _loc_5.num_friends_online = _loc_6;
-            }
-            if (_loc_3 == _loc_2)
-            {
-                this.online_users_mc.users_mc.selectedIndex = -1;
-            }
-            else if (_loc_3 > _loc_2)
-            {
-                this.online_users_mc.users_mc.selectedIndex = _loc_3 - 1;
-            }
-            return _loc_4;
-        }// end function
-
-        public function userPositionFind(param1:String) : int
-        {
-            var _loc_2:* = this.userPositionFind2(param1, this.num_friends_online + this.num_admins_online, (this.online_users_mc.users_mc.length - 1));
-            if (_loc_2 >= 0)
-            {
-                return _loc_2;
-            }
-            _loc_2 = this.userPositionFind2(param1, 0, (this.num_friends_online - 1));
-            if (_loc_2 >= 0)
-            {
-                return _loc_2;
-            }
-            return this.userPositionFind2(param1, this.num_friends_online, this.num_friends_online + this.num_admins_online - 1);
-        }// end function
-
-        public function userPositionFind2(param1:String, param2:int, param3:int) : int
-        {
-            var _loc_7:int = 0;
-            var _loc_8:String = null;
-            var _loc_4:* = param1.toUpperCase();
-            var _loc_5:* = param2;
-            var _loc_6:* = param3;
-            while (_loc_5 <= _loc_6)
-            {
-                
-                _loc_7 = (_loc_5 + _loc_6) / 2;
-                _loc_8 = this.online_users_mc.users_mc.getItemAt(_loc_7).data.toUpperCase();
-                if (_loc_4 < _loc_8)
-                {
-                    _loc_6 = _loc_7 - 1;
-                    continue;
-                }
-                if (_loc_4 > _loc_8)
-                {
-                    _loc_5 = _loc_7 + 1;
-                    continue;
-                }
-                return _loc_7;
-            }
-            return -1;
-        }// end function
-
-        public function updateFriend(param1:String, param2:Boolean)
-        {
-            if (param2)
-            {
-                this.friends[param1] = true;
-            }
-            else
-            {
-                this.friends[param1] = undefined;
-            }
-            var _loc_3:* = this.userDelete(param1);
-            if (_loc_3 == null)
-            {
-                return;
-            }
-            _loc_3.friend = param2;
-            this.userInsert(_loc_3);
-            this.updateListColors();
             return;
         }// end function
 
@@ -2799,7 +2312,7 @@
                 if (_loc_2.new_msg)
                 {
                     _loc_2.new_msg = false;
-                    this.updateDropdownColors();
+                    this.private_chat_mc.updateListColors();
                     var _loc_3:String = this;
                     var _loc_4:* = this.num_new_msgs - 1;
                     _loc_3.num_new_msgs = _loc_4;
@@ -2821,90 +2334,6 @@
             return;
         }// end function
 
-        public function startPrivateChat(param1:String) : int
-        {
-            var _loc_6:int = 0;
-            var _loc_7:* = undefined;
-            var _loc_8:int = 0;
-            var _loc_9:TextArea = null;
-            var _loc_10:TextInput = null;
-            var _loc_11:Object = null;
-            var _loc_2:* = param1.toUpperCase();
-            var _loc_3:int = 0;
-            var _loc_4:* = this.private_chat_mc.user_mc.length - 1;
-            var _loc_5:int = -1;
-            while (_loc_3 <= _loc_4)
-            {
-                
-                _loc_6 = (_loc_3 + _loc_4) / 2;
-                _loc_7 = this.private_chat_mc.user_mc.getItemAt(_loc_6).data.toUpperCase();
-                if (_loc_2 < _loc_7)
-                {
-                    _loc_4 = _loc_6 - 1;
-                    continue;
-                }
-                if (_loc_2 > _loc_7)
-                {
-                    _loc_3 = _loc_6 + 1;
-                    continue;
-                }
-                _loc_5 = _loc_6;
-                break;
-            }
-            if (_loc_5 >= 0)
-            {
-                return _loc_5;
-            }
-            _loc_8 = this.private_chat_mc.user_mc.selectedIndex;
-            _loc_9 = new TextArea();
-            _loc_9.x = 0;
-            _loc_9.y = 30;
-            _loc_9.width = 200;
-            _loc_9.height = 379;
-            _loc_9.editable = false;
-            _loc_10 = new TextInput();
-            _loc_10.x = 0;
-            _loc_10.y = 412;
-            _loc_10.width = 200;
-            _loc_10.height = 22;
-            _loc_10.maxChars = this.admin ? (500) : (200);
-            _loc_10.restrict = " -~";
-            _loc_11 = {label:param1, data:param1, cout_txt:_loc_9, cout:"", cin_txt:_loc_10, num_lines:0, new_msg:false};
-            this.private_chat_mc.user_mc.dataProvider.addItemAt(_loc_11, _loc_3);
-            if (_loc_8 >= _loc_3)
-            {
-                this.private_chat_mc.user_mc.selectedIndex = _loc_8 + 1;
-            }
-            return _loc_3;
-        }// end function
-
-        public function findPrivateChat(param1:String) : int
-        {
-            var _loc_5:int = 0;
-            var _loc_6:* = undefined;
-            var _loc_2:* = param1.toUpperCase();
-            var _loc_3:int = 0;
-            var _loc_4:* = this.private_chat_mc.user_mc.length - 1;
-            while (_loc_3 <= _loc_4)
-            {
-                
-                _loc_5 = (_loc_3 + _loc_4) / 2;
-                _loc_6 = this.private_chat_mc.user_mc.getItemAt(_loc_5).data.toUpperCase();
-                if (_loc_2 < _loc_6)
-                {
-                    _loc_4 = _loc_5 - 1;
-                    continue;
-                }
-                if (_loc_2 > _loc_6)
-                {
-                    _loc_3 = _loc_5 + 1;
-                    continue;
-                }
-                return _loc_5;
-            }
-            return -1;
-        }// end function
-
         public function restoreChat(param1:int)
         {
             var _loc_2:Object = null;
@@ -2914,7 +2343,7 @@
                 if (_loc_2.new_msg)
                 {
                     _loc_2.new_msg = false;
-                    this.updateDropdownColors();
+                    this.private_chat_mc.updateListColors();
                     var _loc_3:String = this;
                     var _loc_4:* = this.num_new_msgs - 1;
                     _loc_3.num_new_msgs = _loc_4;
@@ -2930,6 +2359,7 @@
                 {
                     _loc_2.cin_txt.setFocus();
                 }
+                this.private_chat_mc.fixChat();
             }
             this.private_chat_mc.user_mc.selectedIndex = param1;
             return;
@@ -2974,10 +2404,14 @@
             var _loc_10:String = null;
             var _loc_5:* = param1 == this.username ? (param2) : (param1);
             var _loc_6:* = this.private_chat_mc.user_mc.length;
-            var _loc_7:* = this.startPrivateChat(_loc_5);
+            var _loc_7:* = this.private_chat_mc.startPrivateChat(_loc_5, this.admin);
             if (_loc_6 == 0)
             {
                 this.restoreChat(_loc_7);
+            }
+            else
+            {
+                this.private_chat_mc.fixChat();
             }
             switch(param4)
             {
@@ -3011,14 +2445,14 @@
                     break;
                 }
             }
-            var _loc_8:* = this.escapeAndColorSender(param1, _loc_10) + this.escapeHtmlWithLinks(param3);
-            var _loc_9:* = this.privateChatWriteLine(_loc_7, _loc_8);
+            var _loc_8:* = StringUtils.escapeAndColorSender(param1, _loc_10) + StringUtils.escapeHtmlWithLinks(param3);
+            var _loc_9:* = this.private_chat_mc.privateChatWriteLine(_loc_7, _loc_8);
             if (_loc_7 != this.private_chat_mc.user_mc.selectedIndex || !this.private_chat_mc.visible)
             {
                 if (!_loc_9.new_msg)
                 {
                     _loc_9.new_msg = true;
-                    this.updateDropdownColors();
+                    this.private_chat_mc.updateListColors();
                     var _loc_11:String = this;
                     var _loc_12:* = this.num_new_msgs + 1;
                     _loc_11.num_new_msgs = _loc_12;
@@ -3031,51 +2465,13 @@
             }
             if (param1 == this.username)
             {
-                this.playOutboundSound();
+                new ChatOutbound().play();
             }
             else
             {
-                this.playInboundSound();
+                new ChatInbound().play();
             }
             return;
-        }// end function
-
-        public function privateChatWriteLine(param1:Object, param2:String) : Object
-        {
-            var _loc_3:* = this.private_chat_mc.user_mc.getItemAt(param1);
-            var _loc_4:* = _loc_3.cout_txt.verticalScrollPosition;
-            var _loc_5:* = _loc_3.cout_txt.maxVerticalScrollPosition;
-            var _loc_6:* = _loc_4 == _loc_5;
-            var _loc_7:* = _loc_3.num_lines == 200;
-            if (_loc_3.num_lines == 200)
-            {
-                _loc_3.cout = _loc_3.cout.substr(_loc_3.cout.indexOf("<br />") + 6);
-                _loc_3.cout_txt.htmlText = _loc_3.cout;
-                _loc_3.cout_txt.verticalScrollPosition = _loc_4;
-                _loc_4 = _loc_4 - (_loc_5 - _loc_3.cout_txt.maxVerticalScrollPosition);
-                if (_loc_4 < 0)
-                {
-                    _loc_4 = 0;
-                }
-            }
-            else
-            {
-                var _loc_8:* = _loc_3;
-                var _loc_9:* = _loc_3.num_lines + 1;
-                _loc_8.num_lines = _loc_9;
-            }
-            if (_loc_3.cout != "")
-            {
-                param2 = "<br />" + param2;
-            }
-            _loc_3.cout = _loc_3.cout + param2;
-            _loc_3.cout_txt.htmlText = _loc_3.cout;
-            _loc_3.cout_txt.verticalScrollPosition = _loc_4;
-            if (_loc_6)
-            {
-                _loc_3.cout_txt.verticalScrollPosition = _loc_3.cout_txt.maxVerticalScrollPosition;
-            }
-            return _loc_3;
         }// end function
 
         public function privateSendMessage()
@@ -3087,40 +2483,6 @@
             this.Send(["Private message", this.private_chat_mc.user_mc.selectedItem.data, this.private_chat_mc.cin_txt.text]);
             this.private_chat_mc.cin_txt.text = "";
             this.chatLock();
-            return;
-        }// end function
-
-        public function updateDropdownColors(event:Event = null)
-        {
-            var _loc_5:Object = null;
-            var _loc_6:CellRenderer = null;
-            this.private_chat_mc.user_mc.drawNow();
-            var _loc_2:* = this.private_chat_mc.user_mc.dropdown;
-            _loc_2.drawNow();
-            var _loc_3:* = _loc_2.verticalScrollPosition / 20;
-            var _loc_4:* = _loc_3 + 6;
-            if (_loc_3 + 6 > _loc_2.length)
-            {
-                _loc_4 = _loc_2.length;
-            }
-            while (_loc_3 < _loc_4)
-            {
-                
-                _loc_5 = _loc_2.getItemAt(_loc_3);
-                _loc_6 = _loc_2.itemToCellRenderer(_loc_5) as CellRenderer;
-                if (_loc_5.new_msg)
-                {
-                    if (!(_loc_6.getStyle("upSkin") is NewMessageGlow))
-                    {
-                        _loc_6.setStyle("upSkin", new NewMessageGlow());
-                    }
-                }
-                else
-                {
-                    _loc_6.setStyle("upSkin", new MovieClip());
-                }
-                _loc_3++;
-            }
             return;
         }// end function
 
@@ -3163,8 +2525,8 @@
             }
             this.chat_lock = true;
             var _loc_1:* = new TextFormat();
-            _loc_1.font = this.COMPONENT_FONT;
-            _loc_1.size = this.COMPONENT_SIZE;
+            _loc_1.font = Constants.COMPONENT_FONT;
+            _loc_1.size = Constants.COMPONENT_SIZE;
             _loc_1.color = 10066329;
             this.public_chat_mc.cin_txt.setStyle("textFormat", _loc_1);
             if (this.private_chat_mc.cin_txt != null)
@@ -3182,8 +2544,8 @@
         {
             this.private_chat_mc.cin_txt.drawNow();
             var _loc_1:* = new TextFormat();
-            _loc_1.font = this.COMPONENT_FONT;
-            _loc_1.size = this.COMPONENT_SIZE;
+            _loc_1.font = Constants.COMPONENT_FONT;
+            _loc_1.size = Constants.COMPONENT_SIZE;
             _loc_1.color = this.chat_lock ? (10066329) : (0);
             this.private_chat_mc.cin_txt.setStyle("textFormat", _loc_1);
             return;
@@ -3196,8 +2558,8 @@
             {
                 this.watch_chat_mc.cin_txt.drawNow();
                 _loc_1 = new TextFormat();
-                _loc_1.font = this.COMPONENT_FONT;
-                _loc_1.size = this.COMPONENT_SIZE;
+                _loc_1.font = Constants.COMPONENT_FONT;
+                _loc_1.size = Constants.COMPONENT_SIZE;
                 _loc_1.color = 10066329;
                 this.watch_chat_mc.cin_txt.setStyle("textFormat", _loc_1);
             }
@@ -3208,8 +2570,8 @@
         {
             this.chat_lock = false;
             var _loc_1:* = new TextFormat();
-            _loc_1.font = this.COMPONENT_FONT;
-            _loc_1.size = this.COMPONENT_SIZE;
+            _loc_1.font = Constants.COMPONENT_FONT;
+            _loc_1.size = Constants.COMPONENT_SIZE;
             _loc_1.color = 0;
             this.public_chat_mc.cin_txt.setStyle("textFormat", _loc_1);
             if (this.private_chat_mc.cin_txt != null)
@@ -3220,20 +2582,6 @@
             {
                 this.watch_chat_mc.cin_txt.setStyle("textFormat", _loc_1);
             }
-            return;
-        }// end function
-
-        public function playInboundSound()
-        {
-            var _loc_1:* = new ChatInbound();
-            _loc_1.play();
-            return;
-        }// end function
-
-        public function playOutboundSound()
-        {
-            var _loc_1:* = new ChatOutbound();
-            _loc_1.play();
             return;
         }// end function
 
@@ -3271,7 +2619,7 @@
             {
                 return;
             }
-            this.title_usernames[param1] = null;
+            delete this.title_usernames[param1];
             var _loc_4:* = _loc_3[0];
             var _loc_5:* = _loc_3[1];
             if (_loc_4 == null)
@@ -3444,15 +2792,33 @@
             var leaderboardClickE:Function;
             leaderboardClickE = function (event:MouseEvent)
             {
-                var _loc_2:* = new URLRequest("http://www.coretcg.com/");
-                navigateToURL(_loc_2, "_blank");
-                trackEvent("Ad", "Click", "CoretcgLeaderboard");
+                var _loc_2:String = null;
+                var _loc_3:String = null;
+                switch(event.target.name)
+                {
+                    case "facebook_btn":
+                    {
+                        break;
+                    }
+                    case "buying_btn":
+                    {
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                        break;
+                    }
+                }
+                navigateToURL(new URLRequest(_loc_2), "_blank");
+                trackEvent("Ad", "Click", _loc_3);
                 return;
             }// end function
             ;
             stage.focus = null;
             this.track("main_menu");
-            this.leaderboard_mc.addChild(new CoretcgLeaderboard());
+            this.leaderboard_mc.tat = Math.random() <= 0.25;
+            this.leaderboard_mc.addChild(this.leaderboard_mc.tat ? (new TatLeaderboard()) : (new CoretcgLeaderboard()));
             this.leaderboard_mc.addEventListener(MouseEvent.CLICK, leaderboardClickE);
             this.enter_handler = null;
             this.incoming_handler = null;
@@ -3856,15 +3222,15 @@
                 this.duel_rb.selected = true;
                 this.enable_dueling = true;
                 _loc_2 = param1[0];
-                i = 1;
-                while (i < param1.length)
+                _loc_3 = 1;
+                while (_loc_3 < param1.length)
                 {
                     
-                    _loc_4 = param1[i];
-                    _loc_5 = param1[i + 1] == "true";
+                    _loc_4 = param1[_loc_3];
+                    _loc_5 = param1[(_loc_3 + 1)] == "true";
                     _loc_6 = {label:_loc_4, data:_loc_4, advanced:_loc_5};
                     this.decklist_cb.addItem(_loc_6);
-                    i += 2;
+                    _loc_3 = _loc_3 + 2;
                 }
                 this.decklist_cb.selectedIndex = _loc_2;
                 this.updateDropdownFont();
@@ -3907,8 +3273,8 @@
                 _loc_5 = _loc_2.getItemAt(_loc_3);
                 _loc_6 = _loc_2.itemToCellRenderer(_loc_5) as CellRenderer;
                 _loc_7 = new TextFormat();
-                _loc_7.font = this.COMPONENT_FONT;
-                _loc_7.size = this.COMPONENT_SIZE;
+                _loc_7.font = Constants.COMPONENT_FONT;
+                _loc_7.size = Constants.COMPONENT_SIZE;
                 _loc_7.color = 0;
                 if (!_loc_5.advanced)
                 {
@@ -3967,7 +3333,27 @@
 
         public function hostDuelE(event:MouseEvent = null)
         {
+            if (this.host_mc.duel_note_txt.text == "")
+            {
+                this.hostDuel(true);
+                return;
+            }
+            var _loc_2:* = "Do you confirm that your duel note contains none of the following?" + "\n- Lurking for girlfriends/boyfriends or other sexual purposes" + "\n- Spam or advertising (YouTube, selling/trading, academies, tournaments, \"hosting to stay on,\" etc.)";
+            if (this.host_mc.ar_rb.selected)
+            {
+                _loc_2 = _loc_2 + "\n- Deck restrictions for opponent, other than format (TCG/OCG)";
+            }
+            this.getConfirmation("Duel Note Rules", _loc_2, this.hostDuel);
+            return;
+        }// end function
+
+        public function hostDuel(param1:Boolean)
+        {
             var _loc_2:Array = null;
+            if (!param1)
+            {
+                return;
+            }
             if (this.host_mc.watching_cb.selected)
             {
                 _loc_2 = new Array(7);
@@ -4034,25 +3420,33 @@
             return;
         }// end function
 
-        public function joinDuel(mode:String, title:String, token:String, pwd:Boolean)
+        public function joinDuel(param1:String, param2:String, param3:String, param4:Boolean)
         {
-            this.entering_rated_duel = mode.charAt(1) == "r";
+            this.entering_rated_duel = param1.charAt(1) == "r";
             if (this.duel_rb.selected)
             {
-                this.join_arr = ["Join duel", mode, this.decklist_cb.selectedItem.data, title, token];
-                if (pwd)
+                if (this.admin)
                 {
-                    this.getInput("Duel Password", "Enter duel password to join duel:", "", 0, this.performJoinDuel);
+                    this.getConfirmation("Kick User", "Are you sure you want to kick " + param2 + "?", this.performJoinDuelKick);
+                    this.join_duel_kick = param2;
                 }
                 else
                 {
-                    this.performJoinDuel(null, true);
+                    this.join_arr = ["Join duel", param1, this.decklist_cb.selectedItem.data, param2, param3];
+                    if (param4)
+                    {
+                        this.getInput("Duel Password", "Enter duel password to join duel:", "", 0, this.performJoinDuel);
+                    }
+                    else
+                    {
+                        this.performJoinDuel(null, true);
+                    }
                 }
             }
             else if (this.watch_rb.selected)
             {
-                this.join_arr = ["Watch duel", mode, title, token];
-                if (!this.admin && pwd)
+                this.join_arr = ["Watch duel", param1, param2, param3];
+                if (!this.admin && param4)
                 {
                     this.getInput("Watch Password", "Enter watch password to watch duel:", "", 0, this.performJoinDuel);
                 }
@@ -4069,22 +3463,34 @@
             return;
         }// end function
 
-        public function performJoinDuel(pass:String, noPass:Boolean = false)
+        public function performJoinDuelKick(param1:Boolean)
         {
-            if (pass == null && !noPass)
+            if (!param1)
             {
                 return;
             }
-            if (pass == "" && !noPass)
+            this.Send(["Kick user", this.join_duel_kick]);
+            this.trackEvent("Admin Kick", this.username, this.join_duel_kick);
+            this.join_duel_kick = null;
+            return;
+        }// end function
+
+        public function performJoinDuel(param1:String, param2:Boolean = false)
+        {
+            if (param1 == null && !param2)
+            {
+                return;
+            }
+            if (param1 == "" && !param2)
             {
                 this.displayError("Password not entered");
                 return;
             }
-            if (noPass)
+            if (param2)
             {
-                pass = "";
+                param1 = "";
             }
-            this.join_arr.push(pass);
+            this.join_arr.push(param1);
             this.Send(this.join_arr);
             this.join_arr = null;
             this.lock();
@@ -6049,7 +5455,7 @@
             var _loc_10:* = _loc_5.minutes < 10 ? ("0" + _loc_9) : ("" + _loc_9);
             var _loc_11:* = _loc_6[_loc_5.month] + " " + _loc_5.date + ", " + _loc_5.fullYear + ", " + _loc_8 + ":" + _loc_10 + " " + (_loc_7 >= 12 ? ("PM") : ("AM"));
             this.registered_txt.text = _loc_11;
-            this.profile_txt.text = param1[9];
+            this.profile_txt.htmlText = StringUtils.escapeHtmlWithLinks(param1[9]);
             var _loc_12:* = param1[10];
             if (param1[10] == "yes")
             {
@@ -6066,8 +5472,9 @@
                 this.watch_duel_btn.visible = false;
                 this.key_mc.visible = false;
             }
+            this.showPuzzle(param1[11] == "true");
             this.send_pm_btn.visible = !_loc_2 && _loc_3 == "Online";
-            var _loc_13:* = this.friends[this.profile_username];
+            var _loc_13:* = this.online_users_mc.isFriend(this.profile_username);
             this.add_friend_btn.visible = !_loc_13;
             this.delete_friend_btn.visible = _loc_13;
             return;
@@ -6145,10 +5552,42 @@
             return;
         }// end function
 
+        public function puzzleInit()
+        {
+            this.puzzle_mc.visible = false;
+            this.puzzle_mc.current_supporter_mc.visible = false;
+            this.puzzle_area_mc.addEventListener(MouseEvent.MOUSE_OVER, this.showSupporterE);
+            this.puzzle_area_mc.addEventListener(MouseEvent.MOUSE_OUT, this.hideSupporterE);
+            return;
+        }// end function
+
+        public function showSupporterE(event:MouseEvent)
+        {
+            this.puzzle_mc.current_supporter_mc.visible = true;
+            return;
+        }// end function
+
+        public function hideSupporterE(event:MouseEvent)
+        {
+            this.puzzle_mc.current_supporter_mc.visible = false;
+            return;
+        }// end function
+
+        public function showPuzzle(param1:Boolean)
+        {
+            this.puzzle_mc.visible = param1;
+            return;
+        }// end function
+
         public function myProfileEnterHandler()
         {
             switch(stage.focus)
             {
+                case this.redeem_donation_btn:
+                {
+                    this.redeemDonationE();
+                    break;
+                }
                 case this.save_profile_btn:
                 {
                     this.saveAvatarAndProfileE();
@@ -6156,7 +5595,17 @@
                 }
                 case this.my_profile_exit_btn:
                 {
-                    this.returnToMainE();
+                    this.myProfileExitE();
+                    break;
+                }
+                case this.avatar_browse_mc.avatar_browse_btn:
+                {
+                    this.avatarBrowseE();
+                    break;
+                }
+                case this.back_browse_mc.back_browse_btn:
+                {
+                    this.backBrowseE();
                     break;
                 }
                 default:
@@ -6198,6 +5647,11 @@
                         this.saveAvatarAndProfileResponse(_loc_3);
                         break;
                     }
+                    case "Redeem donation":
+                    {
+                        this.redeemDonationResponse(_loc_3);
+                        break;
+                    }
                     default:
                     {
                         break;
@@ -6233,17 +5687,14 @@
 
         public function avatarLeftE(event:Event)
         {
-            var _loc_2:Number = NaN;
-            var _loc_3:Number = NaN;
-            var _loc_4:* = undefined;
             var _loc_5:MovieClip = null;
-            _loc_2 = this.avatar_gallery[0].x + this.SCROLL_AMOUNT;
+            var _loc_2:* = this.avatar_gallery[0].x + this.SCROLL_AMOUNT;
             if (this.avatar_cursor == 0)
             {
                 _loc_2 = Math.min(_loc_2, this.GALLERY_LEFT_JUSTIFY);
             }
-            _loc_3 = 0;
-            _loc_4 = 0;
+            var _loc_3:Number = 0;
+            var _loc_4:* = 0;
             while (_loc_4 < this.avatar_gallery.length)
             {
                 
@@ -6274,17 +5725,14 @@
 
         public function avatarRightE(event:Event)
         {
-            var _loc_2:Number = NaN;
-            var _loc_3:Number = NaN;
-            var _loc_4:* = undefined;
             var _loc_5:MovieClip = null;
-            _loc_2 = this.avatar_gallery[0].x - this.SCROLL_AMOUNT;
+            var _loc_2:* = this.avatar_gallery[0].x - this.SCROLL_AMOUNT;
             if (this.avatar_cursor == this.avatars.length - 7)
             {
                 _loc_2 = Math.max(_loc_2, this.GALLERY_RIGHT_JUSTIFY);
             }
-            _loc_3 = 0;
-            _loc_4 = 0;
+            var _loc_3:Number = 0;
+            var _loc_4:* = 0;
             while (_loc_4 < this.avatar_gallery.length)
             {
                 
@@ -6313,11 +5761,59 @@
             return;
         }// end function
 
+        public function redeemDonationE(event:MouseEvent = null)
+        {
+            this.getInput("Redeem Donation", "Enter your PayPal transaction ID:", "", 17, this.redeemDonation, "A-Za-z0-9");
+            return;
+        }// end function
+
+        public function redeemDonation(param1:String)
+        {
+            if (param1 == null)
+            {
+                return;
+            }
+            if (param1 == "")
+            {
+                this.displayError("Transaction ID not specified");
+                return;
+            }
+            this.Send(["Redeem donation", param1]);
+            this.lock();
+            return;
+        }// end function
+
+        public function redeemDonationResponse(param1:Array)
+        {
+            var _loc_3:MovieClip = null;
+            this.unlock();
+            this.donation_reward_txt.text = "Donation Reward: " + param1[0];
+            this.avatar_browse_mc.visible = true;
+            this.back_browse_mc.visible = true;
+            this.num_wins = int.MAX_VALUE;
+            this.num_rep = int.MAX_VALUE;
+            this.showPuzzle(true);
+            var _loc_2:int = 0;
+            while (_loc_2 < this.avatar_gallery.length)
+            {
+                
+                _loc_3 = this.avatar_gallery[_loc_2];
+                _loc_3.disable(-1);
+                _loc_3.addEventListener(MouseEvent.CLICK, this.avatarClickE);
+                _loc_3.buttonMode = true;
+                _loc_3.mouseChildren = false;
+                _loc_2++;
+            }
+            this.back_mc.disable(-1);
+            this.save_profile_btn.enabled = true;
+            this.displayMessage("You have successfully redeemed your donation!");
+            return;
+        }// end function
+
         public function avatarsAndProfile()
         {
-            var _loc_1:* = undefined;
             this.Send(["Avatars and profile"]);
-            _loc_1 = 0;
+            var _loc_1:* = 0;
             while (_loc_1 < this.avatar_gallery.length)
             {
                 
@@ -6337,18 +5833,15 @@
 
         public function avatarsAndProfileResponse(param1:Array)
         {
-            var _loc_2:int = 0;
-            var _loc_3:int = 0;
-            var _loc_4:int = 0;
             var _loc_5:Number = NaN;
-            var _loc_6:Number = NaN;
-            var _loc_7:* = undefined;
             this.unlock();
-            var _loc_8:* = param1[0];
             this.saved_avatar = param1[0];
-            this.my_avatar = _loc_8;
-            this.avatar_mc.setPicture(this.AVATAR_START, this.my_avatar);
+            this.new_avatar = "same";
+            this.new_avatar2 = "";
+            this.avatar_mc.setPicture(this.AVATAR_START, this.saved_avatar);
             this.saved_back = param1[1];
+            this.new_back = "same";
+            this.new_back2 = "";
             var _loc_8:* = param1[2];
             this.saved_back_color1 = param1[2];
             this.color1_cp.selectedColor = _loc_8;
@@ -6362,15 +5855,24 @@
             this.profile_txt.text = _loc_8;
             this.num_wins = param1[5];
             this.num_rep = param1[6];
-            _loc_2 = param1[param1.length - 2];
-            _loc_3 = param1[(param1.length - 1)];
-            this.avatars = param1.slice(7, _loc_2 + 7);
-            this.backs = param1.slice(_loc_2 + 7, _loc_2 + _loc_3 + 7);
+            if (param1[7] != "")
+            {
+                this.donation_reward_txt.text = "Donation Reward: " + param1[7];
+                this.avatar_browse_mc.visible = true;
+                this.back_browse_mc.visible = true;
+                this.num_wins = int.MAX_VALUE;
+                this.num_rep = int.MAX_VALUE;
+                this.showPuzzle(true);
+            }
+            var _loc_2:* = param1[param1.length - 2];
+            var _loc_3:* = param1[(param1.length - 1)];
+            this.avatars = param1.slice(8, _loc_2 + 8);
+            this.backs = param1.slice(_loc_2 + 8, _loc_2 + _loc_3 + 8);
             this.backs.reverse();
             this.backs.push("");
             this.backs.reverse();
-            _loc_4 = this.avatars.indexOf(this.my_avatar);
-            if (_loc_4 <= 1)
+            var _loc_4:* = this.avatars.indexOf(this.saved_avatar);
+            if (this.avatars.indexOf(this.saved_avatar) <= 1)
             {
                 this.avatar_cursor = 0;
                 _loc_5 = this.GALLERY_LEFT_JUSTIFY;
@@ -6405,8 +5907,8 @@
                 this.left_btn.visible = true;
                 this.right_btn.visible = true;
             }
-            _loc_6 = 0;
-            _loc_7 = 0;
+            var _loc_6:Number = 0;
+            var _loc_7:* = 0;
             while (_loc_7 < 7)
             {
                 
@@ -6429,15 +5931,24 @@
 
         public function setGalleryAvatar(param1:MovieClip, param2:String)
         {
-            var _loc_3:int = 0;
-            var _loc_4:Boolean = false;
             var _loc_5:Boolean = false;
             param1.visible = true;
-            _loc_3 = int(param2.substr(0, param2.indexOf("/")));
-            _loc_4 = _loc_3 > this.num_wins;
+            var _loc_3:* = int(param2.substr(0, param2.indexOf("/")));
+            var _loc_4:* = _loc_3 > this.num_wins;
             param1.disable(_loc_4 ? (_loc_3) : (-1));
             param1.setPicture(this.AVATAR_START, param2);
-            _loc_5 = param2 == this.my_avatar;
+            if (this.new_avatar == "same")
+            {
+                _loc_5 = param2 == this.saved_avatar;
+            }
+            else if (this.new_avatar == "path")
+            {
+                _loc_5 = param2 == this.new_avatar;
+            }
+            else
+            {
+                _loc_5 = false;
+            }
             param1.setOutline(_loc_5);
             if (_loc_5)
             {
@@ -6462,10 +5973,19 @@
 
         public function avatarClickE(event:MouseEvent)
         {
-            var _loc_2:MovieClip = null;
-            _loc_2 = event.target as MovieClip;
-            this.my_avatar = _loc_2.getPictureString();
-            this.avatar_mc.copyPicture(_loc_2.getPicture());
+            var _loc_2:* = event.target as MovieClip;
+            var _loc_3:* = _loc_2.getPictureString();
+            if (this.saved_avatar == _loc_3)
+            {
+                this.new_avatar = "same";
+                this.new_avatar2 = "";
+            }
+            else
+            {
+                this.new_avatar = "path";
+                this.new_avatar2 = _loc_3;
+            }
+            this.avatar_mc.copyPicture(_loc_2.picture_mc);
             if (this.outlined_avatar != null)
             {
                 this.outlined_avatar.setOutline(false);
@@ -6477,12 +5997,8 @@
 
         public function saveAvatarAndProfileE(event:MouseEvent = null)
         {
-            this.saving_avatar = this.my_avatar;
-            this.saving_back = this.my_back;
-            this.saving_back_color1 = this.color1_cp.selectedColor;
-            this.saving_back_color2 = this.color2_cp.selectedColor;
-            this.saving_profile = this.replaceAll(this.profile_txt.text, "\r", "\n");
-            this.Send(["Save avatar and profile", this.saving_avatar, this.saving_back, this.saving_back_color1, this.saving_back_color2, this.saving_profile]);
+            var _loc_2:* = StringUtils.replaceAll(this.profile_txt.text, "\r", "\n");
+            this.Send(["Save avatar and profile", this.new_avatar, this.new_avatar2, this.new_back, this.new_back2, this.color1_cp.selectedColor, this.color2_cp.selectedColor, _loc_2]);
             this.my_profile_exiting = false;
             this.lock();
             return;
@@ -6490,8 +6006,7 @@
 
         public function saveAvatarAndProfileResponse(param1:Array)
         {
-            var _loc_2:String = null;
-            _loc_2 = "Profile has been saved";
+            var _loc_2:String = "Profile has been saved";
             if (this.my_profile_exiting)
             {
                 this.displayMessage(_loc_2, this.returnToMainE);
@@ -6500,18 +6015,62 @@
             {
                 this.unlock();
                 this.displayMessage(_loc_2);
-                this.saved_avatar = this.saving_avatar;
-                this.saved_back = this.saving_back;
-                this.saved_back_color1 = this.saving_back_color1;
-                this.saved_back_color2 = this.saving_back_color2;
-                this.saved_profile = this.saving_profile;
+                switch(this.new_avatar)
+                {
+                    case "same":
+                    {
+                        break;
+                    }
+                    case "path":
+                    {
+                        this.saved_avatar = this.new_avatar2;
+                        break;
+                    }
+                    case "upload":
+                    {
+                        this.saved_avatar = null;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                this.new_avatar = "same";
+                this.new_avatar2 = "";
+                switch(this.new_back)
+                {
+                    case "same":
+                    {
+                        break;
+                    }
+                    case "path":
+                    {
+                        this.saved_back = this.new_back2;
+                        break;
+                    }
+                    case "upload":
+                    {
+                        this.saved_back = null;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+                this.new_back = "same";
+                this.new_back2 = "";
+                this.saved_back_color1 = this.color1_cp.selectedColor;
+                this.saved_back_color2 = this.color2_cp.selectedColor;
+                this.saved_profile = StringUtils.replaceAll(this.profile_txt.text, "\r", "\n");
             }
             return;
         }// end function
 
-        public function myProfileExitE(event:MouseEvent)
+        public function myProfileExitE(event:MouseEvent = null)
         {
-            if (this.saved_avatar != this.my_avatar || this.saved_back != this.my_back || this.saved_back_color1 != this.color1_cp.selectedColor || this.saved_back_color2 != this.color2_cp.selectedColor || this.saved_profile != this.replaceAll(this.profile_txt.text, "\r", "\n"))
+            if (this.new_avatar != "same" || this.new_back != "same" || this.saved_back_color1 != this.color1_cp.selectedColor || this.saved_back_color2 != this.color2_cp.selectedColor || this.saved_profile != StringUtils.replaceAll(this.profile_txt.text, "\r", "\n"))
             {
                 if (this.save_profile_btn.enabled)
                 {
@@ -6554,10 +6113,19 @@
 
         public function setCardBack(param1:String)
         {
-            var _loc_2:int = 0;
-            var _loc_3:Boolean = false;
-            this.my_back = param1;
-            if (this.my_back == "")
+            var _loc_2:Boolean = false;
+            var _loc_3:int = 0;
+            if (param1 == this.saved_back)
+            {
+                this.new_back = "same";
+                this.new_back2 = "";
+            }
+            else
+            {
+                this.new_back = "path";
+                this.new_back2 = param1;
+            }
+            if (param1 == "")
             {
                 this.back_mc.disable(-1);
                 this.back_mc.setDefaultBack();
@@ -6567,11 +6135,18 @@
             }
             else
             {
-                _loc_2 = int(this.my_back.substr(0, this.my_back.indexOf("/")));
-                _loc_3 = _loc_2 > this.num_rep;
-                this.back_mc.disable(_loc_3 ? (_loc_2) : (-1));
-                this.back_mc.setBack(this.BACK_START, this.my_back);
-                this.save_profile_btn.enabled = this.my_back == this.saved_back || !_loc_3;
+                if (this.new_back == "same")
+                {
+                    _loc_2 = true;
+                }
+                else
+                {
+                    _loc_3 = int(param1.substr(0, param1.indexOf("/")));
+                    _loc_2 = this.num_rep >= _loc_3;
+                }
+                this.back_mc.disable(_loc_2 ? (-1) : (_loc_3));
+                this.save_profile_btn.enabled = _loc_2;
+                this.back_mc.setBack(this.BACK_START, param1);
                 this.color1_cp.visible = true;
                 this.color2_cp.visible = true;
             }
@@ -6609,6 +6184,196 @@
         public function color2ChangeE(event:Event)
         {
             this.back_mc.setColor2(this.color2_cp.selectedColor);
+            return;
+        }// end function
+
+        public function avatarBrowseE(event:MouseEvent = null)
+        {
+            if (this.browse_fr != null)
+            {
+                return;
+            }
+            this.browse_avatar = true;
+            this.browse_fr = new FileReference();
+            this.browse_fr.addEventListener(Event.SELECT, this.abSelectE);
+            this.browse_fr.addEventListener(Event.CANCEL, this.abCancelE);
+            this.browse_fr.browse([new FileFilter("Images (*.jpg,*.gif,*.png)", "*.jpg;*.gif;*.png")]);
+            return;
+        }// end function
+
+        public function backBrowseE(event:MouseEvent = null)
+        {
+            if (this.browse_fr != null)
+            {
+                return;
+            }
+            this.browse_avatar = false;
+            this.browse_fr = new FileReference();
+            this.browse_fr.addEventListener(Event.SELECT, this.abSelectE);
+            this.browse_fr.addEventListener(Event.CANCEL, this.abCancelE);
+            this.browse_fr.browse();
+            return;
+        }// end function
+
+        public function abSelectE(event:Event)
+        {
+            if (currentFrameLabel != "my_profile_start")
+            {
+                this.browse_fr = null;
+                return;
+            }
+            this.browse_fr.removeEventListener(Event.SELECT, this.abSelectE);
+            this.browse_fr.addEventListener(Event.COMPLETE, this.abCompleteE);
+            this.browse_fr.addEventListener(IOErrorEvent.IO_ERROR, this.abErrorE);
+            this.browse_fr.load();
+            return;
+        }// end function
+
+        public function abCancelE(event:Event)
+        {
+            this.browse_fr = null;
+            return;
+        }// end function
+
+        public function abCompleteE(event:Event)
+        {
+            if (currentFrameLabel != "my_profile_start")
+            {
+                this.browse_fr = null;
+                return;
+            }
+            var _loc_2:* = this.browse_fr.data;
+            this.browse_fr = null;
+            this.abLoadImage(_loc_2);
+            return;
+        }// end function
+
+        public function abLoadImage(param1:ByteArray)
+        {
+            var ba:* = param1;
+            this.browse_loader = new Loader();
+            this.browse_loader.contentLoaderInfo.addEventListener(Event.COMPLETE, this.abLoadE);
+            this.browse_loader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, this.abLoadErrorE);
+            try
+            {
+                this.browse_loader.loadBytes(ba);
+            }
+            catch (err:Error)
+            {
+                browse_loader = null;
+                displayError("File is empty");
+            }
+            this.browse_ba = ba;
+            return;
+        }// end function
+
+        public function abErrorE(event:Event)
+        {
+            this.browse_fr = null;
+            this.displayError("Failed to open file");
+            return;
+        }// end function
+
+        public function abLoadE(event:Event)
+        {
+            var bd:BitmapData;
+            var ba:ByteArray;
+            var type:String;
+            var new_dim:int;
+            var new_bd:BitmapData;
+            var matrix:Matrix;
+            var e:* = event;
+            if (currentFrameLabel != "my_profile_start")
+            {
+                this.browse_loader = null;
+                this.browse_ba = null;
+                return;
+            }
+            try
+            {
+                bd = Bitmap(this.browse_loader.content).bitmapData;
+                ba = this.browse_ba;
+                type = this.browse_loader.contentLoaderInfo.contentType;
+            }
+            catch (e:Error)
+            {
+                displayError("File is not a compatible image");
+                ;
+                
+                
+                return;
+            }
+            finally
+            {
+                this.browse_loader = null;
+                this.browse_ba = null;
+            }
+            if (this.browse_avatar)
+            {
+                if (bd.width == 0 || bd.height == 0)
+                {
+                    this.displayError("Invalid image dimensions");
+                    return;
+                }
+                if (bd.width != bd.height || bd.width > 600)
+                {
+                    new_dim = bd.width >= 600 ? (600) : (bd.width);
+                    if (bd.height < new_dim)
+                    {
+                        new_dim = bd.height;
+                    }
+                    new_bd = new BitmapData(new_dim, new_dim);
+                    matrix = new Matrix();
+                    matrix.scale(new_dim / bd.width, new_dim / bd.height);
+                    new_bd.draw(bd, matrix, null, null, null, true);
+                    this.abLoadImage(new JPGEncoder(85).encode(new_bd));
+                    return;
+                }
+                else if (type != "image/jpeg")
+                {
+                    this.abLoadImage(new JPGEncoder(85).encode(bd));
+                    return;
+                }
+                this.new_avatar = "upload";
+                this.new_avatar2 = Base64.encodeByteArray(ba);
+                this.avatar_mc.useBitmapData(bd);
+                if (this.outlined_avatar != null)
+                {
+                    this.outlined_avatar.setOutline(false);
+                }
+                this.outlined_avatar = null;
+            }
+            else
+            {
+                if (bd.width != 400 || !(bd.height == 580 || bd.height == 1160 || bd.height == 1740))
+                {
+                    this.displayError("Invalid image dimensions");
+                    return;
+                }
+                if (type != "image/png")
+                {
+                    this.abLoadImage(PNGEncoder.encode(bd));
+                    return;
+                }
+                this.new_back = "upload";
+                this.new_back2 = Base64.encodeByteArray(ba);
+                this.back_mc.disable(-1);
+                this.save_profile_btn.enabled = true;
+                this.back_mc.useBitmapData(bd);
+                this.color1_cp.visible = true;
+                this.color2_cp.visible = true;
+                this.card_back_idx = -1;
+                this.back_left_btn.visible = false;
+                this.back_right_btn.visible = this.card_back_idx < (this.backs.length - 1);
+            }
+            return;
+        }// end function
+
+        public function abLoadErrorE(event:IOErrorEvent)
+        {
+            this.browse_loader = null;
+            this.browse_ba = null;
+            this.displayError("File is not a compatible image");
             return;
         }// end function
 
@@ -6830,7 +6595,7 @@
             this.unlock();
             this.status_txt.text = param1[0];
             this.strikes_txt.text = param1[1];
-            this.ban_note_txt.text = param1[2];
+            this.ban_note_txt.htmlText = StringUtils.escapeHtmlWithLinks(param1[2]);
             return;
         }// end function
 
@@ -7433,16 +7198,24 @@
             color21 = this.duel_args[4];
             rating1 = this.duel_args[5];
             reputation1 = this.duel_args[6];
-            username2 = this.duel_args[7];
-            avatar2 = this.duel_args[8];
-            back2 = this.duel_args[9];
-            color12 = this.duel_args[10];
-            color22 = this.duel_args[11];
-            rating2 = this.duel_args[12];
-            reputation2 = this.duel_args[13];
-            watcher_list_str = this.duel_args[14];
-            watcher_list = watcher_list_str == "" ? ([]) : (this.stringToArray(watcher_list_str));
-            remaining_args = this.duel_args.slice(15);
+            if (this.duel_args[7] == "true")
+            {
+                this.avatar_back1_mc.setDonator();
+            }
+            username2 = this.duel_args[8];
+            avatar2 = this.duel_args[9];
+            back2 = this.duel_args[10];
+            color12 = this.duel_args[11];
+            color22 = this.duel_args[12];
+            rating2 = this.duel_args[13];
+            reputation2 = this.duel_args[14];
+            if (this.duel_args[15] == "true")
+            {
+                this.avatar_back2_mc.setDonator();
+            }
+            watcher_list_str = this.duel_args[16];
+            watcher_list = watcher_list_str == "" ? ([]) : (StringUtils.stringToArray(watcher_list_str));
+            remaining_args = this.duel_args.slice(17);
             this.duel_args = null;
             this.username1_mc.setUsername(username1);
             this.username2_mc.setUsername(username2);
@@ -7456,7 +7229,7 @@
             this.rating_rep2_mc.setRatingRep(rating2, reputation2);
             this.status1_mc.status = "";
             this.status2_mc.status = "";
-            this.watchers_mc.initialize(watcher_list, this.COMPONENT_FONT, this.COMPONENT_SIZE);
+            this.watchers_mc.initialize(watcher_list);
             this.watchers_mc.watchers_mc.addEventListener(MouseEvent.DOUBLE_CLICK, startWatchersPrivateE);
             this.watchers_mc.watchers_mc.addEventListener(KeyboardEvent.KEY_DOWN, watcherListKeyboardHandlerE);
             this.watch_btn.visible = true;
@@ -7485,7 +7258,6 @@
             this.watchHtmlText = "";
             this.watchHtmlLines = 0;
             this.duelHtmlText = "";
-            this.duelHtmlLines = 0;
             if (this.duelist)
             {
                 this.defeat_btn.addEventListener(MouseEvent.CLICK, this.admitDefeatE);
@@ -7967,7 +7739,7 @@
                     }
                 }
             }
-            _loc_8 = this.escapeAndColorSender(param1, _loc_9) + this.escapeHtmlWithLinks(param2);
+            _loc_8 = StringUtils.escapeAndColorSender(param1, _loc_9) + StringUtils.escapeHtmlWithLinks(param2);
             if (this.watchHtmlText != "")
             {
                 _loc_8 = "<br />" + _loc_8;
@@ -8023,13 +7795,13 @@
                     }
                 }
             }
-            this.writeDuelChatLine(this.escapeAndColorSender(param1, _loc_4) + this.escapeHtmlWithLinks(param2));
+            this.writeDuelChatLine(StringUtils.escapeAndColorSender(param1, _loc_4) + StringUtils.escapeHtmlWithLinks(param2));
             return;
         }// end function
 
         public function duelChatAddLine(param1:String)
         {
-            this.writeDuelChatLine("<b>" + this.escapeHtml(param1) + "</b>");
+            this.writeDuelChatLine("<b>" + StringUtils.escapeHtml(param1) + "</b>");
             return;
         }// end function
 
@@ -8038,28 +7810,9 @@
             var _loc_2:* = undefined;
             var _loc_3:Number = NaN;
             var _loc_4:Boolean = false;
-            var _loc_5:Boolean = false;
             _loc_2 = this.duel_chat_mc.cout_txt.verticalScrollPosition;
             _loc_3 = this.duel_chat_mc.cout_txt.maxVerticalScrollPosition;
             _loc_4 = _loc_2 == _loc_3;
-            _loc_5 = this.duelHtmlLines == 200;
-            if (_loc_5)
-            {
-                this.duelHtmlText = this.duelHtmlText.substr(this.duelHtmlText.indexOf("<br />") + 6);
-                this.duel_chat_mc.cout_txt.htmlText = this.duelHtmlText;
-                this.duel_chat_mc.cout_txt.verticalScrollPosition = _loc_2;
-                _loc_2 = _loc_2 - (_loc_3 - this.duel_chat_mc.cout_txt.maxVerticalScrollPosition);
-                if (_loc_2 < 0)
-                {
-                    _loc_2 = 0;
-                }
-            }
-            else
-            {
-                var _loc_6:String = this;
-                var _loc_7:* = this.duelHtmlLines + 1;
-                _loc_6.duelHtmlLines = _loc_7;
-            }
             if (this.duelHtmlText != "")
             {
                 param1 = "<br />" + param1;
@@ -8284,7 +8037,7 @@
             {
                 this.draw_btn.label = "Offer Draw";
             }
-            this.duelChatAddLine(_loc_2 + " has revoked his draw offer");
+            this.duelChatAddLine(_loc_2 + " has revoked the draw offer");
             return;
         }// end function
 
@@ -8296,7 +8049,7 @@
             {
                 this.draw_btn.label = "Offer Draw";
             }
-            this.duelChatAddLine(_loc_2 + " has revoked his draw offer");
+            this.duelChatAddLine(_loc_2 + " has revoked the draw offer");
             return;
         }// end function
 
@@ -8384,7 +8137,7 @@
             this.call_admin_btn.enabled = this.watchers_mc.num_admins_online == 0;
             if (param1.length > 0)
             {
-                this.duelChatAddLine(param1[0] + " has canceled his admin call");
+                this.duelChatAddLine(param1[0] + " has canceled the admin call");
             }
             return;
         }// end function
@@ -8460,7 +8213,7 @@
             {
                 this.rematch_btn.label = "Offer Rematch";
             }
-            this.duelChatAddLine(_loc_2 + " has revoked his rematch offer");
+            this.duelChatAddLine(_loc_2 + " has revoked the rematch offer");
             return;
         }// end function
 
@@ -8472,7 +8225,7 @@
             {
                 this.rematch_btn.label = "Offer Rematch";
             }
-            this.duelChatAddLine(_loc_2 + " has revoked his rematch offer");
+            this.duelChatAddLine(_loc_2 + " has revoked the rematch offer");
             return;
         }// end function
 
@@ -9556,8 +9309,8 @@
         {
             var _loc_1:TextFormat = null;
             _loc_1 = new TextFormat();
-            _loc_1.font = this.COMPONENT_FONT;
-            _loc_1.size = this.COMPONENT_SIZE;
+            _loc_1.font = Constants.COMPONENT_FONT;
+            _loc_1.size = Constants.COMPONENT_SIZE;
             _loc_1.color = 39168;
             _loc_1.color = 16777215;
             this.auto_draw_cb.setStyle("textFormat", _loc_1);
@@ -12267,6 +12020,36 @@
             return;
         }// end function
 
+        function __setProp_redeem_donation_btn_dn_donation_191()
+        {
+            if (this.__setPropDict[this.redeem_donation_btn] == undefined || int(this.__setPropDict[this.redeem_donation_btn]) != 192)
+            {
+                this.__setPropDict[this.redeem_donation_btn] = 192;
+                try
+                {
+                    this.redeem_donation_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.redeem_donation_btn.emphasized = false;
+                this.redeem_donation_btn.enabled = true;
+                this.redeem_donation_btn.label = "Redeem Donation";
+                this.redeem_donation_btn.labelPlacement = "right";
+                this.redeem_donation_btn.selected = false;
+                this.redeem_donation_btn.toggle = false;
+                this.redeem_donation_btn.visible = true;
+                try
+                {
+                    this.redeem_donation_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
         function __setProp_profile_txt_dn_profile_191()
         {
             if (this.__setPropDict[this.profile_txt] == undefined || int(this.__setPropDict[this.profile_txt]) != 192)
@@ -13913,12 +13696,10 @@
                 this.AVATAR_START = this.URL_START + "images/avatars/";
                 this.BACK_START = this.URL_START + "images/backs/";
                 this.bgmusic = new Sound();
-                this.bgmusic.load(new URLRequest(this.URL_START + "EndlessDream.mp3"), new SoundLoaderContext());
+                this.bgmusic.load(new URLRequest(this.URL_START + "soft_love_piano_instrumental.mp3"), new SoundLoaderContext());
                 this.bgmusic.addEventListener(IOErrorEvent.IO_ERROR, this.bufferFailE);
                 addEventListener(Event.ENTER_FRAME, this.doneBufferingE);
             }
-            this.COMPONENT_FONT = "MyArial";
-            this.COMPONENT_SIZE = 12;
             this.setStyleManager();
             return;
         }// end function
@@ -14010,7 +13791,10 @@
             this.socket.addEventListener(Event.CLOSE, this.reconnectE);
             this.socket.addEventListener(SecurityErrorEvent.SECURITY_ERROR, this.reconnectE);
             this.socket.addEventListener(IOErrorEvent.IO_ERROR, this.reconnectE);
-            this.session_id = this.randomHex();
+            if (this.session_id == null)
+            {
+                this.session_id = this.randomHex();
+            }
             this.connection_success = false;
             this.Connect();
             this.incoming_handler = null;
@@ -14037,15 +13821,10 @@
             this.watch_icon_mc.visible = false;
             this.public_btn.addEventListener(MouseEvent.CLICK, this.togglePublicE);
             this.public_chat_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.togglePublicE);
-            this.publicHtmlText = "";
-            this.publicHtmlLines = 0;
             this.online_btn.addEventListener(MouseEvent.CLICK, this.toggleOnlineE);
             this.online_users_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.toggleOnlineE);
             this.online_users_mc.users_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.startPrivateE);
             this.online_users_mc.users_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.userListKeyboardHandlerE);
-            this.num_friends_online = 0;
-            this.num_admins_online = 0;
-            this.online_users_mc.users_mc.addEventListener(ScrollEvent.SCROLL, this.updateListColors);
             this.call_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
             this.calls_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
             this.calls_mc.calls_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.answerCallE);
@@ -14055,7 +13834,6 @@
             this.private_chat_mc.exit_btn.addEventListener(MouseEvent.CLICK, this.removeCurrentPrivateE);
             this.private_chat_mc.user_mc.addEventListener(Event.CHANGE, this.changePrivateE);
             this.num_new_msgs = 0;
-            this.private_chat_mc.user_mc.dropdown.addEventListener(ScrollEvent.SCROLL, this.updateDropdownColors);
             this.chat_lock = false;
             this.public_chat_mc.cin_txt.drawNow();
             this.chatLock();
@@ -14222,6 +14000,7 @@
             this.watch_duel_btn.visible = false;
             this.key_mc.visible = false;
             this.watch_duel_btn.addEventListener(MouseEvent.CLICK, this.profileWatchDuelE);
+            this.puzzleInit();
             this.username_txt.text = this.username;
             this.username_txt.setFocus();
             this.getProfile();
@@ -14234,6 +14013,7 @@
             this.__setProp_my_profile_exit_btn_dn_buttons_191();
             this.__setProp_save_profile_btn_dn_buttons_191();
             this.__setProp_profile_txt_dn_profile_191();
+            this.__setProp_redeem_donation_btn_dn_donation_191();
             stage.focus = null;
             this.track("my_profile");
             this.enter_handler = this.myProfileEnterHandler;
@@ -14245,10 +14025,18 @@
             this.left_btn.addEventListener(MouseEvent.MOUSE_UP, this.avatarStopLeftE);
             this.right_btn.addEventListener(MouseEvent.MOUSE_DOWN, this.avatarStartRightE);
             this.right_btn.addEventListener(MouseEvent.MOUSE_UP, this.avatarStopRightE);
+            this.redeem_donation_btn.addEventListener(MouseEvent.CLICK, this.redeemDonationE);
+            this.redeem_donation_btn.useHandCursor = true;
             this.save_profile_btn.addEventListener(MouseEvent.CLICK, this.saveAvatarAndProfileE);
             this.save_profile_btn.useHandCursor = true;
             this.my_profile_exit_btn.addEventListener(MouseEvent.CLICK, this.myProfileExitE);
             this.my_profile_exit_btn.useHandCursor = true;
+            this.avatar_browse_mc.avatar_browse_btn.addEventListener(MouseEvent.CLICK, this.avatarBrowseE);
+            this.avatar_browse_mc.avatar_browse_btn.useHandCursor = true;
+            this.avatar_browse_mc.visible = false;
+            this.back_browse_mc.back_browse_btn.addEventListener(MouseEvent.CLICK, this.backBrowseE);
+            this.back_browse_mc.back_browse_btn.useHandCursor = true;
+            this.back_browse_mc.visible = false;
             this.GALLERY_LEFT_JUSTIFY = 360.75;
             this.GALLERY_RIGHT_JUSTIFY = -299.25;
             this.GALLERY_CENTER_JUSTIFY = 30.75;
@@ -14259,6 +14047,7 @@
             this.back_right_btn.addEventListener(MouseEvent.CLICK, this.backRightE);
             this.color1_cp.addEventListener(Event.CHANGE, this.color1ChangeE);
             this.color2_cp.addEventListener(Event.CHANGE, this.color2ChangeE);
+            this.puzzleInit();
             return;
         }// end function
 

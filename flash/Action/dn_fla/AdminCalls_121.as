@@ -7,9 +7,14 @@
     dynamic public class AdminCalls_121 extends MovieClip
     {
         public var calls_mc:List;
+        public var calls_btn:SimpleButton;
+        public var tools_mc:MovieClip;
+        public var tools_selected_mc:MovieClip;
         public var top_mc:MovieClip;
         public var num_calls_txt:Label;
+        public var tools_btn:SimpleButton;
         public var minimize_btn:SimpleButton;
+        public var calls_selected_mc:MovieClip;
         public var calls:Object;
         public var remember_position:Boolean;
 
@@ -32,7 +37,7 @@
         public function removeCall(param1:String)
         {
             var _loc_2:* = this.calls[param1];
-            this.calls[param1] = undefined;
+            delete this.calls[param1];
             this.calls_mc.removeItem(_loc_2);
             this.num_calls_txt.text = "Calls: " + this.calls_mc.length;
             return;
@@ -48,6 +53,28 @@
         public function dropE(event:MouseEvent)
         {
             stopDrag();
+            return;
+        }// end function
+
+        public function showCallsE(event:MouseEvent)
+        {
+            this.calls_btn.visible = false;
+            this.calls_selected_mc.visible = true;
+            this.tools_btn.visible = true;
+            this.tools_selected_mc.visible = false;
+            this.calls_mc.visible = true;
+            this.tools_mc.visible = false;
+            return;
+        }// end function
+
+        public function showToolsE(event:MouseEvent)
+        {
+            this.calls_btn.visible = true;
+            this.calls_selected_mc.visible = false;
+            this.tools_btn.visible = false;
+            this.tools_selected_mc.visible = true;
+            this.calls_mc.visible = false;
+            this.tools_mc.visible = true;
             return;
         }// end function
 
@@ -85,6 +112,9 @@
             this.remember_position = false;
             this.top_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.startDragE);
             this.top_mc.addEventListener(MouseEvent.MOUSE_UP, this.dropE);
+            this.showCallsE(null);
+            this.calls_btn.addEventListener(MouseEvent.CLICK, this.showCallsE);
+            this.tools_btn.addEventListener(MouseEvent.CLICK, this.showToolsE);
             return;
         }// end function
 

@@ -69,8 +69,8 @@
                 removeChild(this.joins[_loc_5]);
                 this.holes.enqueue(new ComparableInt(-_loc_5));
             }
-            this.joins_table[_loc_3] = undefined;
-            this.joins[_loc_5] = undefined;
+            delete this.joins_table[_loc_3];
+            this.joins[_loc_5] = null;
             return;
         }// end function
 
