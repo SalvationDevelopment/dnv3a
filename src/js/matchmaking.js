@@ -659,7 +659,6 @@ window.MatchmakingView = View.extend({
 	Tabs: {'AR':0, 'AU':1, 'TU':2, 'FRIEND':3, 'HOST':4},
 
 	open: function() {
-		this._super();
 		this.tabHolder = $('#mm-tabs');
 		this.mainBox = $('#mm-main-box');
 		this.searchPanel = new SearchPanel(this);
@@ -909,9 +908,22 @@ window.MatchmakingView = View.extend({
 
 		if (ev === 'Watch duel') {
 			Communicator.send(['Unsubscribe']);
-			window.alert("Now watching a duel! See the console spam.");
 			ignoreLateMessages(this.ignoreLateMessage);
-			return false;
+			var ind = 0;
+			var duelState = data[ind++];
+			var duelists = [];
+			for (var i = 0; i < 2; ++i) {
+				duelists.push(new Duelist(data.slice(ind, ind+8)));
+				ind += 8;
+			}
+			var watcherList = data[ind++].split(','), watchers = [];
+			for (var i = 0; i < watcherList.length; i += 2) {
+				var name = watcherList[i];
+				watchers.push(Users.getUser(name));
+			}
+
+			setView(new DuelView(true, duelState, duelists, watchers));
+			return true;
 		}
 
 		if (ev === (this.watch ? 'Add watches' : 'Add duels')) {

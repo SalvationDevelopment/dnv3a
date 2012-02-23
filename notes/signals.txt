@@ -15,6 +15,9 @@ DuelMode = ar/au/tu (advanced rated, etc.)
 UserTitle = Username in duel mode, "User1 ({Rating}) | User2 ({Rating})" in watch mode
 Rating = Format "1178/437" or so, or empty
 DuelListToken = 32 random hex-chars
+DuelState = Rock-paper-scissors/Turn pick/Duel/Siding
+Avatar = E.g. "0/1.jpg". Appended to AVATAR_START in urls.txt for a ~500x500 px image. Can perhaps be empty.
+WatcherListStr = E.g. "simonlindholm,0,simonlindholm4,0".
 
 
 Outgoing:
@@ -87,3 +90,5 @@ Incoming:
 * Private message, From, To, Message, {ModStatus}
 
 * Leave duel, Reason [, Alternative Duel Offer Message]
+
++ Watch duel, {DuelState}, (Name, {Avatar}, Back, Color1, Color2, Rating, Reputation, Has donated: bool)*2, {WatcherListStr} (Followed by another message, in some cases, perhaps related to matches and side-decking.)

@@ -11,6 +11,7 @@ function keyToString(key, shift) {
 	if (key === 9) name = 'tab';
 	else if (key === 13) name = 'enter';
 	else if (key === 27) name = 'escape';
+	else if (key === 32) name = ' ';
 	else if (key === 37) name = 'left';
 	else if (key === 38) name = 'up';
 	else if (key === 39) name = 'right';
