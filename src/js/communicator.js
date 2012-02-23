@@ -100,7 +100,7 @@ Communicator.setup = function(ready) {
 	el.style.top = '-200px';
 	el.id = flashId;
 	document.body.appendChild(el);
-	swfobject.embedSWF("http://simonsoftware.se/dn/communicator.swf", flashId, "0", "0", "10.0.0", false, flashvars, params, attributes, flashLoaded);
+	swfobject.embedSWF("communicator.swf", flashId, "0", "0", "10.0.0", false, flashvars, params, attributes, flashLoaded);
 
 	// Treat flash as not loading after five seconds.
 	setTimeout(function() {
