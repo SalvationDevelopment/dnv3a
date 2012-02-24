@@ -12,6 +12,13 @@ http://www.youtube.com/watch?v=uYwykrhvhR8 has the intro.
 (Also http://www.duelingnetwork.com:8080/Dueling_Network/overlap_low.mp3, but
 the volume is low.)
 
+New intro:
+http://www.duelingnetwork.com:8080/Dueling_Network/EndlessDream.mp3
+
+Intro for Valentines Day:
+http://www.duelingnetwork.com:8080/Dueling_Network/soft_love_piano_instrumental.mp3
+
+
 http://www.duelingnetwork.com:8080/Dueling_Network/images/cards/<card number>.scf
 
 http://www.duelingnetwork.com:8080/Dueling_Network/images/avatars/<required rating>/<id>.jpg

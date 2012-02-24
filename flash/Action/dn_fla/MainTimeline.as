@@ -8480,7 +8480,14 @@
 
         public function rpsTweenStart(param1) : Array
         {
-            return [new Tween(this.rock1_mc, "y", None.easeNone, 766.9, this.rock1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.paper1_mc, "y", None.easeNone, 766.9, this.paper1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.scissors1_mc, "y", None.easeNone, 766.9, this.scissors1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.rock2_mc, "y", None.easeNone, -126.9, this.rock2_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.paper2_mc, "y", None.easeNone, -126.9, this.paper2_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.scissors2_mc, "y", None.easeNone, -126.9, this.scissors2_mc.y, this.RPS_TWEEN_TIME, true)];
+            return [
+                new Tween(this.rock1_mc, "y", None.easeNone, 766.9, this.rock1_mc.y, this.RPS_TWEEN_TIME, true),
+                new Tween(this.paper1_mc, "y", None.easeNone, 766.9, this.paper1_mc.y, this.RPS_TWEEN_TIME, true),
+                new Tween(this.scissors1_mc, "y", None.easeNone, 766.9, this.scissors1_mc.y, this.RPS_TWEEN_TIME, true),
+                new Tween(this.rock2_mc, "y", None.easeNone, -126.9, this.rock2_mc.y, this.RPS_TWEEN_TIME, true),
+                new Tween(this.paper2_mc, "y", None.easeNone, -126.9, this.paper2_mc.y, this.RPS_TWEEN_TIME, true),
+                new Tween(this.scissors2_mc, "y", None.easeNone, -126.9, this.scissors2_mc.y, this.RPS_TWEEN_TIME, true)
+            ];
         }// end function
 
         public function rpsChooseE(event:MouseEvent)
@@ -9368,65 +9375,70 @@
             }
             else
             {
-                _loc_1 = this.duel_screen_args[0];
-                _loc_2 = this.duel_screen_args[1];
+                var duelStartArgs = this.duel_screen_args[0];
+                var pl1First = this.duel_screen_args[1];
                 this.duel_screen_args = null;
-                _loc_3 = _loc_1[0];
-                _loc_4 = _loc_1[1];
-                _loc_5 = _loc_1[2];
-                _loc_6 = _loc_1[3];
-                _loc_7 = _loc_1[4];
-                _loc_8 = _loc_1[5];
-                _loc_9 = _loc_1[6];
-                _loc_10 = _loc_1[7];
-                _loc_11 = _loc_2 ? (6) : (5);
-                _loc_12 = 8 + 16 * _loc_11;
-                _loc_13 = _loc_3 - 1;
-                while (_loc_13 >= 0)
+
+                var deck1 = duelStartArgs[0];
+                var deck1Base = duelStartArgs[1];
+                var extra1 = duelStartArgs[2];
+                var extra1Base = duelStartArgs[3];
+
+                var deck2 = duelStartArgs[4];
+                var deck2Base = duelStartArgs[5];
+                var extra2 = duelStartArgs[6];
+                var extra2Base = duelStartArgs[7];
+
+                var ownDraw = pl1First ? (6) : (5);
+
+                _loc_12 = 8 + 16 * ownDraw;
+
+                var i = deck1;
+                while (i --> 0)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader1);
-                    _loc_14.id = _loc_4 + _loc_13;
-                    if (_loc_13 < _loc_11 && this.duelist)
+                    _loc_14.id = deck1Base + i;
+                    if (i < ownDraw && this.duelist)
                     {
                         _loc_12 = _loc_12 - 16;
-                        this.initDuelCard(_loc_14, _loc_1.slice(_loc_12, _loc_12 + 16));
+                        this.initDuelCard(_loc_14, duelStartArgs.slice(_loc_12, _loc_12 + 16));
                     }
                     this.cards_mc.addCard(_loc_14, "deck1");
-                    _loc_13 = _loc_13 - 1;
                 }
-                _loc_12 = 8 + 16 * _loc_11;
-                _loc_13 = 0;
-                while (_loc_13 < _loc_5)
+
+                _loc_12 = 8 + 16 * ownDraw;
+                i = 0;
+                while (i < extra1)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader1);
-                    _loc_14.id = _loc_6 + _loc_13;
+                    _loc_14.id = extra1Base + i;
                     if (this.duelist)
                     {
-                        this.initDuelCard(_loc_14, _loc_1.slice(_loc_12, _loc_12 + 16));
+                        this.initDuelCard(_loc_14, duelStartArgs.slice(_loc_12, _loc_12 + 16));
                         _loc_12 = _loc_12 + 16;
                     }
                     this.cards_mc.addCard(_loc_14, "extra1");
-                    _loc_13 = _loc_13 + 1;
+                    ++i;
                 }
-                _loc_13 = _loc_7 - 1;
-                while (_loc_13 >= 0)
+                i = deck2 - 1;
+                while (i >= 0)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader2);
-                    _loc_14.id = _loc_8 + _loc_13;
+                    _loc_14.id = deck2Base + i;
                     this.cards_mc.addCard(_loc_14, "deck2");
-                    _loc_13 = _loc_13 - 1;
+                    --i;
                 }
-                _loc_13 = 0;
-                while (_loc_13 < _loc_9)
+                i = 0;
+                while (i < extra2)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader2);
-                    _loc_14.id = _loc_10 + _loc_13;
+                    _loc_14.id = extra2Base + i;
                     this.cards_mc.addCard(_loc_14, "extra2");
-                    _loc_13 = _loc_13 + 1;
+                    ++i;
                 }
             }
             return;

@@ -18,6 +18,28 @@ DuelListToken = 32 random hex-chars
 DuelState = Rock-paper-scissors/Turn pick/Duel/Siding
 Avatar = E.g. "0/1.jpg". Appended to AVATAR_START in urls.txt for a ~500x500 px image. Can perhaps be empty.
 WatcherListStr = E.g. "simonlindholm,0,simonlindholm4,0".
+CardType = normal/effect/ritual/fusion/synchro/xyz/spell/trap/token
+Attribute = dark/
+FieldPosition = 0..4 for spell/trap, 5 for field spell, 6..10 for monsters
+
+Card =
+	(card type id (slightly larger than the image id). E.g. 3517. -1 for tokens),
+	(card "number", e.g. 88264978. Perhaps unique? Used no-where, it seems... (at least for duels)),
+	(card name, e.g. "Red-Eyes Darkness Metal Dragon"),
+	(card image name, e.g. 2323.scf. Can perhaps be empty),
+	("treated-as", almost always equal to the card name, but probably differs for e.g. harpies. Used for limits),
+	{CardType},
+	(type, e.g. "Dragon/Effect"),
+	{Attribute},
+	Card text,
+	(ATK, or ?),
+	(DEF or ?),
+	(level for monsters, else blank),
+	(card limit),
+	{PreloadInfo} (ignored for now)
+
+PreloadInfo = E.g. 31137, 22080, c11ef232ae77f020ecc4e4ad7e220577. Sent when dueling, can be all empty otherwise. In order: offset into preload array, length of data, decryption key. See getPreloadPicture.
+Place = deck1/grave1/rfg1/extra1/hand1/field1/...
 
 
 Outgoing:
@@ -92,3 +114,16 @@ Incoming:
 * Leave duel, Reason [, Alternative Duel Offer Message]
 
 + Watch duel, {DuelState}, (Name, {Avatar}, Back, Color1, Color2, Rating, Reputation, Has donated: bool)*2, {WatcherListStr} (Followed by another message, in some cases, perhaps related to matches and side-decking.)
+
+* Turn pick, Username -> That user goes first
+
+* Duel start, (Cards in pile, Start of pile index)x4 (= deck1, extra1, deck2, extra2, in order) [, {Card}x(5 or 6, depending on if you start) = values of the deck's first cards, not sent in watch mode]
+
+
+With Duel prefix:
+
+* Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition} (or blank if not sent to field), Face-down :bool, Defense? :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card}
+
+* Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
+
+* Shuffle, Which deck :{Place}, New base ID
