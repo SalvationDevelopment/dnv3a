@@ -117,11 +117,10 @@ window.Debug = {
 		});
 
 		Sidebar.add({
+			order: 'b',
 			title: "Debug log",
 			element: ui
 		});
-
-		ui.parent().height(200);
 	},
 
 	handleMessage: function(ev, data, sending) {

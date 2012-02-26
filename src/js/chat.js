@@ -40,10 +40,11 @@ var Chat = Class.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
 
-	init: function(title) {
+	init: function(title, order) {
 		this.ui = $("<div>").addClass('chat');
 
 		this.sidebarHandle = Sidebar.add({
+			order: order,
 			title: title,
 			element: this.ui
 		});
@@ -96,7 +97,7 @@ window.ChatManager = {
 
 	openGlobalChat: function() {
 		if (!this.globalChat) {
-			this.globalChat = new Chat('Global chat');
+			this.globalChat = new Chat('Global chat', 'a');
 		}
 		return this.globalChat;
 	},

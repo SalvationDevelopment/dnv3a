@@ -50,24 +50,47 @@ body {
 	/* border-box */
 	height: 100%;
 	border-right: 1px solid black;
-	padding: 7px;
+	padding: 7px 7px 0 7px;
 }
 .sidebar-box {
+	/* border-box */
 	border: 2px solid black;
-	height: 300px;
 	border-radius: 4px;
 	margin-bottom: 7px;
 	position: relative;
 }
+
 .sidebar-title {
 	/* border-box */
 	height: 22px;
-	padding: 1px;
-	border-bottom: 1px solid black;
+	padding-left: 2px;
+	border-radius: 2px;
 	background-color: blue;
+	overflow: hidden;
 }
+.sidebar-box.open > .sidebar-title {
+	border-bottom: 1px solid black;
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+.sidebar-minimize-button {
+	background-image: url(img/unminimize.png);
+	float: right;
+	width: 16px;
+	height: 17px;
+	margin: 2px 1px 0 0;
+	cursor: pointer;
+}
+.sidebar-box.open .sidebar-minimize-button {
+	background-image: url(img/minimize.png);
+}
+
 .sidebar-content {
 	/* border-box */
+	display: none;
+}
+.sidebar-box.open > .sidebar-content {
+	display: block;
 	position: absolute;
 	bottom: 0;
 	top: 22px;
