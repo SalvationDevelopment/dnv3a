@@ -77,12 +77,12 @@ var DebugWidget = SidebarWidget.extend({
 	filter: '',
 
 	init: function() {
-		this.ui = $('<div>');
-		this.holder = $('<div>').addClass('debug-holder border-box')
+		this.ui = $('<div>').addClass('debug-widget');
+		this.holder = $('<div>').addClass('sidebar-box-holder border-box')
 			.appendTo(this.ui);
-		this.cont = $('<div>').addClass('debug-cont border-box')
+		this.cont = $('<div>').addClass('sidebar-box-cont border-box')
 			.appendTo(this.holder);
-		this.filterField = $('<input>').addClass('debug-filter border-box')
+		this.filterField = $('<input>').addClass('sidebar-box-field border-box')
 		    .prop('value', '').attr('placeholder', "Filter...").appendTo(this.holder);
 
 		this.cont.on('click', '.debug-row', function() {

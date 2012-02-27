@@ -13,6 +13,12 @@ window.User = Class.extend({
 
 	isFriend: function() {
 		return Friends.isFriend(this.name);
+	},
+
+	getColor: function() {
+		// TODO: Properly color different kinds of admins.
+		if (this.modStatus === 0) return 'black';
+		return 'darkblue';
 	}
 });
 
@@ -30,7 +36,7 @@ window.Users = Listenable.extendObject({
 	handleMessage: function(ev, data) {
 		if (ev === 'Online users') {
 			for (var i = 0; i < data.length; ) {
-				var name = data[i++], mod = data[i++];
+				var name = data[i++], mod = +data[i++];
 				var user = this.map[',' + name] = new User(name, mod);
 				this.dispatch('online', user);
 			}

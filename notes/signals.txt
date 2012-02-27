@@ -56,6 +56,8 @@ Outgoing:
 
 * Get deck data -> "Get deck data" event returned
 
++ Global message, Message
+
 * Private message, Receiver, Message
 
 + Watch duel, Mode, Title, Token, Password

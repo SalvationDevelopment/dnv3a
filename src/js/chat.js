@@ -39,15 +39,40 @@ var Chat = SidebarWidget.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
 
+	holder: null,
+	cont: null,
+	chatField: null,
+
 	init: function(title, order) {
 		this.title = title;
 		this.order = order;
+
 		this.ui = $('<div>').addClass('chat');
+		this.holder = $('<div>').addClass('sidebar-box-holder border-box')
+			.appendTo(this.ui);
+		this.cont = $('<div>').addClass('sidebar-box-cont border-box')
+			.appendTo(this.holder);
+		this.chatField = $('<input>').addClass('sidebar-box-field border-box')
+		    .prop('value', '').attr('placeholder', "Reply...").appendTo(this.holder);
+
+		this.chatField.keydown(function(e) {
+			if (e.which === 13) this.send();
+		}.bind(this));
+
 		this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
 
 	destroy: function() {
 		IgnoreList.unlisten(this.ignoreHandle);
+	},
+
+	send: function() {
+		var value = this.chatField.attr('value');
+		if (ChatManager.locked || !value)
+			return;
+		ChatManager.locked = true;
+		Communicator.send(['Global message', value]);
+		this.chatField.attr('value', '');
 	},
 
 	ignoreListener: function(ev, name) {
@@ -61,7 +86,7 @@ var Chat = SidebarWidget.extend({
 	},
 
 	shown: function() {
-		var el = this.ui[0];
+		var el = this.cont[0];
 		el.scrollTop = el.scrollHeight;
 	},
 
@@ -69,7 +94,7 @@ var Chat = SidebarWidget.extend({
 		if (IgnoreList.has(from))
 			return;
 
-		var el = this.ui[0];
+		var el = this.cont[0];
 		var scrollToBottom = (this.isVisible() &&
 			el.scrollTop + el.offsetHeight === el.scrollHeight);
 
@@ -77,7 +102,7 @@ var Chat = SidebarWidget.extend({
 			$('<span>').addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
 			$('<span>').addClass('chat-message').html(linkify(message))
-		).appendTo(this.ui);
+		).appendTo(this.cont);
 
 		line.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
 			var menu = $('#contextmenu').empty();
@@ -127,10 +152,10 @@ window.ChatManager = {
 			return true;
 		}
 		if (ev === 'Global message') {
-			// TODO: Make a better color choice.
-			var st = parseInt(data[2], 10);
-			var col = (st === 0 ? 'black' : 'darkblue');
-			this.globalChat.addMessage(data[0], data[1], col);
+			var from = data[0], message = data[1];
+			var user = Users.getUser(from);
+			console.assert(user);
+			this.globalChat.addMessage(from, message, user.getColor());
 			return true;
 		}
 		return false;
