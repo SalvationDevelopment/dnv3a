@@ -107,9 +107,9 @@ window.Debug = {
 			var el = that.cont[0];
 			var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
 
-			var filt = that.filter = this.value;
+			var filt = that.filter = this.value.toLowerCase();
 			that.cont.children().each(function() {
-				$(this).toggle(this.textContent.indexOf(filt) !== -1);
+				$(this).toggle(this.textContent.toLowerCase().indexOf(filt) !== -1);
 			});
 
 			if (scrollToBottom)
@@ -141,7 +141,7 @@ window.Debug = {
 			row.css('color', 'darkgreen');
 		}
 
-		if (obj.textContent.indexOf(this.filter) === -1) {
+		if (obj.textContent.toLowerCase().indexOf(this.filter) === -1) {
 			row.hide();
 		}
 
