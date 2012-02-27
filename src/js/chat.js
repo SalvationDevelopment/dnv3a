@@ -81,9 +81,19 @@ var Chat = Class.extend({
 
 		line.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
 			var menu = $('#contextmenu').empty();
-			$('<menuitem>').attr('label', "Ignore user").click(function() {
+			$('<menuitem>').attr('label', "Add \"" + from + "\" to Ignore List").click(function() {
 				IgnoreList.add(from);
 			}).appendTo(menu);
+			if (Friends.isFriend(from)) {
+				$('<menuitem>').attr('label', "Remove From Friends List").click(function() {
+					Friends.removeFriend(from);
+				}).appendTo(menu);
+			}
+			else {
+				$('<menuitem>').attr('label', "Add \"" + from + "\" as a Friend").click(function() {
+					Friends.addFriend(from);
+				}).appendTo(menu);
+			}
 		});
 
 		if (scrollToBottom)
