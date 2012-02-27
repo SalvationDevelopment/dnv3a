@@ -83,7 +83,7 @@ var DebugWidget = SidebarWidget.extend({
 		this.cont = $('<div>').addClass('debug-cont border-box')
 			.appendTo(this.holder);
 		this.filterField = $('<input>').addClass('debug-filter border-box')
-		    .prop('value', '').appendTo(this.holder);
+		    .prop('value', '').attr('placeholder', "Filter...").appendTo(this.holder);
 
 		this.cont.on('click', '.debug-row', function() {
 			$(this).toggleClass('expand');
