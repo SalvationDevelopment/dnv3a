@@ -35,24 +35,18 @@ function linkify(text) {
 	return out;
 }
 
-var Chat = Class.extend({
-	ui: null,
+var Chat = SidebarWidget.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
 
 	init: function(title, order) {
-		this.ui = $("<div>").addClass('chat');
-
-		this.sidebarHandle = Sidebar.add({
-			order: order,
-			title: title,
-			element: this.ui
-		});
+		this.title = title;
+		this.order = order;
+		this.ui = $('<div>').addClass('chat');
 		this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
 
-	close: function() {
-		Sidebar.remove(this.sidebarHandle);
+	destroy: function() {
 		IgnoreList.unlisten(this.ignoreHandle);
 	},
 
@@ -66,12 +60,18 @@ var Chat = Class.extend({
 		}
 	},
 
+	shown: function() {
+		var el = this.ui[0];
+		el.scrollTop = el.scrollHeight;
+	},
+
 	addMessage: function(from, message, color) {
 		if (IgnoreList.has(from))
 			return;
 
 		var el = this.ui[0];
-		var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
+		var scrollToBottom = (this.isVisible() &&
+			el.scrollTop + el.offsetHeight === el.scrollHeight);
 
 		var line = $('<div>').addClass('chat-line').append(
 			$('<span>').addClass('chat-author').css('color', color).text(from + ": ")
@@ -105,18 +105,16 @@ window.ChatManager = {
 	locked: true,
 	globalChat: null,
 
-	openGlobalChat: function() {
-		if (!this.globalChat) {
-			this.globalChat = new Chat('Global chat', 'a');
-		}
-		return this.globalChat;
+	setupGlobalChat: function() {
+		console.assert(!this.globalChat);
+		this.globalChat = new Chat("Global chat", 'a');
+		this.globalChat.open(false);
 	},
 
 	removeAllChats: function() {
-		if (this.globalChat) {
-			this.globalChat.close();
-			this.globalChat = null;
-		}
+		console.assert(this.globalChat);
+		this.globalChat.destroy();
+		this.globalChat = null;
 	},
 
 	openUserChat: function(user) {
@@ -132,7 +130,7 @@ window.ChatManager = {
 			// TODO: Make a better color choice.
 			var st = parseInt(data[2], 10);
 			var col = (st === 0 ? 'black' : 'darkblue');
-			this.openGlobalChat().addMessage(data[0], data[1], col);
+			this.globalChat.addMessage(data[0], data[1], col);
 			return true;
 		}
 		return false;

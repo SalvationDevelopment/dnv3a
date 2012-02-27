@@ -2,22 +2,78 @@
 ;(function() {
 "use strict";
 
+window.SidebarWidget = Class.extend({
+	order: '',
+	title: '',
+	ui: null,
+	box: null,
+	handle: null,
+
+	shown: function() {},
+
+	hidden: function() {},
+
+
+	open: function(shown) {
+		if (this.isOpen())
+			return;
+		Sidebar.add(this);
+		if (shown)
+			this.show();
+	},
+
+	close: function() {
+		if (!this.isOpen())
+			return;
+		this.hide();
+		Sidebar.remove(this);
+	},
+
+	isOpen: function() {
+		return (!!this.box);
+	},
+
+
+	show: function() {
+		if (this.isVisible())
+			return;
+		this.box.addClass('open');
+		this.shown();
+		Sidebar.layout();
+	},
+
+	hide: function() {
+		if (!this.isVisible())
+			return;
+		this.box.removeClass('open');
+		this.hidden();
+		Sidebar.layout();
+	},
+
+	isVisible: function() {
+		console.assert(this.isOpen());
+		return this.box.hasClass('open');
+	},
+
+	toggleVisibility: function() {
+		if (this.isVisible())
+			this.hide();
+		else
+			this.show();
+	}
+});
+
 window.Sidebar = {
 	ui: null,
-	boxes: null,
-	ind: 0,
 
 	init: function() {
-		this.boxes = {};
-		this.ind = 0;
-
 		this.ui = $('<div>').addClass('sidebar-ui border-box');
 		$('#sidebar').append(this.ui);
 		
 		var that = this;
 		$('#sidebar').on('click', '.sidebar-minimize-button', function() {
-			var param = $(this).parents('.sidebar-box').data('param');
-			that.toggleVisibility(param);
+			var widget = $(this).parents('.sidebar-box').data('widget');
+			widget.toggleVisibility();
 		});
 	},
 
@@ -29,11 +85,6 @@ window.Sidebar = {
 	hide: function() {
 		$('#sidebar').css('width', '0%').css('display', 'none');
 		$('#views').css('width', '100%');
-	},
-
-	toggleVisibility: function(param) {
-		param.box.toggleClass('open');
-		this.layout();
 	},
 
 	layout: function() {
@@ -50,20 +101,20 @@ window.Sidebar = {
 			.css('height', calcExpr);
 	},
 
-	add: function(param) {
-		var box = param.box = $('<div>').addClass('sidebar-box border-box open');
-		box.data('param', param);
+	add: function(widget) {
+		var box = widget.box = $('<div>').addClass('sidebar-box border-box');
+		box.data('widget', widget);
 
-		$('<div>').addClass('sidebar-title border-box').text(param.title)
+		$('<div>').addClass('sidebar-title border-box').text(widget.title)
 			.append(
 				$('<div>').addClass('sidebar-minimize-button')
 			).appendTo(box);
 
-		param.element.addClass('sidebar-content border-box').appendTo(box);
+		widget.ui.addClass('sidebar-content border-box').appendTo(box);
 
 		// Add the box at the right place sorted by 'order'.
 		var greaterBoxes = this.ui.children().filter(function() {
-			return param.order < $(this).data('param').order;
+			return widget.order < $(this).data('widget').order;
 		});
 		if (greaterBoxes.length)
 			box.insertBefore(greaterBoxes[0]);
@@ -71,19 +122,13 @@ window.Sidebar = {
 			this.ui.append(box);
 
 		this.layout();
-
-		// Find an empty spot for the box in the list, and add it there.
-		var handle = 'handle' + (this.ind++);
-		this.boxes[handle] = param;
-		return handle;
 	},
 
-	remove: function(handle) {
-		var param = this.boxes[handle];
-		delete this.boxes[handle];
+	remove: function(widget) {
+		widget.box.remove();
+		widget.box = null;
 
-		console.assert(param !== null);
-		param.box.remove();
+		this.layout();
 	}
 };
 

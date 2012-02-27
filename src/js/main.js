@@ -4,7 +4,7 @@
 
 window.setupLoggedInState = function() {
 	Sidebar.show();
-	ChatManager.openGlobalChat();
+	ChatManager.setupGlobalChat();
 	Commands.show();
 };
 

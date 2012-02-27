@@ -67,32 +67,19 @@ var replays = {
 	],
 };
 
-window.messages = [];
-window.Debug = {
+var DebugWidget = SidebarWidget.extend({
+	order: 'b',
+	title: "Debug log",
+
 	holder: null,
 	cont: null,
 	filterField: null,
 	filter: '',
 
-	isSpam: function(ev, data, sending) {
-		// Tweak to whatever fits.
-		if (ev === 'Heartbeat')
-			return true;
-		if (ev === 'Online users' || ev === 'Offline users')
-			return true;
-		if (ev === 'Add duels' || ev === 'Remove duels')
-			return true;
-		if (ev === 'Add watches' || ev === 'Remove watches')
-			return true;
-		if (ev === 'Global message' && !sending)
-			return true;
-		return false;
-	},
-
 	init: function() {
-		var ui = $('<div>');
+		this.ui = $('<div>');
 		this.holder = $('<div>').addClass('debug-holder border-box')
-			.appendTo(ui);
+			.appendTo(this.ui);
 		this.cont = $('<div>').addClass('debug-cont border-box')
 			.appendTo(this.holder);
 		this.filterField = $('<input>').addClass('debug-filter border-box')
@@ -105,7 +92,8 @@ window.Debug = {
 		var that = this;
 		this.filterField.on('input', function() {
 			var el = that.cont[0];
-			var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
+			var scrollToBottom = (that.isVisible() &&
+				el.scrollTop + el.offsetHeight === el.scrollHeight);
 
 			var filt = that.filter = this.value.toLowerCase();
 			that.cont.children().each(function() {
@@ -115,18 +103,9 @@ window.Debug = {
 			if (scrollToBottom)
 				el.scrollTop = el.scrollHeight;
 		});
-
-		Sidebar.add({
-			order: 'b',
-			title: "Debug log",
-			element: ui
-		});
 	},
 
-	handleMessage: function(ev, data, sending) {
-		messages.push([(sending ? 'SEND ' : '') + ev].concat(data));
-		if (this.isSpam(ev, data, sending)) return;
-
+	addRow: function(ev, data, sending) {
 		var el = this.cont[0];
 		var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
 
@@ -147,6 +126,38 @@ window.Debug = {
 
 		if (scrollToBottom)
 			el.scrollTop = el.scrollHeight;
+	}
+});
+
+window.messages = [];
+window.Debug = {
+	widget: null,
+
+	isSpam: function(ev, data, sending) {
+		// Tweak to whatever fits.
+		if (ev === 'Heartbeat')
+			return true;
+		if (ev === 'Online users' || ev === 'Offline users')
+			return true;
+		if (ev === 'Add duels' || ev === 'Remove duels')
+			return true;
+		if (ev === 'Add watches' || ev === 'Remove watches')
+			return true;
+		if (ev === 'Global message' && !sending)
+			return true;
+		return false;
+	},
+
+	init: function() {
+		this.widget = new DebugWidget();
+		this.widget.open(true);
+	},
+
+	handleMessage: function(ev, data, sending) {
+		messages.push([(sending ? 'SEND ' : '') + ev].concat(data));
+		if (this.isSpam(ev, data, sending)) return;
+
+		this.widget.addRow(ev, data, sending);
 	},
 
 	interceptSentMessages: function() {
