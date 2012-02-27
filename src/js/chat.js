@@ -104,22 +104,7 @@ var Chat = SidebarWidget.extend({
 			$('<span>').addClass('chat-message').html(linkify(message))
 		).appendTo(this.cont);
 
-		line.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
-			var menu = $('#contextmenu').empty();
-			$('<menuitem>').attr('label', "Add \"" + from + "\" to Ignore List").click(function() {
-				IgnoreList.add(from);
-			}).appendTo(menu);
-			if (Friends.isFriend(from)) {
-				$('<menuitem>').attr('label', "Remove From Friends List").click(function() {
-					Friends.removeFriend(from);
-				}).appendTo(menu);
-			}
-			else {
-				$('<menuitem>').attr('label', "Add \"" + from + "\" as a Friend").click(function() {
-					Friends.addFriend(from);
-				}).appendTo(menu);
-			}
-		});
+		addUserContextMenu(line, from);
 
 		if (scrollToBottom)
 			el.scrollTop = el.scrollHeight;
@@ -133,7 +118,7 @@ window.ChatManager = {
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
 		this.globalChat = new Chat("Global chat", 'a');
-		this.globalChat.open(false);
+		this.globalChat.open(true);
 	},
 
 	removeAllChats: function() {

@@ -136,6 +136,24 @@ body {
 .chat-message > a:visited { color: #300A97; }
 .chat-message > a:active { color: #0000D0; }
 
+.online-widget > div {
+	font-size: 85%;
+	padding: 0 0 0 2px;
+	overflow-x: hidden;
+}
+.online-widget > hr {
+	border: 0 solid black;
+	border-top-width: 1px;
+	margin: 1px 0 0;
+}
+.online-widget > h3 {
+	margin: 0;
+	padding: 0 0 0 1px;
+	font-size: 85%;
+}
+.online-widget .usercount {
+	margin-top: 1px;
+}
 
 .debug-widget .sidebar-box-cont {
 	font-size: 70%;

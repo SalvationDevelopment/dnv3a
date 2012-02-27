@@ -179,4 +179,151 @@ window.Friends = Listenable.extendObject({
 	}
 });
 
+window.addUserContextMenu = function(el, name) {
+	el.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
+		var menu = $('#contextmenu').empty();
+
+		if (!IgnoreList.has(name)) {
+			$('<menuitem>').attr('label', "Add \"" + name + "\" to Ignore List").click(function() {
+				IgnoreList.add(name);
+			}).appendTo(menu);
+		}
+
+		if (Friends.isFriend(name)) {
+			$('<menuitem>').attr('label', "Remove From Friends List").click(function() {
+				Friends.removeFriend(name);
+			}).appendTo(menu);
+		}
+		else {
+			$('<menuitem>').attr('label', "Add \"" + name + "\" as a Friend").click(function() {
+				Friends.addFriend(name);
+			}).appendTo(menu);
+		}
+	});
+};
+
+window.OnlineList = SidebarWidget.extendObject({
+	order: 'b',
+	title: "Online",
+
+	friendList: null,
+	modList: null,
+	userCount: null,
+	map: null,
+	nUsers: 0,
+	initialAdding: false,
+
+	init: function() {
+		this.ui = $('<div>').addClass('online-widget');
+	},
+
+	compareUserRows: function(a, b) {
+		if (a.modStatus > b.modStatus)
+			return true;
+		if (a.modStatus < b.modStatus)
+			return false;
+		return (a.name < b.name);
+	},
+
+	shown: function() {
+		$('<h3>').text("Friends:").appendTo(this.ui);
+		this.friendList = $('<div>').appendTo(this.ui);
+		$('<hr>').appendTo(this.ui);
+		$('<h3>').text("Admins:").appendTo(this.ui);
+		this.modList = $('<div>').appendTo(this.ui);
+		this.userCount = $('<span>');
+		$('<div>').addClass('usercount')
+			.append(this.userCount).append(" users online.")
+			.appendTo(this.ui);
+
+		this.nUsers = 0;
+		this.initialAdding = true;
+		this.map = {};
+		var that = this;
+		this.userListener = Users.listen(function(ev, user) {
+			if (ev === 'online')
+				that.add(user);
+			else if (ev === 'offline')
+				that.remove(user);
+		});
+		Users.sendCurrentInfo(this.userListener);
+		this.friendListener = Friends.listen(function(ev, name) {
+			var user = Users.getUser(name);
+			if (user) {
+				// We are un-/friending an online user.
+				if (ev === 'friend') {
+					that.remove(user);
+					that.add(user);
+				}
+				else if (ev === 'unfriend') {
+					that.remove(user);
+					that.add(user);
+				}
+			}
+		});
+
+		this.initialAdding = false;
+		this.setUserCount();
+	},
+
+	add: function(user) {
+		++this.nUsers;
+		this.setUserCount();
+
+		if (!user.isFriend() && user.modStatus === 0)
+			return;
+
+		var el = $('<div>').addClass('online-row').text(user.name)
+			.css('color', user.getColor());
+
+		addUserContextMenu(el, user.name);
+
+		var holder = (user.isFriend() ? this.friendList : this.modList);
+
+		// Insert the element in the right place to maintain a sorted order.
+		// There are too few elements to bother doing this efficiently.
+		var lt = this.compareUserRows, before = null;
+		holder.children().each(function() {
+			var e2 = $(this), u2 = Users.getUser(e2.text());
+			if (u2 === null)
+				console.log(e2, e2.text());
+			if (lt(user, u2)) {
+				before = e2;
+				return false;
+			}
+		});
+		if (before)
+			el.insertBefore(before);
+		else
+			el.appendTo(holder);
+
+		this.map[',' + user.name] = el;
+	},
+
+	remove: function(user) {
+		--this.nUsers;
+		this.setUserCount();
+
+		var el = this.map[',' + user.name];
+		if (el) el.remove();
+	},
+
+	setUserCount: function() {
+		// Don't set the user count each time when adding lots of users,
+		// for performance (a ~1 second lag).
+		if (this.initialAdding)
+			return;
+
+		this.userCount.text(this.nUsers);
+	},
+
+	hidden: function() {
+		this.ui.empty();
+		this.map = null;
+		this.userCount = this.friendList = this.modList = null;
+		Users.unlisten(this.userListener);
+		Users.unlisten(this.friendListener);
+	}
+});
+
 })();

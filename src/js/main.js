@@ -5,11 +5,13 @@
 window.setupLoggedInState = function() {
 	Sidebar.show();
 	ChatManager.setupGlobalChat();
+	OnlineList.open(true);
 	Commands.show();
 };
 
 window.destroyLoggedInState = function() {
 	Commands.hide();
+	OnlineList.close();
 	ChatManager.removeAllChats();
 	Sidebar.hide();
 };

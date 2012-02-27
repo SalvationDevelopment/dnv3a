@@ -68,7 +68,7 @@ var replays = {
 };
 
 var DebugWidget = SidebarWidget.extend({
-	order: 'b',
+	order: 'c',
 	title: "Debug log",
 
 	holder: null,
@@ -150,7 +150,7 @@ window.Debug = {
 
 	init: function() {
 		this.widget = new DebugWidget();
-		this.widget.open(true);
+		this.widget.open(false);
 	},
 
 	handleMessage: function(ev, data, sending) {
