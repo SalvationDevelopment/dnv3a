@@ -69,9 +69,9 @@ Communicator.setup = function(ready) {
 		};
 		Communicator._response = function(data) {
 			data = data
-				.replace(/%5c/g, "\\")
-				.replace(/%26/g, "&")
-				.replace(/%25/g, "%");
+				.replace(/%5c/g, '\\')
+				.replace(/%26/g, '&')
+				.replace(/%25/g, '%');
 			resp(stringToArray(data));
 		};
 		Communicator._responseStatus = function(st) {
@@ -90,7 +90,7 @@ Communicator.setup = function(ready) {
 		}
 	}
 
-	var flashId = "swf_communicator";
+	var flashId = 'swf_communicator';
 	var flashvars = {};
 	var params = {allowscriptaccess: 'always'};
 	var attributes = {};
@@ -100,7 +100,7 @@ Communicator.setup = function(ready) {
 	el.style.top = '-200px';
 	el.id = flashId;
 	document.body.appendChild(el);
-	swfobject.embedSWF("communicator.swf", flashId, "0", "0", "10.0.0", false, flashvars, params, attributes, flashLoaded);
+	swfobject.embedSWF("communicator.swf", flashId, '0', '0', '10.0.0', false, flashvars, params, attributes, flashLoaded);
 
 	// Treat flash as not loading after five seconds.
 	setTimeout(function() {

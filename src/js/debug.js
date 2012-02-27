@@ -162,7 +162,7 @@ window.Debug = {
 		var i = 0;
 		function iterate() {
 			var m = ar[i++];
-			Communicator._response(m.replace(/%/g, "%25"));
+			Communicator._response(m.replace(/%/g, '%25'));
 			if (ar[i])
 				setTimeout(iterate, 2000);
 		}

@@ -243,10 +243,10 @@ var MatchTab = Tab.extend({
 		map.push(
 			[21, "↑/↓", "Move selection"],
 			[22, 'g', "Reset selection", function() { that.selectHead(); }],
-			[0, 'up', "", function() { that.selectRel(-1); }],
-			[0, 'down', "", function() { that.selectRel(1); }],
-			[0, 'k', "", function() { that.selectRel(-1); }],
-			[0, 'j', "", function() { that.selectRel(1); }]
+			[0, 'up', '', function() { that.selectRel(-1); }],
+			[0, 'down', '', function() { that.selectRel(1); }],
+			[0, 'k', '', function() { that.selectRel(-1); }],
+			[0, 'j', '', function() { that.selectRel(1); }]
 		);
 	},
 
@@ -254,8 +254,8 @@ var MatchTab = Tab.extend({
 		var that = this;
 		map.push(
 			[10, "↑/↓", "Move selection"],
-			[0, 'force;up', "", function() { that.selectRel(-1); }],
-			[0, 'force;down', "", function() { that.selectRel(1); }]
+			[0, 'force;up', '', function() { that.selectRel(-1); }],
+			[0, 'force;down', '', function() { that.selectRel(1); }]
 		);
 		if (this.watch && !this.isSelection(this.headSelection)) {
 			map.push(
@@ -420,7 +420,7 @@ var FriendTab = MatchTab.extend({
 	friendListener: null,
 
 	init: function(view, watch) {
-		this._super(view, watch, "");
+		this._super(view, watch, '');
 		this.currentDuelists = {};
 
 		var that = this;
@@ -585,8 +585,8 @@ window.SearchPanel = Class.extend({
 
 		map.push(
 			[5, "←/→", "Change tabs"],
-			[0, 'force;left', "", function() { this.view.changeTabRel(-1); }],
-			[0, 'force;right', "", function() { this.view.changeTabRel(1); }]
+			[0, 'force;left', '', function() { this.view.changeTabRel(-1); }],
+			[0, 'force;right', '', function() { this.view.changeTabRel(1); }]
 		);
 		this.view.addSearchDuelCommands(map);
 
@@ -784,8 +784,8 @@ window.MatchmakingView = View.extend({
 			Commands.setMap(this, [
 				[0, "↑/↓", "Change deck"],
 				[1, "<enter>", "Finish"],
-				[0, 'enter', "", function(ev) { ev.target.blur(); }],
-				[0, 'escape', "", function(ev) { ev.target.blur(); }],
+				[0, 'enter', '', function(ev) { ev.target.blur(); }],
+				[0, 'escape', '', function(ev) { ev.target.blur(); }],
 			]);
 			return;
 		}
@@ -822,17 +822,17 @@ window.MatchmakingView = View.extend({
 		else {
 			map.push(
 				[12, "<esc>", "Stop filtering"],
-				[0, 'force;escape', "", function() { this.searchPanel.close(); }],
-				[0, '/', "", function() { this.searchPanel.open(); }]
+				[0, 'force;escape', '', function() { this.searchPanel.close(); }],
+				[0, '/', '', function() { this.searchPanel.open(); }]
 			);
 		}
 
 		map.push(
 			[20, "←/→", "Change tabs"],
-			[0, 'left', "", function() { this.changeTabRel(-1); }],
-			[0, 'h', "", function() { this.changeTabRel(-1); }],
-			[0, 'right', "", function() { this.changeTabRel(1); }],
-			[0, 'l', "", function() { this.changeTabRel(1); }],
+			[0, 'left', '', function() { this.changeTabRel(-1); }],
+			[0, 'h', '', function() { this.changeTabRel(-1); }],
+			[0, 'right', '', function() { this.changeTabRel(1); }],
+			[0, 'l', '', function() { this.changeTabRel(1); }],
 			[100, 'q', "Go back to the menu", this.goBack]
 		);
 

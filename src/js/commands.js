@@ -36,7 +36,7 @@ window.Commands = {
 	forceMap: {},
 
 	setMap: function(obj, ar) {
-		this.ui.find("div").remove();
+		this.ui.find('div').remove();
 		this.obj = obj;
 		var map = {}, forceMap = {};
 		ar.sort(compareCommandPriority);
@@ -50,10 +50,10 @@ window.Commands = {
 			map[key] = func;
 
 			// Skip hidden entries.
-			if (text === "") continue;
+			if (text === '') continue;
 
-			$("<div>")
-				.append($("<span class='key'>").text(key))
+			$('<div>')
+				.append($('<span class="key">').text(key))
 				.append(" - " + text)
 				.appendTo(this.ui);
 		}
@@ -81,7 +81,7 @@ window.Commands = {
 	},
 
 	init: function() {
-		this.ui = $("#commands").addClass('border-box');
+		this.ui = $('#commands').addClass('border-box');
 	}
 };
 

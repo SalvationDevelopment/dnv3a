@@ -4,17 +4,17 @@
 
 function urlToLink(text) {
 	var url;
-	if (text.startsWith("http://") || text.startsWith("https://"))
+	if (text.startsWith('http://') || text.startsWith('https://'))
 		url = text;
 	else
-		url = "http://" + text;
-	var attrHTML = url.replace(/"/g, "&quot;");
-	return "<a href=\"" + attrHTML + "\" target=\"_blank\">" + text + "</a>";
+		url = 'http://' + text;
+	var attrHTML = url.replace(/"/g, '&quot;');
+	return '<a href="' + attrHTML + '" target="_blank">' + text + '</a>';
 }
 
 function linkify(text) {
-	var rest = text.replace(/&/g, "&amp;").replace(/</g, "&lt;");
-	var out = "";
+	var rest = text.replace(/&/g, '&amp;').replace(/</g, '&lt;');
+	var out = '';
 
 	for (;;) {
 		var pos = rest.search(/( |\(|^)(http:\/\/|https:\/\/|www\.)/);
@@ -74,9 +74,9 @@ var Chat = Class.extend({
 		var scrollToBottom = (el.scrollTop + el.offsetHeight === el.scrollHeight);
 
 		var line = $('<div>').addClass('chat-line').append(
-			$("<span>").addClass('chat-author').css('color', color).text(from + ": ")
+			$('<span>').addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
-			$("<span>").addClass('chat-message').html(linkify(message))
+			$('<span>').addClass('chat-message').html(linkify(message))
 		).appendTo(this.ui);
 
 		line.attr('contextmenu', 'contextmenu').on('contextmenu', function() {

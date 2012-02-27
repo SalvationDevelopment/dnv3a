@@ -16,7 +16,7 @@ window.LoginView = View.extend({
 	open: function() {
 		// Set up a default UI state. We do nothing to the username field,
 		// it might be remembered by the browser.
-		this.setStatus(true, 0, "");
+		this.setStatus(true, 0, '');
 		this.setPasswordState(true);
 		var f = this.ui.find('form')[0];
 		f.remember.checked = false;
