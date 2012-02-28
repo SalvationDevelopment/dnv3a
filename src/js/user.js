@@ -190,7 +190,7 @@ window.addUserContextMenu = function(el, name) {
 		}
 
 		if (Friends.isFriend(name)) {
-			$('<menuitem>').attr('label', "Remove From Friends List").click(function() {
+			$('<menuitem>').attr('label', "Remove From Friend List").click(function() {
 				Friends.removeFriend(name);
 			}).appendTo(menu);
 		}
