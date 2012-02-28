@@ -2,17 +2,12 @@
 <svg version="1.1" id="Layer_1"
 xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-width="23px" height="20px"
+width="206px" height="115px"
 xml:space="preserve">
-<g id="PathID_5239" transform="matrix(1, 0, 0, 1, -29.15, -20.35)">
-<radialGradient
-id="RadialGradID_2421" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.00909424, 0.00498962, 0.00567627, -0.00799561, 39.6, 27.3)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
-<stop  offset="0"  style="stop-color:#FFFFFF;stop-opacity:1" />
-<stop  offset="1"  style="stop-color:#C8C8C8;stop-opacity:1" />
-</radialGradient>
-<path style="fill:url(#RadialGradID_2421) " d="M50.55 27.95Q51.6 31.75 49.25 35.05Q46.9 38.35 42.6 39.25Q38.3 40.1 34.55 38.05Q30.8 36 29.8 32.2Q28.8 28.45 31.1 25.15Q32.6 23 35.1 21.85Q37.5 20.7 40.2 20.7Q43.2 20.7 45.8 22.1Q49.55 24.15 50.55 27.95" />
-</g>
-<g id="PathID_5240" transform="matrix(1, 0, 0, 1, -29.15, -20.35)">
-<path style="fill:none;stroke-width:0.7;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#787878;stroke-opacity:1" d="M49.25 35.05Q46.9 38.35 42.6 39.25Q38.3 40.1 34.55 38.05Q30.8 36 29.8 32.2Q28.8 28.45 31.1 25.15L31.1 25.1Q33.45 21.85 37.75 20.95Q42.05 20.1 45.8 22.1Q49.55 24.15 50.55 27.95Q51.6 31.75 49.25 35.05z" />
+<g id="PathID_992" transform="matrix(1, 0, 0, 1, 2.5, 2.5)">
+<path style="fill:#FFFFFF;fill-opacity:1" d="M191.9 29.9L87.95 29.9L87.95 13.25L18.45 55.05L87.95 96.8L87.95 80.1L191.9 80.1L191.9 29.9M200.4 88.1L95.25 88.1L95.25 110L0 55.05L95.25 0L95.25 21.9L200.4 21.9L200.4 88.1" />
+<path style="fill:#FF9900;fill-opacity:1" d="M191.9 80.1L87.95 80.1L87.95 96.8L18.45 55.05L87.95 13.25L87.95 29.9L191.9 29.9L191.9 80.1" />
+<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF6501;stroke-opacity:1" d="M191.9 29.9L87.95 29.9L87.95 13.25L18.45 55.05L87.95 96.8L87.95 80.1L191.9 80.1L191.9 29.9z" />
+<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF6501;stroke-opacity:1" d="M200.4 21.9L95.25 21.9L95.25 0L0 55.05L95.25 110L95.25 88.1L200.4 88.1L200.4 21.9z" />
 </g>
 </svg>

@@ -2,42 +2,14 @@
 <svg version="1.1" id="Layer_1"
 xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-width="455px" height="635px"
+width="181px" height="154px"
 xml:space="preserve">
-<g id="PathID_5275" transform="matrix(1, 0, 0, 1, 227.5, 317.5)">
+<g id="PathID_1086" transform="matrix(1, 0, 0, 1, 0, 0)">
 <radialGradient
-id="RadialGradID_2440" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.0476685, 0, 0, 0.0476685, 200, -285)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
-<stop  offset="0"  style="stop-color:#FFCCFF;stop-opacity:1" />
-<stop  offset="1"  style="stop-color:#FF3366;stop-opacity:1" />
+id="RadialGradID_393" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.145081, 0, 0, 0.145081, 90.5, 77)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="209728" fy="0" >
+<stop  offset="0.470588"  style="stop-color:#0000FF;stop-opacity:1" />
+<stop  offset="0.839216"  style="stop-color:#FFFF00;stop-opacity:1" />
 </radialGradient>
-<path style="fill:url(#RadialGradID_2440) " d="M225 -315L225 -255L205 -255L205 -295L175 -295L175 -315L225 -315" />
-<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF0000;stroke-opacity:1" d="M225 -315L225 -255L205 -255L205 -295L175 -295L175 -315L225 -315z" />
-</g>
-<g id="PathID_5276" transform="matrix(1, 0, 0, 1, 227.5, 317.5)">
-<radialGradient
-id="RadialGradID_2441" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-0.0476685, 0, 0, 0.0476685, -200, -285)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
-<stop  offset="0"  style="stop-color:#FFCCFF;stop-opacity:1" />
-<stop  offset="1"  style="stop-color:#FF0033;stop-opacity:1" />
-</radialGradient>
-<path style="fill:url(#RadialGradID_2441) " d="M-175 -315L-175 -295L-205 -295L-205 -255L-225 -255L-225 -315L-175 -315" />
-<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF0000;stroke-opacity:1" d="M-225 -315L-225 -255L-205 -255L-205 -295L-175 -295L-175 -315L-225 -315z" />
-</g>
-<g id="PathID_5277" transform="matrix(1, 0, 0, 1, 227.5, 317.5)">
-<radialGradient
-id="RadialGradID_2442" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.0476685, 0, 0, 0.0476685, 200, 285)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
-<stop  offset="0"  style="stop-color:#FFCCFF;stop-opacity:1" />
-<stop  offset="1"  style="stop-color:#FF3366;stop-opacity:1" />
-</radialGradient>
-<path style="fill:url(#RadialGradID_2442) " d="M205 255L225 255L225 315L175 315L175 295L205 295L205 255" />
-<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF0000;stroke-opacity:1" d="M205 295L175 295L175 315L225 315L225 255L205 255L205 295z" />
-</g>
-<g id="PathID_5278" transform="matrix(1, 0, 0, 1, 227.5, 317.5)">
-<radialGradient
-id="RadialGradID_2443" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.0476685, 0, 0, 0.0476685, -200, 285)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
-<stop  offset="0"  style="stop-color:#FFCCFF;stop-opacity:1" />
-<stop  offset="1"  style="stop-color:#FF3366;stop-opacity:1" />
-</radialGradient>
-<path style="fill:url(#RadialGradID_2443) " d="M-205 295L-175 295L-175 315L-225 315L-225 255L-205 255L-205 295" />
-<path style="fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:3;stroke:#FF0000;stroke-opacity:1" d="M-205 295L-175 295L-175 315L-225 315L-225 255L-205 255L-205 295z" />
+<path style="fill:url(#RadialGradID_393) " d="M10 0L181 0L181 154L10 154Q0 154 0 144L0 10Q0 0 10 0" />
 </g>
 </svg>

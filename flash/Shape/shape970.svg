@@ -2,9 +2,14 @@
 <svg version="1.1" id="Layer_1"
 xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-width="59px" height="52px"
+width="250px" height="40px"
 xml:space="preserve">
-<g id="PathID_5244" transform="matrix(1, 0, 0, 1, 0.1, 0)">
-<path style="fill:#FFFFFF;fill-opacity:1" d="M43.3 48.4Q36.7 51.55 29.25 51.55Q21 51.55 13.8 47.65Q3.5 42 0.75 31.6Q-2 21.2 4.4 12.15Q8.5 6.35 15.3 3.15Q21.85 0 29.35 0Q37.6 0 44.8 3.9Q55.1 9.55 57.85 19.95Q60.6 30.35 54.2 39.4Q50.1 45.15 43.3 48.4M43.15 6.2Q36.8 2.75 29.35 2.75Q22.5 2.75 16.55 5.65Q10.65 8.5 7.05 13.6Q1.3 21.65 3.75 30.95Q6.25 40.3 15.45 45.3Q21.75 48.8 29.25 48.8Q36.1 48.8 42.05 45.95Q47.95 43.05 51.55 37.95Q54.3 34.05 55.15 29.55Q56 25.05 54.85 20.55Q53.65 16.05 50.65 12.35Q47.6 8.65 43.15 6.2" />
+<g id="PathID_997" transform="matrix(1, 0, 0, 1, 0, 0)">
+<radialGradient
+id="RadialGradID_370" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.154541, 0, 0, 0.154541, 125, 20)" spreadMethod ="pad" cx="0" cy="0" r="819.2" fx="0" fy="0" >
+<stop  offset="0"  style="stop-color:#339900;stop-opacity:1" />
+<stop  offset="1"  style="stop-color:#33FF66;stop-opacity:1" />
+</radialGradient>
+<path style="fill:url(#RadialGradID_370) " d="M250 10L250 40L0 40L0 10Q0 0 10 0L240 0Q250 0 250 10" />
 </g>
 </svg>

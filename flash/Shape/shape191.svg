@@ -2,30 +2,12 @@
 <svg version="1.1" id="Layer_1"
 xmlns="http://www.w3.org/2000/svg"
 xmlns:xlink="http://www.w3.org/1999/xlink"
-width="14px" height="14px"
+width="152px" height="22px"
 xml:space="preserve">
-<g id="PathID_4506" transform="matrix(1, 0, 0, 1, 0, 0)">
-<linearGradient
-id="LinearGradID_2142" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0, -0.00787354, 0.00787354, 0, 8.5, 6.45)" spreadMethod ="pad" x1="-819.2" y1="0" x2="819.2" y2="0" >
-<stop  offset="0" style="stop-color:#5B5D5E;stop-opacity:1" />
-<stop  offset="1" style="stop-color:#B7BABC;stop-opacity:1" />
-</linearGradient>
-<path style="fill:url(#LinearGradID_2142) " d="M1 13L13 13L13 1L1 1L1 13M14 0L14 14L0 14L0 0L14 0" />
-</g>
-<g id="PathID_4507" transform="matrix(1, 0, 0, 1, 0, 0)">
-<linearGradient
-id="LinearGradID_2143" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0, -0.00831604, 0.00831604, 0, 6, 7.15)" spreadMethod ="pad" x1="-819.2" y1="0" x2="819.2" y2="0" >
-<stop  offset="0" style="stop-color:#CCCCCC;stop-opacity:0.4" />
-<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0.6" />
-</linearGradient>
-<path style="fill:url(#LinearGradID_2143) " d="M1 1L13 1L13 13L1 13L1 1" />
-</g>
-<g id="PathID_4508" transform="matrix(1, 0, 0, 1, 0, 0)">
-<linearGradient
-id="LinearGradID_2144" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0, -0.00408936, 0.00831604, 0, 6, 4.35)" spreadMethod ="pad" x1="-819.2" y1="0" x2="819.2" y2="0" >
-<stop  offset="0" style="stop-color:#EEEEEE;stop-opacity:0" />
-<stop  offset="1" style="stop-color:#FFFFFF;stop-opacity:0.298039" />
-</linearGradient>
-<path style="fill:url(#LinearGradID_2144) " d="M13 7.5L1 7.5L1 1L13 1L13 7.5" />
+<g id="PathID_177" transform="matrix(1, 0, 0, 1, 0, 0)">
+<path style="fill:#6D6F70;fill-opacity:1" d="M151 1L150.1 1L2.2 1L1 1L0 1L0 0L2.2 0L150.1 0L151 0L151 1" />
+<path style="fill:#C9CBCC;fill-opacity:1" d="M1 1.4L1 20.1L1 21L1 22L0 22L0 20.1L0 1.4L0 1L1 1L1 1.4M151 21L151 20.1L151 1.4L151 1L151 0L152 0L152 1.4L152 20.1L152 22L151 22L151 21" />
+<path style="fill:#FFFFFF;fill-opacity:1" d="M151 1.4L151 20.1L151 21L150.1 21L2.2 21L1 21L1 20.1L1 1.4L1 1L2.2 1L150.1 1L151 1L151 1.4" />
+<path style="fill:#D3D5D6;fill-opacity:1" d="M1 21L2.2 21L150.1 21L151 21L151 22L150.1 22L2.2 22L1 22L1 21" />
 </g>
 </svg>
