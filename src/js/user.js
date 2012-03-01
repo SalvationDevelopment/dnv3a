@@ -183,6 +183,16 @@ window.addUserContextMenu = function(el, name) {
 	el.attr('contextmenu', 'contextmenu').on('contextmenu', function() {
 		var menu = $('#contextmenu').empty();
 
+		// Try to trick Firefox into opening a nicer context menu.
+		try {
+			var range = document.createRange();
+			var hiddenEl = document.getElementById('hiddentext');
+			hiddenEl.textContent = name;
+			range.selectNode(hiddenEl);
+			window.getSelection().addRange(range);
+		}
+		catch(e) {}
+
 		if (!IgnoreList.has(name)) {
 			$('<menuitem>').attr('label', "Add \"" + name + "\" to Ignore List").click(function() {
 				IgnoreList.add(name);
