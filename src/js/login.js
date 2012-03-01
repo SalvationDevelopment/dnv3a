@@ -68,13 +68,16 @@ window.LoginView = View.extend({
 
 	rememberLogin: function(user, token) {
 		var info = token + '|' + user;
-		localStorage.rememberedLogin = info;
+		try {
+			localStorage.rememberedLogin = info;
+		}
+		catch(e) {}
 	},
 
 	autoLogin: function() {
 		if (!window.localStorage) return false;
 		var info = localStorage.rememberedLogin;
-		if (info === null) return false;
+		if (!info) return false;
 		var pos = info.indexOf('|');
 		if (pos === -1) return false;
 
@@ -96,7 +99,10 @@ window.LoginView = View.extend({
 	},
 
 	removeAutoLogin: function() {
-		localStorage.removeItem('rememberedLogin');
+		try {
+			localStorage.removeItem('rememberedLogin');
+		}
+		catch(e) {}
 	},
 
 	resetAutoLogin: function() {

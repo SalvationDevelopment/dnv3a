@@ -3,7 +3,9 @@
 "use strict";
 
 function keyToString(key, shift) {
-	var ch = String.charCodeAt;
+	var ch = function(c) {
+		return c.charCodeAt(0);
+	};
 	if (ch('A') <= key && key <= ch('Z')) {
 		return String.fromCharCode(key + (shift ? 0 : ch('a') - ch('A')));
 	}

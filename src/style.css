@@ -322,13 +322,13 @@ body {
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
+	width: 100%;
 	overflow: auto;
 }
 
 .mm-tab.host {
 	padding-top: 40px;
 	text-size: 120%;
-	width: 100%;
 	text-align: center;
 }
 
