@@ -9198,114 +9198,100 @@
 
         public function watchDuelStart()
         {
-            var _loc_1:Array = null;
-            var _loc_2:String = null;
+            var args:Array = null;
             var _loc_3:Boolean = false;
-            var _loc_4:Array = null;
-            var _loc_5:DuelCard = null;
-            var _loc_6:DuelCard = null;
-            var _loc_7:int = 0;
-            var _loc_8:String = null;
-            var _loc_9:String = null;
-            var _loc_10:String = null;
-            var _loc_11:Boolean = false;
-            var _loc_12:Boolean = false;
-            var _loc_13:Boolean = false;
-            var _loc_14:Boolean = false;
-            var _loc_15:DuelCard = null;
-            _loc_1 = this.duel_args;
+            var fieldSpells:Array = null;
+            var firstUnderlay:DuelCard = null;
+            var lastUnderlay:DuelCard = null;
+            var i:int = 0;
+            var position:String = null;
+            var cardId:String = null;
+            var fieldPosition:String = null;
+            var faceDown:Boolean = false;
+            var isDefense:Boolean = false;
+            var amOriginalOwner:Boolean = false;
+            var isKnown:Boolean = false;
+            var card:DuelCard = null;
+
+            var args:Array = this.duel_args;
             this.duel_args = null;
-            _loc_2 = _loc_1[0];
-            this.my_turn = _loc_1[1] == "true";
-            this.phase_mc.setPhase(_loc_2, this.my_turn);
-            _loc_3 = _loc_1[2] == "true";
-            this.lp_bottom_mc.points = _loc_1[3];
-            this.lp_top_mc.points = _loc_1[4];
-            this.status1_mc.status = _loc_1[5];
-            this.status2_mc.status = _loc_1[6];
-            _loc_4 = [null, null];
-            _loc_5 = null;
-            _loc_6 = null;
-            _loc_7 = 7;
-            while (_loc_7 < _loc_1.length)
+            var phase:String = args[0];
+            this.my_turn = (args[1] == "true");
+            this.phase_mc.setPhase(phase, this.my_turn);
+            _loc_3 = (args[2] == "true");
+            this.lp_bottom_mc.points = args[3];
+            this.lp_top_mc.points = args[4];
+            this.status1_mc.status = args[5];
+            this.status2_mc.status = args[6];
+            fieldSpells = [null, null];
+            firstUnderlay = null;
+            lastUnderlay = null;
+
+            i = 7;
+            while (i < args.length)
             {
-                
-                _loc_8 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_9 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_10 = _loc_1[_loc_7];
-                _loc_7++;
-                _loc_11 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_12 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_13 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_14 = _loc_1[_loc_7] == "true";
-                _loc_7++;
-                _loc_15 = new DuelCard(_loc_13 ? (this.back_loader1) : (this.back_loader2));
-                if (_loc_14)
+                position = args[i++];
+                cardId = args[i++];
+                fieldPosition = args[i++];
+                faceDown = args[i++] == "true";
+                isDefense = args[i++] == "true";
+                amOriginalOwner = args[i++] == "true";
+                isKnown = args[i++] == "true";
+                card = new DuelCard(amOriginalOwner ? (this.back_loader1) : (this.back_loader2));
+                if (isKnown)
                 {
-                    this.initDuelCard(_loc_15, _loc_1.slice(_loc_7, _loc_7 + 16));
-                    _loc_7 = _loc_7 + 16;
+                    this.initDuelCard(card, args.slice(i, i + 16));
+                    i += 16;
                 }
-                _loc_15.id = _loc_9;
-                if (_loc_8 == "underlay1" || _loc_8 == "underlay2")
+                card.id = cardId;
+                if (position == "underlay1" || position == "underlay2")
                 {
-                    if (_loc_6 == null)
+                    if (lastUnderlay == null)
                     {
-                        var _loc_16:* = _loc_15;
-                        _loc_6 = _loc_15;
-                        _loc_5 = _loc_16;
+                        lastUnderlay = card;
+                        firstUnderlay = card;
                     }
                     else
                     {
-                        _loc_6.overlayLink(_loc_15);
-                        _loc_6 = _loc_15;
+                        lastUnderlay.overlayLink(card);
+                        lastUnderlay = card;
                     }
                 }
-                else if (_loc_6 != null)
+                else if (lastUnderlay != null)
                 {
-                    _loc_15.overlayLink(_loc_5);
-                    _loc_6.overlayLink(_loc_15);
-                    var _loc_16:String = null;
-                    _loc_6 = null;
-                    _loc_5 = _loc_16;
+                    card.overlayLink(firstUnderlay);
+                    lastUnderlay.overlayLink(card);
+                    lastUnderlay = null;
+                    firstUnderlay = null;
                 }
-                this.cards_mc.addCard(_loc_15, _loc_8, _loc_10, _loc_11, _loc_12);
-                if (_loc_8 == "field1")
+                this.cards_mc.addCard(card, position, fieldPosition, faceDown, isDefense);
+                if (position == "field1")
                 {
-                    if (_loc_15.position == 5 && !_loc_15.show_back)
+                    if (card.position == 5 && !card.show_back)
                     {
-                        _loc_4[0] = _loc_15;
+                        fieldSpells[0] = card;
                     }
-                    this.cards_mc.finishFieldCard(_loc_15, true, false);
+                    this.cards_mc.finishFieldCard(card, true, false);
                     continue;
                 }
-                if (_loc_8 == "field2")
+                if (position == "field2")
                 {
-                    if (_loc_15.position == 5 && !_loc_15.show_back)
+                    if (card.position == 5 && !card.show_back)
                     {
-                        _loc_4[1] = _loc_15;
+                        fieldSpells[1] = card;
                     }
-                    this.cards_mc.finishFieldCard(_loc_15, false, false);
+                    this.cards_mc.finishFieldCard(card, false, false);
                 }
             }
-            _loc_7 = _loc_3 ? (0) : (1);
-            _loc_15 = _loc_4[_loc_7];
-            if (_loc_15 == null)
+            i = _loc_3 ? (0) : (1);
+            card = fieldSpells[i];
+            if (card == null)
             {
-                _loc_7 = _loc_3 ? (1) : (0);
-                _loc_15 = _loc_4[_loc_7];
-                if (_loc_15 != null)
-                {
-                    this.cards_mc.loadFieldBackground(_loc_15);
-                }
+                card = fieldSpells[1 - i];
             }
-            else
+			if (card != null)
             {
-                this.cards_mc.loadFieldBackground(_loc_15);
+                this.cards_mc.loadFieldBackground(card);
             }
             this.addTweens(this.duelFadeTween);
             this.addTweens(this.duelInvisibleTween);

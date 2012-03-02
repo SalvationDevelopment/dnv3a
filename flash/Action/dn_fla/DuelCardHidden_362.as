@@ -1139,100 +1139,100 @@
             return _loc_4;
         }// end function
 
-        public function addCard(param1:DuelCard, param2:String, param3:Object = null, param4:Boolean = false, param5:Boolean = false, param6:Array = null, param7:Boolean = false)
+        public function addCard(card:DuelCard, position:String, fieldPosition:Object = null, faceDown:Boolean = false, isDefense:Boolean = false, param6:Array = null, param7:Boolean = false)
         {
             var _loc_10:DuelCard = null;
             this.removeSelect();
-            if (param2 == "deck1_bottom")
+            if (position == "deck1_bottom")
             {
-                param1.loc = "deck1";
+                card.loc = "deck1";
             }
-            else if (param2 == "deck2_bottom")
+            else if (position == "deck2_bottom")
             {
-                param1.loc = "deck2";
+                card.loc = "deck2";
             }
             else
             {
-                param1.loc = param2;
+                card.loc = position;
             }
             var _loc_8:Number = 0;
             var _loc_9:Boolean = false;
-            switch(param2)
+            switch(position)
             {
                 case "deck1":
                 {
                     if (this.viewing == this.deck1)
                     {
-                        this.deck1.putInFront(param1);
-                        param1.cardRotationY = 0;
+                        this.deck1.putInFront(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateDeck1Count();
                         return;
                     }
-                    this.addDeck1(param1, param6);
+                    this.addDeck1(card, param6);
                     this.updateDeck1Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     break;
                 }
                 case "deck1_bottom":
                 {
                     if (this.viewing == this.deck1)
                     {
-                        this.deck1.put(param1);
-                        param1.cardRotationY = 0;
+                        this.deck1.put(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateDeck1Count();
                         return;
                     }
-                    this.addDeck1Bottom(param1, param6);
+                    this.addDeck1Bottom(card, param6);
                     this.updateDeck1Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     break;
                 }
                 case "hand1":
                 {
-                    this.addHand1(param1, param6);
-                    param4 = !this.duelist;
-                    param5 = false;
+                    this.addHand1(card, param6);
+                    faceDown = !this.duelist;
+                    isDefense = false;
                     break;
                 }
                 case "extra1":
                 {
                     if (this.viewing == this.extra1)
                     {
-                        this.extra1.put(param1);
-                        param1.cardRotationY = 0;
+                        this.extra1.put(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateExtra1Count();
                         return;
                     }
-                    this.addExtra1(param1, param6);
+                    this.addExtra1(card, param6);
                     this.updateExtra1Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     break;
                 }
                 case "field1":
                 {
-                    param1.position = int(param3);
-                    if (this.duelist && !param4 && param1.position >= 6 && param1.front_mc.card != "token")
+                    card.position = int(fieldPosition);
+                    if (this.duelist && !faceDown && card.position >= 6 && card.front_mc.card != "token")
                     {
-                        param1.addEventListener(MouseEvent.CLICK, this.clickCardOverlayE);
+                        card.addEventListener(MouseEvent.CLICK, this.clickCardOverlayE);
                     }
-                    _loc_10 = param1.overlay_next;
+                    _loc_10 = card.overlay_next;
                     if (_loc_10.loc != "underlay1")
                     {
-                        while (_loc_10 != param1)
+                        while (_loc_10 != card)
                         {
                             
                             _loc_10.loc = "underlay1";
                             _loc_10 = _loc_10.overlay_next;
                         }
                     }
-                    this.field1.put(param1);
-                    this.adjustOverlay(param1, param5, param4, param7, param6);
+                    this.field1.put(card);
+                    this.adjustOverlay(card, isDefense, faceDown, param7, param6);
                     _loc_9 = true;
                     break;
                 }
@@ -1240,47 +1240,47 @@
                 {
                     if (this.viewing == this.grave1)
                     {
-                        this.grave1.putInFront(param1);
-                        param1.cardRotationY = 0;
+                        this.grave1.putInFront(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateGrave1Count();
                         return;
                     }
-                    this.addGrave1(param1, param6);
+                    this.addGrave1(card, param6);
                     this.updateGrave1Count();
-                    param4 = false;
-                    param5 = false;
+                    faceDown = false;
+                    isDefense = false;
                     break;
                 }
                 case "rfg1":
                 {
                     if (this.viewing == this.rfg1)
                     {
-                        this.rfg1.putInFront(param1);
-                        param1.cardRotationY = param4 ? (180) : (0);
+                        this.rfg1.putInFront(card);
+                        card.cardRotationY = faceDown ? (180) : (0);
                         this.updateView();
                         this.updateRfg1Count();
                         return;
                     }
-                    this.addRfg1(param1, param6);
+                    this.addRfg1(card, param6);
                     this.updateRfg1Count();
-                    param5 = false;
+                    isDefense = false;
                     break;
                 }
                 case "deck2":
                 {
                     if (this.viewing == this.deck2)
                     {
-                        this.deck2.putInFront(param1);
-                        param1.cardRotationY = 0;
+                        this.deck2.putInFront(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateDeck2Count();
                         return;
                     }
-                    this.addDeck2(param1, param6);
+                    this.addDeck2(card, param6);
                     this.updateDeck2Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
@@ -1288,16 +1288,16 @@
                 {
                     if (this.viewing == this.deck2)
                     {
-                        this.deck2.put(param1);
-                        param1.cardRotationY = 0;
+                        this.deck2.put(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateDeck2Count();
                         return;
                     }
-                    this.addDeck2Bottom(param1, param6);
+                    this.addDeck2Bottom(card, param6);
                     this.updateDeck2Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
@@ -1305,20 +1305,20 @@
                 {
                     if (this.duelist)
                     {
-                        param1.addEventListener(MouseEvent.CLICK, this.clickCardE);
-                        param1.buttonMode = true;
-                        param1.tabEnabled = false;
+                        card.addEventListener(MouseEvent.CLICK, this.clickCardE);
+                        card.buttonMode = true;
+                        card.tabEnabled = false;
                     }
                     if (this.viewing == this.hand2)
                     {
-                        this.hand2.put(param1);
-                        param1.cardRotationY = 0;
+                        this.hand2.put(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         return;
                     }
-                    this.addHand2(param1, param6);
-                    param4 = true;
-                    param5 = false;
+                    this.addHand2(card, param6);
+                    faceDown = true;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
@@ -1326,16 +1326,16 @@
                 {
                     if (this.viewing == this.extra2)
                     {
-                        this.extra2.put(param1);
-                        param1.cardRotationY = 0;
+                        this.extra2.put(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateExtra2Count();
                         return;
                     }
-                    this.addExtra2(param1, param6);
+                    this.addExtra2(card, param6);
                     this.updateExtra2Count();
-                    param4 = true;
-                    param5 = false;
+                    faceDown = true;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
@@ -1343,23 +1343,23 @@
                 {
                     if (this.duelist)
                     {
-                        param1.addEventListener(MouseEvent.CLICK, this.clickCardE);
-                        param1.buttonMode = true;
-                        param1.tabEnabled = false;
+                        card.addEventListener(MouseEvent.CLICK, this.clickCardE);
+                        card.buttonMode = true;
+                        card.tabEnabled = false;
                     }
-                    param1.position = int(param3);
-                    _loc_10 = param1.overlay_next;
+                    card.position = int(fieldPosition);
+                    _loc_10 = card.overlay_next;
                     if (_loc_10.loc != "underlay2")
                     {
-                        while (_loc_10 != param1)
+                        while (_loc_10 != card)
                         {
                             
                             _loc_10.loc = "underlay2";
                             _loc_10 = _loc_10.overlay_next;
                         }
                     }
-                    this.field2.put(param1);
-                    this.adjustOverlay(param1, param5, param4, param7, param6);
+                    this.field2.put(card);
+                    this.adjustOverlay(card, isDefense, faceDown, param7, param6);
                     _loc_9 = true;
                     break;
                 }
@@ -1367,16 +1367,16 @@
                 {
                     if (this.viewing == this.grave2)
                     {
-                        this.grave2.putInFront(param1);
-                        param1.cardRotationY = 0;
+                        this.grave2.putInFront(card);
+                        card.cardRotationY = 0;
                         this.updateView();
                         this.updateGrave2Count();
                         return;
                     }
-                    this.addGrave2(param1, param6);
+                    this.addGrave2(card, param6);
                     this.updateGrave2Count();
-                    param4 = false;
-                    param5 = false;
+                    faceDown = false;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
@@ -1384,22 +1384,22 @@
                 {
                     if (this.viewing == this.rfg2)
                     {
-                        this.rfg2.putInFront(param1);
-                        param1.cardRotationY = param4 ? (180) : (0);
+                        this.rfg2.putInFront(card);
+                        card.cardRotationY = faceDown ? (180) : (0);
                         this.updateView();
                         this.updateRfg2Count();
                         return;
                     }
-                    this.addRfg2(param1, param6);
+                    this.addRfg2(card, param6);
                     this.updateRfg2Count();
-                    param5 = false;
+                    isDefense = false;
                     _loc_8 = 180;
                     break;
                 }
                 case "underlay1":
                 case "underlay2":
                 {
-                    this.underlay.put(param1);
+                    this.underlay.put(card);
                     _loc_9 = true;
                     break;
                 }
@@ -1410,11 +1410,11 @@
             }
             if (!_loc_9)
             {
-                this.moveCard(param1, param6, "cardRotationY", param4 ? (180) : (0));
-                this.moveCard(param1, param6, "cardRotationZ", param5 ? (_loc_8 - 90) : (_loc_8));
+                this.moveCard(card, param6, "cardRotationY", faceDown ? (180) : (0));
+                this.moveCard(card, param6, "cardRotationZ", isDefense ? (_loc_8 - 90) : (_loc_8));
             }
-            param1.addEventListener(MouseEvent.MOUSE_OVER, this.cardOverE);
-            param1.addEventListener(MouseEvent.MOUSE_OUT, this.cardOutE);
+            card.addEventListener(MouseEvent.MOUSE_OVER, this.cardOverE);
+            card.addEventListener(MouseEvent.MOUSE_OUT, this.cardOutE);
             return;
         }// end function
 

@@ -20,7 +20,7 @@ Avatar = E.g. "0/1.jpg". Appended to AVATAR_START in urls.txt for a ~500x500 px 
 WatcherListStr = E.g. "simonlindholm,0,simonlindholm4,0".
 CardType = normal/effect/ritual/fusion/synchro/xyz/spell/trap/token
 Attribute = dark/
-FieldPosition = 0..4 for spell/trap, 5 for field spell, 6..10 for monsters
+FieldPosition = 0..4 for spell/trap, 5 for field spell, 6..10 for monsters, blank if not applicable. Might also have a meaning for underlays?
 
 Card =
 	(card type id (slightly larger than the image id). E.g. 3517. -1 for tokens),
@@ -29,7 +29,7 @@ Card =
 	(card image name, e.g. 2323.scf. Can perhaps be empty),
 	("treated-as", almost always equal to the card name, but probably differs for e.g. harpies. Used for limits),
 	{CardType},
-	(type, e.g. "Dragon/Effect"),
+	(type, e.g. "Dragon/Effect", also "continuous" etc. I guess),
 	{Attribute},
 	Card text,
 	(ATK, or ?),
@@ -39,7 +39,27 @@ Card =
 	{PreloadInfo} (ignored for now)
 
 PreloadInfo = E.g. 31137, 22080, c11ef232ae77f020ecc4e4ad7e220577. Sent when dueling, can be all empty otherwise. In order: offset into preload array, length of data, decryption key. See getPreloadPicture.
-Place = deck1/grave1/rfg1/extra1/hand1/field1/...
+Place = deck1/grave1/rfg1/extra1/hand1/field1/underlay1/...
+
+OptWatchArgs = (see watchDuelStart)
+	If DuelState = "Duel":
+		{Phase},
+		(turn :bool, "true" for player 1),
+		(latest field spell player :bool, "true" for player 1),
+		(life points, player 1),
+		(life points, player 2),
+		(status, player 1),
+		(status, player 2),
+		(
+			{Place}, (if underlay, push to a stack, else, use underlays on stack)
+			(card id),
+			{FieldPosition},
+			Face-down :bool,
+			Defense :bool,
+			originalOwner :bool, (true = player 1)
+			isKnown :bool,
+			{Card} if isKnown
+		)*
 
 
 Outgoing:
@@ -115,7 +135,7 @@ Incoming:
 
 * Leave duel, Reason [, Alternative Duel Offer Message]
 
-+ Watch duel, {DuelState}, (Name, {Avatar}, Back, Color1, Color2, Rating, Reputation, Has donated: bool)*2, {WatcherListStr} (Followed by another message, in some cases, perhaps related to matches and side-decking.)
++ Watch duel, {DuelState}, (Name, {Avatar}, Back, Color1, Color2, Rating, Reputation, Has donated: bool)*2, {WatcherListStr}, {OptWatchArgs}
 
 * Turn pick, Username -> That user goes first
 
@@ -124,7 +144,7 @@ Incoming:
 
 With Duel prefix:
 
-* Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition} (or blank if not sent to field), Face-down :bool, Defense? :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card}
+* Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition}, Face-down :bool, Defense :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card} (sometimes)
 
 * Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
 
