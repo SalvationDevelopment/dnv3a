@@ -4,13 +4,19 @@
 
 if (!window.console) window.console = {};
 if (!console.assert) {
-	console.assert = function(condition) {
+	console.assert = function(condition, msg) {
 		if (!condition) {
-			var err = new Error("Assertion failure.");
-			var stack = e.stack || e.stacktrace || e.message;
-			console.error("Assertion failure: " + stack);
+			msg = "Assertion failure" + (msg ? ": " + msg : ".");
+			var err = new Error(msg);
+			var stack = err.stack || err.stacktrace || err.message;
+			console.error(msg + "\n" + stack);
 			throw err;
 		}
+	};
+}
+if (!console.assertNotReached) {
+	console.assertNotReached = function(msg) {
+		console.assert(0, msg);
 	};
 }
 
