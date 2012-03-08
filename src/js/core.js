@@ -2,6 +2,8 @@
 ;(function() {
 "use strict";
 
+window.UrlBase = "http://www.duelingnetwork.com:8080/Dueling_Network/";
+
 // An abstract 'view' class - exactly one view is active at a time and
 // represents a fullscreen activity like 'Deck Constructor' or 'Duel'.
 window.View = Class.extend({
