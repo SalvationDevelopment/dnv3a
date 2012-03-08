@@ -909,20 +909,7 @@ window.MatchmakingView = View.extend({
 		if (ev === 'Watch duel') {
 			Communicator.send(['Unsubscribe']);
 			ignoreLateMessages(this.ignoreLateMessage);
-			var ind = 0;
-			var duelState = data[ind++];
-			var duelists = [];
-			for (var i = 0; i < 2; ++i) {
-				duelists.push(new Duelist(data.slice(ind, ind+8)));
-				ind += 8;
-			}
-			var watcherList = data[ind++].split(','), watchers = [];
-			for (var i = 0; i < watcherList.length; i += 2) {
-				var name = watcherList[i];
-				watchers.push(Users.getUser(name));
-			}
-
-			setView(new DuelView(true, duelState, duelists, watchers));
+			setView(new DuelView(true, data));
 			return true;
 		}
 
