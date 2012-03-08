@@ -15,7 +15,9 @@ body {
 }
 #hiddentext {
 	position: absolute;
-	top: -999px;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
 }
 
 #views {
@@ -328,7 +330,7 @@ body {
 
 .mm-tab.host {
 	padding-top: 40px;
-	text-size: 120%;
+	font-size: 120%;
 	text-align: center;
 }
 
