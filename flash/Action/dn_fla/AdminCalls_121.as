@@ -8,8 +8,11 @@
     {
         public var calls_mc:List;
         public var calls_btn:SimpleButton;
+        public var log_mc:MovieClip;
         public var tools_mc:MovieClip;
         public var tools_selected_mc:MovieClip;
+        public var log_btn:SimpleButton;
+        public var log_selected_mc:MovieClip;
         public var top_mc:MovieClip;
         public var num_calls_txt:Label;
         public var tools_btn:SimpleButton;
@@ -62,8 +65,13 @@
             this.calls_selected_mc.visible = true;
             this.tools_btn.visible = true;
             this.tools_selected_mc.visible = false;
+            this.log_btn.visible = true;
+            this.log_selected_mc.visible = false;
             this.calls_mc.visible = true;
             this.tools_mc.visible = false;
+            this.log_mc.visible = false;
+            this.calls_mc.setFocus();
+            this.calls_mc.drawFocus(false);
             return;
         }// end function
 
@@ -73,8 +81,28 @@
             this.calls_selected_mc.visible = false;
             this.tools_btn.visible = false;
             this.tools_selected_mc.visible = true;
+            this.log_btn.visible = true;
+            this.log_selected_mc.visible = false;
             this.calls_mc.visible = false;
             this.tools_mc.visible = true;
+            this.log_mc.visible = false;
+            this.tools_mc.username_txt.setFocus();
+            return;
+        }// end function
+
+        public function showLogE(event:MouseEvent)
+        {
+            this.calls_btn.visible = true;
+            this.calls_selected_mc.visible = false;
+            this.tools_btn.visible = true;
+            this.tools_selected_mc.visible = false;
+            this.log_btn.visible = false;
+            this.log_selected_mc.visible = true;
+            this.calls_mc.visible = false;
+            this.tools_mc.visible = false;
+            this.log_mc.visible = true;
+            this.log_mc.log_txt.setFocus();
+            this.log_mc.log_txt.drawFocus(false);
             return;
         }// end function
 
@@ -115,6 +143,7 @@
             this.showCallsE(null);
             this.calls_btn.addEventListener(MouseEvent.CLICK, this.showCallsE);
             this.tools_btn.addEventListener(MouseEvent.CLICK, this.showToolsE);
+            this.log_btn.addEventListener(MouseEvent.CLICK, this.showLogE);
             return;
         }// end function
 

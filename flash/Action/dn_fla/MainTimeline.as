@@ -369,6 +369,7 @@
         public var super_ban_mc:MovieClip;
         public var strikes_txt:TextField;
         public var color2_cp:ColorPicker;
+        public var admin_reward_txt:TextField;
         public var redeem_donation_btn:Button;
         public var search10_mc:SearchCard;
         public var extra4_mc:DeckCard;
@@ -423,6 +424,7 @@
         public var connection_success:Boolean;
         public var incoming_handler:Function;
         public var admin:int;
+        public var private_chat_prev_idx:int;
         public var num_new_msgs:int;
         public var chat_lock:Boolean;
         public var title_usernames:Object;
@@ -436,7 +438,8 @@
         public var entering_rated_duel:Boolean;
         public var duelroom_rbg:RadioButtonGroup;
         public var join_arr:Array;
-        public var join_duel_kick:String;
+        public var join_duel_ban:String;
+        public var join_duel_ban_note:String;
         public var alternate_join_offer:String;
         public var deck_init:Boolean;
         public var deck:Array;
@@ -1087,6 +1090,8 @@
                                 case this.watch_chat_mc.cin_txt.textField:
                                 case this.public_chat_mc.cin_txt.textField:
                                 case this.cin_txt.textField:
+                                case this.calls_mc.tools_mc.username_txt.textField:
+                                case this.calls_mc.tools_mc.reason_txt.textField:
                                 {
                                     break;
                                 }
@@ -1759,7 +1764,7 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect10", this.username, this.password, this.session_id];
+            var _loc_2:Array = ["Connect12", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
                 _loc_2.push("Administrate");
@@ -2041,10 +2046,27 @@
                     this.chatUnlock();
                     break;
                 }
+                case "Ban status":
+                case "Ban user":
+                case "Unban user":
+                case "Kick user":
+                case "Cancel duel":
+                case "Add warning":
+                case "IP check":
+                case "Computer check":
+                case "Get admin":
+                {
+                    if (this.calls_mc.tools_mc.awaiting_response)
+                    {
+                        this.calls_mc.tools_mc.showResults(_loc_2);
+                        break;
+                    }
+                }
                 default:
                 {
                     if (_loc_2[0] == "Error")
                     {
+                        this.calls_mc.tools_mc.awaiting_response = false;
                         this.unlock();
                         if (_loc_2.length == 2)
                         {
@@ -2266,8 +2288,20 @@
                 }
                 this.calls_mc.visible = true;
                 this.chat_hidden_mc.addChild(this.calls_mc);
-                this.calls_mc.calls_mc.setFocus();
-                this.calls_mc.calls_mc.drawFocus(false);
+                if (this.calls_mc.calls_mc.visible)
+                {
+                    this.calls_mc.calls_mc.setFocus();
+                    this.calls_mc.calls_mc.drawFocus(false);
+                }
+                else if (this.calls_mc.tools_mc.visible)
+                {
+                    this.calls_mc.tools_mc.username_txt.setFocus();
+                }
+                else if (this.calls_mc.log_mc.visible)
+                {
+                    this.calls_mc.log_mc.log_txt.setFocus();
+                    this.calls_mc.log_mc.log_txt.drawFocus(false);
+                }
             }
             return;
         }// end function
@@ -2279,6 +2313,7 @@
                 return;
             }
             this.Send(["Answer call", this.calls_mc.calls_mc.selectedItem.data]);
+            this.lock();
             return;
         }// end function
 
@@ -2334,34 +2369,35 @@
             return;
         }// end function
 
-        public function restoreChat(param1:int)
+        public function restoreChat(param1:int, param2:Boolean = true)
         {
-            var _loc_2:Object = null;
+            var _loc_3:Object = null;
             if (param1 >= 0)
             {
-                _loc_2 = this.private_chat_mc.user_mc.getItemAt(param1);
-                if (_loc_2.new_msg)
+                _loc_3 = this.private_chat_mc.user_mc.getItemAt(param1);
+                if (_loc_3.new_msg)
                 {
-                    _loc_2.new_msg = false;
+                    _loc_3.new_msg = false;
                     this.private_chat_mc.updateListColors();
-                    var _loc_3:String = this;
-                    var _loc_4:* = this.num_new_msgs - 1;
-                    _loc_3.num_new_msgs = _loc_4;
+                    var _loc_4:String = this;
+                    var _loc_5:* = this.num_new_msgs - 1;
+                    _loc_4.num_new_msgs = _loc_5;
                     if (this.num_new_msgs == 0)
                     {
                         this.private_btn.stopAnimation();
                     }
-                    this.removeTitle(_loc_2.data);
+                    this.removeTitle(_loc_3.data);
                 }
-                this.private_chat_mc.setChat(_loc_2.cout_txt, _loc_2.cin_txt);
+                this.private_chat_mc.setChat(_loc_3.cout_txt, _loc_3.cin_txt);
                 this.updatePrivateChatLock();
-                if (this.private_chat_mc.visible)
+                if (param2 && this.private_chat_mc.visible)
                 {
-                    _loc_2.cin_txt.setFocus();
+                    _loc_3.cin_txt.setFocus();
                 }
                 this.private_chat_mc.fixChat();
             }
             this.private_chat_mc.user_mc.selectedIndex = param1;
+            this.private_chat_prev_idx = param1;
             return;
         }// end function
 
@@ -2396,6 +2432,16 @@
         public function changePrivateE(event:Event)
         {
             this.restoreChat(this.private_chat_mc.user_mc.selectedIndex);
+            return;
+        }// end function
+
+        public function changePrivateKeypressE(event:KeyboardEvent)
+        {
+            var _loc_2:* = this.private_chat_mc.user_mc.selectedIndex;
+            if (_loc_2 != this.private_chat_prev_idx)
+            {
+                this.restoreChat(_loc_2, false);
+            }
             return;
         }// end function
 
@@ -3420,20 +3466,51 @@
             return;
         }// end function
 
-        public function joinDuel(param1:String, param2:String, param3:String, param4:Boolean)
+        public function joinDuel(param1:String, param2:JoinButton)
         {
-            this.entering_rated_duel = param1.charAt(1) == "r";
+            var _loc_7:String = null;
+            var _loc_3:* = param2.title;
+            var _loc_4:* = param2.rand;
+            var _loc_5:* = param2.password;
+            var _loc_6:* = param2.note_txt.text;
+            this.entering_rated_duel = false;
+            switch(param1)
+            {
+                case "ar":
+                {
+                    _loc_7 = "Advanced Rated";
+                    this.entering_rated_duel = true;
+                    break;
+                }
+                case "au":
+                {
+                    _loc_7 = "Advanced Unrated";
+                    break;
+                }
+                case "tu":
+                {
+                    _loc_7 = "Traditional Unrated";
+                    break;
+                }
+                default:
+                {
+                    _loc_7 = "Unknown";
+                    break;
+                    break;
+                }
+            }
             if (this.duel_rb.selected)
             {
                 if (this.admin)
                 {
-                    this.getConfirmation("Kick User", "Are you sure you want to kick " + param2 + "?", this.performJoinDuelKick);
-                    this.join_duel_kick = param2;
+                    this.getConfirmation("Ban User", "Are you sure you want to ban " + _loc_3 + " for 1 day?", this.performJoinDuelBan);
+                    this.join_duel_ban = _loc_3;
+                    this.join_duel_ban_note = "Duel Note (" + _loc_7 + "): " + _loc_6;
                 }
                 else
                 {
-                    this.join_arr = ["Join duel", param1, this.decklist_cb.selectedItem.data, param2, param3];
-                    if (param4)
+                    this.join_arr = ["Join duel", param1, this.decklist_cb.selectedItem.data, _loc_3, _loc_4];
+                    if (_loc_5)
                     {
                         this.getInput("Duel Password", "Enter duel password to join duel:", "", 0, this.performJoinDuel);
                     }
@@ -3445,8 +3522,8 @@
             }
             else if (this.watch_rb.selected)
             {
-                this.join_arr = ["Watch duel", param1, param2, param3];
-                if (!this.admin && param4)
+                this.join_arr = ["Watch duel", param1, _loc_3, _loc_4];
+                if (!this.admin && _loc_5)
                 {
                     this.getInput("Watch Password", "Enter watch password to watch duel:", "", 0, this.performJoinDuel);
                 }
@@ -3463,15 +3540,14 @@
             return;
         }// end function
 
-        public function performJoinDuelKick(param1:Boolean)
+        public function performJoinDuelBan(param1:Boolean)
         {
-            if (!param1)
+            if (param1)
             {
-                return;
+                this.Send(["Ban user", this.join_duel_ban, 1, true, this.join_duel_ban_note, true]);
             }
-            this.Send(["Kick user", this.join_duel_kick]);
-            this.trackEvent("Admin Kick", this.username, this.join_duel_kick);
-            this.join_duel_kick = null;
+            this.join_duel_ban = null;
+            this.join_duel_ban_note = null;
             return;
         }// end function
 
@@ -3535,21 +3611,21 @@
         public function joinAdvancedRatedE(event:MouseEvent)
         {
             var _loc_2:* = JoinButton(event.target);
-            this.joinDuel("ar", _loc_2.title, _loc_2.rand, _loc_2.password);
+            this.joinDuel("ar", _loc_2);
             return;
         }// end function
 
         public function joinAdvancedUnratedE(event:MouseEvent)
         {
             var _loc_2:* = JoinButton(event.target);
-            this.joinDuel("au", _loc_2.title, _loc_2.rand, _loc_2.password);
+            this.joinDuel("au", _loc_2);
             return;
         }// end function
 
         public function joinTraditionalUnratedE(event:MouseEvent)
         {
             var _loc_2:* = JoinButton(event.target);
-            this.joinDuel("tu", _loc_2.title, _loc_2.rand, _loc_2.password);
+            this.joinDuel("tu", _loc_2);
             return;
         }// end function
 
@@ -3987,6 +4063,10 @@
             this.deckInitSearchListeners();
             this.deckInitButtons();
             this.getDeckData();
+            if (this.admin)
+            {
+                this.preview_mc.skip_hml = true;
+            }
             return;
         }// end function
 
@@ -5864,10 +5944,21 @@
                 this.num_rep = int.MAX_VALUE;
                 this.showPuzzle(true);
             }
+            if (param1[8] == "true")
+            {
+                this.avatar_browse_mc.visible = true;
+                this.back_browse_mc.visible = true;
+                this.num_wins = int.MAX_VALUE;
+                this.num_rep = int.MAX_VALUE;
+            }
+            if (param1[9] != "")
+            {
+                this.admin_reward_txt.text = param1[9];
+            }
             var _loc_2:* = param1[param1.length - 2];
             var _loc_3:* = param1[(param1.length - 1)];
-            this.avatars = param1.slice(8, _loc_2 + 8);
-            this.backs = param1.slice(_loc_2 + 8, _loc_2 + _loc_3 + 8);
+            this.avatars = param1.slice(10, _loc_2 + 10);
+            this.backs = param1.slice(_loc_2 + 10, _loc_2 + _loc_3 + 10);
             this.backs.reverse();
             this.backs.push("");
             this.backs.reverse();
@@ -6237,12 +6328,13 @@
 
         public function abCompleteE(event:Event)
         {
+            var _loc_2:ByteArray = null;
             if (currentFrameLabel != "my_profile_start")
             {
                 this.browse_fr = null;
                 return;
             }
-            var _loc_2:* = this.browse_fr.data;
+            _loc_2 = this.browse_fr.data;
             this.browse_fr = null;
             this.abLoadImage(_loc_2);
             return;
@@ -6645,6 +6737,10 @@
 
         public function banTimeChangeE(event:Event)
         {
+            if (this.days_txt == null || this.days_rb == null)
+            {
+                return;
+            }
             this.days_txt.enabled = this.days_rb.selected;
             return;
         }// end function
@@ -7158,9 +7254,18 @@
             var reputation2:*;
             var watcher_list_str:String;
             var watcher_list:Array;
+            var duel_log_str:String;
+            var duel_log:Array;
+            var hideRefreshButtonE:Function;
             var remaining_args:Array;
             var startWatchersPrivateE:Function;
             var watcherListKeyboardHandlerE:Function;
+            hideRefreshButtonE = function (event:Event)
+            {
+                calls_mc.log_mc.refresh_btn.visible = false;
+                return;
+            }// end function
+            ;
             startWatchersPrivateE = function (event:MouseEvent = null)
             {
                 if (watchers_mc.watchers_mc.selectedIndex < 0)
@@ -7215,7 +7320,11 @@
             }
             watcher_list_str = this.duel_args[16];
             watcher_list = watcher_list_str == "" ? ([]) : (StringUtils.stringToArray(watcher_list_str));
-            remaining_args = this.duel_args.slice(17);
+            duel_log_str = this.duel_args[17];
+            duel_log = duel_log_str == "" ? ([]) : (StringUtils.stringToArray(duel_log_str));
+            this.calls_mc.log_mc.showLog(duel_log, username1, username2);
+            this.duel_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, hideRefreshButtonE);
+            remaining_args = this.duel_args.slice(18);
             this.duel_args = null;
             this.username1_mc.setUsername(username1);
             this.username2_mc.setUsername(username2);
@@ -7494,6 +7603,8 @@
             var _loc_2:String = null;
             var _loc_3:Array = null;
             var _loc_4:String = null;
+            var _loc_5:String = null;
+            var _loc_6:Array = null;
             if (param1 != null)
             {
                 _loc_2 = param1[0];
@@ -7660,6 +7771,13 @@
                         this.preloadPictures();
                         this.tweensInit();
                         this.addTurnPickTweens(_loc_3[0] == this.username);
+                        break;
+                    }
+                    case "Duel log":
+                    {
+                        _loc_5 = _loc_3[0];
+                        _loc_6 = _loc_5 == "" ? ([]) : (StringUtils.stringToArray(_loc_5));
+                        this.calls_mc.log_mc.showLog(_loc_6, this.username1_mc.username_txt.text, this.username2_mc.username_txt.text, true);
                         break;
                     }
                     default:
@@ -8480,14 +8598,7 @@
 
         public function rpsTweenStart(param1) : Array
         {
-            return [
-                new Tween(this.rock1_mc, "y", None.easeNone, 766.9, this.rock1_mc.y, this.RPS_TWEEN_TIME, true),
-                new Tween(this.paper1_mc, "y", None.easeNone, 766.9, this.paper1_mc.y, this.RPS_TWEEN_TIME, true),
-                new Tween(this.scissors1_mc, "y", None.easeNone, 766.9, this.scissors1_mc.y, this.RPS_TWEEN_TIME, true),
-                new Tween(this.rock2_mc, "y", None.easeNone, -126.9, this.rock2_mc.y, this.RPS_TWEEN_TIME, true),
-                new Tween(this.paper2_mc, "y", None.easeNone, -126.9, this.paper2_mc.y, this.RPS_TWEEN_TIME, true),
-                new Tween(this.scissors2_mc, "y", None.easeNone, -126.9, this.scissors2_mc.y, this.RPS_TWEEN_TIME, true)
-            ];
+            return [new Tween(this.rock1_mc, "y", None.easeNone, 766.9, this.rock1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.paper1_mc, "y", None.easeNone, 766.9, this.paper1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.scissors1_mc, "y", None.easeNone, 766.9, this.scissors1_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.rock2_mc, "y", None.easeNone, -126.9, this.rock2_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.paper2_mc, "y", None.easeNone, -126.9, this.paper2_mc.y, this.RPS_TWEEN_TIME, true), new Tween(this.scissors2_mc, "y", None.easeNone, -126.9, this.scissors2_mc.y, this.RPS_TWEEN_TIME, true)];
         }// end function
 
         public function rpsChooseE(event:MouseEvent)
@@ -9198,100 +9309,114 @@
 
         public function watchDuelStart()
         {
-            var args:Array = null;
+            var _loc_1:Array = null;
+            var _loc_2:String = null;
             var _loc_3:Boolean = false;
-            var fieldSpells:Array = null;
-            var firstUnderlay:DuelCard = null;
-            var lastUnderlay:DuelCard = null;
-            var i:int = 0;
-            var position:String = null;
-            var cardId:String = null;
-            var fieldPosition:String = null;
-            var faceDown:Boolean = false;
-            var isDefense:Boolean = false;
-            var amOriginalOwner:Boolean = false;
-            var isKnown:Boolean = false;
-            var card:DuelCard = null;
-
-            var args:Array = this.duel_args;
+            var _loc_4:Array = null;
+            var _loc_5:DuelCard = null;
+            var _loc_6:DuelCard = null;
+            var _loc_7:int = 0;
+            var _loc_8:String = null;
+            var _loc_9:String = null;
+            var _loc_10:String = null;
+            var _loc_11:Boolean = false;
+            var _loc_12:Boolean = false;
+            var _loc_13:Boolean = false;
+            var _loc_14:Boolean = false;
+            var _loc_15:DuelCard = null;
+            _loc_1 = this.duel_args;
             this.duel_args = null;
-            var phase:String = args[0];
-            this.my_turn = (args[1] == "true");
-            this.phase_mc.setPhase(phase, this.my_turn);
-            _loc_3 = (args[2] == "true");
-            this.lp_bottom_mc.points = args[3];
-            this.lp_top_mc.points = args[4];
-            this.status1_mc.status = args[5];
-            this.status2_mc.status = args[6];
-            fieldSpells = [null, null];
-            firstUnderlay = null;
-            lastUnderlay = null;
-
-            i = 7;
-            while (i < args.length)
+            _loc_2 = _loc_1[0];
+            this.my_turn = _loc_1[1] == "true";
+            this.phase_mc.setPhase(_loc_2, this.my_turn);
+            _loc_3 = _loc_1[2] == "true";
+            this.lp_bottom_mc.points = _loc_1[3];
+            this.lp_top_mc.points = _loc_1[4];
+            this.status1_mc.status = _loc_1[5];
+            this.status2_mc.status = _loc_1[6];
+            _loc_4 = [null, null];
+            _loc_5 = null;
+            _loc_6 = null;
+            _loc_7 = 7;
+            while (_loc_7 < _loc_1.length)
             {
-                position = args[i++];
-                cardId = args[i++];
-                fieldPosition = args[i++];
-                faceDown = args[i++] == "true";
-                isDefense = args[i++] == "true";
-                amOriginalOwner = args[i++] == "true";
-                isKnown = args[i++] == "true";
-                card = new DuelCard(amOriginalOwner ? (this.back_loader1) : (this.back_loader2));
-                if (isKnown)
+                
+                _loc_8 = _loc_1[_loc_7];
+                _loc_7++;
+                _loc_9 = _loc_1[_loc_7];
+                _loc_7++;
+                _loc_10 = _loc_1[_loc_7];
+                _loc_7++;
+                _loc_11 = _loc_1[_loc_7] == "true";
+                _loc_7++;
+                _loc_12 = _loc_1[_loc_7] == "true";
+                _loc_7++;
+                _loc_13 = _loc_1[_loc_7] == "true";
+                _loc_7++;
+                _loc_14 = _loc_1[_loc_7] == "true";
+                _loc_7++;
+                _loc_15 = new DuelCard(_loc_13 ? (this.back_loader1) : (this.back_loader2));
+                if (_loc_14)
                 {
-                    this.initDuelCard(card, args.slice(i, i + 16));
-                    i += 16;
+                    this.initDuelCard(_loc_15, _loc_1.slice(_loc_7, _loc_7 + 16));
+                    _loc_7 = _loc_7 + 16;
                 }
-                card.id = cardId;
-                if (position == "underlay1" || position == "underlay2")
+                _loc_15.id = _loc_9;
+                if (_loc_8 == "underlay1" || _loc_8 == "underlay2")
                 {
-                    if (lastUnderlay == null)
+                    if (_loc_6 == null)
                     {
-                        lastUnderlay = card;
-                        firstUnderlay = card;
+                        var _loc_16:* = _loc_15;
+                        _loc_6 = _loc_15;
+                        _loc_5 = _loc_16;
                     }
                     else
                     {
-                        lastUnderlay.overlayLink(card);
-                        lastUnderlay = card;
+                        _loc_6.overlayLink(_loc_15);
+                        _loc_6 = _loc_15;
                     }
                 }
-                else if (lastUnderlay != null)
+                else if (_loc_6 != null)
                 {
-                    card.overlayLink(firstUnderlay);
-                    lastUnderlay.overlayLink(card);
-                    lastUnderlay = null;
-                    firstUnderlay = null;
+                    _loc_15.overlayLink(_loc_5);
+                    _loc_6.overlayLink(_loc_15);
+                    var _loc_16:String = null;
+                    _loc_6 = null;
+                    _loc_5 = _loc_16;
                 }
-                this.cards_mc.addCard(card, position, fieldPosition, faceDown, isDefense);
-                if (position == "field1")
+                this.cards_mc.addCard(_loc_15, _loc_8, _loc_10, _loc_11, _loc_12);
+                if (_loc_8 == "field1")
                 {
-                    if (card.position == 5 && !card.show_back)
+                    if (_loc_15.position == 5 && !_loc_15.show_back)
                     {
-                        fieldSpells[0] = card;
+                        _loc_4[0] = _loc_15;
                     }
-                    this.cards_mc.finishFieldCard(card, true, false);
+                    this.cards_mc.finishFieldCard(_loc_15, true, false);
                     continue;
                 }
-                if (position == "field2")
+                if (_loc_8 == "field2")
                 {
-                    if (card.position == 5 && !card.show_back)
+                    if (_loc_15.position == 5 && !_loc_15.show_back)
                     {
-                        fieldSpells[1] = card;
+                        _loc_4[1] = _loc_15;
                     }
-                    this.cards_mc.finishFieldCard(card, false, false);
+                    this.cards_mc.finishFieldCard(_loc_15, false, false);
                 }
             }
-            i = _loc_3 ? (0) : (1);
-            card = fieldSpells[i];
-            if (card == null)
+            _loc_7 = _loc_3 ? (0) : (1);
+            _loc_15 = _loc_4[_loc_7];
+            if (_loc_15 == null)
             {
-                card = fieldSpells[1 - i];
+                _loc_7 = _loc_3 ? (1) : (0);
+                _loc_15 = _loc_4[_loc_7];
+                if (_loc_15 != null)
+                {
+                    this.cards_mc.loadFieldBackground(_loc_15);
+                }
             }
-			if (card != null)
+            else
             {
-                this.cards_mc.loadFieldBackground(card);
+                this.cards_mc.loadFieldBackground(_loc_15);
             }
             this.addTweens(this.duelFadeTween);
             this.addTweens(this.duelInvisibleTween);
@@ -9361,70 +9486,65 @@
             }
             else
             {
-                var duelStartArgs = this.duel_screen_args[0];
-                var pl1First = this.duel_screen_args[1];
+                _loc_1 = this.duel_screen_args[0];
+                _loc_2 = this.duel_screen_args[1];
                 this.duel_screen_args = null;
-
-                var deck1 = duelStartArgs[0];
-                var deck1Base = duelStartArgs[1];
-                var extra1 = duelStartArgs[2];
-                var extra1Base = duelStartArgs[3];
-
-                var deck2 = duelStartArgs[4];
-                var deck2Base = duelStartArgs[5];
-                var extra2 = duelStartArgs[6];
-                var extra2Base = duelStartArgs[7];
-
-                var ownDraw = pl1First ? (6) : (5);
-
-                _loc_12 = 8 + 16 * ownDraw;
-
-                var i = deck1;
-                while (i --> 0)
+                _loc_3 = _loc_1[0];
+                _loc_4 = _loc_1[1];
+                _loc_5 = _loc_1[2];
+                _loc_6 = _loc_1[3];
+                _loc_7 = _loc_1[4];
+                _loc_8 = _loc_1[5];
+                _loc_9 = _loc_1[6];
+                _loc_10 = _loc_1[7];
+                _loc_11 = _loc_2 ? (6) : (5);
+                _loc_12 = 8 + 16 * _loc_11;
+                _loc_13 = _loc_3 - 1;
+                while (_loc_13 >= 0)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader1);
-                    _loc_14.id = deck1Base + i;
-                    if (i < ownDraw && this.duelist)
+                    _loc_14.id = _loc_4 + _loc_13;
+                    if (_loc_13 < _loc_11 && this.duelist)
                     {
                         _loc_12 = _loc_12 - 16;
-                        this.initDuelCard(_loc_14, duelStartArgs.slice(_loc_12, _loc_12 + 16));
+                        this.initDuelCard(_loc_14, _loc_1.slice(_loc_12, _loc_12 + 16));
                     }
                     this.cards_mc.addCard(_loc_14, "deck1");
+                    _loc_13 = _loc_13 - 1;
                 }
-
-                _loc_12 = 8 + 16 * ownDraw;
-                i = 0;
-                while (i < extra1)
+                _loc_12 = 8 + 16 * _loc_11;
+                _loc_13 = 0;
+                while (_loc_13 < _loc_5)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader1);
-                    _loc_14.id = extra1Base + i;
+                    _loc_14.id = _loc_6 + _loc_13;
                     if (this.duelist)
                     {
-                        this.initDuelCard(_loc_14, duelStartArgs.slice(_loc_12, _loc_12 + 16));
+                        this.initDuelCard(_loc_14, _loc_1.slice(_loc_12, _loc_12 + 16));
                         _loc_12 = _loc_12 + 16;
                     }
                     this.cards_mc.addCard(_loc_14, "extra1");
-                    ++i;
+                    _loc_13 = _loc_13 + 1;
                 }
-                i = deck2 - 1;
-                while (i >= 0)
+                _loc_13 = _loc_7 - 1;
+                while (_loc_13 >= 0)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader2);
-                    _loc_14.id = deck2Base + i;
+                    _loc_14.id = _loc_8 + _loc_13;
                     this.cards_mc.addCard(_loc_14, "deck2");
-                    --i;
+                    _loc_13 = _loc_13 - 1;
                 }
-                i = 0;
-                while (i < extra2)
+                _loc_13 = 0;
+                while (_loc_13 < _loc_9)
                 {
                     
                     _loc_14 = new DuelCard(this.back_loader2);
-                    _loc_14.id = extra2Base + i;
+                    _loc_14.id = _loc_10 + _loc_13;
                     this.cards_mc.addCard(_loc_14, "extra2");
-                    ++i;
+                    _loc_13 = _loc_13 + 1;
                 }
             }
             return;
@@ -12639,7 +12759,7 @@
                 this.decrement_strikes_cb.enabled = true;
                 this.decrement_strikes_cb.label = "                                                                                                    ";
                 this.decrement_strikes_cb.labelPlacement = "right";
-                this.decrement_strikes_cb.selected = false;
+                this.decrement_strikes_cb.selected = true;
                 this.decrement_strikes_cb.visible = true;
                 try
                 {
@@ -13694,7 +13814,7 @@
                 this.AVATAR_START = this.URL_START + "images/avatars/";
                 this.BACK_START = this.URL_START + "images/backs/";
                 this.bgmusic = new Sound();
-                this.bgmusic.load(new URLRequest(this.URL_START + "soft_love_piano_instrumental.mp3"), new SoundLoaderContext());
+                this.bgmusic.load(new URLRequest(this.URL_START + "clear_mind.mp3"), new SoundLoaderContext());
                 this.bgmusic.addEventListener(IOErrorEvent.IO_ERROR, this.bufferFailE);
                 addEventListener(Event.ENTER_FRAME, this.doneBufferingE);
             }
@@ -13827,10 +13947,14 @@
             this.calls_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
             this.calls_mc.calls_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.answerCallE);
             this.calls_mc.calls_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.callListKeyboardHandlerE);
+            this.calls_mc.tools_mc.init(this.username, this.admin, this.Send, this.lock, this.unlock, this.trackEvent, this.displayError);
+            this.calls_mc.log_mc.init(this.Send);
             this.private_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
             this.private_chat_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
+            this.private_chat_prev_idx = -1;
             this.private_chat_mc.exit_btn.addEventListener(MouseEvent.CLICK, this.removeCurrentPrivateE);
             this.private_chat_mc.user_mc.addEventListener(Event.CHANGE, this.changePrivateE);
+            this.private_chat_mc.user_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.changePrivateKeypressE);
             this.num_new_msgs = 0;
             this.chat_lock = false;
             this.public_chat_mc.cin_txt.drawNow();
@@ -14271,6 +14395,10 @@
             this.DIE_BOUNCE_TIME = 1.5;
             this.makeAutoDrawWhite();
             this.duelScreenEnter();
+            if (this.duelist || this.admin)
+            {
+                this.preview_mc.skip_hml = true;
+            }
             return;
         }// end function
 
@@ -14292,6 +14420,10 @@
             this.kick2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
             this.sidingEnter();
+            if (this.duelist || this.admin)
+            {
+                this.preview_mc.skip_hml = true;
+            }
             return;
         }// end function
 

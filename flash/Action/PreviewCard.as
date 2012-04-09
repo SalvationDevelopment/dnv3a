@@ -7,16 +7,15 @@
 
     dynamic public class PreviewCard extends MovieClip
     {
-        public var preview_desc_txt:TextArea;
-        public var front2_mc:Front;
-        public var front1_mc:Front;
-        public var fronts:Array;
+        public var cont1_mc:MovieClip;
+        public var cont2_mc:MovieClip;
+        public var conts:Array;
         public var preview_timer:Timer;
+        public var skip_hml:Boolean;
 
         public function PreviewCard()
         {
             addFrameScript(0, this.frame1);
-            this.__setProp_preview_desc_txt_PreviewCard_Layer1_0();
             return;
         }// end function
 
@@ -27,11 +26,20 @@
                 param2 = event.currentTarget;
             }
             var _loc_3:* = Front(param2.front_mc);
-            if (this.fronts[0].id == _loc_3.id)
+            if (this.conts[0].front_mc.id == _loc_3.id)
             {
                 return;
             }
-            this.fronts[1].copyFront(_loc_3);
+            var _loc_4:* = this.conts[1];
+            var _loc_5:* = this.conts[1].front_mc;
+            if (this.conts[1].front_mc.id != _loc_3.id)
+            {
+                if (!this.skip_hml && _loc_5.card_name != _loc_3.card_name)
+                {
+                    _loc_4.low_avg_high_mc.loadHML(_loc_3.card == "token" ? (null) : (_loc_3.card_name));
+                }
+                _loc_5.copyFront(_loc_3);
+            }
             this.preview_timer.reset();
             this.preview_timer.start();
             return;
@@ -45,53 +53,57 @@
 
         public function previewFinishE(event:TimerEvent)
         {
-            this.fronts[0].visible = false;
-            this.fronts[1].visible = true;
-            var _loc_2:* = this.fronts[0];
-            this.fronts[0] = this.fronts[1];
-            this.fronts[1] = _loc_2;
-            this.preview_desc_txt.text = this.fronts[0].desc;
-            this.preview_desc_txt.visible = true;
+            var _loc_3:Number = NaN;
+            var _loc_2:* = this.conts[1];
+            this.conts[1] = this.conts[0];
+            this.conts[0] = _loc_2;
+            this.conts[0].visible = true;
+            this.conts[1].visible = false;
+            _loc_2.preview_desc_txt.text = _loc_2.front_mc.desc;
+            if (!_loc_2.low_avg_high_mc.visible)
+            {
+                _loc_3 = _loc_2.preview_desc_txt.verticalScrollPosition;
+                _loc_2.preview_desc_txt.height = 162;
+                _loc_2.preview_desc_txt.verticalScrollPosition = _loc_3;
+                _loc_2.preview_desc_txt.validateNow();
+                _loc_2.preview_desc_txt.verticalScrollPosition = _loc_3;
+            }
             return;
         }// end function
 
-        function __setProp_preview_desc_txt_PreviewCard_Layer1_0()
+        public function descRollOver(event:MouseEvent)
         {
-            try
-            {
-                this.preview_desc_txt["componentInspectorSetting"] = true;
-            }
-            catch (e:Error)
-            {
-            }
-            this.preview_desc_txt.condenseWhite = false;
-            this.preview_desc_txt.editable = false;
-            this.preview_desc_txt.enabled = true;
-            this.preview_desc_txt.horizontalScrollPolicy = "auto";
-            this.preview_desc_txt.htmlText = "";
-            this.preview_desc_txt.maxChars = 0;
-            this.preview_desc_txt.restrict = "";
-            this.preview_desc_txt.text = "";
-            this.preview_desc_txt.verticalScrollPolicy = "auto";
-            this.preview_desc_txt.visible = false;
-            this.preview_desc_txt.wordWrap = true;
-            try
-            {
-                this.preview_desc_txt["componentInspectorSetting"] = false;
-            }
-            catch (e:Error)
-            {
-            }
+            var _loc_2:* = TextArea(event.currentTarget);
+            var _loc_3:* = _loc_2.verticalScrollPosition;
+            _loc_2.height = MovieClip(_loc_2.parent).low_avg_high_mc.visible && _loc_2.verticalScrollPosition == _loc_2.maxVerticalScrollPosition ? (104) : (162);
+            _loc_2.verticalScrollPosition = _loc_3;
+            _loc_2.validateNow();
+            _loc_2.verticalScrollPosition = _loc_3;
+            return;
+        }// end function
+
+        public function descRollOut(event:MouseEvent)
+        {
+            var _loc_2:* = TextArea(event.currentTarget);
+            var _loc_3:* = _loc_2.verticalScrollPosition;
+            _loc_2.height = MovieClip(_loc_2.parent).low_avg_high_mc.visible ? (104) : (162);
+            _loc_2.verticalScrollPosition = _loc_3;
+            _loc_2.validateNow();
+            _loc_2.verticalScrollPosition = _loc_3;
             return;
         }// end function
 
         function frame1()
         {
-            this.fronts = [this.front1_mc, this.front2_mc];
-            this.front1_mc.visible = false;
-            this.front2_mc.visible = false;
+            this.conts = [this.cont1_mc, this.cont2_mc];
+            this.cont1_mc.visible = false;
+            this.cont2_mc.visible = false;
             this.preview_timer = new Timer(250, 1);
             this.preview_timer.addEventListener(TimerEvent.TIMER, this.previewFinishE);
+            this.cont1_mc.preview_desc_txt.addEventListener(MouseEvent.ROLL_OVER, this.descRollOver);
+            this.cont2_mc.preview_desc_txt.addEventListener(MouseEvent.ROLL_OVER, this.descRollOver);
+            this.cont1_mc.preview_desc_txt.addEventListener(MouseEvent.ROLL_OUT, this.descRollOut);
+            this.cont2_mc.preview_desc_txt.addEventListener(MouseEvent.ROLL_OUT, this.descRollOut);
             return;
         }// end function
 
