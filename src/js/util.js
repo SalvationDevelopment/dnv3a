@@ -39,6 +39,10 @@ window.modulo = function(a, b) {
 	return (res >= 0 ? res : res + b);
 };
 
+window.plural = function(n, noun, sing, plural) {
+	return n + " " + noun + (n === 1 ? sing : plural);
+};
+
 // Function.prototype.bind polyfill, taken from MDN.
 if (!Function.prototype.bind) {
 	Function.prototype.bind = function (oThis) {

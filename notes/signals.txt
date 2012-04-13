@@ -148,13 +148,13 @@ Incoming:
 
 * Turn pick, Username -> That user goes first
 
-* Duel start, (Cards in pile, Start of pile index)x4 (= deck1, extra1, deck2, extra2, in order) [, {Card}x(5 or 6, depending on if you start) = values of the deck's first cards, not sent in watch mode]
++ Duel start, (Cards in pile, Start of pile index)x4 (= deck1, extra1, deck2, extra2, in order) [, {Card}x(5 or 6, depending on if you start) = values of the deck's first cards, not sent in watch mode]
 
-* Add watcher, Username, {ModStatus}
++ Add watcher, Username, {ModStatus}
 
 * Watch message, Username, Message, {ModStatus}
 
-* Remove watcher, Username
++ Remove watcher, Username
 
 * Player quit, Username
 
@@ -171,9 +171,9 @@ With Duel prefix:
 
 + Shuffle, Which deck :{Place}, New base ID
 
-* Phase, {Phase}, Username [, true if player draws a card [, {Card}]] (Per source code - in captures though, true isn't sent if card info is. That might be the old behavior.)
++ Phase, {Phase}, Username [, true if player draws a card [, {Card}]]
 
-* Life points, Username, Points
++ Life points, Username, Points
 
 * Card select
 

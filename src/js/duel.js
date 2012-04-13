@@ -53,8 +53,7 @@ var CardLocation = Class.extend({
 
 	removeCard: function(card) {
 		var ind = this.cards.indexOf(card);
-		if (ind === -1)
-			console.assertNotReached("Card not in location.");
+		console.assert(ind !== -1);
 		this.cards.splice(ind, 1);
 	}
 });
@@ -128,8 +127,7 @@ var FieldCardLocation = CardLocation.extend({
 	},
 	removeCard: function(card) {
 		var ind = this.cards.indexOf(card);
-		if (ind === -1)
-			console.assertNotReached("Card not on field.");
+		console.assert(ind !== -1);
 		this.cards[ind] = null;
 	}
 });
@@ -176,6 +174,14 @@ var DuelUI = Class.extend({
 	},
 
 	moveCard: function(card, reveal) {
+		// TODO
+	},
+
+	setPhase: function(turn, phase) {
+		// TODO
+	},
+
+	setLifePoints: function(pl, points) {
 		// TODO
 	}
 });
@@ -265,6 +271,23 @@ var Duel = Class.extend({
 		this.ui.moveCard(card, reveal);
 	},
 
+	attack: function(card, target) {
+		// TODO (target = null -> direct attack)
+	},
+
+	setPhase: function(turn, phase) {
+		this.turn = turn;
+		this.phase = phase;
+		this.ui.setPhase(turn, phase);
+	},
+
+	setLifePoints: function(pl, points) {
+		this.ui.setLifePoints(pl, points);
+		var dif = points - this.lifepoints[pl];
+		this.lifepoints[pl] = points;
+		return dif;
+	},
+
 	_initFromStart: function(ar) {
 		this.locations[0].deck.setup(ar[0]);
 		this.locations[0].extra.setup(ar[1]);
@@ -335,6 +358,7 @@ Duel.createFromWatchData = function(view, data) {
 window.DuelView = View.extend({
 	id: 'duelview',
 	duel: null,
+	startingPlayer: null,
 	duelState: '',
 	duelists: null,
 	watchers: null,
@@ -385,6 +409,14 @@ window.DuelView = View.extend({
 	close: function() {
 	},
 
+	getDuelistFromName: function(name) {
+		for (var i = 0; i < 2; ++i) {
+			if (this.duelists[i].user.name === name)
+				return i;
+		}
+		console.assertNotReached("No player with name " + name + ".");
+	},
+
 	ignoreLateMessage: function(ev, data) {
 		return (ev === 'Duel' || ev === 'Duel start' || ev === 'Turn pick' ||
 			ev === 'Player quit' || ev === 'Add watcher' || ev === 'Remove watcher' ||
@@ -418,12 +450,13 @@ window.DuelView = View.extend({
 			var special = (data[7] === 'special');
 
 			if (data.length > 8)
-				card.card = createCard(data.slice(8, 8+16));
+				card.card = createCard(data.slice(8));
 
 			this.duel.moveCard(card, toLoc, locPosition, faceup, defense, special, reveal);
 
 			if (msgToLog)
 				this.addToDuelLog(msgToLog);
+			return true;
 		}
 		if (ev === 'Attack') {
 			var from = data[0];
@@ -438,14 +471,29 @@ window.DuelView = View.extend({
 			else {
 				this.duel.attack(card, null);
 			}
+			return true;
 		}
 		if (ev === 'Phase') {
-			// (extra arg = true if new turn)
-			// TODO
+			var phase = data[0];
+			var turn = this.getDuelistFromName(data[1]);
+			this.duel.setPhase(turn, phase);
+			if (data[2]) {
+				// XXX: According to captures, we might need to s/3/2 here.
+				var cardInfo = (data.length > 3 ? createCard(data.slice(3)) : null);
+				this.duel.drawCard(turn, cardInfo);
+			}
+			return true;
 		}
 		if (ev === 'Life points') {
-			// (name, points)
-			// TODO
+			var uname = data[0];
+			var pl = this.getDuelistFromName(uname);
+			var points = +data[1];
+			var dif = this.duel.setLifePoints(pl, points);
+			var msg = uname + (dif > 0 ? " gained " : " lost ") +
+				plural(Math.abs(dif), "lifepoint", "", "s") + ".";
+				Math.abs(dif) + " lifepoint" + (Math.abs(dif) === 1 ? "" : "s") + ".";
+			this.addToDuelLog(msg);
+			return true;
 		}
 		if (ev === 'Token') {
 			// TODO
@@ -484,11 +532,27 @@ window.DuelView = View.extend({
 				});
 			}
 			this.duelState = 'Duel';
-			this.duel = new Duel(ar);
+			console.assert(this.startingPlayer !== null);
+			this.duel = Duel.createFromStart(this, ar, this.startingPlayer);
 			return true;
 		}
 		if (ev === 'Duel') {
 			return this.handleDuelMessage(data[0], data.slice(1));
+		}
+		if (ev === 'Add watcher') {
+			this.watchers.push(Users.getUser(data[0]));
+			return true;
+		}
+		if (ev === 'Remove watcher') {
+			// XXX If this can happen after people go offline, this is wrong.
+			var ind = this.watchers.indexOf(Users.getUser(data[0]);
+			console.assert(ind !== -1);
+			this.watchers.splice(ind, 1);
+			return true;
+		}
+		if (ev === 'Turn pick') {
+			this.startingPlayer = this.getDuelistFromName(data[0]);
+			return true;
 		}
 		if (ev === 'Player quit') {
 			// TODO
