@@ -84,6 +84,15 @@ Outgoing:
 
 * Join duel, Mode, Deck, Title, Token, Password
 
+* Watch message, Message
+
+
+With duel prefix:
+
+* Life points, delta
+
+* Close view
+
 
 Incoming:
 
@@ -141,11 +150,32 @@ Incoming:
 
 * Duel start, (Cards in pile, Start of pile index)x4 (= deck1, extra1, deck2, extra2, in order) [, {Card}x(5 or 6, depending on if you start) = values of the deck's first cards, not sent in watch mode]
 
+* Add watcher, Username, {ModStatus}
+
+* Watch message, Username, Message, {ModStatus}
+
+* Remove watcher, Username
+
+* Player quit, Username
+
+* Win
+
+* Lose
+
 
 With Duel prefix:
 
-* Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition}, Face-down :bool, Defense :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card} (sometimes)
++ Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition}, Face-down :bool, Defense :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card} (sometimes)
 
-* Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
++ Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
 
-* Shuffle, Which deck :{Place}, New base ID
++ Shuffle, Which deck :{Place}, New base ID
+
+* Phase, {Phase}, Username [, true if player draws a card [, {Card}]] (Per source code - in captures though, true isn't sent if card info is. That might be the old behavior.)
+
+* Life points, Username, Points
+
+* Card select
+
++ Attack, From :{FieldPosition}, Attacker id, To :{FieldPosition} (or "" if direct attack)
+
