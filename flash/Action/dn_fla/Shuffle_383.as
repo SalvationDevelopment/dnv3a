@@ -270,8 +270,8 @@
 
         function frame1()
         {
-            this.FLY_TIME = 1;
-            this.TWEEN_TIME = 0.1;
+            this.FLY_TIME = 0.5;
+            this.TWEEN_TIME = 0.05;
             return;
         }// end function
 

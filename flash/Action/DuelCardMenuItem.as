@@ -20,7 +20,6 @@
         public function initialize(param1:String, param2:String, param3:Number, param4:Boolean) : Number
         {
             var _loc_5:Number = NaN;
-            var _loc_7:Sprite = null;
             this.bg = param4 ? (new DuelCardMenuItemBackground2()) : (new DuelCardMenuItemBackground1());
             this.bg.stop();
             this.label_txt.width = param3 - 2;
@@ -31,19 +30,10 @@
             this.label_txt.height = _loc_5 + 10;
             var _loc_6:* = _loc_5 + (param4 ? (2.5) : (6));
             this.bg.height = _loc_6;
-            _loc_7 = new Sprite();
-            _loc_7.graphics.beginFill(0, 0);
-            _loc_7.graphics.drawRect(0, 0, 10, _loc_6 + 10);
-            _loc_7.graphics.drawRect(10, 0, param3, 20);
-            _loc_7.graphics.drawRect(param3 + 10, 0, 10, _loc_6 + 10);
-            _loc_7.graphics.endFill();
-            _loc_7.x = -10;
-            _loc_7.y = -10;
-            var _loc_8:* = new MovieClip();
+            var _loc_7:* = new MovieClip();
             new MovieClip().addChild(this.bg);
-            _loc_8.addChild(_loc_7);
-            addChildAt(_loc_8, 0);
-            hitArea = _loc_8;
+            addChildAt(_loc_7, 0);
+            hitArea = _loc_7;
             tabEnabled = false;
             buttonMode = true;
             mouseChildren = false;

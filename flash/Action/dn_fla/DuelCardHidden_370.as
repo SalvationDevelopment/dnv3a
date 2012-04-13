@@ -1,6 +1,7 @@
 ﻿package dn_fla
 {
     import fl.data.*;
+    import fl.events.*;
     import fl.transitions.*;
     import fl.transitions.easing.*;
     import flash.display.*;
@@ -128,6 +129,7 @@
         public var viewing:DuelMap;
         public var viewing2:DuelMap;
         public var scroll_rect_graphics:Graphics;
+        public var fix_menu_flag:Boolean;
 
         public function DuelCardHidden_370()
         {
@@ -243,12 +245,12 @@
         public function showMenu(param1:DuelCard)
         {
             var _loc_3:* = undefined;
-            var _loc_4:int = 0;
-            var _loc_5:Boolean = false;
+            var _loc_4:Boolean = false;
+            var _loc_5:int = 0;
             var _loc_6:Boolean = false;
             var _loc_7:Boolean = false;
             var _loc_8:Boolean = false;
-            var _loc_9:Point = null;
+            var _loc_9:Boolean = false;
             var _loc_10:Boolean = false;
             var _loc_11:DuelCardMenu = null;
             var _loc_2:Array = [];
@@ -264,10 +266,11 @@
                             this.select1_mc.y = this.HAND1_Y_UP;
                         }
                         _loc_3 = param1.front_mc.card;
+                        _loc_4 = false;
                         if (_loc_3 == "spell" || _loc_3 == "trap")
                         {
-                            _loc_7 = param1.front_mc.type == "field" ? (this.field1.hasFieldSpellOpening()) : (this.field1.hasSpellTrapOpening());
-                            if (_loc_7)
+                            _loc_8 = param1.front_mc.type == "field" ? (this.field1.hasFieldSpellOpening()) : (this.field1.hasSpellTrapOpening());
+                            if (_loc_8)
                             {
                                 if (_loc_3 == "spell")
                                 {
@@ -278,8 +281,8 @@
                         }
                         else
                         {
-                            _loc_7 = this.field1.hasMonsterOpening();
-                            if (_loc_7)
+                            _loc_8 = this.field1.hasMonsterOpening();
+                            if (_loc_8)
                             {
                                 if (_loc_3 == "normal" || _loc_3 == "effect")
                                 {
@@ -289,23 +292,35 @@
                                 _loc_2.push({label:"S. Summon ATK", data:"Hand Special Summon ATK"});
                                 _loc_2.push({label:"S. Summon DEF", data:"Hand Special Summon DEF"});
                             }
+                            if (this.field1.hasSpellTrapOpening())
+                            {
+                                _loc_4 = true;
+                            }
                         }
                         _loc_2.push({label:"To Graveyard", data:"Hand To Graveyard"});
                         _loc_2.push({label:"To Top of Deck", data:"Hand To Top of Deck"});
                         _loc_2.push({label:"Banish", data:"Hand Remove from Play"});
                         _loc_2.push({label:"To Bottom of Deck", data:"Hand To Bottom of Deck"});
                         _loc_2.push({label:"Reveal", data:"Hand Reveal"});
+                        if (_loc_4)
+                        {
+                            _loc_2.push({label:"To S/T", data:"Hand To Spell/Trap Zone"});
+                            if (param1.front_mc.id == 4435 || param1.front_mc.id == 5463)
+                            {
+                                _loc_2.push({label:"Set (To S/T)", data:"Hand Set To Spell/Trap"});
+                            }
+                        }
                         break;
                     }
                     case "field1":
                     {
-                        _loc_4 = param1.position;
+                        _loc_5 = param1.position;
                         _loc_3 = param1.front_mc.card;
-                        _loc_5 = _loc_3 == "token";
-                        _loc_6 = !param1.hasUnderlays();
-                        if (_loc_4 < 6)
+                        _loc_6 = _loc_3 == "token";
+                        _loc_7 = !param1.hasUnderlays();
+                        if (_loc_5 < 6)
                         {
-                            if (_loc_5)
+                            if (_loc_6)
                             {
                                 _loc_2.push({label:"Remove", data:"Remove Token"});
                             }
@@ -315,7 +330,7 @@
                                 {
                                     _loc_2.push({label:"Activate", data:"Field Activate"});
                                 }
-                                if (_loc_6)
+                                if (_loc_7)
                                 {
                                     _loc_2.push({label:"To Grave", data:"Field To Graveyard"});
                                     _loc_2.push({label:"Banish", data:"Field Remove from Play"});
@@ -324,7 +339,7 @@
                                 {
                                     _loc_2.push({label:"Set", data:"Field Set"});
                                 }
-                                if (_loc_6)
+                                if (_loc_7)
                                 {
                                     if (_loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz")
                                     {
@@ -338,15 +353,15 @@
                                     }
                                 }
                             }
-                            if (_loc_4 != 5 && !param1.show_back && this.field1.hasMonsterOpening())
+                            if (_loc_5 != 5 && !param1.show_back && this.field1.hasMonsterOpening())
                             {
                                 _loc_2.push({label:"To Mon. Zone", data:"Field To Monster Zone"});
                             }
                         }
                         else
                         {
-                            _loc_8 = !param1.isSideways();
-                            if (this.isMyBP() && _loc_8)
+                            _loc_9 = !param1.isSideways();
+                            if (this.isMyBP() && _loc_9)
                             {
                                 if (this.field2.hasMonsters())
                                 {
@@ -354,11 +369,11 @@
                                 }
                                 _loc_2.push({label:"Attack Directly", data:"Attack directly"});
                             }
-                            if (_loc_5)
+                            if (_loc_6)
                             {
                                 _loc_2.push({label:"Remove", data:"Remove Token"});
                             }
-                            else if (_loc_6)
+                            else if (_loc_7)
                             {
                                 _loc_2.push({label:"To Grave", data:"Field To Graveyard"});
                             }
@@ -369,7 +384,7 @@
                             }
                             else
                             {
-                                if (_loc_8)
+                                if (_loc_9)
                                 {
                                     _loc_2.push({label:"To DEF", data:"To DEF"});
                                 }
@@ -377,12 +392,12 @@
                                 {
                                     _loc_2.push({label:"To ATK", data:"To ATK"});
                                 }
-                                if (!_loc_5)
+                                if (!_loc_6)
                                 {
                                     _loc_2.push({label:"Set", data:"Field Set"});
                                 }
                             }
-                            if (_loc_6 && !_loc_5)
+                            if (_loc_7 && !_loc_6)
                             {
                                 _loc_2.push({label:"Banish", data:"Field Remove from Play"});
                             }
@@ -390,13 +405,13 @@
                             {
                                 _loc_2.push({label:"Change Control", data:"Change Control"});
                             }
-                            if (_loc_6)
+                            if (_loc_7)
                             {
                                 if (_loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz")
                                 {
                                     _loc_2.push({label:"To Extra", data:"Field To Extra Deck"});
                                 }
-                                else if (!_loc_5)
+                                else if (!_loc_6)
                                 {
                                     _loc_2.push({label:"To Hand", data:"Field To Hand"});
                                     _loc_2.push({label:"To T. Deck", data:"Field To Top of Deck"});
@@ -407,7 +422,7 @@
                             {
                                 _loc_2.push({label:"To S/T", data:"Field To Spell/Trap Zone"});
                             }
-                            if (!param1.show_back && !_loc_5 && this.field1.hasOverlayOption(param1.id))
+                            if (!param1.show_back && !_loc_6 && this.field1.hasOverlayOption(param1.id))
                             {
                                 _loc_2.push({label:"Overlay", data:"Field Overlay"});
                             }
@@ -463,147 +478,167 @@
                     }
                 }
             }
-            else
+            else if (this.isInView(param1))
             {
-                _loc_9 = param1.parent.localToGlobal(new Point(param1.x, param1.y));
-                if (_loc_9.y >= 90 + param1.height / 2)
+                switch(param1.loc)
                 {
-                    switch(param1.loc)
+                    case "deck1":
                     {
-                        case "deck1":
+                        if (this.viewing != this.deck1)
                         {
-                            if (this.viewing != this.deck1)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
+                            break;
+                        }
+                        _loc_3 = param1.front_mc.card;
+                        _loc_4 = false;
+                        if (_loc_3 != "spell" && _loc_3 != "trap")
+                        {
+                            if (this.field1.hasMonsterOpening())
                             {
                                 _loc_2.push({label:"SS ATK", data:"Deck Special Summon ATK"});
                                 _loc_2.push({label:"SS DEF", data:"Deck Special Summon DEF"});
                             }
-                            _loc_2.push({label:"To Hand", data:"Deck To Hand"});
-                            _loc_2.push({label:"To Grave", data:"Deck To Graveyard"});
-                            _loc_2.push({label:"Banish", data:"Deck Remove from Play"});
-                            _loc_2.push({label:"Banish FD", data:"Deck Remove from Play Face-Down"});
+                            if (this.field1.hasSpellTrapOpening())
+                            {
+                                _loc_4 = true;
+                            }
+                        }
+                        _loc_2.push({label:"To Hand", data:"Deck To Hand"});
+                        _loc_2.push({label:"To Grave", data:"Deck To Graveyard"});
+                        _loc_2.push({label:"Banish", data:"Deck Remove from Play"});
+                        _loc_2.push({label:"Banish FD", data:"Deck Remove from Play Face-Down"});
+                        if (_loc_4)
+                        {
+                            _loc_2.push({label:"To S/T", data:"Deck To Spell/Trap Zone"});
+                        }
+                        break;
+                    }
+                    case "extra1":
+                    {
+                        if (this.viewing != this.extra1)
+                        {
                             break;
                         }
-                        case "extra1":
+                        _loc_3 = param1.front_mc.card;
+                        if (_loc_3 == "xyz" && this.field1.hasOverlayOption(param1.id))
                         {
-                            if (this.viewing != this.extra1)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (_loc_3 == "xyz" && this.field1.hasOverlayOption(param1.id))
-                            {
-                                _loc_2.push({label:"OL ATK", data:"Xyz Overlay ATK"});
-                                _loc_2.push({label:"OL DEF", data:"Xyz Overlay DEF"});
-                            }
+                            _loc_2.push({label:"OL ATK", data:"Xyz Overlay ATK"});
+                            _loc_2.push({label:"OL DEF", data:"Xyz Overlay DEF"});
+                        }
+                        if (this.field1.hasMonsterOpening())
+                        {
+                            _loc_2.push({label:"SS ATK", data:"Extra Special Summon ATK"});
+                            _loc_2.push({label:"SS DEF", data:"Extra Special Summon DEF"});
+                        }
+                        _loc_2.push({label:"To Grave", data:"Extra To Graveyard"});
+                        _loc_2.push({label:"Banish", data:"Extra Remove from Play"});
+                        _loc_2.push({label:"Reveal", data:"Extra Reveal"});
+                        break;
+                    }
+                    case "grave1":
+                    {
+                        if (this.viewing != this.grave1)
+                        {
+                            break;
+                        }
+                        _loc_3 = param1.front_mc.card;
+                        _loc_4 = false;
+                        if (_loc_3 != "spell" && _loc_3 != "trap")
+                        {
                             if (this.field1.hasMonsterOpening())
-                            {
-                                _loc_2.push({label:"SS ATK", data:"Extra Special Summon ATK"});
-                                _loc_2.push({label:"SS DEF", data:"Extra Special Summon DEF"});
-                            }
-                            _loc_2.push({label:"To Grave", data:"Extra To Graveyard"});
-                            _loc_2.push({label:"Banish", data:"Extra Remove from Play"});
-                            _loc_2.push({label:"Reveal", data:"Extra Reveal"});
-                            break;
-                        }
-                        case "grave1":
-                        {
-                            if (this.viewing != this.grave1)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
                             {
                                 _loc_2.push({label:"SS ATK", data:"Grave1 Special Summon ATK"});
                                 _loc_2.push({label:"SS DEF", data:"Grave1 Special Summon DEF"});
                             }
-                            _loc_10 = _loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz";
-                            if (_loc_10)
+                            if (this.field1.hasSpellTrapOpening())
                             {
-                                _loc_2.push({label:"To Extra", data:"Grave1 To Extra Deck"});
+                                _loc_4 = true;
                             }
-                            else
-                            {
-                                _loc_2.push({label:"To Hand", data:"Grave1 To Hand"});
-                            }
-                            _loc_2.push({label:"Banish", data:"Grave1 Remove from Play"});
-                            if (!_loc_10)
-                            {
-                                _loc_2.push({label:"To T. Deck", data:"Grave1 To Top of Deck"});
-                                _loc_2.push({label:"To B. Deck", data:"Grave1 To Bottom of Deck"});
-                            }
-                            break;
                         }
-                        case "grave2":
+                        _loc_10 = _loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz";
+                        if (_loc_10)
                         {
-                            if (this.viewing != this.grave2)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
-                            {
-                                _loc_2.push({label:"SS ATK", data:"Grave2 Special Summon ATK"});
-                                _loc_2.push({label:"SS DEF", data:"Grave2 Special Summon DEF"});
-                            }
-                            _loc_2.push({label:"Banish", data:"Grave2 Remove from Play"});
-                            break;
+                            _loc_2.push({label:"To Extra", data:"Grave1 To Extra Deck"});
                         }
-                        case "rfg1":
+                        else
                         {
-                            if (this.viewing != this.rfg1)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (!param1.show_back && _loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
-                            {
-                                _loc_2.push({label:"SS ATK", data:"RFG1 Special Summon ATK"});
-                                _loc_2.push({label:"SS DEF", data:"RFG1 Special Summon DEF"});
-                            }
-                            _loc_10 = _loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz";
-                            if (_loc_10)
-                            {
-                                _loc_2.push({label:"To Extra", data:"RFG1 To Extra Deck"});
-                            }
-                            else
-                            {
-                                _loc_2.push({label:"To Hand", data:"RFG1 To Hand"});
-                            }
-                            if (!param1.show_back)
-                            {
-                                _loc_2.push({label:"To Grave", data:"RFG1 To Graveyard"});
-                            }
-                            if (!_loc_10)
-                            {
-                                _loc_2.push({label:"To T. Deck", data:"RFG1 To Top of Deck"});
-                            }
-                            break;
+                            _loc_2.push({label:"To Hand", data:"Grave1 To Hand"});
                         }
-                        case "rfg2":
+                        _loc_2.push({label:"Banish", data:"Grave1 Remove from Play"});
+                        if (!_loc_10)
                         {
-                            if (this.viewing != this.rfg2 || param1.show_back)
-                            {
-                                break;
-                            }
-                            _loc_3 = param1.front_mc.card;
-                            if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
-                            {
-                                _loc_2.push({label:"SS ATK", data:"RFG2 Special Summon ATK"});
-                                _loc_2.push({label:"SS DEF", data:"RFG2 Special Summon DEF"});
-                            }
-                            _loc_2.push({label:"To Grave", data:"RFG2 To Graveyard"});
-                            break;
+                            _loc_2.push({label:"To T. Deck", data:"Grave1 To Top of Deck"});
+                            _loc_2.push({label:"To B. Deck", data:"Grave1 To Bottom of Deck"});
                         }
-                        default:
+                        if (_loc_4)
+                        {
+                            _loc_2.push({label:"To S/T", data:"Grave1 To Spell/Trap Zone"});
+                        }
+                        break;
+                    }
+                    case "grave2":
+                    {
+                        if (this.viewing != this.grave2)
                         {
                             break;
                         }
+                        _loc_3 = param1.front_mc.card;
+                        if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
+                        {
+                            _loc_2.push({label:"SS ATK", data:"Grave2 Special Summon ATK"});
+                            _loc_2.push({label:"SS DEF", data:"Grave2 Special Summon DEF"});
+                        }
+                        _loc_2.push({label:"Banish", data:"Grave2 Remove from Play"});
+                        break;
+                    }
+                    case "rfg1":
+                    {
+                        if (this.viewing != this.rfg1)
+                        {
+                            break;
+                        }
+                        _loc_3 = param1.front_mc.card;
+                        if (!param1.show_back && _loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
+                        {
+                            _loc_2.push({label:"SS ATK", data:"RFG1 Special Summon ATK"});
+                            _loc_2.push({label:"SS DEF", data:"RFG1 Special Summon DEF"});
+                        }
+                        _loc_10 = _loc_3 == "fusion" || _loc_3 == "synchro" || _loc_3 == "xyz";
+                        if (_loc_10)
+                        {
+                            _loc_2.push({label:"To Extra", data:"RFG1 To Extra Deck"});
+                        }
+                        else
+                        {
+                            _loc_2.push({label:"To Hand", data:"RFG1 To Hand"});
+                        }
+                        if (!param1.show_back)
+                        {
+                            _loc_2.push({label:"To Grave", data:"RFG1 To Graveyard"});
+                        }
+                        if (!_loc_10)
+                        {
+                            _loc_2.push({label:"To T. Deck", data:"RFG1 To Top of Deck"});
+                        }
+                        break;
+                    }
+                    case "rfg2":
+                    {
+                        if (this.viewing != this.rfg2 || param1.show_back)
+                        {
+                            break;
+                        }
+                        _loc_3 = param1.front_mc.card;
+                        if (_loc_3 != "spell" && _loc_3 != "trap" && this.field1.hasMonsterOpening())
+                        {
+                            _loc_2.push({label:"SS ATK", data:"RFG2 Special Summon ATK"});
+                            _loc_2.push({label:"SS DEF", data:"RFG2 Special Summon DEF"});
+                        }
+                        _loc_2.push({label:"To Grave", data:"RFG2 To Graveyard"});
+                        break;
+                    }
+                    default:
+                    {
+                        break;
                     }
                 }
             }
@@ -2779,13 +2814,13 @@
         public function viewPositionX(param1:int) : Number
         {
             var _loc_2:* = param1 % 8;
-            return 35 + 72 * _loc_2;
+            return 35 + 70 * _loc_2;
         }// end function
 
         public function viewPositionY(param1:int) : Number
         {
             var _loc_2:* = param1 / 8;
-            return 48.5 + 99 * _loc_2;
+            return 48.5 + 97 * _loc_2;
         }// end function
 
         public function viewHeight(param1:int) : Number
@@ -2857,6 +2892,45 @@
             if (this.duelist)
             {
                 this.Send(["Duel", "Close view"]);
+            }
+            return;
+        }// end function
+
+        public function isInView(param1:DuelCard) : Boolean
+        {
+            var _loc_2:* = param1.parent.localToGlobal(new Point(param1.x, param1.y));
+            return _loc_2.y >= 90 + param1.height / 2;
+        }// end function
+
+        public function fixMenuE(event:ScrollEvent)
+        {
+            this.fix_menu_flag = false;
+            addEventListener(Event.ENTER_FRAME, this.fixMenuE2);
+            return;
+        }// end function
+
+        public function fixMenuE2(event:Event)
+        {
+            if (!this.fix_menu_flag)
+            {
+                this.fix_menu_flag = true;
+                return;
+            }
+            removeEventListener(Event.ENTER_FRAME, this.fixMenuE2);
+            if (this.menu == null)
+            {
+                if (this.card_over != null && this.isInView(this.card_over))
+                {
+                    this.showMenu(this.card_over);
+                }
+            }
+            else if (this.isInView(this.menu_card))
+            {
+                this.menu.fixMenuPosition();
+            }
+            else
+            {
+                this.removeCardMenu(false);
             }
             return;
         }// end function
@@ -2943,6 +3017,7 @@
             this.atk_def2_8_txt.mouseEnabled = false;
             this.atk_def2_9_txt.mouseEnabled = false;
             this.atk_def2_10_txt.mouseEnabled = false;
+            this.view_mc.sp_sp.addEventListener(ScrollEvent.SCROLL, this.fixMenuE);
             this.deck1_txt.mouseEnabled = false;
             this.deck2_txt.mouseEnabled = false;
             this.extra1_txt.mouseEnabled = false;

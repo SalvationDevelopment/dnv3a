@@ -3,12 +3,12 @@
     import flash.display.*;
     import flash.events.*;
 
-    dynamic public class CoretcgLeaderboard_436 extends MovieClip
+    dynamic public class TatFebruaryLeaderboard_435 extends MovieClip
     {
         public var new_window_mc:MovieClip;
         public var init:Boolean;
 
-        public function CoretcgLeaderboard_436()
+        public function TatFebruaryLeaderboard_435()
         {
             addFrameScript(0, this.frame1);
             return;
@@ -32,11 +32,10 @@
             {
                 this.init = true;
                 this.new_window_mc.visible = false;
-                mouseChildren = false;
                 buttonMode = true;
                 tabEnabled = false;
-                addEventListener(MouseEvent.MOUSE_OVER, this.mouseOverE);
-                addEventListener(MouseEvent.MOUSE_OUT, this.mouseOutE);
+                addEventListener(MouseEvent.ROLL_OVER, this.mouseOverE);
+                addEventListener(MouseEvent.ROLL_OUT, this.mouseOutE);
             }
             return;
         }// end function

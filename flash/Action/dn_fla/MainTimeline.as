@@ -1764,7 +1764,7 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect12", this.username, this.password, this.session_id];
+            var _loc_2:Array = ["Connect13", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
                 _loc_2.push("Administrate");
@@ -9810,32 +9810,26 @@
         {
             var _loc_2:String = null;
             var _loc_3:Boolean = false;
-            var _loc_4:Array = null;
-            var _loc_5:Sound = null;
+            var _loc_4:Boolean = false;
+            var _loc_5:Array = null;
             var _loc_6:DuelCard = null;
+            var _loc_7:Sound = null;
             _loc_2 = param1[0];
             _loc_3 = param1[1] == this.username1_mc.username_txt.text;
-            _loc_4 = this.phaseTweens([_loc_2, _loc_3]);
-            if (param1.length > 2)
+            _loc_4 = param1[2] == "true";
+            _loc_5 = this.phaseTweens([_loc_2, _loc_3]);
+            if (_loc_4)
             {
-                if (this.my_turn)
+                _loc_6 = this.cards_mc.removeCard(this.my_turn ? ("deck1") : ("deck2"));
+                if (param1.length > 3)
                 {
-                    _loc_6 = this.cards_mc.removeCard("deck1");
-                    if (this.duelist)
-                    {
-                        this.initDuelCard(_loc_6, param1.slice(2));
-                    }
-                    this.cards_mc.addCard(_loc_6, "hand1", null, false, false, _loc_4);
+                    this.initDuelCard(_loc_6, param1.slice(3));
                 }
-                else
-                {
-                    _loc_6 = this.cards_mc.removeCard("deck2");
-                    this.cards_mc.addCard(_loc_6, "hand2", null, false, false, _loc_4);
-                }
-                _loc_5 = new DrawSound();
-                _loc_5.play();
+                this.cards_mc.addCard(_loc_6, this.my_turn ? ("hand1") : ("hand2"), null, false, false, _loc_5);
+                _loc_7 = new DrawSound();
+                _loc_7.play();
             }
-            return _loc_4;
+            return _loc_5;
         }// end function
 
         public function phaseTweens(param1:Array) : Array
@@ -14163,7 +14157,7 @@
             this.GALLERY_RIGHT_JUSTIFY = -299.25;
             this.GALLERY_CENTER_JUSTIFY = 30.75;
             this.GALLERY_GAP = 185;
-            this.SCROLL_AMOUNT = 10;
+            this.SCROLL_AMOUNT = 30;
             this.outlined_avatar = null;
             this.back_left_btn.addEventListener(MouseEvent.CLICK, this.backLeftE);
             this.back_right_btn.addEventListener(MouseEvent.CLICK, this.backRightE);

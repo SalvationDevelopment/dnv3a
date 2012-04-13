@@ -76,12 +76,12 @@
         public function appear(param1) : Array
         {
             visible = true;
-            return [new Tween(this.rect_mc, "scaleX", Regular.easeInOut, 0, 1, 1, true), new Tween(this.rect_mc, "scaleY", Regular.easeInOut, 0, 1, 1, true)];
+            return [new Tween(this.rect_mc, "scaleX", Regular.easeInOut, 0, 1, 0.5, true), new Tween(this.rect_mc, "scaleY", Regular.easeInOut, 0, 1, 0.5, true)];
         }// end function
 
         public function disappear1(param1) : Array
         {
-            return [new Tween(this.rect_mc, "scaleX", Regular.easeInOut, 1, 0, 1, true), new Tween(this.rect_mc, "scaleY", Regular.easeInOut, 1, 0, 1, true)];
+            return [new Tween(this.rect_mc, "scaleX", Regular.easeInOut, 1, 0, 0.5, true), new Tween(this.rect_mc, "scaleY", Regular.easeInOut, 1, 0, 0.5, true)];
         }// end function
 
         public function disappear2(param1) : Array
