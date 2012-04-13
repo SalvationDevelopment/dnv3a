@@ -59,7 +59,7 @@ var DeckCardLocation = CardLocation.extend({
 		for (var i = this.cards.length; i --> 0; ) {
 			duel.unmapCard(this.cards[i]);
 			var card = new DuelCard(id++, this, this.player);
-			this.cards[i] = cards;
+			this.cards[i] = card;
 			duel.mapCard(card);
 		}
 	}
@@ -218,10 +218,10 @@ var Duel = Class.extend({
 	},
 
 	_initFromStart: function(ar) {
-		locations[0].deck.setup(ar[0]);
-		locations[0].extra.setup(ar[1]);
-		locations[1].deck.setup(ar[2]);
-		locations[1].extra.setup(ar[3]);
+		this.locations[0].deck.setup(ar[0]);
+		this.locations[0].extra.setup(ar[1]);
+		this.locations[1].deck.setup(ar[2]);
+		this.locations[1].extra.setup(ar[3]);
 
 		this.turn = 0;
 		this.phase = 'dp';
@@ -239,23 +239,22 @@ var Duel = Class.extend({
 
 		var ind = 7;
 		while (ind < data.length) {
-			var position = data[i++];
-			var cardId = +data[i++];
-			var fieldPosition = data[i++];
-			var faceup = (data[i++] !== 'true');
-			var defense = (data[i++] === 'true');
-			var originalOwner = (data[i++] === 'true' ? 0 : 1);
-			var isKnown = (data[i++] === 'true');
+			var position = data[ind++];
+			var cardId = +data[ind++];
+			var fieldPosition = data[ind++];
+			var faceup = (data[ind++] !== 'true');
+			var defense = (data[ind++] === 'true');
+			var originalOwner = (data[ind++] === 'true' ? 0 : 1);
+			var isKnown = (data[ind++] === 'true');
 
 			var loc = this.getLocation(position, fieldPosition);
 			var card = new DuelCard(cardId, loc, originalOwner);
 			card.defense = defense;
 			card.faceup = faceup;
-			card.card = cardInfo;
 
 			if (isKnown) {
-				card.card = createCard(data.slice(i, i + 16));
-				i += 16;
+				card.card = createCard(data.slice(ind, ind + 16));
+				ind += 16;
 			}
 
 			if (loc instanceof FieldCardLocation)
@@ -311,8 +310,6 @@ window.DuelView = View.extend({
 			var name = watcherList[i];
 			this.watchers.push(Users.getUser(name));
 		}
-
-		this.watchers = watchers;
 
 		if (this.duelState === 'Duel') {
 			this.duel = Duel.createFromWatchData(this, data.slice(ind));
