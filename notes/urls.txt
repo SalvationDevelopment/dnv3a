@@ -8,16 +8,11 @@ MainTimeline:
             this.AVATAR_START = this.URL_START + "images/avatars/";
             this.BACK_START = this.URL_START + "images/backs/";
 
-http://www.youtube.com/watch?v=uYwykrhvhR8 has the intro.
-(Also http://www.duelingnetwork.com:8080/Dueling_Network/overlap_low.mp3, but
-the volume is low.)
-
-New intro:
+Intros:
+http://www.duelingnetwork.com:8080/Dueling_Network/overlap_low.mp3 (higher volume at http://www.youtube.com/watch?v=uYwykrhvhR8)
 http://www.duelingnetwork.com:8080/Dueling_Network/EndlessDream.mp3
-
-Intro for Valentines Day:
-http://www.duelingnetwork.com:8080/Dueling_Network/soft_love_piano_instrumental.mp3
-
+http://www.duelingnetwork.com:8080/Dueling_Network/soft_love_piano_instrumental.mp3 (Valentine's Day)
+http://www.duelingnetwork.com:8080/Dueling_Network/clear_mind.mp3
 
 http://www.duelingnetwork.com:8080/Dueling_Network/images/cards/<card number>.scf
 
