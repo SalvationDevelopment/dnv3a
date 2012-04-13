@@ -133,6 +133,27 @@ var DuelCard = Class.extend({
 });
 
 
+var DuelUI = Class.extend({
+	ui: null,
+
+	init: function(view) {
+		// TODO
+	},
+
+	setUI: function(duel) {
+		// TODO
+	},
+
+	setStatus: function(pl, status) {
+		// TODO
+	},
+
+	moveCard: function(card, reveal) {
+		// TODO
+	}
+});
+
+
 var Duel = Class.extend({
 	locations: null,
 	lifepoints: null,
@@ -140,10 +161,12 @@ var Duel = Class.extend({
 	turn: 0,
 	phase: '',
 	map: null,
+	ui: null,
 
-	init: function() {
+	init: function(view) {
 		this.locations = [];
 		this.map = [];
+		this.statuses = ['', ''];
 		for (var pl = 0; pl < 2; ++pl) {
 			this.locations.push({
 				'gy': new GYCardLocation(pl),
@@ -156,6 +179,8 @@ var Duel = Class.extend({
 				'fieldspell': new FieldSpellCardLocation(pl)
 			});
 		}
+
+		this.ui = new DuelUI(view);
 	},
 
 	mapCard: function(card) {
@@ -170,6 +195,7 @@ var Duel = Class.extend({
 
 	setStatus: function(pl, status) {
 		this.statuses[pl] = status;
+		this.ui.setStatus(pl, status);
 	},
 
 	getLocation: function(pos, fieldPos) {
@@ -200,7 +226,8 @@ var Duel = Class.extend({
 		this.turn = 0;
 		this.phase = 'dp';
 		this.lifepoints = [8000, 8000];
-		this.statuses = ['', ''];
+
+		this.ui.setUI(this);
 	},
 
 	_initFromWatchData: function(data) {
@@ -208,7 +235,7 @@ var Duel = Class.extend({
 		this.turn = (data[1] === 'true' ? 0 : 1);
 		var latestFieldSpellPlayer = (data[2] === 'true' ? 0 : 1);
 		this.lifepoints = [+data[3], +data[4]];
-		this.statuses = [data[5], data[6]];
+		var statuses = [data[5], data[6]];
 
 		var ind = 7;
 		while (ind < data.length) {
@@ -236,17 +263,21 @@ var Duel = Class.extend({
 			else
 				loc.addCard(card);
 		}
+
+		this.ui.setUI(this);
+		this.setStatus(0, statuses[0]);
+		this.setStatus(1, statuses[1]);
 	}
 });
 
-Duel.createFromStart = function(ar) {
-	var d = new Duel;
+Duel.createFromStart = function(view, ar) {
+	var d = new Duel(view);
 	d._initFromStart(ar);
 	return d;
 };
 
-Duel.createFromWatchData = function(data) {
-	var d = new Duel;
+Duel.createFromWatchData = function(view, data) {
+	var d = new Duel(view);
 	d._initFromWatchData(data);
 	return d;
 };
@@ -284,7 +315,7 @@ window.DuelView = View.extend({
 		this.watchers = watchers;
 
 		if (this.duelState === 'Duel') {
-			this.duel = Duel.createFromWatchData(data.slice(ind));
+			this.duel = Duel.createFromWatchData(this, data.slice(ind));
 		}
 		else if (this.duelState === 'Rock-paper-scissors') {
 			// TODO
