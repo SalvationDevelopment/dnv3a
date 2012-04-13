@@ -48,7 +48,14 @@ var CardLocation = Class.extend({
 	},
 
 	addCard: function(card) {
-		cards.push(card);
+		this.cards.push(card);
+	},
+
+	removeCard: function(card) {
+		var ind = this.cards.indexOf(card);
+		if (ind === -1)
+			console.assertNotReached("Card not in location.");
+		this.cards.splice(ind, 1);
 	}
 });
 
@@ -62,6 +69,12 @@ var DeckCardLocation = CardLocation.extend({
 			this.cards[i] = card;
 			duel.mapCard(card);
 		}
+	},
+	addToTop: function(card) {
+		this.cards.unshift(card);
+	},
+	addToBottom: function(card) {
+		this.cards.push(card);
 	}
 });
 var BanishCardLocation = CardLocation.extend({});
@@ -98,12 +111,26 @@ var FieldCardLocation = CardLocation.extend({
 	hasOpening: function() {
 		return this.cards.indexOf(null) !== -1;
 	},
-	addCard: function(card, serverPosition) {
-		var position = serverPosition;
-		if (position === 5) position = 0;
-		if (position >= 6) position -= 6;
+	getPosition: function(fp) {
+		if (fp < 5) return fp;
+		if (fp === 5) return 0;
+		return fp - 6;
+	},
+	addCard: function(card, fieldPosition) {
+		var position = this.getPosition(fieldPosition);
 		console.assert(!this.cards[position]);
 		this.cards[position] = card;
+	},
+	getCard: function(fieldPosition) {
+		var card = this.cards[this.getPosition(fieldPosition)];
+		console.assert(card);
+		return card;
+	},
+	removeCard: function(card) {
+		var ind = this.cards.indexOf(card);
+		if (ind === -1)
+			console.assertNotReached("Card not on field.");
+		this.cards[ind] = null;
 	}
 });
 var MonsterCardLocation = FieldCardLocation.extend({
@@ -217,6 +244,27 @@ var Duel = Class.extend({
 		return locs.fieldSpell;
 	},
 
+	moveCard: function(card, toLoc, locPosition, faceup, defense, special, reveal) {
+		card.location.removeCard(card);
+		card.location = toLoc;
+		card.faceup = faceup;
+		card.defense = defense;
+		if (toLoc instanceof FieldCardLocation) {
+			toLoc.addCard(card, locPosition);
+		}
+		else if (toLoc instanceof DeckCardLocation) {
+			if (locPosition === 'bottom')
+				toLoc.addToBottom(card);
+			else
+				toLoc.addToTop(card);
+		}
+		else {
+			toLoc.addCard(card);
+		}
+
+		this.ui.moveCard(card, reveal);
+	},
+
 	_initFromStart: function(ar) {
 		this.locations[0].deck.setup(ar[0]);
 		this.locations[0].extra.setup(ar[1]);
@@ -259,8 +307,10 @@ var Duel = Class.extend({
 
 			if (loc instanceof FieldCardLocation)
 				loc.addCard(card, +fieldPosition);
+			else if (loc instanceof DeckCardLocation)
+				loc.addToBottom(card); // XXX Maybe?
 			else
-				loc.addCard(card);
+				loc.addCard(card); // XXX Maybe add these in reverse order.
 		}
 
 		this.ui.setUI(this);
@@ -337,18 +387,57 @@ window.DuelView = View.extend({
 
 	ignoreLateMessage: function(ev, data) {
 		return (ev === 'Duel' || ev === 'Duel start' || ev === 'Turn pick' ||
-			ev === 'Player quit');
+			ev === 'Player quit' || ev === 'Add watcher' || ev === 'Remove watcher' ||
+			ev === 'Win' || ev === 'Lose');
 	},
 
 	handleDuelMessage: function(ev, data) {
-		if (ev === 'Move') {
-			// TODO
-		}
-		if (ev === 'Reveal and move') {
-			// TODO
+		if (ev === 'Move' || ev === 'Reveal and move') {
+			var reveal = (ev === 'Reveal and move');
+			var from = data[0];
+			var id = data[1], card;
+			if (id === '') {
+				console.assert(from.startsWith('deck'));
+				var pl = from.charAt(4)-1;
+				card = this.duel.getTopOfDeck(pl);
+			}
+			else
+				card = this.duel.getCard(id);
+
+			var to = data[2];
+			var locPosition = data[3];
+			if (to.endsWith("_bottom")) {
+				to = to.slice(0, -7);
+				locPosition = 'bottom';
+			}
+			var toLoc = this.duel.getLocation(to, locPosition);
+
+			var faceup = (data[4] === 'false');
+			var defense = (data[5] === 'true');
+			var msgToLog = data[6];
+			var special = (data[7] === 'special');
+
+			if (data.length > 8)
+				card.card = createCard(data.slice(8, 8+16));
+
+			this.duel.moveCard(card, toLoc, locPosition, faceup, defense, special, reveal);
+
+			if (msgToLog)
+				this.addToDuelLog(msgToLog);
 		}
 		if (ev === 'Attack') {
-			// TODO
+			var from = data[0];
+			var card = this.duel.getCard(data[1]);
+			var target = 'field' + (from === "field1" ? 2 : 1);
+			var targetFieldPosition = data[2];
+			if (targetFieldPosition) {
+				var loc = this.duel.getLocation(target);
+				var targetCard = loc.getCard(+targetFieldPosition);
+				this.duel.attack(card, targetCard);
+			}
+			else {
+				this.duel.attack(card, null);
+			}
 		}
 		if (ev === 'Phase') {
 			// (extra arg = true if new turn)
@@ -402,9 +491,13 @@ window.DuelView = View.extend({
 			return this.handleDuelMessage(data[0], data.slice(1));
 		}
 		if (ev === 'Player quit') {
-			// TODO (sp?)
+			// TODO
 		}
 		return false;
+	},
+
+	addToDuelLog: function(msg) {
+		// TODO
 	},
 
 	goBack: function() {
@@ -421,8 +514,8 @@ window.DuelView = View.extend({
 		// TODO: Commands for when the chat has focus.
 		if (this.watch) {
 			Commands.setMap(this, [
-				[1, "<space>", "Chat (watch)"],
-				[0, ' ', "", function() { this.selectChat(true); }],
+				[1, "<enter>", "Chat (watch)"],
+				[0, 'enter', "", function() { this.selectChat(true); }],
 				[2, 'q', "Quit", this.goBack],
 			]);
 			return;
