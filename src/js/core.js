@@ -120,6 +120,17 @@ window.ignoreLateMessages = function(f) {
 	}, 500);
 }
 
+function handleErrorMessage(ev, data) {
+	if (ev === 'Error' || ev === 'Chat error' || ev === 'Async error') {
+		// Do an asynchronous alert() (so we don't break the world).
+		setTimeout(function() {
+			alert(ev + "\n\n" + data[0]);
+		});
+		return true;
+	}
+	return false;
+}
+
 function handleMessage(msg) {
 	if (msg.length === 0) return;
 	var ev = msg[0];
@@ -134,6 +145,8 @@ function handleMessage(msg) {
 	if (currentView.handleMessage(ev, data))
 		return;
 	if (ChatManager.handleMessage(ev, data))
+		return;
+	if (handleErrorMessage(ev, data))
 		return;
 
 	if (lateMessageHandler && lateMessageHandler(ev, data))

@@ -143,6 +143,11 @@ window.ChatManager = {
 			this.globalChat.addMessage(from, message, user.getColor());
 			return true;
 		}
+		if (ev === 'Chat error') {
+			if (data[0] !== 'Quick chat')
+				this.locked = false;
+			return false;
+		}
 		return false;
 	}
 };
