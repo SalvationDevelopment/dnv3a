@@ -499,10 +499,16 @@ window.DuelView = View.extend({
 			// TODO
 		}
 		if (ev === 'Coin') {
-			// TODO
+			var uname = data[0], result = data[1];
+			var msg = uname + " flips a coin. It lands on... " + result + "!";
+			this.addToDuelLog(msg);
+			return true;
 		}
 		if (ev === 'Die') {
-			// TODO
+			var uname = data[0], result = +data[1];
+			var msg = uname + " rolls a die. It lands on... " + result + "!";
+			this.addToDuelLog(msg);
+			return true;
 		}
 		if (ev === 'Shuffle') {
 			var deck = this.duel.getLocation(data[0]);

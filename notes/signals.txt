@@ -179,3 +179,7 @@ With Duel prefix:
 
 + Attack, From :{FieldPosition}, Attacker id, To :{FieldPosition} (or "" if direct attack)
 
++ Die, From, Result
+
++ Coin, From, Result
+
