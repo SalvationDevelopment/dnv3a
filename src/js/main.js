@@ -31,7 +31,6 @@ function preload() {
 }
 
 $(function() {
-	IgnoreList.load();
 	Sidebar.init();
 	Commands.init();
 	Debug.init();

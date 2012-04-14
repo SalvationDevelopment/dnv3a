@@ -75,23 +75,6 @@ window.IgnoreList = Listenable.extendObject({
 		this.map[',' + name] = true;
 		this.list.push(name);
 		this.dispatch('add', name);
-		this.save();
-	},
-
-	save: function() {
-		try {
-			localStorage.dnIgnore = this.list.map(encodeURIComponent).join(',');
-		} catch(e) {}
-	},
-
-	load: function() {
-		try {
-			this.list = localStorage.dnIgnore.split(',').map(decodeURIComponent);
-			var that = this;
-			this.list.forEach(function(name) {
-				that.map[',' + name] = true;
-			});
-		} catch(e) {}
 	}
 });
 
