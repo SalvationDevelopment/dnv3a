@@ -87,9 +87,11 @@ var HandCardLocation = CardLocation.extend({
 			for (var i = 0; i < data.length; ++i) {
 				var oldId = +data[i];
 				var card = duel.getCard(oldId);
-				duel.unmapCard(card);
+				var oldCard = card.clone();
 				card.id = id++;
 				duel.mapCard(card);
+				duel.ui.handMove(oldCard, card);
+				duel.unmapCard(oldCard);
 			}
 		}
 		else {
@@ -155,6 +157,15 @@ var DuelCard = Class.extend({
 		this.id = id;
 		this.originalOwner = originalOwner;
 		this.location = loc;
+	},
+
+	clone: function() {
+		var copy = {};
+		for (var a in this) {
+			if (this.hasOwnProperty(a))
+				copy[a] = this[a];
+		}
+		return copy;
 	}
 });
 
@@ -196,7 +207,9 @@ var UICard = Class.extend({
 
 		$('<img>').addClass('card-frame')
 			.attr('src', "img/duel/border.png")
-			.appendTo(this.flipper);
+			.appendTo(this.frontSide);
+
+		this.holder.append(this.el);
 	},
 
 	createCardFront: function() {
@@ -262,13 +275,14 @@ var UICard = Class.extend({
 
 var DuelUI = Class.extend({
 	ui: null,
-	topHeight: 50,
-	left: 270,
-	bottomHeight: undefined,
+	fieldCells: null,
+	cardMap: null,
 
 	init: function(view) {
-		this.bottomHeight = innerHeight * 0.10;
+		this.cardMap = {};
 		this.ui = $('#duel-ui');
+
+		this.cardHolder = $('#duel-cardholder');
 
 		this.tableCont = $('<div id="duel-tablecont">').appendTo(this.ui);
 		this.duelTable = $('<table id="duel-table">').appendTo(this.tableCont);
@@ -297,31 +311,115 @@ var DuelUI = Class.extend({
 			}
 			els.push(elr);
 		}
+		this.fieldCells = els;
 
 		midContainer.text("Hello.");
 	},
 
+	getFieldPosRect: function(row, col) {
+		var cell = this.fieldCells[row][col];
+		var ratio = 1.45;
+		var h = cell.height(), w = cell.width();
+		var offset = cell.offset();
+		var midx = offset.left + w/2, nw = h/1.45;
+		return {
+			width: nw,
+			height: h,
+			left: midx - nw/2 + 2,
+			top: offset.top + 2
+		};
+	},
+
+	getCardRect: function(card) {
+		var loc = card.location, pl = loc.player;
+		if (loc instanceof HandCardLocation) {
+			// TODO
+			row = 3; col = 2;
+		}
+
+		var row, col;
+		if (loc instanceof BanishCardLocation) {
+			row = 2;
+			col = (pl === 0 ? 1 : 0);
+		}
+		else {
+			// Pretend to be player 0, then mirror the field if (pl === 1).
+			if (loc instanceof DeckCardLocation) {
+				row = 4;
+				col = 6;
+			}
+			else if (loc instanceof GYCardLocation) {
+				row = 3;
+				col = 6;
+			}
+			else if (loc instanceof ExtraCardLocation) {
+				row = 4;
+				col = 0;
+			}
+			else if (loc instanceof FieldSpellCardLocation) {
+				row = 3;
+				col = 0;
+			}
+			else {
+				row = (loc instanceof MonsterCardLocation ? 3 : 4);
+				col = loc.cards.indexOf(card) + 1;
+			}
+
+			if (pl === 1) {
+				row = 4-row;
+				col = 6-col;
+			}
+		}
+
+		// TODO: Adjust for 3d effects.
+		return this.getFieldPosRect(row, col);
+	},
+
 	destroy: function() {
 		this.ui.empty();
+		this.cardHolder.empty();
 	},
 
 	setUI: function(duel) {
-		// TODO
+		var self = this;
+		for (var pl = 0; pl < 2; ++pl) {
+			var locs = duel.locations[pl];
+			for (var a in locs) {
+				locs[a].cards.forEach(function(c) {
+					if (c)
+						self.makeCard(c);
+				});
+			}
+		}
 	},
 
 	setStatus: function(pl, status) {
 		// TODO
 	},
 
-	getDuelCard: function(card) {
+	getUICard: function(card) {
 		return this.cardMap[card.id];
 	},
 
-	moveCard: function(card, reveal) {
-		var x, y, h, w;
-		var duelCard = this.getDuelCard(card);
+	makeCard: function(card) {
+		var uiCard = new UICard(this.cardHolder, card);
+		this.cardMap[card.id] = uiCard;
+		this.moveCard(card);
+	},
+
+	handMove: function(oldCard, card) {
+		var uiCard = this.cardMap[oldCard.id];
+		this.cardMap[card.id] = uiCard;
+		delete this.cardMap[oldCard.id];
+		this.moveCard(card);
+	},
+
+	moveCard: function(card) {
+		var rect = this.getCardRect(card);
+		var uiCard = this.getUICard(card);
 		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
-		duelCard.move(x, y, h, w, card.faceup, rotation);
+		uiCard.move(rect.left, rect.top, rect.width, rect.height,
+				card.faceup, rotation);
 	},
 
 	attack: function(card, target) {
@@ -405,8 +503,24 @@ var Duel = Class.extend({
 		return locs.fieldSpell;
 	},
 
+	refreshLocation: function(loc, card) {
+		// Refresh an individual card's location, after it has moved to/from
+		// there. (For hands, other cards need to rearrange, etc.)
+		var ui = this.ui;
+		if (loc instanceof FieldCardLocation) {
+			if (card)
+				this.ui.moveCard(card);
+		}
+		else {
+			loc.cards.forEach(function(c) {
+				ui.moveCard(c);
+			});
+		}
+	},
+
 	moveCard: function(card, toLoc, locPosition, faceup, defense, special, reveal) {
-		card.location.removeCard(card);
+		var fromLoc = card.location;
+		fromLoc.removeCard(card);
 		card.location = toLoc;
 		card.faceup = faceup;
 		card.defense = defense;
@@ -423,7 +537,8 @@ var Duel = Class.extend({
 			toLoc.addCard(card);
 		}
 
-		this.ui.moveCard(card, reveal);
+		this.refreshLocation(fromLoc, card);
+		this.refreshLocation(toLoc, card);
 	},
 
 	setPhase: function(turn, phase) {
@@ -644,7 +759,6 @@ window.DuelView = View.extend({
 			var dif = this.duel.setLifePoints(pl, points);
 			var msg = uname + (dif > 0 ? " gained " : " lost ") +
 				plural(Math.abs(dif), "lifepoint", "", "s") + ".";
-				Math.abs(dif) + " lifepoint" + (Math.abs(dif) === 1 ? "" : "s") + ".";
 			this.addToDuelLog(msg);
 			return true;
 		}
