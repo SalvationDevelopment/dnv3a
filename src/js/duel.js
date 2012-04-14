@@ -675,7 +675,7 @@ window.DuelView = View.extend({
 		}
 		if (ev === 'Remove watcher') {
 			// XXX If this can happen after people go offline, this is wrong.
-			var ind = this.watchers.indexOf(Users.getUser(data[0]);
+			var ind = this.watchers.indexOf(Users.getUser(data[0]));
 			console.assert(ind !== -1);
 			this.watchers.splice(ind, 1);
 			return true;
