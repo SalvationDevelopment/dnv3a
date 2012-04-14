@@ -251,7 +251,7 @@ var UICard = Class.extend({
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
-			var dir = (faceup ? 'flip' : 'unflip');
+			var dir = (faceup ? 'unflip' : 'flip');
 			this.flipper.rotate3Di(dir, delay,
 					{direction: 'clockwise', sideChange: this.flipped.bind(this)});
 		}
