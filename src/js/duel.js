@@ -243,9 +243,43 @@ var UICard = Class.extend({
 
 var DuelUI = Class.extend({
 	ui: null,
+	topHeight: 50,
+	left: 270,
+	bottomHeight: undefined,
 
 	init: function(view) {
-		// TODO
+		this.bottomHeight = innerHeight * 0.10;
+		this.ui = $('<div>').addClass('duel-ui').appendTo(view.ui);
+
+		this.tableCont = $('<div>').addClass('duel-tablecont').appendTo(this.ui);
+		this.duelTable = $('<table>').addClass('duel-table').appendTo(this.tableCont);
+		var tbody = $('<tbody>').appendTo(this.duelTable);
+		var els = [], midContainer;
+		for (var row = 0; row < 5; ++row) {
+			var r = $('<tr>').appendTo(tbody), elr = [];
+			elr.push($('<td>').addClass('duel-cell-edge').appendTo(r));
+			if (row === 2) {
+				midContainer = $('<td colspan=5>').addClass('duel-cell-cont').appendTo(r);
+			}
+			else {
+				for (var i = 0; i < 5; ++i) {
+					elr.push($('<td>').addClass('duel-cell-mid').appendTo(r));
+				}
+			}
+			elr.push($('<td>').addClass('duel-cell-edge').appendTo(r));
+			if (row === 2) {
+				elr[0].addClass('pl0');
+				elr[1].addClass('pl1');
+			}
+			else {
+				for (var i = 0; i < 7; ++i) {
+					elr[i].addClass((row < 2 ? 'pl1' : 'pl0'));
+				}
+			}
+			els.push(elr);
+		}
+
+		midContainer.text("Hello.");
 	},
 
 	setUI: function(duel) {
