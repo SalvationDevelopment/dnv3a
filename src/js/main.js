@@ -23,11 +23,42 @@ window.doLogout = function() {
 };
 
 function preload() {
-	new Image().src = "img/loading.gif";
-	new Image().src = "img/error.png";
-	new Image().src = "img/nowatch.png";
-	new Image().src = "img/key.png";
-	new Image().src = "img/key-nowatch.png";
+	var imgs = [
+		"img/",
+		"loading.gif", "error.png", "minimize.png", "unminimize.png",
+		"nowatch.png", "key-nowatch.png", "key.png",
+		[
+			"duel/",
+			"border.png", "rank.png", "star.png",
+			[
+				"frames/",
+				"back.jpg", "effect.jpg", "fusion.jpg", "normal.jpg",
+				"ritual.jpg", "spell.jpg", "synchro.jpg", "trap.jpg", "xyz.jpg"
+			],
+			[
+				"attr/",
+				"dark.png", "divine.png", "earth.png", "fire.png",
+				"light.png", "water.png", "wind.png"
+			],
+			[
+				"st-icons/",
+				"continuous.png", "counter.png", "equip.png", "field.png",
+				"quick.png", "ritual.png"
+			]
+		]
+	];
+
+	function rec(dir, ar) {
+		dir += ar[0];
+		for (var i = 1; i < ar.length; ++i) {
+			var a = ar[i];
+			if (typeof a === "string")
+				new Image().src = dir + a;
+			else
+				rec(dir, a);
+		}
+	}
+	rec("", imgs);
 }
 
 $(function() {
