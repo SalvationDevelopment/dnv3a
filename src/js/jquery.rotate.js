@@ -174,12 +174,18 @@
         // a value for css('transform') the first time after the page is loaded
         // with my flipbox demo... I am storing degrees someplace where I know
         // I can get them.
-        $(fx.elem).data('rotate3Di.degrees', direction * degrees);
-        $(fx.elem).css(
-            'transform',
-            'skewY(' + direction * degrees + 'deg)'
-                + ' scale(' + scale + ', 1)'
-        );
+        var dd = direction * degrees;
+        $(fx.elem).data('rotate3Di.degrees', dd);
+        if (scale === 1 && dd%180 === 0) {
+            $(fx.elem).css('transform', '');
+        }
+        else {
+            $(fx.elem).css(
+                'transform',
+                'skewY(' + dd + 'deg)'
+                    + ' scale(' + scale + ', 1)'
+            );
+        }
     }
     
     // fx.cur() must be monkey patched because otherwise it would always
@@ -187,15 +193,7 @@
     var proxied = $.fx.prototype.cur;
     $.fx.prototype.cur = function () {
         if (this.prop == 'rotate3Di') {
-            var style = $(this.elem).css('transform');
-            if (style) {
-                var m = style.match(/(-?[0-9]+)deg\)/);
-                if (m && m[1]) {
-                    return parseInt(m[1]);
-                } else {
-                    return 0;
-                }
-            }
+            return +$(this.elem).data('rotate3Di.degrees') || 0;
         }
         
         return proxied.apply(this, arguments);
