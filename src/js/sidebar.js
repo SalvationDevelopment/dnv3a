@@ -78,8 +78,8 @@ window.Sidebar = {
 	},
 
 	show: function() {
-		$('#sidebar').css('width', '18%').css('display', 'table-cell');
-		$('#views').css('width', '82%');
+		$('#sidebar').css('width', '20%').css('display', 'table-cell');
+		$('#views').css('width', '80%');
 	},
 
 	hide: function() {

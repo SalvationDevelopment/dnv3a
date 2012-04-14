@@ -456,46 +456,44 @@ body {
 	display: none;
 }
 
-.duel-ui {
+#duel-ui {
 	position: absolute;
 	top: 0;
-	left: 260px;
+	left: 25px;
 	bottom: 0;
-	right: 260px;
+	right: 265px;
 }
 
-.duel-tablecont {
+#duel-tablecont {
 	position: absolute;
-	top: 50px;
-	bottom: 10%;
+	top: 67px;
+	bottom: 19%;
 	width: 100%;
 }
-.duel-table {
+#duel-table {
 	width: 100%;
 	height: 100%;
 	border-spacing: 1px;
 }
-.duel-cell-edge.pl0, .duel-cell-mid.pl0 {
-	border-color: red;
+#duel-table .pl0 {
+	border: 1px solid red;
 }
-.duel-cell-edge.pl1, .duel-cell-mid.pl1 {
-	border-color: blue;
+#duel-table .pl1 {
+	border: 1px solid blue;
 }
-.duel-cell-edge, .duel-cell-mid, .duel-cell-cont {
+.duel-edge, .duel-cell, #duel-mid {
 	height: 20%;
 }
-.duel-cell-edge {
-	border: 1px solid black;
-	background-color: rgba(0, 0, 0, 150);
-	width: 12.5%;
+.duel-edge {
+	background-color: rgba(0, 0, 0, 0.2);
+	width: 11%;
 }
 .duel-cell-cont {
 	background-color: wheat;
 }
-.duel-cell-mid {
+.duel-cell {
 	width: 15%;
-	border: 1px solid black;
-	background-color: rgba(0, 0, 0, 150);
+	background-color: rgba(0, 0, 0, 0.2);
 }
 
 

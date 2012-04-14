@@ -249,27 +249,27 @@ var DuelUI = Class.extend({
 
 	init: function(view) {
 		this.bottomHeight = innerHeight * 0.10;
-		this.ui = $('<div>').addClass('duel-ui').appendTo(view.ui);
+		this.ui = $('#duel-ui');
 
-		this.tableCont = $('<div>').addClass('duel-tablecont').appendTo(this.ui);
-		this.duelTable = $('<table>').addClass('duel-table').appendTo(this.tableCont);
+		this.tableCont = $('<div id="duel-tablecont">').appendTo(this.ui);
+		this.duelTable = $('<table id="duel-table">').appendTo(this.tableCont);
 		var tbody = $('<tbody>').appendTo(this.duelTable);
 		var els = [], midContainer;
 		for (var row = 0; row < 5; ++row) {
 			var r = $('<tr>').appendTo(tbody), elr = [];
-			elr.push($('<td>').addClass('duel-cell-edge').appendTo(r));
+			elr.push($('<td>').addClass('duel-edge').appendTo(r));
 			if (row === 2) {
-				midContainer = $('<td colspan=5>').addClass('duel-cell-cont').appendTo(r);
+				midContainer = $('<td colspan="5" id="duel-mid">').appendTo(r);
 			}
 			else {
 				for (var i = 0; i < 5; ++i) {
-					elr.push($('<td>').addClass('duel-cell-mid').appendTo(r));
+					elr.push($('<td>').addClass('duel-cell').appendTo(r));
 				}
 			}
-			elr.push($('<td>').addClass('duel-cell-edge').appendTo(r));
+			elr.push($('<td>').addClass('duel-edge').appendTo(r));
 			if (row === 2) {
-				elr[0].addClass('pl0');
-				elr[1].addClass('pl1');
+				elr[0].addClass('pl1');
+				elr[1].addClass('pl0');
 			}
 			else {
 				for (var i = 0; i < 7; ++i) {
