@@ -37,17 +37,20 @@ $(function() {
 	preload();
 	setView(new LoginView(true));
 
+	var hasInner = !!window.innerHeight;
+
 	// Keep the view maximized with a constant aspect ratio.
 	$(window).resize(function() {
-		var HWRAT = 9/16;
-		var h = window.innerHeight, w = window.innerWidth;
-		if (!h) {
-			// We can't easily get the sizes including scrollbars in IE, so we
-			// cheat and use the ones without scollbars (on page load, it's
-			// probably the same).
-			h = $(window).height();
-			w = $(window).width();
+		if (!hasInner) {
+			// Polyfill inner{Height,Width}. We can't easily get the sizes
+			// including scrollbars, so we cheat and use the ones without
+			// scollbars (on page load, it's probably the same).
+			window.innerHeight = $(window).height();
+			window.innerWidth = $(window).width();
 		}
+
+		var HWRAT = 9/16;
+		var h = innerHeight, w = innerWidth;
 		var rat = h/w, nh = h, nw = w;
 		if (rat > HWRAT) nh = w * HWRAT;
 		else nw = h / HWRAT;
