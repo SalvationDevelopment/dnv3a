@@ -301,6 +301,10 @@ var DuelUI = Class.extend({
 		midContainer.text("Hello.");
 	},
 
+	destroy: function() {
+		this.ui.empty();
+	},
+
 	setUI: function(duel) {
 		// TODO
 	},
@@ -361,6 +365,10 @@ var Duel = Class.extend({
 		}
 
 		this.ui = new DuelUI(view);
+	},
+
+	destroy: function() {
+		this.ui.destroy();
 	},
 
 	mapCard: function(card) {
@@ -550,6 +558,8 @@ window.DuelView = View.extend({
 	},
 
 	close: function() {
+		if (this.duel)
+			this.duel.destroy();
 	},
 
 	getDuelistFromName: function(name) {
