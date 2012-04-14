@@ -158,6 +158,88 @@ var DuelCard = Class.extend({
 });
 
 
+var UICard = Class.extend({
+	el: null,
+	flipper: null,
+	holder: null,
+	card: null,
+	hasCardInfo: false,
+	faceup: undefined,
+	rotation: 0,
+	frontImg: null,
+
+	flipped: function(front) {
+		this.frontSide.toggle(front);
+		this.backSide.toggle(!front);
+	},
+
+	init: function(holder, card) {
+		this.holder = holder;
+		this.card = card;
+	},
+
+	create: function() {
+		this.el = $('<div>').addClass('card');
+		this.rotator = $('<div>').addClass('card-rotator').appendTo(this.el);
+		this.flipper = $('<div>').addClass('card-flipper').appendTo(this.rotator);
+		this.frontSide = $('<div>').addClass('card-front').appendTo(this.flipper);
+		this.backSide = $('<div>').addClass('card-back').appendTo(this.flipper);
+
+		$('<img>').addClass('card-frame')
+			.attr('src', "img/duel/frames/back.jpg")
+			.appendTo(this.backSide);
+
+		this.frontImg = $('<img>').addClass('card-frame')
+			.attr('src', "img/duel/frames/back.jpg")
+			.appendTo(this.frontSide);
+
+		$('<img>').addClass('card-frame')
+			.attr('src', "img/duel/border.png")
+			.appendTo(this.flipper);
+	},
+
+	createCardFront: function() {
+		// TODO
+	},
+
+	move: function(x, y, w, h, faceup, rotation) {
+		var delay = 500;
+		if (!this.el) {
+			this.create();
+			delay = 0;
+		}
+
+		if (!this.hasCardInfo && this.card.card) {
+			this.hasCardInfo = true;
+			this.createCardFront();
+		}
+
+		this.el.animate({left: x, top: y, width: w, height: h}, delay);
+
+		if (this.faceup !== faceup) {
+			this.faceup = faceup;
+			var dir = (faceup ? 'flip' : 'unflip');
+			this.flipper.rotate3Di(dir, delay,
+					{direction: 'clockwise', sideChange: this.flipped.bind(this)});
+		}
+
+		if (this.rotation !== rotation) {
+			// Make jQuery animate a dummy CSS property, and set rotation at
+			// each step.
+			this.rotation = rotation;
+			this.rotator.animate({
+				'border-spacing': rotation
+			}, {
+				step: function(now, fx) {
+					$(this).css('transform', 'rotate(' + now + 'deg)');
+				},
+				duration: delay
+			}, 'linear');
+		}
+	}
+});
+
+
 var DuelUI = Class.extend({
 	ui: null,
 
@@ -173,8 +255,19 @@ var DuelUI = Class.extend({
 		// TODO
 	},
 
+	getDuelCard: function(card) {
+		return this.cardMap[card.id];
+	},
+
 	moveCard: function(card, reveal) {
-		// TODO
+		var x, y, h, w;
+		var duelCard = this.getDuelCard(card);
+		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
+		duelCard.move(x, y, h, w, card.faceup, rotation);
+	},
+
+	attack: function(card, target) {
+		// TODO (target = null -> direct attack)
 	},
 
 	setPhase: function(turn, phase) {
@@ -269,10 +362,6 @@ var Duel = Class.extend({
 		}
 
 		this.ui.moveCard(card, reveal);
-	},
-
-	attack: function(card, target) {
-		// TODO (target = null -> direct attack)
 	},
 
 	setPhase: function(turn, phase) {
@@ -466,10 +555,10 @@ window.DuelView = View.extend({
 			if (targetFieldPosition) {
 				var loc = this.duel.getLocation(target);
 				var targetCard = loc.getCard(+targetFieldPosition);
-				this.duel.attack(card, targetCard);
+				this.duel.ui.attack(card, targetCard);
 			}
 			else {
-				this.duel.attack(card, null);
+				this.duel.ui.attack(card, null);
 			}
 			return true;
 		}
