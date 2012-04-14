@@ -2,6 +2,34 @@
 ;(function() {
 "use strict";
 
+var Queue = Class.extend({
+	q: null,
+	timer: null,
+
+	init: function() {
+		this.q = [];
+	},
+
+	destroy: function() {
+		if (this.timer !== null)
+			clearTimeout(this.timer);
+	},
+
+	push: function(f) {
+		var self = this;
+		this.q.push(function() {
+			var duration = f();
+			self.timer = setTimeout(function() {
+				self.timer = null;
+				self.q.shift()();
+			}, duration);
+		});
+		if (this.timer === null)
+			this.q.shift()();
+	}
+});
+
+
 var Duelist = Class.extend({
 	user: null,
 	avatar: '',
@@ -629,6 +657,7 @@ window.DuelView = View.extend({
 	duelists: null,
 	watchers: null,
 	watch: false,
+	queue: null,
 
 	init: function(watch, data) {
 		this._super();
@@ -670,11 +699,13 @@ window.DuelView = View.extend({
 
 	open: function() {
 		this.setCommands();
+		this.queue = new Queue();
 	},
 
 	close: function() {
 		if (this.duel)
 			this.duel.destroy();
+		this.queue.destroy();
 	},
 
 	getDuelistFromName: function(name) {
@@ -691,7 +722,7 @@ window.DuelView = View.extend({
 			ev === 'Win' || ev === 'Lose');
 	},
 
-	handleDuelMessage: function(ev, data) {
+	handleDuelMessage: function(ev, data) { // runs on queue
 		if (ev === 'Move' || ev === 'Reveal and move') {
 			var reveal = (ev === 'Reveal and move');
 			var from = data[0];
@@ -724,7 +755,7 @@ window.DuelView = View.extend({
 
 			if (msgToLog)
 				this.addToDuelLog(msgToLog);
-			return true;
+			return 500;
 		}
 		if (ev === 'Attack') {
 			var from = data[0];
@@ -739,7 +770,7 @@ window.DuelView = View.extend({
 			else {
 				this.duel.ui.attack(card, null);
 			}
-			return true;
+			return 500;
 		}
 		if (ev === 'Phase') {
 			var phase = data[0];
@@ -747,20 +778,22 @@ window.DuelView = View.extend({
 			this.duel.setPhase(turn, phase);
 			if (data[2]) {
 				// XXX: According to captures, we might need to s/3/2 here.
-				var cardInfo = (data.length > 3 ? createCard(data.slice(3)) : null);
-				this.duel.drawCard(turn, cardInfo);
+				var icard = (data.length > 3 ? createCard(data.slice(3)) : null);
+				this.duel.drawCard(turn, icard);
+				return 500;
 			}
-			return true;
+			return 0;
 		}
 		if (ev === 'Life points') {
 			var uname = data[0];
 			var pl = this.getDuelistFromName(uname);
 			var points = +data[1];
 			var dif = this.duel.setLifePoints(pl, points);
+
 			var msg = uname + (dif > 0 ? " gained " : " lost ") +
 				plural(Math.abs(dif), "lifepoint", "", "s") + ".";
 			this.addToDuelLog(msg);
-			return true;
+			return 0;
 		}
 		if (ev === 'Token') {
 			// TODO
@@ -769,29 +802,29 @@ window.DuelView = View.extend({
 			var uname = data[0], result = data[1];
 			var msg = uname + " flips a coin. It lands on... " + result + "!";
 			this.addToDuelLog(msg);
-			return true;
+			return 0;
 		}
 		if (ev === 'Die') {
 			var uname = data[0], result = +data[1];
 			var msg = uname + " rolls a die. It lands on... " + result + "!";
 			this.addToDuelLog(msg);
-			return true;
+			return 0;
 		}
 		if (ev === 'Shuffle') {
 			var deck = this.duel.getLocation(data[0]);
 			deck.shuffle(this.duel, +data[1]);
-			return true;
+			return 500;
 		}
 		if (ev === 'Hand shuffle') {
 			var hand = this.duel.getLocation(data[0]);
 			hand.shuffle(this.duel, +data[1], data.slice(2));
-			return true;
+			return 500;
 		}
 		if (ev === 'Status1' || ev === 'Status2') {
 			this.duel.setStatus(ev.slice(-1) - 1, data[0]);
-			return true;
+			return 0;
 		}
-		return false;
+		return -1;
 	},
 
 	handleMessage: function(ev, data) {
@@ -810,7 +843,15 @@ window.DuelView = View.extend({
 			return true;
 		}
 		if (ev === 'Duel') {
-			return this.handleDuelMessage(data[0], data.slice(1));
+			this.queue.push(function() {
+				var time = this.handleDuelMessage(data[0], data.slice(1));
+				if (time === -1) {
+					console.warn("Unhandled duel message: ", data.slice(1));
+					time = 0;
+				}
+				return time;
+			}.bind(this));
+			return true;
 		}
 		if (ev === 'Add watcher') {
 			this.watchers.push(Users.getUser(data[0]));
