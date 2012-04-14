@@ -16,6 +16,7 @@ var Duelist = Class.extend({
 		console.assert(ar.length === 8);
 		var name = ar[0];
 		this.user = Users.getUser(name);
+		this.uname = name;
 		this.avatar = ar[1];
 		this.back = ar[2];
 		this.color1 = +ar[3];
@@ -500,7 +501,7 @@ window.DuelView = View.extend({
 
 	getDuelistFromName: function(name) {
 		for (var i = 0; i < 2; ++i) {
-			if (this.duelists[i].user.name === name)
+			if (this.duelists[i].uname === name)
 				return i;
 		}
 		console.assertNotReached("No player with name " + name + ".");
