@@ -103,6 +103,10 @@ var DeckCardLocation = CardLocation.extend({
 	},
 	addToBottom: function(card) {
 		this.cards.push(card);
+	},
+	top: function() {
+		console.assert(this.cards.length > 0);
+		return this.cards[0];
 	}
 });
 var BanishCardLocation = CardLocation.extend({});
@@ -567,6 +571,13 @@ var Duel = Class.extend({
 
 		this.refreshLocation(fromLoc, card);
 		this.refreshLocation(toLoc, card);
+	},
+
+	drawCard: function(pl, icard) {
+		var card = this.locations[pl].deck.top();
+		var hand = this.locations[pl].hand;
+		var ownHand = false;
+		this.moveCard(card, hand, null, ownHand, false, false, false);
 	},
 
 	setPhase: function(turn, phase) {
