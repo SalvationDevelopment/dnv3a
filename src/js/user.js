@@ -230,7 +230,6 @@ window.OnlineList = SidebarWidget.extendObject({
 			.appendTo(this.ui);
 
 		this.nUsers = 0;
-		this.initialAdding = true;
 		this.map = {};
 		var that = this;
 		this.userListener = Users.listen(function(ev, user) {
@@ -254,12 +253,20 @@ window.OnlineList = SidebarWidget.extendObject({
 				}
 			}
 		});
-
-		this.initialAdding = false;
-		this.setUserCount();
 	},
 
 	add: function(user) {
+		if (this.nUsers === 0) {
+			// Delay setting the counter on the first adding, to avoid touching
+			// the DOM too much.
+			this.initialAdding = true;
+			var self = this;
+			setTimeout(function() {
+				self.initialAdding = false;
+				self.setUserCount();
+			});
+		}
+
 		++this.nUsers;
 		this.setUserCount();
 
