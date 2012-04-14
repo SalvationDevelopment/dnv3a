@@ -21,6 +21,7 @@ window.MonsterCard = Card.extend({
 });
 
 window.EffectMonsterCard = MonsterCard.extend({});
+window.NormalMonsterCard = MonsterCard.extend({});
 window.SynchroMonsterCard = MonsterCard.extend({});
 
 window.STCard = Card.extend({
@@ -33,7 +34,6 @@ window.TrapCard = STCard.extend({});
 // Unimplemented
 window.FusionMonsterCard = SynchroMonsterCard;
 window.XYZMonsterCard = SynchroMonsterCard;
-window.NormalMonsterCard = SynchroMonsterCard;
 window.RitualMonsterCard = SynchroMonsterCard;
 
 window.createCard = function(data) {

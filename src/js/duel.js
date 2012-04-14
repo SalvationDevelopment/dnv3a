@@ -200,7 +200,26 @@ var UICard = Class.extend({
 	},
 
 	createCardFront: function() {
-		// TODO
+		var icard = this.card.card, type;
+		if (icard instanceof EffectMonsterCard) {
+			type = "effect";
+		}
+		else if (icard instanceof NormalMonsterCard) {
+			type = "normal";
+		}
+		else if (icard instanceof SynchroMonsterCard) {
+			type = "synchro";
+		}
+		else if (icard instanceof TrapCard) {
+			type = "trap";
+		}
+		else if (icard instanceof SpellCard) {
+			type = "spell";
+		}
+		else {
+			console.assertNotReached("Invalid card type.");
+		}
+		this.frontImg.attr('src', "img/duel/frames/" + type + ".jpg");
 	},
 
 	move: function(x, y, w, h, faceup, rotation) {
