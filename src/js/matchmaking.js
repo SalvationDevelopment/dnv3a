@@ -554,7 +554,7 @@ window.SearchPanel = Class.extend({
 	open: function() {
 		this.isOpen = true;
 		this.ui.show();
-		$('#mm-side').stop().animate({width: 250}, 70);
+		$('#mm-side').stop().animate({width: 240}, 70);
 		this.searchField.focus();
 		this.view.setCommands();
 	},
