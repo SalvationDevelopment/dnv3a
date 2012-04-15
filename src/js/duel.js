@@ -213,8 +213,9 @@ var UICard = Class.extend({
 	frontImg: null,
 
 	flipped: function(front) {
-		this.frontSide.toggle(front);
-		this.backSide.toggle(!front);
+		// Do this with raw CSS, because jQuery is too slow.
+		this.frontSide[0].style.display = (front ? 'block' : 'none');
+		this.backSide[0].style.display = (front ? 'none' : 'block');
 	},
 
 	init: function(holder, card) {
@@ -279,13 +280,24 @@ var UICard = Class.extend({
 			this.createCardFront();
 		}
 
-		this.el.animate({left: x, top: y, width: w, height: h}, delay);
+		var loc = {left: x, top: y, width: w, height: h};
+		if (delay)
+			this.el.animate(loc, delay);
+		else
+			this.el.css(loc);
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
 			var dir = (faceup ? 'unflip' : 'flip');
-			this.flipper.rotate3Di(dir, delay,
-					{direction: 'clockwise', sideChange: this.flipped.bind(this)});
+			if (delay === 0) {
+				this.flipped(faceup);
+			}
+			else {
+				this.flipper.rotate3Di(dir, delay, {
+					direction: 'clockwise',
+					sideChange: this.flipped.bind(this)
+				});
+			}
 		}
 
 		if (this.rotation !== rotation) {
@@ -309,15 +321,23 @@ var DuelUI = Class.extend({
 	ui: null,
 	fieldCells: null,
 	cardMap: null,
+	colX: null,
+	colW: null,
+	rowY: null,
+	rowH: null,
 
 	init: function(view) {
 		this.cardMap = {};
 		this.ui = $('#duel-ui');
-
 		this.cardHolder = $('#duel-cardholder');
 
+		this.colX = [];
+		this.colW = [];
+		this.rowY = [];
+		this.rowH = [];
+
 		this.tableCont = $('<div id="duel-tablecont">').appendTo(this.ui);
-		this.duelTable = $('<table id="duel-table">').appendTo(this.tableCont);
+		this.duelTable = $('<table id="duel-table">');
 		var tbody = $('<tbody>').appendTo(this.duelTable);
 		var els = [], midContainer;
 		for (var row = 0; row < 5; ++row) {
@@ -346,61 +366,72 @@ var DuelUI = Class.extend({
 		this.fieldCells = els;
 
 		midContainer.text("Hello.");
+		this.duelTable.appendTo(this.tableCont);
+
+		for (var row = 0; row < 5; ++row) {
+			this.rowY.push(els[row][0].offset().top);
+			this.rowH.push(els[row][0].height());
+		}
+		for (var col = 0; col < 7; ++col) {
+			this.colX.push(els[0][col].offset().left);
+			this.colW.push(els[0][col].width());
+		}
 	},
 
 	getFieldPosRect: function(row, col) {
-		var cell = this.fieldCells[row][col];
 		var ratio = 1.45;
-		var h = cell.height(), w = cell.width();
-		var offset = cell.offset();
-		var midx = offset.left + w/2, nw = h/1.45;
+		var w = this.colW[col], h = this.rowH[row];
+		var x = this.colX[col], y = this.rowY[row];
+		var midx = x + w/2, nw = h/1.45;
 		return {
 			width: nw,
 			height: h,
 			left: midx - nw/2 + 2,
-			top: offset.top + 2
+			top: y + 2
 		};
 	},
 
 	getCardRect: function(card) {
 		var loc = card.location, pl = loc.player;
 		if (loc instanceof HandCardLocation) {
-			// TODO
-			row = 3; col = 2;
+			if (pl === 0) {
+				// TODO
+			}
+			else {
+				// TODO
+			}
 		}
 
 		var row, col;
+		// Pretend to be player 0, then mirror the field if (pl === 1).
 		if (loc instanceof BanishCardLocation) {
 			row = 2;
-			col = (pl === 0 ? 1 : 0);
+			col = 6;
+		}
+		else if (loc instanceof DeckCardLocation) {
+			row = 4;
+			col = 6;
+		}
+		else if (loc instanceof GYCardLocation) {
+			row = 3;
+			col = 6;
+		}
+		else if (loc instanceof ExtraCardLocation) {
+			row = 4;
+			col = 0;
+		}
+		else if (loc instanceof FieldSpellCardLocation) {
+			row = 3;
+			col = 0;
 		}
 		else {
-			// Pretend to be player 0, then mirror the field if (pl === 1).
-			if (loc instanceof DeckCardLocation) {
-				row = 4;
-				col = 6;
-			}
-			else if (loc instanceof GYCardLocation) {
-				row = 3;
-				col = 6;
-			}
-			else if (loc instanceof ExtraCardLocation) {
-				row = 4;
-				col = 0;
-			}
-			else if (loc instanceof FieldSpellCardLocation) {
-				row = 3;
-				col = 0;
-			}
-			else {
-				row = (loc instanceof MonsterCardLocation ? 3 : 4);
-				col = loc.cards.indexOf(card) + 1;
-			}
+			row = (loc instanceof MonsterCardLocation ? 3 : 4);
+			col = loc.cards.indexOf(card) + 1;
+		}
 
-			if (pl === 1) {
-				row = 4-row;
-				col = 6-col;
-			}
+		if (pl === 1) {
+			row = 4-row;
+			col = 6-col;
 		}
 
 		// TODO: Adjust for 3d effects.
