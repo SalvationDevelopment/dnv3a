@@ -93,10 +93,10 @@ var DeckCardLocation = CardLocation.extend({
 	shuffle: function(duel, base) {
 		var id = base;
 		for (var i = this.cards.length; i --> 0; ) {
-			duel.unmapCard(this.cards[i]);
+			var oldCard = this.cards[i];
 			var card = new DuelCard(id++, this, this.player);
 			this.cards[i] = card;
-			duel.mapCard(card);
+			duel.remapCard(oldCard, card);
 		}
 	},
 	addToTop: function(card) {
@@ -119,19 +119,17 @@ var HandCardLocation = CardLocation.extend({
 		if (data.length) {
 			for (var i = 0; i < data.length; ++i) {
 				var oldId = +data[i];
-				var card = duel.getCard(oldId);
-				var oldCard = card.clone();
+				var oldCard = duel.getCard(oldId);
+				var card = Object.clone(oldCard);
 				card.id = id++;
-				duel.mapCard(card);
-				duel.ui.handMove(oldCard, card);
-				duel.unmapCard(oldCard);
+				duel.remapCard(oldCard, card);
 			}
 		}
 		else {
 			for (var i = 0; i < this.cards.length; ++i) {
-				duel.unmapCard(this.cards[i]);
+				var oldCard = this.cards[i];
 				this.cards[i] = new DuelCard(id++, this, this.player);
-				duel.mapCard(this.cards[i]);
+				duel.remapCard(oldCard, this.cards[i]);
 			}
 		}
 	}
@@ -190,15 +188,6 @@ var DuelCard = Class.extend({
 		this.id = id;
 		this.originalOwner = originalOwner;
 		this.location = loc;
-	},
-
-	clone: function() {
-		var copy = {};
-		for (var a in this) {
-			if (this.hasOwnProperty(a))
-				copy[a] = this[a];
-		}
-		return copy;
 	}
 });
 
@@ -496,6 +485,7 @@ var DuelUI = Class.extend({
 	},
 
 	getUICard: function(card) {
+		console.assert(this.cardMap[card.id]);
 		return this.cardMap[card.id];
 	},
 
@@ -505,11 +495,11 @@ var DuelUI = Class.extend({
 		this.moveCard(card);
 	},
 
-	handMove: function(oldCard, card) {
+	remapCard: function(oldCard, card) {
 		var uiCard = this.cardMap[oldCard.id];
+		uiCard.card = card;
 		this.cardMap[card.id] = uiCard;
 		delete this.cardMap[oldCard.id];
-		this.moveCard(card);
 	},
 
 	moveCard: function(card) {
@@ -573,14 +563,19 @@ var Duel = Class.extend({
 	unmapCard: function(card) {
 		delete this.map[card.id];
 	},
+	remapCard: function(oldCard, card) {
+		this.mapCard(card);
+		this.ui.remapCard(oldCard, card);
+		this.unmapCard(oldCard);
+	},
 	getCard: function(id) {
+		console.assert(this.map[id]);
 		return this.map[id];
 	},
 
 	mapAllCards: function() {
 		var map = function(c) {
-			if (c)
-				this.mapCard(c);
+			if (c) this.mapCard(c);
 		}.bind(this);
 
 		for (var pl = 0; pl < 2; ++pl) {
@@ -622,6 +617,7 @@ var Duel = Class.extend({
 	refreshLocation: function(loc, card) {
 		// Refresh an individual card's location, after it has moved to/from
 		// there. (For hands, other cards need to rearrange, etc.)
+		// If loc is not a FieldCardLocation, card can be null.
 		var ui = this.ui;
 		if (loc instanceof FieldCardLocation) {
 			if (card)
@@ -632,6 +628,15 @@ var Duel = Class.extend({
 				ui.moveCard(c);
 			});
 		}
+	},
+
+	deckShuffle: function(deck, base) {
+		deck.shuffle(this, base);
+		this.refreshLocation(deck, null);
+	},
+	handShuffle: function(hand, base, data) {
+		hand.shuffle(this, base, data);
+		this.refreshLocation(hand, null);
 	},
 
 	moveCard: function(card, toLoc, locPosition, faceup, defense, special, reveal) {
@@ -654,7 +659,8 @@ var Duel = Class.extend({
 		}
 
 		this.refreshLocation(fromLoc, card);
-		this.refreshLocation(toLoc, card);
+		if (fromLoc !== toLoc)
+			this.refreshLocation(toLoc, card);
 	},
 
 	drawCard: function(pl, icard) {
@@ -924,12 +930,12 @@ window.DuelView = View.extend({
 		}
 		if (ev === 'Shuffle') {
 			var deck = this.duel.getLocation(data[0]);
-			deck.shuffle(this.duel, +data[1]);
+			this.duel.deckShuffle(deck, +data[1]);
 			return 500;
 		}
 		if (ev === 'Hand shuffle') {
 			var hand = this.duel.getLocation(data[0]);
-			hand.shuffle(this.duel, +data[1], data.slice(2));
+			this.duel.handShuffle(hand, +data[1], data.slice(2));
 			return 500;
 		}
 		if (ev === 'Status1' || ev === 'Status2') {

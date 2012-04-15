@@ -43,6 +43,15 @@ window.plural = function(n, noun, sing, plural) {
 	return n + " " + noun + (n === 1 ? sing : plural);
 };
 
+Object.clone = function(obj) {
+	var copy = Object.create(Object.getPrototypeOf(obj));
+	for (var a in obj) {
+		if (Object.prototype.hasOwnProperty.call(obj, a))
+			copy[a] = obj[a];
+	}
+	return copy;
+};
+
 // Function.prototype.bind polyfill, taken from MDN.
 if (!Function.prototype.bind) {
 	Function.prototype.bind = function (oThis) {
