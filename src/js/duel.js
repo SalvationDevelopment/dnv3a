@@ -278,6 +278,7 @@ var UICard = Class.extend({
 		else {
 			this.el.css(loc);
 		}
+		// TODO: Do this at the right time.
 		this.el.css({'z-index': z, 'overflow': 'visible'});
 
 		if (this.faceup !== faceup) {
@@ -408,7 +409,7 @@ var DuelUI = Class.extend({
 			y = this.rowY[4] + this.rowH[4] + 10;
 		}
 		else {
-			y = this.rowY[0] - h - 10;
+			y = this.rowY[0] - h - 5;
 		}
 
 		return {
