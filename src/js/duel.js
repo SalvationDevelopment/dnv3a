@@ -443,8 +443,8 @@ var DuelUI = Class.extend({
 			col = 0;
 		}
 		else if (loc instanceof FieldSpellCardLocation) {
-			row = 3;
-			col = 0;
+			row = 2;
+			col = 6;
 		}
 		else {
 			row = (loc instanceof MonsterCardLocation ? 3 : 4);
