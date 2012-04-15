@@ -289,7 +289,7 @@ var UICard = Class.extend({
 		else {
 			this.el.css(loc);
 		}
-		this.el.css('z-index', z);
+		this.el.css({'z-index': z, 'overflow': 'visible'});
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
