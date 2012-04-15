@@ -877,17 +877,10 @@ window.DuelView = View.extend({
 		}
 		if (ev === 'Attack') {
 			var from = data[0];
-			var card = this.duel.getCard(data[1]);
-			var target = 'field' + (from === "field1" ? 2 : 1);
-			var targetFieldPosition = data[2];
-			if (targetFieldPosition) {
-				var loc = this.duel.getLocation(target);
-				var targetCard = loc.getCard(+targetFieldPosition);
-				this.duel.ui.attack(card, targetCard);
-			}
-			else {
-				this.duel.ui.attack(card, null);
-			}
+			var attacker = this.duel.getCard(data[1]);
+			var targetId = data[2];
+			this.duel.ui.attack(attacker,
+					(data[2] ? this.duel.getCard(data[2]) : null));
 			return 500;
 		}
 		if (ev === 'Phase') {

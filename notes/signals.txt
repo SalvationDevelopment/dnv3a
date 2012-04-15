@@ -177,7 +177,7 @@ With Duel prefix:
 
 * Card select
 
-+ Attack, From :{FieldPosition}, Attacker id, To :{FieldPosition} (or "" if direct attack)
++ Attack, From :{Place}, Attacker id, Target id (or "" if direct attack)
 
 + Die, From, Result
 
