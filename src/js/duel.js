@@ -75,7 +75,6 @@ var CardLocation = Class.extend({
 			var card = new DuelCard(id++, this, this.player);
 			this.cards.push(card);
 		}
-		this.cards.reverse();
 	},
 
 	addCard: function(card) {
@@ -270,7 +269,7 @@ var UICard = Class.extend({
 		this.frontImg.attr('src', "img/duel/frames/" + type + ".jpg");
 	},
 
-	move: function(x, y, w, h, faceup, rotation) {
+	move: function(x, y, w, h, z, faceup, rotation) {
 		var delay = 500;
 		if (!this.el) {
 			this.create();
@@ -287,6 +286,7 @@ var UICard = Class.extend({
 			this.el.animate(loc, delay);
 		else
 			this.el.css(loc);
+		this.el.css('z-index', z);
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
@@ -393,15 +393,43 @@ var DuelUI = Class.extend({
 		};
 	},
 
+	getHandCardRect: function(card) {
+		var loc = card.location, pl = loc.player;
+		var index = loc.cards.indexOf(card), ncards = loc.cards.length;
+		var startX = this.colX[0], endX = this.colX[6] + this.colW[6];
+		var fullW = endX - startX;
+		var w = fullW / 5, h = w*1.45;
+		var eachX = w;
+		if (ncards * w <= fullW + 0.1) {
+			// The cards fit; center them.
+			startX = startX + fullW/2 - (ncards * w)/2;
+		}
+		else {
+			// They don't; cover the space with some overlap.
+			eachX = (endX - startX - w) / (ncards-1);
+		}
+		var x = startX + eachX*index, y;
+
+		if (pl === 0) {
+			y = this.rowY[4] + this.rowH[4] + 10;
+		}
+		else {
+			y = this.rowY[0] - h - 10;
+		}
+
+		return {
+			left: x,
+			top: y,
+			width: w,
+			height: h,
+			z: ncards - index
+		};
+	},
+
 	getCardRect: function(card) {
 		var loc = card.location, pl = loc.player;
 		if (loc instanceof HandCardLocation) {
-			if (pl === 0) {
-				// TODO
-			}
-			else {
-				// TODO
-			}
+			return this.getHandCardRect(card);
 		}
 
 		var row, col;
@@ -437,7 +465,9 @@ var DuelUI = Class.extend({
 		}
 
 		// TODO: Adjust for 3d effects.
-		return this.getFieldPosRect(row, col);
+		var rect = this.getFieldPosRect(row, col);
+		rect.z = 1;
+		return rect;
 	},
 
 	destroy: function() {
@@ -484,7 +514,7 @@ var DuelUI = Class.extend({
 		var uiCard = this.getUICard(card);
 		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
-				card.faceup, rotation);
+				rect.z, card.faceup, rotation);
 	},
 
 	attack: function(card, target) {
@@ -544,6 +574,20 @@ var Duel = Class.extend({
 		return this.map[id];
 	},
 
+	mapAllCards: function() {
+		var map = function(c) {
+			if (c)
+				this.mapCard(c);
+		}.bind(this);
+
+		for (var pl = 0; pl < 2; ++pl) {
+			var locs = this.locations[pl];
+			for (var a in locs) {
+				locs[a].cards.forEach(map);
+			}
+		}
+	},
+
 	setStatus: function(pl, status) {
 		this.statuses[pl] = status;
 		this.ui.setStatus(pl, status);
@@ -568,13 +612,17 @@ var Duel = Class.extend({
 		return locs.fieldSpell;
 	},
 
+	getTopOfDeck: function(pl) {
+		return this.locations[pl].deck.top();
+	},
+
 	refreshLocation: function(loc, card) {
 		// Refresh an individual card's location, after it has moved to/from
 		// there. (For hands, other cards need to rearrange, etc.)
 		var ui = this.ui;
 		if (loc instanceof FieldCardLocation) {
 			if (card)
-				this.ui.moveCard(card);
+				ui.moveCard(card);
 		}
 		else {
 			loc.cards.forEach(function(c) {
@@ -613,6 +661,21 @@ var Duel = Class.extend({
 		this.moveCard(card, hand, null, ownHand, false, false, false);
 	},
 
+	drawInitialCards: function() { // runs on queue
+		for (var i = 0; i < 5; ++i) {
+			setTimeout(function() {
+				this.drawCard(0, null);
+				this.drawCard(1, null);
+				// TODO: Sound
+			}.bind(this), i*500);
+		}
+		setTimeout(function() {
+			this.drawCard(this.turn, null);
+		}.bind(this), 5*500);
+
+		return 6*500;
+	},
+
 	setPhase: function(turn, phase) {
 		this.turn = turn;
 		this.phase = phase;
@@ -636,6 +699,7 @@ var Duel = Class.extend({
 		this.phase = 'dp';
 		this.lifepoints = [8000, 8000];
 
+		this.mapAllCards();
 		this.ui.setUI(this);
 	},
 
@@ -674,6 +738,7 @@ var Duel = Class.extend({
 				loc.addCard(card); // XXX Maybe add these in reverse order.
 		}
 
+		this.mapAllCards();
 		this.ui.setUI(this);
 		this.setStatus(0, statuses[0]);
 		this.setStatus(1, statuses[1]);
@@ -777,7 +842,7 @@ window.DuelView = View.extend({
 				card = this.duel.getTopOfDeck(pl);
 			}
 			else
-				card = this.duel.getCard(id);
+				card = this.duel.getCard(+id);
 
 			var to = data[2];
 			var locPosition = data[3];
@@ -884,6 +949,11 @@ window.DuelView = View.extend({
 			this.duelState = 'Duel';
 			console.assert(this.startingPlayer !== null);
 			this.duel = Duel.createFromStart(this, ar, this.startingPlayer);
+			// TODO: When duelling, initialize top cards of the deck with
+			// provided data.
+			this.queue.push(function() {
+				return this.duel.drawInitialCards();
+			}.bind(this));
 			return true;
 		}
 		if (ev === 'Duel') {
