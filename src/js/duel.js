@@ -612,7 +612,7 @@ var Duel = Class.extend({
 			return locs.st;
 		if (fieldPos > 5)
 			return locs.monsters;
-		return locs.fieldSpell;
+		return locs.fieldspell;
 	},
 
 	getTopOfDeck: function(pl) {
