@@ -15,17 +15,19 @@ var Queue = Class.extend({
 			clearTimeout(this.timer);
 	},
 
+	next: function() {
+		this.timer = null;
+		if (this.q.length > 0)
+			this.q.shift()();
+	},
+
 	push: function(f) {
-		var self = this;
 		this.q.push(function() {
 			var duration = f();
-			self.timer = setTimeout(function() {
-				self.timer = null;
-				self.q.shift()();
-			}, duration);
-		});
+			this.timer = setTimeout(this.next.bind(this), duration);
+		}.bind(this));
 		if (this.timer === null)
-			this.q.shift()();
+			this.next();
 	}
 });
 
