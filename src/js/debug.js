@@ -151,6 +151,9 @@ window.Debug = {
 	init: function() {
 		this.widget = new DebugWidget();
 		this.widget.open(false);
+
+		// Add replays as needed.
+		//this.replay('watch');
 	},
 
 	handleMessage: function(ev, data, sending) {
@@ -174,10 +177,14 @@ window.Debug = {
 		function iterate() {
 			var m = ar[i++];
 			Communicator._response(m.replace(/%/g, '%25'));
-			if (ar[i])
-				setTimeout(iterate, 2000);
+			if (!ar[i])
+				btn.remove();
 		}
-		iterate();
+		var btn = $('<button>').text("+").css({
+			'position': 'absolute',
+			'bottom': 0,
+			'left': 0
+		}).click(iterate).appendTo($('body'));
 	}
 };
 
