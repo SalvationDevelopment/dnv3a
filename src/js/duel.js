@@ -282,23 +282,26 @@ var UICard = Class.extend({
 		}
 
 		var loc = {left: x, top: y, width: w, height: h};
-		if (delay)
+		if (delay) {
+			this.el.stop();
 			this.el.animate(loc, delay);
-		else
+		}
+		else {
 			this.el.css(loc);
+		}
 		this.el.css('z-index', z);
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
 			var dir = (faceup ? 'unflip' : 'flip');
-			if (delay === 0) {
-				this.flipped(faceup);
-			}
-			else {
+			if (delay) {
 				this.flipper.rotate3Di(dir, delay, {
 					direction: 'clockwise',
 					sideChange: this.flipped.bind(this)
 				});
+			}
+			else {
+				this.flipped(faceup);
 			}
 		}
 
