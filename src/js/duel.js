@@ -965,7 +965,7 @@ window.DuelView = View.extend({
 			this.queue.push(function() {
 				var time = this.handleDuelMessage(data[0], data.slice(1));
 				if (time === -1) {
-					console.warn("Unhandled duel message: ", data.slice(1));
+					console.warn("Unhandled duel message: ", data[0], data.slice(1));
 					time = 0;
 				}
 				return time;
