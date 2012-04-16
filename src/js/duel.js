@@ -77,10 +77,6 @@ var CardLocation = Class.extend({
 		}
 	},
 
-	addCard: function(card) {
-		this.cards.push(card);
-	},
-
 	removeCard: function(card) {
 		var ind = this.cards.indexOf(card);
 		console.assert(ind !== -1);
@@ -89,6 +85,8 @@ var CardLocation = Class.extend({
 });
 
 var CardPileLocation = CardLocation.extend({
+	// 'cards' is top-to-bottom
+
 	uiPile: null,
 
 	addToTop: function(card) {
@@ -118,6 +116,13 @@ var DeckCardLocation = CardPileLocation.extend({
 var BanishCardLocation = CardPileLocation.extend({});
 var ExtraCardLocation = CardPileLocation.extend({});
 var HandCardLocation = CardLocation.extend({
+	// 'cards' is left-to-right
+	// TODO: right-to-left for player 1
+
+	addCard: function(card) {
+		this.cards.push(card);
+	},
+
 	shuffle: function(duel, base, data) {
 		var id = base;
 		var newCards = [];
@@ -141,6 +146,8 @@ var HandCardLocation = CardLocation.extend({
 });
 
 var FieldCardLocation = CardLocation.extend({
+	// 'cards' is a fixed-size array of cards (/null for no card)
+
 	init: function(pl, size) {
 		this._super(pl);
 		for (var i = 0; i < size; ++i)
@@ -243,13 +250,18 @@ var UIPile = Class.extend({
 		return oldClone;
 	},
 
-	setUI: function(loc, adj) {
+	updateFromLocation: function(loc) {
+		this.stack = [];
 		loc.cards.forEach(function(card) {
 			this.stack.unshift(Object.clone(card));
 		}.bind(this));
+		this.update(true);
+	},
+
+	setUI: function(loc, adj) {
 		this.owner = loc.player;
 		this.adj = adj;
-		this.update(true);
+		this.updateFromLocation(loc);
 	},
 
 	setZ: function(z) {
@@ -726,7 +738,9 @@ var DuelUI = Class.extend({
 	moveCard: function(card) {
 		var rect = this.getCardRect(card);
 		var thing = this.map[card.id], uiCard;
+
 		if (thing instanceof UIPile) {
+			// Extract the card from its pile (automatically adjusts z-index).
 			var oldClone = thing.remove(card);
 			console.assert(oldClone.id === card.id);
 			this.makeCard(oldClone);
@@ -736,15 +750,18 @@ var DuelUI = Class.extend({
 		else {
 			uiCard = thing;
 		}
-		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
 
-		// Adjust z-index of target pile.
-		var toPile = card.location.uiPile;
-		if (toPile && card.location.cards.length > 0) {
-			if (card.location.top() === card)
-				toPile.setZ(200);
+		var toLoc = card.location;
+		var rotation = (card.defense ? -90 : 0) + (toLoc.player ? -180 : 0);
+
+		// Adjust z-index of moved card, target pile.
+		var toPile = toLoc.uiPile;
+		if (toPile && toLoc.cards.length > 0 && toLoc.top() !== card) {
+			toPile.setZ(200);
 		}
+		uiCard.setZ(rect.z >= 400 ? rect.z - 300 : 100 + rect.z);
 
+		var self = this;
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
 				card.faceup, rotation, function()
 		{
@@ -754,7 +771,7 @@ var DuelUI = Class.extend({
 				toPile.setZ(1);
 			}
 			else {
-				// Readjust z to what it is supposed to be.
+				// Readjust the z-index to what it is supposed to be.
 				uiCard.setZ(rect.z);
 			}
 			// Reset z-index of piles referred to.
@@ -762,9 +779,6 @@ var DuelUI = Class.extend({
 			if (thing instanceof UIPile)
 				thing.setZ(1);
 		});
-
-		// Adjust z-index of moved card, after potentially adding it to the DOM.
-		uiCard.setZ(rect.z >= 400 ? rect.z - 300 : 100 + rect.z);
 	},
 
 	attack: function(card, target) {
@@ -906,7 +920,7 @@ var Duel = Class.extend({
 		if (toLoc instanceof FieldCardLocation) {
 			toLoc.addCard(card, locPosition);
 		}
-		else if (toLoc instanceof DeckCardLocation) {
+		else if (toLoc instanceof CardPileLocation) {
 			if (locPosition === 'bottom')
 				toLoc.addToBottom(card);
 			else
