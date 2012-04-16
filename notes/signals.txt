@@ -179,6 +179,8 @@ With Duel prefix:
 
 + Attack, From :{Place}, Attacker id, Target id (or "" if direct attack)
 
+* Token, :{Place}, Id, :{FieldPosition}
+
 + Die, From, Result
 
 + Coin, From, Result
