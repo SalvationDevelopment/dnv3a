@@ -202,6 +202,7 @@ var UIPile = Class.extend({
 	owner: 0,
 	topUICard: null,
 	baseRect: null,
+	adj: null,
 	z: 1,
 
 	// Copies of the cards in the pile, as of the time they were added.
@@ -242,11 +243,12 @@ var UIPile = Class.extend({
 		return oldClone;
 	},
 
-	setUI: function(loc) {
+	setUI: function(loc, adj) {
 		loc.cards.forEach(function(card) {
 			this.stack.unshift(Object.clone(card));
 		}.bind(this));
 		this.owner = loc.player;
+		this.adj = adj;
 		this.update(true);
 	},
 
@@ -275,13 +277,26 @@ var UIPile = Class.extend({
 		}
 
 		if (this.topUICard) {
-			// TODO: Construct a 3D look.
-			// box-shadow e.g. '14px 17px 1px #CCCCCC, 14px 17px 0 #000000' for one layer.
-			this.topUICard.setDirectPosition(rect.left, rect.top);
-			this.topUICard.el.css({
-				'box-shadow': '0 0 ' + this.stack.length + 'px #000'
-			});
+			// Create a 3D effect.
+			var dx = this.adj[0], dy = this.adj[1];
+			var n = this.stack.length;
+			this.topUICard.setDirectPosition(
+				rect.left + dx*(n-1),
+				rect.top + dy*(n-1)
+			);
+			var shadows = [];
+			for (var i = 0; i < n; i += 5) {
+				var pos = (-dx*(n-i)) + 'px ' + (-dy*(n-i)) + 'px ';
+				shadows.unshift(pos + '1px #ccc, ' + pos + '0 #000');
+			}
+			this.topUICard.el.css('box-shadow', shadows.join(', '));
 		}
+	},
+
+	getNextPositionAdjustment: function() {
+		var dx = this.adj[0], dy = this.adj[1];
+		var n = this.stack.length;
+		return {dx: dx*n, dy: dy*n};
 	}
 });
 
@@ -502,7 +517,7 @@ var DuelUI = Class.extend({
 			for (var name in locs) {
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
-					var rect = this.getLocRect(loc);
+					var rect = this.getLocRect(loc, false);
 					var pile = new UIPile(this.cardHolder, rect);
 					loc.uiPile = pile;
 				}
@@ -524,7 +539,32 @@ var DuelUI = Class.extend({
 		};
 	},
 
-	getLocRect: function(loc) {
+	getLoc3DAdj: function(loc) {
+		var scale = this.rowH[0] / 100;
+		var adj;
+		if (loc instanceof DeckCardLocation) {
+			adj = [0.25, 0.05];
+		}
+		else if (loc instanceof ExtraCardLocation) {
+			adj = [-0.25, 0.05];
+		}
+		else if (loc instanceof GYCardLocation) {
+			adj = [0.08, 0.01];
+		}
+		else if (loc instanceof BanishCardLocation) {
+			adj = [0.07, 0];
+		}
+		else {
+			console.assertNotReached("Invalid location.");
+		}
+		if (loc.player === 1) {
+			adj[0] *= -1;
+			adj[1] *= -1;
+		}
+		return [adj[0]*scale, adj[1]*scale];
+	},
+
+	getLocRect: function(loc, correct3D) {
 		var row, col;
 		if (loc instanceof FieldSpellCardLocation) {
 			row = 2;
@@ -556,7 +596,13 @@ var DuelUI = Class.extend({
 			col = 6-col;
 		}
 
-		return this.getFieldPosRect(row, col);
+		var rect = this.getFieldPosRect(row, col);
+		if (correct3D && loc instanceof CardPileLocation) {
+			var adj = loc.uiPile.getNextPositionAdjustment();
+			rect.left += adj.dx;
+			rect.top += adj.dy;
+		}
+		return rect;
 	},
 
 	getHandCardRect: function(card) {
@@ -617,7 +663,7 @@ var DuelUI = Class.extend({
 			return this.getFieldCardRect(card);
 		}
 		else {
-			return this.getLocRect(loc);
+			return this.getLocRect(loc, true);
 		}
 	},
 
@@ -634,7 +680,8 @@ var DuelUI = Class.extend({
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
 					var pile = loc.uiPile;
-					pile.setUI(loc);
+					var adj = self.getLoc3DAdj(loc);
+					pile.setUI(loc, adj);
 					loc.cards.forEach(function(c) {
 						self.mapCardPile(pile, c);
 					});
