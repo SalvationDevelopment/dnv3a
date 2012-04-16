@@ -4,12 +4,15 @@
 html, body {
 	margin: 0;
 	padding: 0;
+	overflow: hidden;
 }
 body {
+	position: absolute;
+	height: 100%;
+	width: 100%;
 	background-color: black;
 	color: black;
 	font-family: 'Trebuchet MS',sans-serif;
-	overflow: hidden;
 }
 #fullscreen {
 	display: table;
