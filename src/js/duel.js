@@ -61,7 +61,7 @@ var Duelist = Class.extend({
 var CardLocation = Class.extend({
 	player: 0,
 
-	// The cards in the location, last is top.
+	// The cards in the location, first is top.
 	cards: null,
 
 	init: function(pl) {
@@ -88,17 +88,9 @@ var CardLocation = Class.extend({
 	}
 });
 
-var GYCardLocation = CardLocation.extend({});
-var DeckCardLocation = CardLocation.extend({
-	shuffle: function(duel, base) {
-		var id = base;
-		for (var i = this.cards.length; i --> 0; ) {
-			var oldCard = this.cards[i];
-			var card = new DuelCard(id++, this, this.player);
-			this.cards[i] = card;
-			duel.remapCard(oldCard, card);
-		}
-	},
+var CardPileLocation = CardLocation.extend({
+	uiPile: null,
+
 	addToTop: function(card) {
 		this.cards.unshift(card);
 	},
@@ -110,8 +102,21 @@ var DeckCardLocation = CardLocation.extend({
 		return this.cards[0];
 	}
 });
-var BanishCardLocation = CardLocation.extend({});
-var ExtraCardLocation = CardLocation.extend({});
+
+var GYCardLocation = CardPileLocation.extend({});
+var DeckCardLocation = CardPileLocation.extend({
+	shuffle: function(duel, base) {
+		var id = base;
+		for (var i = this.cards.length; i --> 0; ) {
+			var oldCard = this.cards[i];
+			var card = new DuelCard(id++, this, this.player);
+			this.cards[i] = card;
+			duel.remapCard(oldCard, card);
+		}
+	}
+});
+var BanishCardLocation = CardPileLocation.extend({});
+var ExtraCardLocation = CardPileLocation.extend({});
 var HandCardLocation = CardLocation.extend({
 	shuffle: function(duel, base, data) {
 		var id = base;
@@ -192,6 +197,95 @@ var DuelCard = Class.extend({
 });
 
 
+var UIPile = Class.extend({
+	holder: null,
+	owner: 0,
+	topUICard: null,
+	baseRect: null,
+	z: 1,
+
+	// Copies of the cards in the pile, as of the time they were added.
+	// The last is topmost.
+	stack: null,
+
+	init: function(holder, rect) {
+		this.holder = holder;
+		this.stack = [];
+		this.topUICard = null;
+		this.baseRect = rect;
+		this.ui = $('<div>').addClass('duel-pile')
+			.css({left: rect.left, top: rect.top,
+				width: rect.width, height: rect.height})
+			.appendTo(this.holder);
+	},
+
+	indexOf: function(card) {
+		return this.stack.map(function(c) {
+			return c.id;
+		}).indexOf(card.id);
+	},
+
+	remap: function(oldCard, card) {
+		var ind = this.indexOf(oldCard);
+		console.assert(ind !== -1);
+		this.stack[ind] = Object.clone(card);
+	},
+
+	remove: function(card) {
+		var ind = this.indexOf(card);
+		console.assert(ind !== -1);
+		var oldClone = this.stack.splice(ind, 1)[0];
+		var wasTop = (oldClone === this.topUICard.card);
+		if (wasTop)
+			this.setZ(200);
+		this.update(wasTop);
+		return oldClone;
+	},
+
+	setUI: function(loc) {
+		loc.cards.forEach(function(card) {
+			this.stack.unshift(Object.clone(card));
+		}.bind(this));
+		this.owner = loc.player;
+		this.update(true);
+	},
+
+	setZ: function(z) {
+		this.z = z;
+		if (this.topUICard) {
+			this.topUICard.setZ(z);
+		}
+	},
+
+	update: function(topChange) {
+		var rect = this.baseRect;
+		if (topChange) {
+			if (this.topUICard) {
+				this.topUICard.destroy();
+				this.topUICard = null;
+			}
+			if (this.stack.length > 0) {
+				var card = this.stack[this.stack.length-1];
+				this.topUICard = new UICard(this.holder, card);
+				var w = rect.width, h = rect.height;
+				var rot = (this.owner === 0 ? 0 : -180);
+				this.topUICard.move(0, 0, w, h, card.faceup, rot);
+				this.topUICard.setZ(this.z);
+			}
+		}
+
+		if (this.topUICard) {
+			// TODO: Construct a 3D look.
+			// box-shadow e.g. '14px 17px 1px #CCCCCC, 14px 17px 0 #000000' for one layer.
+			this.topUICard.setDirectPosition(rect.left, rect.top);
+			this.topUICard.el.css({
+				'box-shadow': '0 0 ' + this.stack.length + 'px #000'
+			});
+		}
+	}
+});
+
+
 var UICard = Class.extend({
 	el: null,
 	flipper: null,
@@ -210,6 +304,16 @@ var UICard = Class.extend({
 
 	init: function(holder, card) {
 		this.holder = holder;
+		this.card = card;
+	},
+
+	destroy: function() {
+		if (this.el)
+			this.el.remove();
+	},
+
+	remap: function(oldCard, card) {
+		console.assert(this.card === oldCard);
 		this.card = card;
 	},
 
@@ -258,7 +362,20 @@ var UICard = Class.extend({
 		this.frontImg.attr('src', "img/duel/frames/" + type + ".jpg");
 	},
 
-	move: function(x, y, w, h, z, faceup, rotation) {
+	setDirectPosition: function(x, y) {
+		this.el.css({left: x, top: y});
+	},
+
+	setZ: function(z) {
+		this.el.css('z-index', z);
+	},
+
+	move: function(x, y, w, h, faceup, rotation, finished) {
+		// z is the z-index for the card, set to:
+		// - 100+ for moving cards
+		// - 1 for cards on field, including piles
+		// - 200 for piles when the a moving card is supposed to be under it
+		// - 300+ for cards in hand
 		var delay = 500;
 		if (!this.el) {
 			this.create();
@@ -270,16 +387,17 @@ var UICard = Class.extend({
 			this.createCardFront();
 		}
 
+		console.assert(!(faceup && !this.hasCardInfo));
+
 		var loc = {left: x, top: y, width: w, height: h};
 		if (delay) {
 			this.el.stop();
-			this.el.animate(loc, delay);
+			this.el.animate(loc, delay, finished);
 		}
 		else {
 			this.el.css(loc);
 		}
-		// TODO: Do this at the right time.
-		this.el.css({'z-index': z, 'overflow': 'visible'});
+		this.el.css('overflow', 'visible');
 
 		if (this.faceup !== faceup) {
 			this.faceup = faceup;
@@ -310,21 +428,26 @@ var UICard = Class.extend({
 				duration: delay
 			}, 'linear');
 		}
+
+		if (!delay && finished)
+			finished();
 	}
 });
 
 
 var DuelUI = Class.extend({
+	duel: null,
 	ui: null,
 	fieldCells: null,
-	cardMap: null,
+	map: null,
 	colX: null,
 	colW: null,
 	rowY: null,
 	rowH: null,
 
-	init: function(view) {
-		this.cardMap = {};
+	init: function(view, duel) {
+		this.duel = duel;
+		this.map = {};
 		this.ui = $('#duel-ui');
 		this.cardHolder = $('#duel-cardholder');
 
@@ -373,6 +496,18 @@ var DuelUI = Class.extend({
 			this.colX.push(els[0][col].offset().left);
 			this.colW.push(els[0][col].width());
 		}
+
+		for (var pl = 0; pl < 2; ++pl) {
+			var locs = duel.locations[pl];
+			for (var name in locs) {
+				var loc = locs[name];
+				if (loc instanceof CardPileLocation) {
+					var rect = this.getLocRect(loc);
+					var pile = new UIPile(this.cardHolder, rect);
+					loc.uiPile = pile;
+				}
+			}
+		}
 	},
 
 	getFieldPosRect: function(row, col) {
@@ -384,8 +519,44 @@ var DuelUI = Class.extend({
 			width: nw,
 			height: h,
 			left: midx - nw/2 + 2,
-			top: y + 2
+			top: y + 2,
+			z: 1
 		};
+	},
+
+	getLocRect: function(loc) {
+		var row, col;
+		if (loc instanceof FieldSpellCardLocation) {
+			row = 2;
+			col = 6;
+		}
+		else if (loc instanceof DeckCardLocation) {
+			row = 4;
+			col = 6;
+		}
+		else if (loc instanceof ExtraCardLocation) {
+			row = 4;
+			col = 0;
+		}
+		else if (loc instanceof GYCardLocation) {
+			row = 3;
+			col = 6;
+		}
+		else if (loc instanceof BanishCardLocation) {
+			row = 2;
+			col = 6;
+		}
+		else {
+			console.assertNotReached("Invalid location.");
+		}
+
+		// Mirror the field for player 1.
+		if (loc.player === 1) {
+			row = 4-row;
+			col = 6-col;
+		}
+
+		return this.getFieldPosRect(row, col);
 	},
 
 	getHandCardRect: function(card) {
@@ -417,8 +588,23 @@ var DuelUI = Class.extend({
 			top: y,
 			width: w,
 			height: h,
-			z: ncards - index
+			z: 300 + ncards - index
 		};
+	},
+
+	getFieldCardRect: function(card) {
+		var loc = card.location;
+		var row = (loc instanceof MonsterCardLocation ? 3 : 4);
+		var col = loc.cards.indexOf(card) + 1;
+		var piles = [['deck', 4, 6], ['extra', 4, 0], ['gy', 3, 6], ['banish', 2, 6]];
+
+		// Mirror the field for player 1.
+		if (loc.player === 1) {
+			row = 4-row;
+			col = 6-col;
+		}
+
+		return this.getFieldPosRect(row, col);
 	},
 
 	getCardRect: function(card) {
@@ -426,43 +612,13 @@ var DuelUI = Class.extend({
 		if (loc instanceof HandCardLocation) {
 			return this.getHandCardRect(card);
 		}
-
-		var row, col;
-		// Pretend to be player 0, then mirror the field if (pl === 1).
-		if (loc instanceof BanishCardLocation) {
-			row = 2;
-			col = 6;
-		}
-		else if (loc instanceof DeckCardLocation) {
-			row = 4;
-			col = 6;
-		}
-		else if (loc instanceof GYCardLocation) {
-			row = 3;
-			col = 6;
-		}
-		else if (loc instanceof ExtraCardLocation) {
-			row = 4;
-			col = 0;
-		}
-		else if (loc instanceof FieldSpellCardLocation) {
-			row = 2;
-			col = 6;
+		else if (loc instanceof STCardLocation ||
+			loc instanceof MonsterCardLocation) {
+			return this.getFieldCardRect(card);
 		}
 		else {
-			row = (loc instanceof MonsterCardLocation ? 3 : 4);
-			col = loc.cards.indexOf(card) + 1;
+			return this.getLocRect(loc);
 		}
-
-		if (pl === 1) {
-			row = 4-row;
-			col = 6-col;
-		}
-
-		// TODO: Adjust for 3d effects.
-		var rect = this.getFieldPosRect(row, col);
-		rect.z = 1;
-		return rect;
 	},
 
 	destroy: function() {
@@ -470,15 +626,24 @@ var DuelUI = Class.extend({
 		this.cardHolder.empty();
 	},
 
-	setUI: function(duel) {
+	setUI: function() {
 		var self = this;
 		for (var pl = 0; pl < 2; ++pl) {
-			var locs = duel.locations[pl];
-			for (var a in locs) {
-				locs[a].cards.forEach(function(c) {
-					if (c)
-						self.makeCard(c);
-				});
+			var locs = this.duel.locations[pl];
+			for (var name in locs) {
+				var loc = locs[name];
+				if (loc instanceof CardPileLocation) {
+					var pile = loc.uiPile;
+					pile.setUI(loc);
+					loc.cards.forEach(function(c) {
+						self.mapCardPile(pile, c);
+					});
+				}
+				else {
+					loc.cards.forEach(function(c) {
+						if (c) self.makeCard(c);
+					});
+				}
 			}
 		}
 	},
@@ -487,30 +652,72 @@ var DuelUI = Class.extend({
 		// TODO
 	},
 
-	getUICard: function(card) {
-		console.assert(this.cardMap[card.id]);
-		return this.cardMap[card.id];
-	},
-
 	makeCard: function(card) {
 		var uiCard = new UICard(this.cardHolder, card);
-		this.cardMap[card.id] = uiCard;
-		this.moveCard(card);
+		this.map[card.id] = uiCard;
+		var rect = this.getCardRect(card);
+		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
+		uiCard.move(rect.left, rect.top, rect.width, rect.height,
+				card.faceup, rotation);
+		uiCard.setZ(rect.z);
 	},
 
 	remapCard: function(oldCard, card) {
-		var uiCard = this.cardMap[oldCard.id];
-		uiCard.card = card;
-		this.cardMap[card.id] = uiCard;
-		delete this.cardMap[oldCard.id];
+		var thing = this.map[oldCard.id];
+		thing.remap(oldCard, card);
+		delete this.map[oldCard.id];
+		this.map[card.id] = thing;
+	},
+
+	mapCardPile: function(pile, card) {
+		this.map[card.id] = pile;
+	},
+
+	placeUICard: function(uiCard) {
 	},
 
 	moveCard: function(card) {
 		var rect = this.getCardRect(card);
-		var uiCard = this.getUICard(card);
+		var thing = this.map[card.id], uiCard;
+		if (thing instanceof UIPile) {
+			var oldClone = thing.remove(card);
+			console.assert(oldClone.id === card.id);
+			this.makeCard(oldClone);
+			uiCard = this.map[card.id];
+			uiCard.card = card;
+		}
+		else {
+			uiCard = thing;
+		}
 		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
+
+		// Adjust z-index of target pile.
+		var toPile = card.location.uiPile;
+		if (toPile && card.location.cards.length > 0) {
+			if (card.location.top() === card)
+				toPile.setZ(200);
+		}
+
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
-				rect.z, card.faceup, rotation);
+				card.faceup, rotation, function()
+		{
+			// Movement has finished, merge card into pile if applicable.
+			if (toPile) {
+				// TODO
+				toPile.setZ(1);
+			}
+			else {
+				// Readjust z to what it is supposed to be.
+				uiCard.setZ(rect.z);
+			}
+			// Reset z-index of piles referred to.
+			// TODO: Delay queue callbacks to after this.
+			if (thing instanceof UIPile)
+				thing.setZ(1);
+		});
+
+		// Adjust z-index of moved card, after potentially adding it to the DOM.
+		uiCard.setZ(rect.z >= 400 ? rect.z - 300 : 100 + rect.z);
 	},
 
 	attack: function(card, target) {
@@ -553,7 +760,7 @@ var Duel = Class.extend({
 			});
 		}
 
-		this.ui = new DuelUI(view);
+		this.ui = new DuelUI(view, this);
 	},
 
 	destroy: function() {
@@ -620,26 +827,27 @@ var Duel = Class.extend({
 	refreshLocation: function(loc, card) {
 		// Refresh an individual card's location, after it has moved to/from
 		// there. (For hands, other cards need to rearrange, etc.)
-		// If loc is not a FieldCardLocation, card can be null.
+		// 'card' can be null if no particular card is designated, or if the
+		// card is no longer there.
 		var ui = this.ui;
-		if (loc instanceof FieldCardLocation) {
-			if (card)
-				ui.moveCard(card);
-		}
-		else {
+		if (loc instanceof HandCardLocation) {
 			loc.cards.forEach(function(c) {
 				ui.moveCard(c);
 			});
+		}
+		else if (card) {
+			ui.moveCard(card);
 		}
 	},
 
 	deckShuffle: function(deck, base) {
 		deck.shuffle(this, base);
-		this.refreshLocation(deck, null);
+		// TODO: Shuffle animation.
 	},
 	handShuffle: function(hand, base, data) {
 		hand.shuffle(this, base, data);
 		this.refreshLocation(hand, null);
+		// TODO: (Better) shuffle animation.
 	},
 
 	moveCard: function(card, toLoc, locPosition, faceup, defense, special, reveal) {
@@ -661,9 +869,9 @@ var Duel = Class.extend({
 			toLoc.addCard(card);
 		}
 
-		this.refreshLocation(fromLoc, card);
 		if (fromLoc !== toLoc)
-			this.refreshLocation(toLoc, card);
+			this.refreshLocation(fromLoc, null);
+		this.refreshLocation(toLoc, card);
 	},
 
 	drawCard: function(pl, icard) {
@@ -712,7 +920,7 @@ var Duel = Class.extend({
 		this.lifepoints = [8000, 8000];
 
 		this.mapAllCards();
-		this.ui.setUI(this);
+		this.ui.setUI();
 	},
 
 	_initFromWatchData: function(data) {
@@ -751,7 +959,7 @@ var Duel = Class.extend({
 		}
 
 		this.mapAllCards();
-		this.ui.setUI(this);
+		this.ui.setUI();
 		this.setStatus(0, statuses[0]);
 		this.setStatus(1, statuses[1]);
 	}
