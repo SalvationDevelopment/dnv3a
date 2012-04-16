@@ -767,7 +767,9 @@ var DuelUI = Class.extend({
 		{
 			// Movement has finished, merge card into pile if applicable.
 			if (toPile) {
-				// TODO
+				uiCard.destroy();
+				self.map[card.id] = toPile;
+				toPile.updateFromLocation(toLoc);
 				toPile.setZ(1);
 			}
 			else {
