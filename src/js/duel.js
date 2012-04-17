@@ -470,7 +470,12 @@ var UICard = Class.extend({
 var DuelUI = Class.extend({
 	duel: null,
 	ui: null,
+	duelists: null,
 	fieldCells: null,
+	turnIndicator: null,
+	phaseIndicator: null,
+	nextTurnIndicator: null,
+	lpEl: null,
 	map: null,
 	colX: null,
 	colW: null,
@@ -479,6 +484,7 @@ var DuelUI = Class.extend({
 
 	init: function(view, duel) {
 		this.duel = duel;
+		this.duelists = view.duelists;
 		this.map = {};
 		this.ui = $('#duel-ui');
 		this.cardHolder = $('#duel-cardholder');
@@ -517,7 +523,31 @@ var DuelUI = Class.extend({
 		}
 		this.fieldCells = els;
 
-		midContainer.text("Hello.");
+		// In the middle, add indicators (wrapped within a div, to enable
+		// position: absolute).
+		var mid = $('<div id="duel-mid-wrapper">').appendTo(midContainer);
+
+		// Add turn indicators in the middle.
+		var ind = $('<div id="duel-indicators">').appendTo(mid);
+		this.turnIndicator = $('<div id="duel-turn">').appendTo(ind);
+		this.phaseIndicator = $('<div id="duel-phase">').appendTo(ind);
+		this.nextTurnIndicator = $('<div id="duel-next">').appendTo(ind);
+
+		// Add player indicators in the middle.
+		this.lpEl = [];
+		for (var i = 0; i < 2; ++i) {
+			var name = this.duelists[i].uname;
+			var pl = $('<div>').addClass('duel-player p'+i).appendTo(mid);
+			$('<div>').addClass('name').text(name).appendTo(pl);
+			var lpbg = $('<div>').addClass('lp-bg');
+			var lpcont = $('<div>').addClass('lp-cont');
+			$('<div>').addClass('lp').append(lpbg).append(lpcont).appendTo(pl);
+			this.lpEl.push({
+				bg: lpbg,
+				cont: lpcont
+			});
+		}
+
 		this.duelTable.appendTo(this.tableCont);
 
 		for (var row = 0; row < 5; ++row) {
@@ -692,9 +722,9 @@ var DuelUI = Class.extend({
 	},
 
 	setUI: function() {
-		var self = this;
+		var self = this, duel = this.duel;
 		for (var pl = 0; pl < 2; ++pl) {
-			var locs = this.duel.locations[pl];
+			var locs = duel.locations[pl];
 			for (var name in locs) {
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
@@ -711,11 +741,12 @@ var DuelUI = Class.extend({
 					});
 				}
 			}
-		}
-	},
 
-	setStatus: function(pl, status) {
-		// TODO
+			this.setLifePoints(pl, duel.lifepoints[pl], true);
+			this.setStatus(pl, duel.statuses[pl]);
+		}
+
+		this.setPhase(duel.turn, duel.phase);
 	},
 
 	makeCard: function(card) {
@@ -737,9 +768,6 @@ var DuelUI = Class.extend({
 
 	mapCardPile: function(pile, card) {
 		this.map[card.id] = pile;
-	},
-
-	placeUICard: function(uiCard) {
 	},
 
 	moveCard: function(card) {
@@ -790,16 +818,40 @@ var DuelUI = Class.extend({
 		});
 	},
 
+	setStatus: function(pl, status) {
+		// TODO
+	},
+
 	attack: function(card, target) {
 		// TODO (target = null -> direct attack)
 	},
 
 	setPhase: function(turn, phase) {
-		// TODO
+		var yourTurn = (this.isPlaying && turn === 0);
+		this.turnIndicator.text(yourTurn ?
+				"your" : this.duelists[turn].uname + "'s");
+
+		var ph = {
+			'dp': "DP",
+			'sp': "SP",
+			'm1': "MP 1",
+			'bp': "BP",
+			'm2': "MP 2",
+			'ep': "EP",
+			'et': "EP"
+		};
+		this.phaseIndicator.text(ph[phase]);
+
+		this.nextTurnIndicator.toggle(phase === 'et')
+			.text(yourTurn ? "(waiting)" : "(next?)");
 	},
 
-	setLifePoints: function(pl, points) {
-		// TODO
+	setLifePoints: function(pl, points, first) {
+		var el = this.lpEl[pl];
+		var w = {'width': (points < 8000 ? (points/80) : 100) + '%'};
+		el.bg.animate(w, (first ? 0 : 500), function() {
+			el.cont.text(points);
+		});
 	}
 });
 
@@ -808,14 +860,16 @@ var Duel = Class.extend({
 	locations: null,
 	lifepoints: null,
 	statuses: null,
+	isPlaying: false,
 	turn: 0,
 	phase: '',
 	map: null,
 	ui: null,
 
 	init: function(view) {
+		this.isPlaying = !view.watch;
 		this.locations = [];
-		this.map = [];
+		this.map = {};
 		this.statuses = ['', ''];
 		for (var pl = 0; pl < 2; ++pl) {
 			this.locations.push({
@@ -947,7 +1001,7 @@ var Duel = Class.extend({
 	drawCard: function(pl, icard) {
 		var card = this.locations[pl].deck.top();
 		var hand = this.locations[pl].hand;
-		var ownHand = false;
+		var ownHand = (this.isPlaying && pl === 0);
 		this.moveCard(card, hand, null, ownHand, false, false, false);
 	},
 
@@ -973,7 +1027,7 @@ var Duel = Class.extend({
 	},
 
 	setLifePoints: function(pl, points) {
-		this.ui.setLifePoints(pl, points);
+		this.ui.setLifePoints(pl, points, false);
 		var dif = points - this.lifepoints[pl];
 		this.lifepoints[pl] = points;
 		return dif;
@@ -998,7 +1052,7 @@ var Duel = Class.extend({
 		this.turn = (data[1] === 'true' ? 0 : 1);
 		var latestFieldSpellPlayer = (data[2] === 'true' ? 0 : 1);
 		this.lifepoints = [+data[3], +data[4]];
-		var statuses = [data[5], data[6]];
+		this.statuses = [data[5], data[6]];
 
 		var ind = 7;
 		while (ind < data.length) {
@@ -1030,8 +1084,6 @@ var Duel = Class.extend({
 
 		this.mapAllCards();
 		this.ui.setUI();
-		this.setStatus(0, statuses[0]);
-		this.setStatus(1, statuses[1]);
 	}
 });
 

@@ -504,12 +504,61 @@ body {
 	background-color: rgba(0, 0, 0, 0.2);
 	width: 11%;
 }
-.duel-cell-cont {
-	background-color: wheat;
-}
 .duel-cell {
 	width: 15%;
 	background-color: rgba(0, 0, 0, 0.2);
+}
+
+#duel-mid {
+	vertical-align: top;
+}
+#duel-mid-wrapper {
+	position: relative;
+}
+.duel-player.p0 {
+	float: left;
+	text-align: left;
+}
+.duel-player.p1 {
+	float: right;
+	text-align: right;
+}
+.duel-player .name {
+	margin: 0 0 1px;
+}
+.duel-player .lp {
+	position: relative;
+	display: inline-block;
+	border: 1px solid gray;
+	width: 110px;
+}
+.duel-player .lp-bg {
+	position: absolute;
+	height: 100%;
+	background-color: lightgreen;
+}
+.duel-player .lp-cont {
+	position: relative;
+	margin: 0 1px;
+}
+.duel-player.p1 .lp-bg { right: 0; }
+#duel-indicators {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+}
+#duel-turn {
+	font-size: 12px;
+	margin: 3px 0 1px;
+}
+#duel-phase {
+	color: #DEAA20;
+	font: 24px serif;
+}
+#duel-next {
+	display: none;
+	font-size: 11px;
+	font-weight: bold;
 }
 
 
