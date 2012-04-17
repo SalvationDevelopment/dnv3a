@@ -321,6 +321,7 @@ var UICard = Class.extend({
 	faceup: undefined,
 	rotation: 0,
 	frontImg: null,
+	cardImg: null,
 
 	flipped: function(front) {
 		// Do this with raw CSS, because jQuery is too slow.
@@ -358,6 +359,10 @@ var UICard = Class.extend({
 			.attr('src', "img/duel/frames/back.jpg")
 			.appendTo(this.frontSide);
 
+		this.cardImg = $('<img>').addClass('card-image')
+			.attr('src', "img/loading.gif")
+			.appendTo(this.frontSide);
+
 		$('<img>').addClass('card-frame')
 			.attr('src', "img/duel/border.png")
 			.appendTo(this.frontSide);
@@ -386,6 +391,7 @@ var UICard = Class.extend({
 			console.assertNotReached("Invalid card type.");
 		}
 		this.frontImg.attr('src', "img/duel/frames/" + type + ".jpg");
+		this.cardImg.attr('src', icard.imageUrl);
 	},
 
 	setDirectPosition: function(x, y) {

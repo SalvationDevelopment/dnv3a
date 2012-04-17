@@ -462,6 +462,12 @@ body {
 	width: 100%;
 	border-radius: 2px;
 }
+.card-image {
+	position: absolute;
+	top: 22%;
+	left: 14.5%;
+	width: 71%;
+}
 .card-back {
 	display: none;
 }
