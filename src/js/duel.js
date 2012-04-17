@@ -1022,10 +1022,10 @@ var Duel = Class.extend({
 
 			if (loc instanceof FieldCardLocation)
 				loc.addCard(card, +fieldPosition);
-			else if (loc instanceof DeckCardLocation)
+			else if (loc instanceof CardPileLocation)
 				loc.addToBottom(card); // XXX Maybe?
 			else
-				loc.addCard(card); // XXX Maybe add these in reverse order.
+				loc.addCard(card);
 		}
 
 		this.mapAllCards();
