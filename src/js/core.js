@@ -25,6 +25,8 @@ window.View = Class.extend({
 	// closing prematurely, the server not responding to heartbeats, or so).
 	// The connection has been closed when this is called.
 	handleError: function(err) {
+		if (currentView instanceof ErrorView)
+			return;
 		setView(new ErrorView("The connection was lost."));
 	},
 
@@ -126,6 +128,11 @@ function handleErrorMessage(ev, data) {
 		setTimeout(function() {
 			alert(ev + "\n\n" + data[0]);
 		});
+		return true;
+	}
+	if (ev === 'Timed out') {
+		setView(new ErrorView("The connection was lost.", "Time out"));
+		Communicator.closeConnection();
 		return true;
 	}
 	return false;
