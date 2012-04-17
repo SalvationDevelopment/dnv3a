@@ -116,8 +116,7 @@ var DeckCardLocation = CardPileLocation.extend({
 var BanishCardLocation = CardPileLocation.extend({});
 var ExtraCardLocation = CardPileLocation.extend({});
 var HandCardLocation = CardLocation.extend({
-	// 'cards' is left-to-right
-	// TODO: right-to-left for player 1
+	// 'cards' is left-to-right for player 0, right-to-left for player 1
 
 	addCard: function(card) {
 		this.cards.push(card);
@@ -632,12 +631,14 @@ var DuelUI = Class.extend({
 			// They don't; cover the space with some overlap.
 			eachX = (endX - startX - w) / (ncards-1);
 		}
-		var x = startX + eachX*index, y;
 
+		var x, y;
 		if (pl === 0) {
+			x = startX + eachX*index;
 			y = this.rowY[4] + this.rowH[4] + 10;
 		}
 		else {
+			x = startX + eachX*(ncards-1-index);
 			y = this.rowY[0] - h - 5;
 		}
 
