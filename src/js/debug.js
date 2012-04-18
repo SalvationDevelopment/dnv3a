@@ -173,7 +173,7 @@ window.Debug = {
 
 	init: function() {
 		this.widget = new DebugWidget();
-		this.widget.open(false);
+		this.widget.open(true);
 
 		// Add replays as needed.
 		//this.replay('watch');

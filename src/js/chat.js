@@ -123,7 +123,7 @@ window.ChatManager = {
 		this.globalChat = new Chat("Global chat", 'a', 5, function(msg) {
 			Communicator.send(['Global message', msg]);
 		});
-		this.globalChat.open(true);
+		this.globalChat.open(false);
 	},
 
 	removeAllChats: function() {
