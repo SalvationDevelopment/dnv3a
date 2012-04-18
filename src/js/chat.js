@@ -55,12 +55,19 @@ var Chat = SidebarWidget.extend({
 			.appendTo(this.ui);
 		this.cont = $('<div>').addClass('sidebar-box-cont border-box')
 			.appendTo(this.holder);
-		this.chatField = $('<input>').addClass('sidebar-box-field border-box')
-		    .prop('value', '').attr('placeholder', "Reply...").appendTo(this.holder);
+		if (this.sendF) {
+			this.chatField = $('<input>')
+				.addClass('sidebar-box-field border-box')
+				.prop('value', '').attr('placeholder', "Reply...")
+				.keydown(function(e) {
+					if (e.which === 13) this.send(this);
+				}.bind(this))
+				.appendTo(this.holder);
 
-		this.chatField.keydown(function(e) {
-			if (e.which === 13) this.send();
-		}.bind(this));
+		}
+		else {
+			this.holder.css('padding-bottom', 0);
+		}
 
 		this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
@@ -69,13 +76,13 @@ var Chat = SidebarWidget.extend({
 		IgnoreList.unlisten(this.ignoreHandle);
 	},
 
-	send: function() {
-		var value = this.chatField.attr('value');
+	send: function(field) {
+		var value = field.value;
 		if (ChatManager.locked || !value)
 			return;
 		ChatManager.locked = true;
 		this.sendF(value);
-		this.chatField.attr('value', '');
+		field.value = '';
 	},
 
 	ignoreListener: function(ev, name) {
@@ -93,24 +100,29 @@ var Chat = SidebarWidget.extend({
 		el.scrollTop = el.scrollHeight;
 	},
 
-	addMessage: function(from, message, color) {
-		if (IgnoreList.has(from))
-			return;
-
+	addLine: function(line) {
 		var el = this.cont[0];
 		var scrollToBottom = (this.isVisible() &&
 			el.scrollTop + el.offsetHeight === el.scrollHeight);
+
+		this.cont.append(line);
+
+		if (scrollToBottom)
+			el.scrollTop = el.scrollHeight;
+	},
+
+	addMessage: function(from, message, color) {
+		if (IgnoreList.has(from))
+			return;
 
 		var line = $('<div>').addClass('chat-line').append(
 			$('<span>').addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
 			$('<span>').addClass('chat-message').html(linkify(message))
-		).appendTo(this.cont);
-
+		);
 		addUserContextMenu(line, from);
 
-		if (scrollToBottom)
-			el.scrollTop = el.scrollHeight;
+		this.addLine(line);
 	}
 });
 
@@ -135,6 +147,12 @@ window.ChatManager = {
 
 	openUserChat: function(user) {
 		return;
+	},
+
+	openDuelLog: function(sendF) {
+		var chat = new Chat("Duel log", 'b', 10, sendF);
+		chat.open(true);
+		return chat;
 	},
 
 	handleMessage: function(ev, data) {

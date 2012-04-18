@@ -469,6 +469,7 @@ var UICard = Class.extend({
 
 var DuelUI = Class.extend({
 	duel: null,
+	isPlaying: false,
 	ui: null,
 	duelists: null,
 	fieldCells: null,
@@ -484,6 +485,7 @@ var DuelUI = Class.extend({
 
 	init: function(view, duel) {
 		this.duel = duel;
+		this.isPlaying = duel.isPlaying;
 		this.duelists = view.duelists;
 		this.map = {};
 		this.ui = $('#duel-ui');
@@ -1103,6 +1105,7 @@ Duel.createFromWatchData = function(view, data) {
 window.DuelView = View.extend({
 	id: 'duelview',
 	duel: null,
+	duelLog: null,
 	startingPlayer: null,
 	duelState: '',
 	duelists: null,
@@ -1151,12 +1154,17 @@ window.DuelView = View.extend({
 	open: function() {
 		this.setCommands();
 		this.queue = new Queue();
+		this.duelLog = ChatManager.openDuelLog(this.watch ? null : function(msg) {
+			this.sendChatMessage(msg);
+		}.bind(this));
 	},
 
 	close: function() {
 		if (this.duel)
 			this.duel.destroy();
 		this.queue.destroy();
+		this.duelLog.close();
+		this.duelLog.destroy();
 	},
 
 	getDuelistFromName: function(name) {
@@ -1234,7 +1242,7 @@ window.DuelView = View.extend({
 			var points = +data[1];
 			var dif = this.duel.setLifePoints(pl, points);
 
-			var msg = uname + (dif > 0 ? " gained " : " lost ") +
+			var msg = uname + (dif > 0 ? " gains " : " loses ") +
 				plural(Math.abs(dif), "lifepoint", "", "s") + ".";
 			this.addToDuelLog(msg);
 			return 0;
@@ -1324,6 +1332,11 @@ window.DuelView = View.extend({
 	},
 
 	addToDuelLog: function(msg) {
+		var line = $('<div class="duel-log-line">').text(msg);
+		this.duelLog.addLine(line);
+	},
+
+	sendChatMessage: function(msg) {
 		// TODO
 	},
 

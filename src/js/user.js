@@ -196,7 +196,7 @@ window.addUserContextMenu = function(el, name) {
 };
 
 window.OnlineList = SidebarWidget.extendObject({
-	order: 'b',
+	order: 'c',
 	importance: 1,
 	title: "Online",
 
