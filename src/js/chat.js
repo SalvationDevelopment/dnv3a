@@ -100,6 +100,11 @@ var Chat = SidebarWidget.extend({
 		el.scrollTop = el.scrollHeight;
 	},
 
+	focus: function() {
+		this.show();
+		this.chatField.focus();
+	},
+
 	addLine: function(line) {
 		var el = this.cont[0];
 		var scrollToBottom = (this.isVisible() &&
@@ -150,8 +155,14 @@ window.ChatManager = {
 	},
 
 	openDuelLog: function(sendF) {
-		var chat = new Chat("Duel log", 'b', 10, sendF);
+		var chat = new Chat("Duel log", 'b2', 10, sendF);
 		chat.open(true);
+		return chat;
+	},
+
+	openWatchChat: function(sendF) {
+		var chat = new Chat("Watch chat", 'b1', 9, sendF);
+		chat.open(false);
 		return chat;
 	},
 

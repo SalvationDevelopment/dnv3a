@@ -1157,6 +1157,9 @@ window.DuelView = View.extend({
 		this.duelLog = ChatManager.openDuelLog(this.watch ? null : function(msg) {
 			this.sendChatMessage(msg);
 		}.bind(this));
+		this.watchChat = ChatManager.openWatchChat(function(msg) {
+			this.sendWatchMessage(msg);
+		});
 	},
 
 	close: function() {
@@ -1321,6 +1324,12 @@ window.DuelView = View.extend({
 			this.watchers.splice(ind, 1);
 			return true;
 		}
+		if (ev === 'Watch message') {
+			var from = data[0], msg = data[1];
+			var user = Users.getUser(from);
+			this.watchChat.addMessage(from, msg, user.getColor());
+			return true;
+		}
 		if (ev === 'Turn pick') {
 			this.startingPlayer = this.getDuelistFromName(data[0]);
 			return true;
@@ -1340,14 +1349,14 @@ window.DuelView = View.extend({
 		// TODO
 	},
 
+	sendWatchMessage: function(msg) {
+		Communicator.send(['Watch message', msg]);
+	},
+
 	goBack: function() {
 		ignoreLateMessages(this.ignoreLateMessage);
 		Communicator.send(['Load duel room']);
 		setView(new MatchmakingView());
-	},
-
-	selectChat: function(watchChat) {
-		console.log("Nope, sorry.");
 	},
 
 	setCommands: function() {
@@ -1355,7 +1364,7 @@ window.DuelView = View.extend({
 		if (this.watch) {
 			Commands.setMap(this, [
 				[1, "<enter>", "Chat (watch)"],
-				[0, 'enter', "", function() { this.selectChat(true); }],
+				[0, 'enter', "", function() { this.watchChat.focus(); }],
 				[2, 'q', "Quit", this.goBack],
 			]);
 			return;
