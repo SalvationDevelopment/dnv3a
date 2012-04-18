@@ -91,6 +91,7 @@ var replays = {
 
 var DebugWidget = SidebarWidget.extend({
 	order: 'c',
+	importance: 3,
 	title: "Debug log",
 
 	holder: null,

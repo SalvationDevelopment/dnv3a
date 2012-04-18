@@ -4,6 +4,7 @@
 
 window.SidebarWidget = Class.extend({
 	order: '',
+	importance: 0,
 	title: '',
 	ui: null,
 	box: null,
@@ -129,6 +130,19 @@ window.Sidebar = {
 		widget.box = null;
 
 		this.layout();
+	},
+
+	collapseUnimportant: function() {
+		// Collapse all but the 3 most important visible boxes.
+		var vis = this.ui.find('.sidebar-box.open');
+		vis.toArray().map(function(x) {
+			return $(x).data('widget');
+		}).sort(function(a, b) {
+			return b.importance - a.importance;
+		}).forEach(function(widget, ind) {
+			if (ind >= 3)
+				widget.hide();
+		});
 	}
 };
 

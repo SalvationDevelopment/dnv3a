@@ -43,9 +43,10 @@ var Chat = SidebarWidget.extend({
 	cont: null,
 	chatField: null,
 
-	init: function(title, order) {
+	init: function(title, order, importance) {
 		this.title = title;
 		this.order = order;
+		this.importance = importance;
 
 		this.ui = $('<div>').addClass('chat');
 		this.holder = $('<div>').addClass('sidebar-box-holder border-box')
@@ -117,7 +118,7 @@ window.ChatManager = {
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
-		this.globalChat = new Chat("Global chat", 'a');
+		this.globalChat = new Chat("Global chat", 'a', 5);
 		this.globalChat.open(true);
 	},
 
