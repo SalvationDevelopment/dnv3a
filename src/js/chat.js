@@ -38,15 +38,17 @@ function linkify(text) {
 var Chat = SidebarWidget.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
+	sendF: null,
 
 	holder: null,
 	cont: null,
 	chatField: null,
 
-	init: function(title, order, importance) {
+	init: function(title, order, importance, sendF) {
 		this.title = title;
 		this.order = order;
 		this.importance = importance;
+		this.sendF = sendF;
 
 		this.ui = $('<div>').addClass('chat');
 		this.holder = $('<div>').addClass('sidebar-box-holder border-box')
@@ -72,7 +74,7 @@ var Chat = SidebarWidget.extend({
 		if (ChatManager.locked || !value)
 			return;
 		ChatManager.locked = true;
-		Communicator.send(['Global message', value]);
+		this.sendF(value);
 		this.chatField.attr('value', '');
 	},
 
@@ -118,12 +120,15 @@ window.ChatManager = {
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
-		this.globalChat = new Chat("Global chat", 'a', 5);
+		this.globalChat = new Chat("Global chat", 'a', 5, function(msg) {
+			Communicator.send(['Global message', msg]);
+		});
 		this.globalChat.open(true);
 	},
 
 	removeAllChats: function() {
 		console.assert(this.globalChat);
+		this.globalChat.close();
 		this.globalChat.destroy();
 		this.globalChat = null;
 	},
