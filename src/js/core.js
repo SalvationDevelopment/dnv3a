@@ -131,7 +131,7 @@ function handleErrorMessage(ev, data) {
 		return true;
 	}
 	if (ev === 'Timed out') {
-		setView(new ErrorView("The connection was lost.", "Time out"));
+		setView(new ErrorView("The connection was dropped.", "Timed out"));
 		Communicator.closeConnection();
 		return true;
 	}
