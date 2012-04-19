@@ -471,6 +471,16 @@ body {
 .card-back {
 	display: none;
 }
+.duel-attackline {
+	position: absolute;
+	z-index: 400;
+	-moz-transform-origin: left center;
+	-webkit-transform-origin: left center;
+	-ms-transform-origin: left center;
+	-o-transform-origin: left center;
+	transform-origin: left center;
+	height: 16px;
+}
 
 #duel-ui {
 	position: absolute;

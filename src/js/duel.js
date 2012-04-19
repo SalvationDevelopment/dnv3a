@@ -402,6 +402,15 @@ var UICard = Class.extend({
 		this.el.css('z-index', z);
 	},
 
+	getCenter: function() {
+		var x = parseFloat(this.el.css('left'), 10);
+		var y = parseFloat(this.el.css('top'), 10);
+		var w = parseFloat(this.el.css('width'), 10);
+		var h = parseFloat(this.el.css('height'), 10);
+		// This works even in case of rotations, because the center stays.
+		return {x: x + w/2, y: y + h/2};
+	},
+
 	move: function(x, y, w, h, faceup, rotation, finished) {
 		// z is the z-index for the card, set to:
 		// - 100+ for moving cards
@@ -471,6 +480,7 @@ var DuelUI = Class.extend({
 	duel: null,
 	isPlaying: false,
 	ui: null,
+	cardHolder: null,
 	duelists: null,
 	fieldCells: null,
 	turnIndicator: null,
@@ -831,7 +841,43 @@ var DuelUI = Class.extend({
 	},
 
 	attack: function(card, target) {
-		// TODO (target = null -> direct attack)
+		var pl = card.location.player;
+		var from = this.map[card.id].getCenter(), to;
+		if (target) {
+			to = this.map[target.id].getCenter();
+		}
+		else {
+			// Set the target to slightly above/below the field.
+			to = {};
+			to.x = this.colX[3] + this.colW[3]/2,
+			to.y = (pl === 0 ? this.rowY[0]-35 : this.rowY[4] + this.rowH[4] + 35);
+		}
+
+		// Draw a thick expanding line 'from' -> 'to'.
+		var dif = {
+			x: to.x - from.x,
+			y: to.y - from.y
+		};
+		var dist = Math.sqrt(dif.x*dif.x + dif.y*dif.y);
+		var angle = Math.atan2(dif.y, dif.x);
+		var color = (pl === 0 ? 'red' : 'blue');
+
+		var line = $('<div>').addClass('duel-attackline')
+			.css({
+				top: from.y-8,
+				left: from.x,
+				width: 0,
+				backgroundColor: color,
+				transform: 'rotate(' + angle + 'rad)'
+			})
+			.appendTo(this.cardHolder);
+		line.animate({
+			width: dist
+		}, 400, function() {
+			setTimeout(function() {
+				line.remove();
+			}, 300);
+		});
 	},
 
 	setPhase: function(turn, phase) {
@@ -1235,7 +1281,7 @@ window.DuelView = View.extend({
 			var targetId = data[2];
 			this.duel.ui.attack(attacker,
 					(data[2] ? this.duel.getCard(data[2]) : null));
-			return 500;
+			return 700;
 		}
 		if (ev === 'Phase') {
 			var phase = data[0];
