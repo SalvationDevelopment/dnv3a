@@ -1343,7 +1343,8 @@ window.DuelView = View.extend({
 			return true;
 		}
 		if (ev === 'Player quit') {
-			// TODO
+			this.addToDuelLog(data[0] + " has left the duel.");
+			return true;
 		}
 		return false;
 	},
