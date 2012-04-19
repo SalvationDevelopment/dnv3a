@@ -1175,6 +1175,8 @@ window.DuelView = View.extend({
 		this.queue.destroy();
 		this.duelLog.close();
 		this.duelLog.destroy();
+		this.watchChat.close();
+		this.watchChat.destroy();
 	},
 
 	getDuelistFromName: function(name) {
