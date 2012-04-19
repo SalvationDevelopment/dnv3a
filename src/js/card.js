@@ -7,22 +7,27 @@ window.Card = Class.extend({
 	number: 0,
 	name: '',
 	treatedAs: '',
+	cardType: '',
+	type: '',
 	imageUrl: '',
 	text: '',
 	limit: 0
 });
 
 window.MonsterCard = Card.extend({
-	type: '',
 	attribute: '',
 	atk: '',
 	def: '',
 	level: 0
 });
 
+window.TokenMonsterCard = MonsterCard.extend({});
 window.EffectMonsterCard = MonsterCard.extend({});
 window.NormalMonsterCard = MonsterCard.extend({});
 window.SynchroMonsterCard = MonsterCard.extend({});
+window.FusionMonsterCard = MonsterCard.extend({});
+window.XYZMonsterCard = MonsterCard.extend({});
+window.RitualMonsterCard = MonsterCard.extend({});
 
 window.STCard = Card.extend({
 	type: ''
@@ -31,13 +36,10 @@ window.STCard = Card.extend({
 window.SpellCard = STCard.extend({});
 window.TrapCard = STCard.extend({});
 
-// Unimplemented
-window.FusionMonsterCard = SynchroMonsterCard;
-window.XYZMonsterCard = SynchroMonsterCard;
-window.RitualMonsterCard = SynchroMonsterCard;
-
 window.createCard = function(data) {
 	console.assert(data.length === 16);
+	if (data[0] === '-1')
+		return window.createToken();
 
 	var type = data[5], card = null;
 	if (type === 'effect')
@@ -61,6 +63,7 @@ window.createCard = function(data) {
 	card.name = data[2];
 	card.imageUrl = UrlBase + "images/cards/" + data[3];
 	card.treatedAs = data[4];
+	card.cardType = type;
 	card.type = data[6];
 	card.text = data[8];
 	card.limit = +data[12];
@@ -70,6 +73,14 @@ window.createCard = function(data) {
 		card.def = data[10];
 		card.level = +data[11];
 	}
+	return card;
+};
+
+window.createToken = function() {
+	var card = new TokenMonsterCard();
+	card.imageUrl = "img/duel/token.jpg";
+	card.name = "Token";
+	card.atk = card.def = '?';
 	return card;
 };
 

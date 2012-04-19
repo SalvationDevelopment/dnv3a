@@ -371,25 +371,9 @@ var UICard = Class.extend({
 	},
 
 	createCardFront: function() {
-		var icard = this.card.card, type;
-		if (icard instanceof EffectMonsterCard) {
-			type = "effect";
-		}
-		else if (icard instanceof NormalMonsterCard) {
+		var icard = this.card.card, type = icard.cardType;
+		if (icard instanceof TokenMonsterCard)
 			type = "normal";
-		}
-		else if (icard instanceof SynchroMonsterCard) {
-			type = "synchro";
-		}
-		else if (icard instanceof TrapCard) {
-			type = "trap";
-		}
-		else if (icard instanceof SpellCard) {
-			type = "spell";
-		}
-		else {
-			console.assertNotReached("Invalid card type.");
-		}
 		this.frontImg.attr('src', "img/duel/frames/" + type + ".jpg");
 		this.cardImg.attr('src', icard.imageUrl);
 	},
@@ -1052,6 +1036,16 @@ var Duel = Class.extend({
 		this.refreshLocation(toLoc, card);
 	},
 
+	addToken: function(id, owner, loc, fieldPosition) {
+		var card = new DuelCard(id, loc, owner);
+		card.defense = true;
+		card.faceup = true;
+		card.card = createToken();
+		loc.addCard(card, +fieldPosition);
+		this.mapCard(card);
+		this.ui.makeCard(card);
+	},
+
 	drawCard: function(pl, icard) {
 		var card = this.locations[pl].deck.top();
 		var hand = this.locations[pl].hand;
@@ -1308,7 +1302,11 @@ window.DuelView = View.extend({
 			return 0;
 		}
 		if (ev === 'Token') {
-			// TODO
+			var locName = data[0], id = +data[1], fieldPosition = data[2];
+			var loc = this.duel.getLocation(locName, fieldPosition);
+			var owner = locName.slice(-1) - 1;
+			this.duel.addToken(id, owner, loc, fieldPosition);
+			return 0;
 		}
 		if (ev === 'Coin') {
 			var uname = data[0], result = data[1];

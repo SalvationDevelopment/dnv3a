@@ -18,7 +18,7 @@ DuelListToken = 32 random hex-chars
 DuelState = Rock-paper-scissors/Turn pick/Duel/Siding
 Avatar = E.g. "0/1.jpg". Appended to AVATAR_START in urls.txt for a ~500x500 px image. Can perhaps be empty.
 WatcherListStr = E.g. "simonlindholm,0,simonlindholm4,0".
-CardType = normal/effect/ritual/fusion/synchro/xyz/spell/trap/token
+CardType = normal/effect/ritual/fusion/synchro/xyz/spell/trap(/token?)
 Attribute = dark/
 FieldPosition = 0..4 for spell/trap, 5 for field spell, 6..10 for monsters, blank if not applicable. Might also have a meaning for underlays?
 
@@ -179,7 +179,7 @@ With Duel prefix:
 
 + Attack, From :{Place}, Attacker id, Target id (or "" if direct attack)
 
-* Token, :{Place}, Id, :{FieldPosition}
++ Token, :{Place}, Id, :{FieldPosition}
 
 + Die, From, Result
 
