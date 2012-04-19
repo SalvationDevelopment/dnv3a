@@ -9,6 +9,7 @@ window.SidebarWidget = Class.extend({
 	ui: null,
 	box: null,
 	handle: null,
+	stateChangeCounter: 0,
 
 	shown: function() {},
 
@@ -26,6 +27,7 @@ window.SidebarWidget = Class.extend({
 	close: function() {
 		if (!this.isOpen())
 			return;
+		++this.stateChangeCounter;
 		this.hide();
 		Sidebar.remove(this);
 	},
@@ -38,6 +40,7 @@ window.SidebarWidget = Class.extend({
 	show: function() {
 		if (this.isVisible())
 			return;
+		++this.stateChangeCounter;
 		this.box.addClass('open');
 		this.shown();
 		Sidebar.layout();
@@ -46,6 +49,7 @@ window.SidebarWidget = Class.extend({
 	hide: function() {
 		if (!this.isVisible())
 			return;
+		++this.stateChangeCounter;
 		this.box.removeClass('open');
 		this.hidden();
 		Sidebar.layout();
@@ -133,15 +137,29 @@ window.Sidebar = {
 	},
 
 	collapseUnimportant: function() {
-		// Collapse all but the 2 most important visible boxes.
-		var vis = this.ui.find('.sidebar-box.open');
+		// Collapse all but the 2 most important visible boxes, and return
+		// a value that uncollapseUnimportant can use for uncollapsing them
+		// again.
+		var vis = this.ui.find('.sidebar-box.open'), hidden = [];
 		vis.toArray().map(function(x) {
 			return $(x).data('widget');
 		}).sort(function(a, b) {
 			return b.importance - a.importance;
 		}).forEach(function(widget, ind) {
-			if (ind >= 2)
-				widget.hide();
+			if (ind < 2)
+				return;
+			widget.hide();
+			hidden.push([widget, widget.stateChangeCounter]);
+		});
+		return hidden;
+	},
+
+	uncollapseUnimportant: function(hidden) {
+		// Show again all boxes that haven't been touched since their collapse.
+		hidden.forEach(function(ar) {
+			var widget = ar[0];
+			if (widget.stateChangeCounter === ar[1])
+				widget.show();
 		});
 	}
 };

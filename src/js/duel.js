@@ -1166,7 +1166,7 @@ window.DuelView = View.extend({
 		this.watchChat = ChatManager.openWatchChat(function(msg) {
 			this.sendWatchMessage(msg);
 		});
-		Sidebar.collapseUnimportant();
+		this.collapseInfo = Sidebar.collapseUnimportant();
 	},
 
 	close: function() {
@@ -1177,6 +1177,7 @@ window.DuelView = View.extend({
 		this.duelLog.destroy();
 		this.watchChat.close();
 		this.watchChat.destroy();
+		Sidebar.uncollapseUnimportant(this.collapseInfo);
 	},
 
 	getDuelistFromName: function(name) {
