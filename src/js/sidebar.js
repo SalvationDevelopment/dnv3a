@@ -133,14 +133,14 @@ window.Sidebar = {
 	},
 
 	collapseUnimportant: function() {
-		// Collapse all but the 3 most important visible boxes.
+		// Collapse all but the 2 most important visible boxes.
 		var vis = this.ui.find('.sidebar-box.open');
 		vis.toArray().map(function(x) {
 			return $(x).data('widget');
 		}).sort(function(a, b) {
 			return b.importance - a.importance;
 		}).forEach(function(widget, ind) {
-			if (ind >= 3)
+			if (ind >= 2)
 				widget.hide();
 		});
 	}

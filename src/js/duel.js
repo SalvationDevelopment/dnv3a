@@ -1160,6 +1160,7 @@ window.DuelView = View.extend({
 		this.watchChat = ChatManager.openWatchChat(function(msg) {
 			this.sendWatchMessage(msg);
 		});
+		Sidebar.collapseUnimportant();
 	},
 
 	close: function() {
