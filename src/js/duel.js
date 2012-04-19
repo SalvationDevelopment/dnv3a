@@ -476,6 +476,7 @@ var DuelUI = Class.extend({
 	turnIndicator: null,
 	phaseIndicator: null,
 	nextTurnIndicator: null,
+	statusIndicators: null,
 	lpEl: null,
 	map: null,
 	colX: null,
@@ -537,6 +538,7 @@ var DuelUI = Class.extend({
 
 		// Add player indicators in the middle.
 		this.lpEl = [];
+		this.statusIndicators = [];
 		for (var i = 0; i < 2; ++i) {
 			var name = this.duelists[i].uname;
 			var pl = $('<div>').addClass('duel-player p'+i).appendTo(mid);
@@ -548,6 +550,9 @@ var DuelUI = Class.extend({
 				bg: lpbg,
 				cont: lpcont
 			});
+
+			var st = $('<div>').addClass('duel-status').appendTo(pl);
+			this.statusIndicators.push(st);
 		}
 
 		this.duelTable.appendTo(this.tableCont);
@@ -821,7 +826,8 @@ var DuelUI = Class.extend({
 	},
 
 	setStatus: function(pl, status) {
-		// TODO
+		var st = this.statusIndicators[pl];
+		st.toggle(status !== '').text(status);
 	},
 
 	attack: function(card, target) {
@@ -1277,7 +1283,8 @@ window.DuelView = View.extend({
 			return 500;
 		}
 		if (ev === 'Status1' || ev === 'Status2') {
-			this.duel.setStatus(ev.slice(-1) - 1, data[0]);
+			var pl = ev.slice(-1) - 1, status = data[0];
+			this.duel.setStatus(pl, status);
 			return 0;
 		}
 		return -1;

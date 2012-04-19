@@ -185,3 +185,5 @@ With Duel prefix:
 
 + Coin, From, Result
 
++ Status[12], Status text ("" for no status)
+
