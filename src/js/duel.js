@@ -1366,7 +1366,6 @@ window.DuelView = View.extend({
 
 	goBack: function() {
 		ignoreLateMessages(this.ignoreLateMessage);
-		Communicator.send(['Load duel room']);
 		setView(new MatchmakingView());
 	},
 
