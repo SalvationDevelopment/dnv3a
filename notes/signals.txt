@@ -84,7 +84,7 @@ Outgoing:
 
 * Join duel, Mode, Deck, Title, Token, Password
 
-* Watch message, Message
++ Watch message, Message
 
 
 With duel prefix:
@@ -120,7 +120,7 @@ Incoming:
 
 + Remove watches = like 'Remove duels'
 
-* Timed out -> socket 'close' will come shortly
++ Timed out -> socket 'close' will come shortly
 
 + Online users, (Name, {ModStatus})*
 
@@ -134,11 +134,11 @@ Incoming:
 
 + Delete friend, Name
 
-* Chat error [, Reason] -> E.g. "Invalid request" which happens on Unicode... Also unlocks the chat, unless the reason is "Quick chat" (= chatting when locked, presumably).
++ Chat error [, Reason] -> E.g. "Invalid request" which happens on Unicode... Also unlocks the chat, unless the reason is "Quick chat" (= chatting when locked, presumably).
 
-* Async error [, Reason] -> E.g. "<user> is not your friend".
++ Async error [, Reason] -> E.g. "<user> is not your friend".
 
-* Error [, Reason]
++ Error [, Reason]
 
 * Private message, From, To, Message, {ModStatus}
 
@@ -152,7 +152,7 @@ Incoming:
 
 + Add watcher, Username, {ModStatus}
 
-* Watch message, Username, Message, {ModStatus}
++ Watch message, Username, Message, {ModStatus}
 
 + Remove watcher, Username
 
