@@ -163,6 +163,11 @@ window.ChatManager = {
 	openWatchChat: function(sendF) {
 		var chat = new Chat("Watch chat", 'b1', 9, sendF);
 		chat.open(false);
+		var btn = chat.box.find('.sidebar-minimize-button');
+		var count = $('<span>').addClass('watch-count').insertBefore(btn);
+		chat.setCount = function(value) {
+			count.text(" (" + value + ")");
+		};
 		return chat;
 	},
 

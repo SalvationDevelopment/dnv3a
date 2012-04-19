@@ -497,6 +497,11 @@ body {
 .duel-log-line:last-child {
 	border-bottom-style: none;
 }
+.watch-count {
+	position: relative;
+	top: -1px;
+	font: 87% Arial;
+}
 
 #duel-tablecont {
 	position: absolute;

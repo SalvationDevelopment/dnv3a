@@ -1161,7 +1161,7 @@ window.DuelView = View.extend({
 	startingPlayer: null,
 	duelState: '',
 	duelists: null,
-	watchers: null,
+	nwatchers: 0,
 	watch: false,
 	queue: null,
 
@@ -1180,10 +1180,10 @@ window.DuelView = View.extend({
 		}
 
 		var watcherList = data[ind++].split(',');
-		this.watchers = [];
+		this.nwatchers = 0;
 		for (var i = 0; i < watcherList.length; i += 2) {
-			var name = watcherList[i];
-			this.watchers.push(Users.getUser(name));
+			var name = watcherList[i], modStatus = watcherList[i+1];
+			++this.nwatchers;
 		}
 
 		if (this.duelState === 'Duel') {
@@ -1212,6 +1212,7 @@ window.DuelView = View.extend({
 		this.watchChat = ChatManager.openWatchChat(function(msg) {
 			this.sendWatchMessage(msg);
 		});
+		this.updateWatchTitle();
 		this.collapseInfo = Sidebar.collapseUnimportant();
 	},
 
@@ -1371,14 +1372,15 @@ window.DuelView = View.extend({
 			return true;
 		}
 		if (ev === 'Add watcher') {
-			this.watchers.push(Users.getUser(data[0]));
+			var name = data[0], modStatus = data[1];
+			++this.nwatchers;
+			this.updateWatchTitle();
 			return true;
 		}
 		if (ev === 'Remove watcher') {
-			// XXX If this can happen after people go offline, this is wrong.
-			var ind = this.watchers.indexOf(Users.getUser(data[0]));
-			console.assert(ind !== -1);
-			this.watchers.splice(ind, 1);
+			var name = data[0];
+			--this.nwatchers;
+			this.updateWatchTitle();
 			return true;
 		}
 		if (ev === 'Watch message') {
@@ -1409,6 +1411,10 @@ window.DuelView = View.extend({
 
 	sendWatchMessage: function(msg) {
 		Communicator.send(['Watch message', msg]);
+	},
+
+	updateWatchTitle: function() {
+		this.watchChat.setCount(this.nwatchers);
 	},
 
 	goBack: function() {
