@@ -60,8 +60,6 @@ var Duelist = Class.extend({
 
 var CardLocation = Class.extend({
 	player: 0,
-
-	// The cards in the location, first is top.
 	cards: null,
 
 	init: function(pl) {
@@ -220,10 +218,6 @@ var UIPile = Class.extend({
 		this.stack = [];
 		this.topUICard = null;
 		this.baseRect = rect;
-		this.ui = $('<div>').addClass('duel-pile')
-			.css({left: rect.left, top: rect.top,
-				width: rect.width, height: rect.height})
-			.appendTo(this.holder);
 	},
 
 	indexOf: function(card) {
