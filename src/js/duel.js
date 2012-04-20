@@ -67,14 +67,6 @@ var CardLocation = Class.extend({
 		this.cards = [];
 	},
 
-	setup: function(info) {
-		var size = info.size, id = info.base;
-		for (var i = 0; i < size; ++i) {
-			var card = new DuelCard(id++, this, this.player);
-			this.cards.push(card);
-		}
-	},
-
 	removeCard: function(card) {
 		var ind = this.cards.indexOf(card);
 		console.assert(ind !== -1);
@@ -86,6 +78,14 @@ var CardPileLocation = CardLocation.extend({
 	// 'cards' is top-to-bottom
 
 	uiPile: null,
+
+	setup: function(info) {
+		var size = info.size, id = info.base;
+		for (var i = 0; i < size; ++i) {
+			var card = new DuelCard(id++, this, this.player);
+			this.cards.push(card);
+		}
+	},
 
 	addToTop: function(card) {
 		this.cards.unshift(card);
@@ -237,7 +237,7 @@ var UIPile = Class.extend({
 		console.assert(ind !== -1);
 		var oldClone = this.stack.splice(ind, 1)[0];
 		var wasTop = (oldClone === this.topUICard.card);
-		if (wasTop)
+		if (!wasTop)
 			this.setZ(200);
 		this.update(wasTop);
 		return oldClone;
@@ -686,7 +686,6 @@ var DuelUI = Class.extend({
 		var loc = card.location;
 		var row = (loc instanceof MonsterCardLocation ? 3 : 4);
 		var col = loc.cards.indexOf(card) + 1;
-		var piles = [['deck', 4, 6], ['extra', 4, 0], ['gy', 3, 6], ['banish', 2, 6]];
 
 		// Mirror the field for player 1.
 		if (loc.player === 1) {
@@ -724,7 +723,7 @@ var DuelUI = Class.extend({
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
 					var pile = loc.uiPile;
-					var adj = self.getLoc3DAdj(loc);
+					var adj = this.getLoc3DAdj(loc);
 					pile.setUI(loc, adj);
 					loc.cards.forEach(function(c) {
 						self.mapCardPile(pile, c);
@@ -789,7 +788,7 @@ var DuelUI = Class.extend({
 		if (toPile && toLoc.cards.length > 0 && toLoc.top() !== card) {
 			toPile.setZ(200);
 		}
-		uiCard.setZ(rect.z >= 400 ? rect.z - 300 : 100 + rect.z);
+		uiCard.setZ(rect.z >= 300 ? rect.z - 200 : 100 + rect.z);
 
 		var self = this;
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
@@ -1248,6 +1247,14 @@ window.DuelView = View.extend({
 			}
 			else
 				card = this.duel.getCard(+id);
+
+			if (card.location instanceof FieldCardLocation) {
+				console.assert(from.startsWith('field'));
+			}
+			else {
+				var fromLoc = this.duel.getLocation(from, undefined);
+				console.assert(card.location === fromLoc);
+			}
 
 			var to = data[2];
 			var locPosition = data[3];

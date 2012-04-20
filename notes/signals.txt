@@ -146,7 +146,7 @@ Incoming:
 
 + Watch duel, {DuelState}, (Name, {Avatar}, Back, Color1, Color2, Rating, Reputation, Has donated: bool)*2, {WatcherListStr}, Duel log string, {OptWatchArgs}
 
-* Turn pick, Username -> That user goes first
++ Turn pick, Username -> That user goes first
 
 + Duel start, (Cards in pile, Start of pile index)x4 (= deck1, extra1, deck2, extra2, in order) [, {Card}x(5 or 6, depending on if you start) = values of the deck's first cards, not sent in watch mode]
 

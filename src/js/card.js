@@ -52,6 +52,8 @@ window.createCard = function(data) {
 		card = new XYZMonsterCard;
 	else if (type === 'ritual')
 		card = new RitualMonsterCard;
+	else if (type === 'fusion')
+		card = new FusionMonsterCard;
 	else if (type === 'spell')
 		card = new SpellCard;
 	else if (type === 'trap')
