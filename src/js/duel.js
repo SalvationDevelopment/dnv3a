@@ -1119,7 +1119,7 @@ var Duel = Class.extend({
 			if (loc instanceof FieldCardLocation)
 				loc.addCard(card, +fieldPosition);
 			else if (loc instanceof CardPileLocation)
-				loc.addToBottom(card); // XXX Maybe?
+				loc.addToTop(card);
 			else
 				loc.addCard(card);
 		}
