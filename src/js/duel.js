@@ -1151,14 +1151,20 @@ window.DuelView = View.extend({
 	duelists: null,
 	nwatchers: 0,
 	watch: false,
+	loadData: null,
 	queue: null,
 
 	init: function(watch, data) {
 		this._super();
 		console.assert(watch); // for now
 		this.watch = watch;
+		this.loadData = data;
+	},
 
+	open: function() {
 		var ind = 0;
+		var data = this.loadData;
+		this.loadData = null;
 		this.duelState = data[ind++];
 
 		this.duelists = [];
@@ -1189,9 +1195,7 @@ window.DuelView = View.extend({
 		else {
 			console.assertNotReached("Invalid duel state: " + this.duelState);
 		}
-	},
 
-	open: function() {
 		this.setCommands();
 		this.queue = new Queue();
 		this.duelLog = ChatManager.openDuelLog(this.watch ? null : function(msg) {
