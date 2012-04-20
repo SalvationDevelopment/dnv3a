@@ -1180,6 +1180,9 @@ window.DuelView = View.extend({
 			++this.nwatchers;
 		}
 
+		// Ignore duel log (sent only for mods).
+		++ind;
+
 		if (this.duelState === 'Duel') {
 			this.duel = Duel.createFromWatchData(this, data.slice(ind));
 		}
