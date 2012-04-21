@@ -439,7 +439,7 @@ var UICard = Class.extend({
 			// each step.
 			this.rotation = rotation;
 			this.rotator.animate({
-				'border-spacing': rotation
+				'text-indent': rotation
 			}, {
 				step: function(now, fx) {
 					$(this).css('transform', 'rotate(' + now + 'deg)');

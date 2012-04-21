@@ -455,6 +455,10 @@ body {
 	height: 100%;
 	width: 100%;
 }
+.card-flipper {
+	/* Reset the property used for animation. */
+	text-indent: 0;
+}
 .card-frame {
 	position: absolute;
 	top: 0;
