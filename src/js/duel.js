@@ -430,7 +430,7 @@ var UICard = Class.extend({
 			else {
 				// Fake rotation, for speed.
 				this.flipped(faceup);
-				this.flipper.data('rotate3Di.degrees', 180);
+				this.flipper.data('rotate3Di.degrees', (faceup ? 0 : 180));
 			}
 		}
 
