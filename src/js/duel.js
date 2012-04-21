@@ -803,6 +803,14 @@ var DuelUI = Class.extend({
 		uiCard.setZ(rect.z);
 	},
 
+	destroyCard: function(card) {
+		var thing = this.map[card.id];
+		if (thing instanceof UICard) {
+			thing.destroy();
+			delete this.map[card.id];
+		}
+	},
+
 	remapCard: function(oldCard, card) {
 		var thing = this.map[oldCard.id];
 		thing.remap(oldCard, card);
@@ -1150,6 +1158,13 @@ var Duel = Class.extend({
 		this.ui.makeCard(card);
 	},
 
+	destroyCard: function(card) {
+		var loc = card.location;
+		loc.removeCard(card);
+		this.refreshLocation(loc, null);
+		this.ui.destroyCard(card);
+	},
+
 	drawCard: function(pl, icard) {
 		var card = this.locations[pl].deck.top();
 		var hand = this.locations[pl].hand;
@@ -1400,9 +1415,8 @@ window.DuelView = View.extend({
 			return 500;
 		}
 		if (ev === 'Overlay') {
-			var from = data[0];
 			var card = this.duel.getCard(+data[1]);
-			this.duel.verifyLocation(card, from);
+			this.duel.verifyLocation(card, data[0]);
 
 			var to = data[2];
 			var target = this.duel.getCard(+data[3]);
@@ -1416,9 +1430,15 @@ window.DuelView = View.extend({
 			this.duel.overlayCard(card, target, defense);
 			return 500;
 		}
+		if (ev === 'Remove') {
+			var card = this.duel.getCard(+data[1]);
+			this.duel.verifyLocation(card, data[0]);
+			this.duel.destroyCard(card);
+			return 0;
+		}
 		if (ev === 'Attack') {
-			var from = data[0];
 			var attacker = this.duel.getCard(data[1]);
+			this.duel.verifyLocation(attacker, data[0]);
 			var targetId = data[2];
 			this.duel.ui.attack(attacker,
 					(data[2] ? this.duel.getCard(data[2]) : null));

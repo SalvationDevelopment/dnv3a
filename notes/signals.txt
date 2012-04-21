@@ -185,7 +185,9 @@ With Duel prefix:
 
 + Attack, From :{Place}, Attacker id, Target id (or "" if direct attack)
 
-+ Token, :{Place}, Id, :{FieldPosition}
++ Token, :{Place}, Card ID, :{FieldPosition}
+
++ Remove, :{Place}, Card ID
 
 + Die, From, Result
 
