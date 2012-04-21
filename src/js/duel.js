@@ -176,6 +176,11 @@ var FieldCardLocation = CardLocation.extend({
 	hasOpening: function() {
 		return this.cards.indexOf(null) !== -1;
 	},
+	getFieldPosition: function(card) {
+		var ind = this.cards.indexOf(card);
+		console.assert(ind !== -1);
+		return ind + this.base;
+	},
 	addCard: function(card, fieldPosition) {
 		var position = fieldPosition - this.base;
 		console.assert(!this.cards[position]);
@@ -1108,6 +1113,33 @@ var Duel = Class.extend({
 		this.refreshLocation(toLoc, card);
 	},
 
+	overlayCard: function(card, target, defense) {
+		var toLoc = target.location;
+		console.assert(toLoc instanceof FieldCardLocation);
+		var fieldPosition = toLoc.getFieldPosition(target);
+
+		card.makeUnderlay();
+		var uloc = card.underlay;
+		function add(c) {
+			c.location.removeCard(c);
+			c.location = uloc;
+			c.defense = false;
+			uloc.addCard(c);
+		}
+		add(target);
+		if (target.underlay) {
+			target.underlay.cards.forEach(add);
+			target.underlay = null;
+		}
+
+		card.location.removeCard(card);
+		card.location = toLoc;
+		card.faceup = true;
+		card.defense = defense;
+		toLoc.addCard(card, fieldPosition);
+		this.refreshLocation(toLoc, card);
+	},
+
 	addToken: function(id, owner, loc, fieldPosition) {
 		var card = new DuelCard(id, loc, owner);
 		card.defense = true;
@@ -1365,6 +1397,23 @@ window.DuelView = View.extend({
 
 			if (msgToLog)
 				this.addToDuelLog(msgToLog);
+			return 500;
+		}
+		if (ev === 'Overlay') {
+			var from = data[0];
+			var card = this.duel.getCard(+data[1]);
+			this.duel.verifyLocation(card, from);
+
+			var to = data[2];
+			var target = this.duel.getCard(+data[3]);
+			this.duel.verifyLocation(target, to);
+
+			var defense = (data[4] === 'true');
+
+			if (data.length > 5)
+				card.card = createCard(data.slice(5));
+
+			this.duel.overlayCard(card, target, defense);
 			return 500;
 		}
 		if (ev === 'Attack') {

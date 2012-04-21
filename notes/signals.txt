@@ -171,7 +171,7 @@ With Duel prefix:
 
 + Reveal and move (like move)
 
-* Overlay, From :{Place}, Card ID, To :{Place}, Target ID, Defense :bool, {Card}
++ Overlay, From :{Place}, Card ID, To :{Place}, Target ID, Defense :bool, {Card}
 
 + Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
 
