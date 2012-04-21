@@ -165,26 +165,24 @@ var HandCardLocation = CardLocation.extend({
 var FieldCardLocation = CardLocation.extend({
 	// 'cards' is a fixed-size array of cards (/null for no card)
 
-	init: function(pl, size) {
+	base: 0,
+
+	init: function(pl, base, size) {
 		this._super(pl);
+		this.base = base;
 		for (var i = 0; i < size; ++i)
 			this.cards.push(null);
 	},
 	hasOpening: function() {
 		return this.cards.indexOf(null) !== -1;
 	},
-	getPosition: function(fp) {
-		if (fp < 5) return fp;
-		if (fp === 5) return 0;
-		return fp - 6;
-	},
 	addCard: function(card, fieldPosition) {
-		var position = this.getPosition(fieldPosition);
+		var position = fieldPosition - this.base;
 		console.assert(!this.cards[position]);
 		this.cards[position] = card;
 	},
 	getCard: function(fieldPosition) {
-		var card = this.cards[this.getPosition(fieldPosition)];
+		var card = this.cards[fieldPosition - this.base];
 		console.assert(card);
 		return card;
 	},
@@ -195,13 +193,13 @@ var FieldCardLocation = CardLocation.extend({
 	}
 });
 var MonsterCardLocation = FieldCardLocation.extend({
-	init: function(pl) { this._super(pl, 5); }
+	init: function(pl) { this._super(pl, 6, 5); }
 });
 var STCardLocation = FieldCardLocation.extend({
-	init: function(pl) { this._super(pl, 5); }
+	init: function(pl) { this._super(pl, 0, 5); }
 });
 var FieldSpellCardLocation = FieldCardLocation.extend({
-	init: function(pl) { this._super(pl, 1); }
+	init: function(pl) { this._super(pl, 5, 1); }
 });
 
 
