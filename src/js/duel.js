@@ -714,7 +714,13 @@ var DuelUI = Class.extend({
 		};
 	},
 
-	getFieldCardRect: function(card) {
+	adjustRectForUnderlays: function(r, index, max) {
+		var rat = (max === 0 ? 0 : index/max - 0.5);
+		var availableX = r.height - r.width;
+		r.left += rat * availableX;
+	},
+
+	getFieldCardRect: function(card, adjustForUnderlays) {
 		var loc = card.location;
 		var row = (loc instanceof MonsterCardLocation ? 3 : 4);
 		var col = loc.cards.indexOf(card) + 1;
@@ -725,16 +731,23 @@ var DuelUI = Class.extend({
 			col = 6-col;
 		}
 
-		// TODO: Adjust for underlays (if in attack position).
-		return this.getFieldPosRect(row, col);
+		var r = this.getFieldPosRect(row, col);
+		if (adjustForUnderlays && !card.defense && card.underlay)
+			this.adjustRectForUnderlays(r, 0, card.underlay.cards.length);
+		return r;
 	},
 
 	getUnderlayCardRect: function(card) {
-		var loc = card.location, r = this.getFieldCardRect(loc.base);
-		var ind = loc.cards.indexOf(card) + 1;
-		r.z -= ind;
-		r.left += ind*10;
-		// TODO
+		var loc = card.location, base = loc.base;
+		var ind = loc.cards.indexOf(card),
+			max = loc.cards.length-1;
+		if (!base.defense) {
+			++ind;
+			++max;
+		}
+		var r = this.getFieldCardRect(base, false);
+		this.adjustRectForUnderlays(r, ind, max);
+		r.z -= ind + 1;
 		return r;
 	},
 
@@ -745,7 +758,7 @@ var DuelUI = Class.extend({
 		}
 		else if (loc instanceof STCardLocation ||
 			loc instanceof MonsterCardLocation) {
-			return this.getFieldCardRect(card);
+			return this.getFieldCardRect(card, true);
 		}
 		else if (loc instanceof UnderlayCardLocation) {
 			return this.getUnderlayCardRect(card);
