@@ -39,7 +39,7 @@ Card =
 	{PreloadInfo} (ignored for now)
 
 PreloadInfo = E.g. 31137, 22080, c11ef232ae77f020ecc4e4ad7e220577. Sent when dueling, can be all empty otherwise. In order: offset into preload array, length of data, decryption key. See getPreloadPicture.
-Place = deck1/grave1/rfg1/extra1/hand1/field1/underlay1/...
+Place = {deck,grave,rfg,extra,hand,field,underlay}[12] or 'underlay' (for moves).
 
 OptWatchArgs = (see watchDuelStart)
 	If DuelState = "Duel":
@@ -60,6 +60,8 @@ OptWatchArgs = (see watchDuelStart)
 			isKnown :bool,
 			{Card} if isKnown
 		)*
+If some cards in a row have 'underlay[12]' as places, they are used as underlays
+on the following card, in top-to-bottom order.
 
 
 Outgoing:
@@ -158,14 +160,18 @@ Incoming:
 
 + Player quit, Username
 
-* Win
+* Win (player 0 wins)
 
-* Lose
+* Lose (player 1 wins)
 
 
 With Duel prefix:
 
 + Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition}, Face-down :bool, Defense :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card} (sometimes)
+
++ Reveal and move (like move)
+
+* Overlay, From :{Place}, Card ID, To :{Place}, Target ID, Defense :bool, {Card}
 
 + Hand shuffle, Which hand :{Place}, New base ID [, (Old card id)x#cards in hand (given if the hand shuffles is yours)]
 

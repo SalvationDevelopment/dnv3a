@@ -74,6 +74,26 @@ var CardLocation = Class.extend({
 	}
 });
 
+var UnderlayCardLocation = CardLocation.extend({
+	base: null,
+
+	init: function(card) {
+		this._super(-1);
+		Object.defineProperty(this, 'player', {
+			get: function() {
+				return card.location.player;
+			},
+			enumerable: true,
+			configurable: true
+		});
+		this.base = card;
+	},
+
+	addCard: function(card) {
+		this.cards.push(card);
+	}
+});
+
 var CardPileLocation = CardLocation.extend({
 	// 'cards' is top-to-bottom
 
@@ -192,11 +212,17 @@ var DuelCard = Class.extend({
 	faceup: false,
 	defense: false,
 	card: null,
+	underlay: null,
 
 	init: function(id, loc, originalOwner) {
 		this.id = id;
 		this.originalOwner = originalOwner;
 		this.location = loc;
+	},
+
+	makeUnderlay: function() {
+		if (!this.underlay)
+			this.underlay = new UnderlayCardLocation(this);
 	}
 });
 
@@ -207,7 +233,7 @@ var UIPile = Class.extend({
 	topUICard: null,
 	baseRect: null,
 	adj: null,
-	z: 1,
+	z: 100,
 
 	// Copies of the cards in the pile, as of the time they were added.
 	// The last is topmost.
@@ -238,7 +264,7 @@ var UIPile = Class.extend({
 		var oldClone = this.stack.splice(ind, 1)[0];
 		var wasTop = (oldClone === this.topUICard.card);
 		if (!wasTop)
-			this.setZ(200);
+			this.setZ(300);
 		this.update(wasTop);
 		return oldClone;
 	},
@@ -314,6 +340,8 @@ var UICard = Class.extend({
 	hasCardInfo: false,
 	faceup: undefined,
 	rotation: 0,
+	frontSide: null,
+	backSide: null,
 	frontImg: null,
 	cardImg: null,
 
@@ -391,10 +419,11 @@ var UICard = Class.extend({
 
 	move: function(x, y, w, h, faceup, rotation, finished) {
 		// z is the z-index for the card, set to:
-		// - 100+ for moving cards
-		// - 1 for cards on field, including piles
-		// - 200 for piles when the a moving card is supposed to be under it
-		// - 300+ for cards in hand
+		// - 200+ for moving cards
+		// - 100 for cards on field, including piles
+		// - 99- for underlays
+		// - 300 for piles when the a moving card is supposed to be under it
+		// - 400+ for cards in hand
 		var delay = 500;
 		if (!this.el) {
 			this.create();
@@ -577,7 +606,7 @@ var DuelUI = Class.extend({
 			height: h,
 			left: midx - nw/2 + 2,
 			top: y + 2,
-			z: 1
+			z: 100
 		};
 	},
 
@@ -678,7 +707,7 @@ var DuelUI = Class.extend({
 			top: y,
 			width: w,
 			height: h,
-			z: 300 + ncards - index
+			z: 400 + ncards - index
 		};
 	},
 
@@ -693,17 +722,30 @@ var DuelUI = Class.extend({
 			col = 6-col;
 		}
 
+		// TODO: Adjust for underlays (if in attack position).
 		return this.getFieldPosRect(row, col);
 	},
 
+	getUnderlayCardRect: function(card) {
+		var loc = card.location, r = this.getFieldCardRect(loc.base);
+		var ind = loc.cards.indexOf(card) + 1;
+		r.z -= ind;
+		r.left += ind*10;
+		// TODO
+		return r;
+	},
+
 	getCardRect: function(card) {
-		var loc = card.location, pl = loc.player;
+		var loc = card.location;
 		if (loc instanceof HandCardLocation) {
 			return this.getHandCardRect(card);
 		}
 		else if (loc instanceof STCardLocation ||
 			loc instanceof MonsterCardLocation) {
 			return this.getFieldCardRect(card);
+		}
+		else if (loc instanceof UnderlayCardLocation) {
+			return this.getUnderlayCardRect(card);
 		}
 		else {
 			return this.getLocRect(loc, true);
@@ -731,7 +773,12 @@ var DuelUI = Class.extend({
 				}
 				else {
 					loc.cards.forEach(function(c) {
-						if (c) self.makeCard(c);
+						if (!c) return;
+						self.makeCard(c);
+						if (!c.underlay) return;
+						c.underlay.cards.forEach(function(c2) {
+							self.makeCard(c2);
+						});
 					});
 				}
 			}
@@ -786,9 +833,9 @@ var DuelUI = Class.extend({
 		// Adjust z-index of moved card, target pile.
 		var toPile = toLoc.uiPile;
 		if (toPile && toLoc.cards.length > 0 && toLoc.top() !== card) {
-			toPile.setZ(200);
+			toPile.setZ(300);
 		}
-		uiCard.setZ(rect.z >= 300 ? rect.z - 200 : 100 + rect.z);
+		uiCard.setZ(rect.z >= 400 ? rect.z - 200 : 100 + rect.z);
 
 		var self = this;
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
@@ -799,7 +846,7 @@ var DuelUI = Class.extend({
 				uiCard.destroy();
 				self.map[card.id] = toPile;
 				toPile.updateFromLocation(toLoc);
-				toPile.setZ(1);
+				toPile.setZ(100);
 			}
 			else {
 				// Readjust the z-index to what it is supposed to be.
@@ -808,7 +855,7 @@ var DuelUI = Class.extend({
 			// Reset z-index of piles referred to.
 			// TODO: Delay queue callbacks to after this.
 			if (thing instanceof UIPile)
-				thing.setZ(1);
+				thing.setZ(100);
 		});
 	},
 
@@ -940,7 +987,10 @@ var Duel = Class.extend({
 
 	mapAllCards: function() {
 		var map = function(c) {
-			if (c) this.mapCard(c);
+			if (!c) return;
+			this.mapCard(c);
+			if (!c.underlay) return;
+			c.underlay.cards.forEach(map);
 		}.bind(this);
 
 		for (var pl = 0; pl < 2; ++pl) {
@@ -957,8 +1007,16 @@ var Duel = Class.extend({
 	},
 
 	getLocation: function(pos, fieldPos) {
+		// Special locations used for movement should never get here.
+		console.assert(pos !== 'underlay' && pos !== '');
+
 		var pl = pos.slice(-1) - 1;
 		pos = pos.slice(0, -1);
+
+		// Fail to handle 'underlay' locations - they depend on the parent card.
+		if (pos === 'underlay')
+			return null;
+
 		var locs = this.locations[pl];
 		if (pos === 'deck' || pos === 'hand' || pos === 'extra')
 			return locs[pos];
@@ -966,13 +1024,25 @@ var Duel = Class.extend({
 			return locs.gy;
 		if (pos === 'rfg')
 			return locs.banish;
-		// TODO: Handle underlays.
 		console.assert(pos === 'field');
 		if (fieldPos < 5)
 			return locs.st;
 		if (fieldPos > 5)
 			return locs.monsters;
 		return locs.fieldspell;
+	},
+
+	verifyLocation: function(card, lname) {
+		if (card.location instanceof FieldCardLocation) {
+			console.assert(lname.startsWith('field'));
+		}
+		else if (card.location instanceof UnderlayCardLocation) {
+			console.assert(lname.startsWith('underlay'));
+		}
+		else {
+			var loc = this.getLocation(lname, undefined);
+			console.assert(card.location === loc);
+		}
 	},
 
 	getTopOfDeck: function(pl) {
@@ -990,8 +1060,19 @@ var Duel = Class.extend({
 				ui.moveCard(c);
 			});
 		}
+		else if (loc instanceof UnderlayCardLocation) {
+			loc.cards.forEach(function(c) {
+				ui.moveCard(c);
+			});
+			ui.moveCard(loc.base);
+		}
 		else if (card) {
 			ui.moveCard(card);
+			if (card.underlay) {
+				card.underlay.cards.forEach(function(c) {
+					ui.moveCard(c);
+				});
+			}
 		}
 	},
 
@@ -1096,6 +1177,7 @@ var Duel = Class.extend({
 		this.statuses = [data[5], data[6]];
 
 		var ind = 7;
+		var underlays = [];
 		while (ind < data.length) {
 			var position = data[ind++];
 			var cardId = +data[ind++];
@@ -1115,12 +1197,27 @@ var Duel = Class.extend({
 				ind += 16;
 			}
 
-			if (loc instanceof FieldCardLocation)
-				loc.addCard(card, +fieldPosition);
-			else if (loc instanceof CardPileLocation)
-				loc.addToTop(card);
-			else
-				loc.addCard(card);
+			if (!loc) {
+				underlays.push(card);
+			}
+			else {
+				if (underlays.length > 0) {
+					card.makeUnderlay();
+					var uloc = card.underlay;
+					for (var i = 0; i < underlays.length; ++i) {
+						underlays[i].location = uloc;
+						uloc.addCard(underlays[i]);
+					}
+					underlays = [];
+				}
+
+				if (loc instanceof FieldCardLocation)
+					loc.addCard(card, +fieldPosition);
+				else if (loc instanceof CardPileLocation)
+					loc.addToTop(card);
+				else
+					loc.addCard(card);
+			}
 		}
 
 		this.mapAllCards();
@@ -1248,13 +1345,7 @@ window.DuelView = View.extend({
 			else
 				card = this.duel.getCard(+id);
 
-			if (card.location instanceof FieldCardLocation) {
-				console.assert(from.startsWith('field'));
-			}
-			else {
-				var fromLoc = this.duel.getLocation(from, undefined);
-				console.assert(card.location === fromLoc);
-			}
+			this.duel.verifyLocation(card, from);
 
 			var to = data[2];
 			var locPosition = data[3];
