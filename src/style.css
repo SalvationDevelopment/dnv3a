@@ -554,6 +554,8 @@ body {
 .duel-player .name {
 	margin: 0 0 1px;
 }
+.duel-player.p0 .name { color: #C00000; }
+.duel-player.p1 .name { color: #00008B; }
 .duel-player .lp {
 	position: relative;
 	display: inline-block;
