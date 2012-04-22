@@ -517,11 +517,11 @@ var DuelUI = Class.extend({
 		this.ui = $('#duel-ui');
 		this.cardHolder = $('#duel-cardholder');
 
-		this.colX = [];
-		this.colW = [];
-		this.rowY = [];
-		this.rowH = [];
+		this.makeTable();
+		this.makePiles();
+	},
 
+	makeTable: function() {
 		this.tableCont = $('<div id="duel-tablecont">').appendTo(this.ui);
 		this.duelTable = $('<table id="duel-table">');
 		var tbody = $('<tbody>').appendTo(this.duelTable);
@@ -551,17 +551,35 @@ var DuelUI = Class.extend({
 		}
 		this.fieldCells = els;
 
-		// In the middle, add indicators (wrapped within a div, to enable
-		// position: absolute).
-		var mid = $('<div id="duel-mid-wrapper">').appendTo(midContainer);
+		this.makeMiddle(midContainer);
 
-		// Add turn indicators in the middle.
+		this.duelTable.appendTo(this.tableCont);
+
+		this.rowY = [];
+		this.rowH = [];
+		for (var row = 0; row < 5; ++row) {
+			this.rowY.push(els[row][0].offset().top);
+			this.rowH.push(els[row][0].height());
+		}
+		this.colX = [];
+		this.colW = [];
+		for (var col = 0; col < 7; ++col) {
+			this.colX.push(els[0][col].offset().left);
+			this.colW.push(els[0][col].width());
+		}
+	},
+
+	makeMiddle: function(cont) {
+		// Create a wrapper div, to enable position: absolute.
+		var mid = $('<div id="duel-mid-wrapper">').appendTo(cont);
+
+		// Add turn indicators.
 		var ind = $('<div id="duel-indicators">').appendTo(mid);
 		this.turnIndicator = $('<div id="duel-turn">').appendTo(ind);
 		this.phaseIndicator = $('<div id="duel-phase">').appendTo(ind);
 		this.nextTurnIndicator = $('<div id="duel-next">').appendTo(ind);
 
-		// Add player indicators in the middle.
+		// Add player indicators.
 		this.lpEl = [];
 		this.statusIndicators = [];
 		for (var i = 0; i < 2; ++i) {
@@ -579,20 +597,11 @@ var DuelUI = Class.extend({
 			var st = $('<div>').addClass('duel-status').appendTo(pl);
 			this.statusIndicators.push(st);
 		}
+	},
 
-		this.duelTable.appendTo(this.tableCont);
-
-		for (var row = 0; row < 5; ++row) {
-			this.rowY.push(els[row][0].offset().top);
-			this.rowH.push(els[row][0].height());
-		}
-		for (var col = 0; col < 7; ++col) {
-			this.colX.push(els[0][col].offset().left);
-			this.colW.push(els[0][col].width());
-		}
-
+	makePiles: function() {
 		for (var pl = 0; pl < 2; ++pl) {
-			var locs = duel.locations[pl];
+			var locs = this.duel.locations[pl];
 			for (var name in locs) {
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
