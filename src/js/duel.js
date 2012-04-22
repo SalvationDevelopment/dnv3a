@@ -1421,6 +1421,17 @@ window.DuelView = View.extend({
 			if (data.length > 8)
 				card.card = createCard(data.slice(8));
 
+			// Correct 'faceup' and 'defense' for when DN does not bother
+			// sending it correctly.
+			if (toLoc instanceof ExtraCardLocation || toLoc instanceof DeckCardLocation)
+				faceup = false;
+			else if (toLoc instanceof GYCardLocation)
+				faceup = true;
+			else if (toLoc instanceof HandCardLocation)
+				faceup = (toLoc.player === 0 && !this.watch);
+			if (!(toLoc instanceof FieldCardLocation))
+				defense = false;
+
 			this.duel.moveCard(card, toLoc, locPosition, faceup, defense, special, reveal);
 
 			if (msgToLog)
