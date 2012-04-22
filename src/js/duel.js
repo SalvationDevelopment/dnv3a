@@ -249,6 +249,11 @@ var UIPile = Class.extend({
 		this.baseRect = rect;
 	},
 
+	destroy: function() {
+		if (this.topUICard)
+			this.topUICard.destroy();
+	},
+
 	indexOf: function(card) {
 		return this.stack.map(function(c) {
 			return c.id;
@@ -769,6 +774,20 @@ var DuelUI = Class.extend({
 	},
 
 	destroy: function() {
+		for (var id in this.map) {
+			var thing = this.map[id];
+			if (thing instanceof UICard)
+				thing.destroy();
+		}
+		for (var pl = 0; pl < 2; ++pl) {
+			var locs = this.duel.locations[pl];
+			for (var name in locs) {
+				var loc = locs[name];
+				if (loc instanceof CardPileLocation)
+					loc.uiPile.destroy();
+			}
+		}
+
 		this.ui.empty();
 		this.cardHolder.empty();
 	},
