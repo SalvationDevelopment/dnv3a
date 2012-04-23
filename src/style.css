@@ -450,6 +450,7 @@ body {
 
 .card {
 	position: absolute;
+	pointer-events: none;
 }
 .card-rotator, .card-flipper, .card-front, .card-back {
 	height: 100%;
@@ -458,6 +459,8 @@ body {
 .card-flipper {
 	/* Reset the property used for animation. */
 	text-indent: 0;
+
+	pointer-events: auto;
 }
 .card-frame {
 	position: absolute;
@@ -492,6 +495,53 @@ body {
 	left: 25px;
 	bottom: 0;
 	right: 265px;
+}
+
+#duel-detail {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 260px;
+	width: 240px;
+}
+#duel-detail-name-holder {
+	position: absolute;
+	top: 64px;
+	width: 100%;
+}
+#duel-detail-name {
+	position: absolute;
+	bottom: 0;
+	left: 3px;
+	right: 3px;
+	max-height: 65px;
+	font: small-caps 18px Helvetica, Arial, sans-serif;
+}
+#duel-detail-info {
+	position: absolute;
+	left: 114px;
+	top: 69px;
+	width: 124px;
+	font-size: 14px;
+	white-space: pre-line;
+}
+.duel-sticon {
+	position: relative;
+	top: 4px;
+	left: 4px;
+	width: 23px;
+	height: 23px;
+}
+#duel-detail-text {
+	position: absolute;
+	top: 217px;
+	bottom: 0;
+	right: 0;
+	padding-right: 2px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	white-space: pre-line;
+	font-size: 14px;
 }
 
 .duel-log-line {

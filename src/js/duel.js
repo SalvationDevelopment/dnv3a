@@ -348,6 +348,7 @@ var UICard = Class.extend({
 	holder: null,
 	card: null,
 	hasCardInfo: false,
+	detailTimeout: null,
 	faceup: undefined,
 	rotation: 0,
 	frontSide: null,
@@ -369,11 +370,19 @@ var UICard = Class.extend({
 
 	destroy: function() {
 		this.el.remove();
+		this.stopDetailTimeout();
 	},
 
 	remap: function(oldCard, card) {
 		console.assert(this.card === oldCard);
 		this.card = card;
+	},
+
+	stopDetailTimeout: function() {
+		if (this.detailTimeout !== null) {
+			clearTimeout(this.detailTimeout);
+			this.detailTimeout = null;
+		}
 	},
 
 	create: function(duelui) {
@@ -398,6 +407,18 @@ var UICard = Class.extend({
 		$('<img>').addClass('card-frame')
 			.attr('src', "img/duel/border.png")
 			.appendTo(this.frontSide);
+
+		this.el.hover(function() {
+			this.detailTimeout = setTimeout(function() {
+				this.detailTimeout = null;
+				duelui.detailCard(this.card.faceup ? this.card : null);
+			}.bind(this), 300);
+		}.bind(this), function() {
+			this.stopDetailTimeout();
+		}.bind(this)).click(function() {
+			this.stopDetailTimeout();
+			duelui.detailCard(this.card.faceup ? this.card : null);
+		}.bind(this));
 
 		this.holder.append(this.el);
 	},
@@ -500,6 +521,8 @@ var DuelUI = Class.extend({
 	nextTurnIndicator: null,
 	statusIndicators: null,
 	lpEl: null,
+	detailEl: null,
+	detailUICard: null,
 	map: null,
 	colX: null,
 	colW: null,
@@ -516,6 +539,7 @@ var DuelUI = Class.extend({
 
 		this.makeTable();
 		this.makePiles();
+		this.makeDetailView();
 	},
 
 	makeTable: function() {
@@ -607,6 +631,54 @@ var DuelUI = Class.extend({
 					loc.uiPile = pile;
 				}
 			}
+		}
+	},
+
+	makeDetailView: function() {
+		var el = this.detailEl = $('#duel-detail');
+		this.detailName = $('#duel-detail-name');
+		this.detailInfo = $('#duel-detail-info');
+		this.detailText = $('#duel-detail-text');
+	},
+
+	detailCard: function(card) {
+		this.detailEl.toggle(card !== null);
+		if (this.detailUICard) {
+			this.detailUICard.destroy();
+			this.detailUICard = null;
+		}
+		if (card) {
+			this.detailUICard = new UICard(this, this.detailEl, card);
+			var w = 100, h = w*1.44;
+			this.detailUICard.move(2, 67, w, h, true, 0, 0);
+
+			var info = card.card;
+			this.detailName.text(info.name);
+			this.detailInfo.empty();
+			if (info instanceof TokenMonsterCard) {
+				// Do nothing.
+			}
+			else if (info instanceof MonsterCard) {
+				var infoList = [];
+				var attr = info.attribute;
+				attr = attr.charAt(0).toUpperCase() + attr.substr(1);
+				infoList.push(attr);
+				infoList.push(info.type);
+				var lvName = ((info instanceof XYZMonsterCard) ? "Rank" : "Level");
+				infoList.push(lvName + ": " + info.level);
+				infoList.push(info.atk + "/" + info.def);
+				this.detailInfo.text(infoList.join("\n"));
+			}
+			else {
+				console.assert(info instanceof STCard);
+				if (info.type !== 'normal') {
+					var src = "img/duel/st-icons/" + info.type + ".png";
+					this.detailName.append(
+						$('<img>').addClass('duel-sticon').attr('src', src)
+					);
+				}
+			}
+			this.detailText.text(info.text);
 		}
 	},
 
@@ -795,6 +867,9 @@ var DuelUI = Class.extend({
 		}
 
 		this.ui.empty();
+		if (this.detailUICard)
+			this.detailUICard.destroy();
+		this.detailEl.hide();
 		this.cardHolder.empty();
 	},
 
@@ -1153,6 +1228,9 @@ var Duel = Class.extend({
 		else {
 			toLoc.addCard(card);
 		}
+
+		if (reveal)
+			this.ui.detailCard(card);
 
 		if (fromLoc !== toLoc)
 			this.refreshLocation(fromLoc, null);
@@ -1635,6 +1713,10 @@ window.DuelView = View.extend({
 		setView(new MatchmakingView());
 	},
 
+	escape: function() {
+		this.duel.ui.detailCard(null);
+	},
+
 	setCommands: function() {
 		// TODO: Commands for when the chat has focus.
 		if (this.watch) {
@@ -1642,6 +1724,7 @@ window.DuelView = View.extend({
 				[1, "<enter>", "Chat (watch)"],
 				[0, 'enter', "", function() { this.watchChat.focus(); }],
 				[2, 'q', "Quit", this.goBack],
+				[0, 'escape', "", function() { this.escape(); }],
 			]);
 			return;
 		}
