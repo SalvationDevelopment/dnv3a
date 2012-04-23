@@ -516,13 +516,20 @@ var DuelUI = Class.extend({
 	cardHolder: null,
 	duelists: null,
 	fieldCells: null,
+
 	turnIndicator: null,
 	phaseIndicator: null,
 	nextTurnIndicator: null,
 	statusIndicators: null,
 	lpEl: null,
+
 	detailEl: null,
+	detailName: null,
+	detailNonName: null,
+	detailInfo: null,
+	detailText: null,
 	detailUICard: null,
+
 	map: null,
 	colX: null,
 	colW: null,
@@ -637,6 +644,7 @@ var DuelUI = Class.extend({
 	makeDetailView: function() {
 		var el = this.detailEl = $('#duel-detail');
 		this.detailName = $('#duel-detail-name');
+		this.detailNonName = $('#duel-detail-nonname');
 		this.detailInfo = $('#duel-detail-info');
 		this.detailText = $('#duel-detail-text');
 	},
@@ -648,9 +656,9 @@ var DuelUI = Class.extend({
 			this.detailUICard = null;
 		}
 		if (card) {
-			this.detailUICard = new UICard(this, this.detailEl, card);
+			this.detailUICard = new UICard(this, this.detailNonName, card);
 			var w = 100, h = w*1.44;
-			this.detailUICard.move(2, 67, w, h, true, 0, 0);
+			this.detailUICard.move(2, 0, w, h, true, 0, 0);
 
 			var info = card.card;
 			this.detailName.text(info.name);

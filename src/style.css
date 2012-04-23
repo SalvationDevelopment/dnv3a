@@ -517,10 +517,16 @@ body {
 	max-height: 65px;
 	font: small-caps 18px Helvetica, Arial, sans-serif;
 }
+#duel-detail-nonname {
+	position: absolute;
+	width: 100%;
+	top: 67px;
+	bottom: 0;
+}
 #duel-detail-info {
 	position: absolute;
 	left: 114px;
-	top: 69px;
+	top: 2px;
 	width: 124px;
 	font-size: 14px;
 	white-space: pre-line;
@@ -534,7 +540,7 @@ body {
 }
 #duel-detail-text {
 	position: absolute;
-	top: 217px;
+	top: 150px;
 	bottom: 0;
 	right: 0;
 	padding-right: 2px;
@@ -681,6 +687,22 @@ body {
 
 
 /* === Small screen sizes === */
+
+@media (max-width:1173px), (max-height: 660px) {
+#duel-detail-nonname {
+	top: 27px;
+}
+#duel-detail-name-holder {
+	top: 2px;
+}
+#duel-detail-name {
+	bottom: auto;
+	max-height: none;
+	white-space: pre;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+}
 
 @media (max-width:500px), (max-height: 400px) {
 	/* TODO: Put something here? */
