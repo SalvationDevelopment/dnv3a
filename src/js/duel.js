@@ -231,6 +231,7 @@ var DuelCard = Class.extend({
 
 
 var UIPile = Class.extend({
+	duelui: null,
 	holder: null,
 	owner: 0,
 	topUICard: null,
@@ -242,7 +243,8 @@ var UIPile = Class.extend({
 	// The last is topmost.
 	stack: null,
 
-	init: function(holder, rect) {
+	init: function(duelui, holder, rect) {
+		this.duelui = duelui;
 		this.holder = holder;
 		this.stack = [];
 		this.topUICard = null;
@@ -307,10 +309,10 @@ var UIPile = Class.extend({
 			}
 			if (this.stack.length > 0) {
 				var card = this.stack[this.stack.length-1];
-				this.topUICard = new UICard(this.holder, card);
+				this.topUICard = new UICard(this.duelui, this.holder, card);
 				var w = rect.width, h = rect.height;
 				var rot = (this.owner === 0 ? 0 : -180);
-				this.topUICard.move(0, 0, w, h, card.faceup, rot);
+				this.topUICard.move(0, 0, w, h, card.faceup, rot, 0);
 				this.topUICard.setZ(this.z);
 			}
 		}
@@ -359,14 +361,14 @@ var UICard = Class.extend({
 		this.backSide[0].style.display = (front ? 'none' : 'block');
 	},
 
-	init: function(holder, card) {
+	init: function(duelui, holder, card) {
 		this.holder = holder;
 		this.card = card;
+		this.create(duelui);
 	},
 
 	destroy: function() {
-		if (this.el)
-			this.el.remove();
+		this.el.remove();
 	},
 
 	remap: function(oldCard, card) {
@@ -374,7 +376,7 @@ var UICard = Class.extend({
 		this.card = card;
 	},
 
-	create: function() {
+	create: function(duelui) {
 		this.el = $('<div>').addClass('card');
 		this.rotator = $('<div>').addClass('card-rotator').appendTo(this.el);
 		this.flipper = $('<div>').addClass('card-flipper').appendTo(this.rotator);
@@ -425,18 +427,13 @@ var UICard = Class.extend({
 		return {x: x + w/2, y: y + h/2};
 	},
 
-	move: function(x, y, w, h, faceup, rotation, finished) {
+	move: function(x, y, w, h, faceup, rotation, delay, finished) {
 		// z is the z-index for the card, set to:
 		// - 200+ for moving cards
 		// - 100 for cards on field, including piles
 		// - 99- for underlays
 		// - 300 for piles when the a moving card is supposed to be under it
 		// - 400+ for cards in hand
-		var delay = 500;
-		if (!this.el) {
-			this.create();
-			delay = 0;
-		}
 
 		if (!this.hasCardInfo && this.card.card) {
 			this.hasCardInfo = true;
@@ -606,7 +603,7 @@ var DuelUI = Class.extend({
 				var loc = locs[name];
 				if (loc instanceof CardPileLocation) {
 					var rect = this.getLocRect(loc, false);
-					var pile = new UIPile(this.cardHolder, rect);
+					var pile = new UIPile(this, this.cardHolder, rect);
 					loc.uiPile = pile;
 				}
 			}
@@ -835,12 +832,12 @@ var DuelUI = Class.extend({
 	},
 
 	makeCard: function(card) {
-		var uiCard = new UICard(this.cardHolder, card);
+		var uiCard = new UICard(this, this.cardHolder, card);
 		this.map[card.id] = uiCard;
 		var rect = this.getCardRect(card);
 		var rotation = (card.defense ? -90 : 0) + (card.location.player ? -180 : 0);
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
-				card.faceup, rotation);
+				card.faceup, rotation, 0);
 		uiCard.setZ(rect.z);
 	},
 
@@ -891,7 +888,7 @@ var DuelUI = Class.extend({
 
 		var self = this;
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
-				card.faceup, rotation, function()
+				card.faceup, rotation, 500, function()
 		{
 			// Movement has finished, merge card into pile if applicable.
 			if (toPile) {
