@@ -43,7 +43,7 @@ function preload() {
 			[
 				"st-icons/",
 				"continuous.png", "counter.png", "equip.png", "field.png",
-				"quick.png", "ritual.png"
+				"quickplay.png", "ritual.png"
 			]
 		]
 	];
