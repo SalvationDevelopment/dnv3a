@@ -165,9 +165,11 @@ window.ChatManager = {
 		}
 	},
 
-	openUserChat: function(user) {
+	openUserChat: function(user, forceNew) {
 		var ch = this.userChats[user.id];
 		if (!ch) {
+			if (!forceNew)
+				return null;
 			ch = new Chat(user.name, 'a-' + user.name, 15, 200, false, function(msg) {
 				Communicator.send(['Private message', user.name, msg]);
 			});
@@ -212,8 +214,12 @@ window.ChatManager = {
 			to = Users.getUser(to);
 			console.assert(from);
 			console.assert(to);
-			var chat = this.openUserChat(from.name === myUserName ? to : from);
-			chat.addMessage(from.name, message, from.getColor());
+			var other = (from.name === myUserName ? to : from);
+			var force = (from === other && !IgnoreList.has(from.name));
+			var chat = this.openUserChat(other, force);
+			if (chat) {
+				chat.addMessage(from.name, message, from.getColor());
+			}
 			return true;
 		}
 		if (ev === 'Chat error') {

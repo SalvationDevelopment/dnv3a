@@ -186,7 +186,7 @@ window.addUserContextMenu = function(el, name) {
 			$('<menuitem>').attr('label', "Chat With \"" + name + "\"").click(function() {
 				var user = Users.getUser(name);
 				if (user) {
-					ChatManager.openUserChat(user).focus();
+					ChatManager.openUserChat(user, true).focus();
 				}
 			}).appendTo(menu);
 		}
