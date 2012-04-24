@@ -334,6 +334,11 @@ var UIPile = Class.extend({
 		}
 	},
 
+	snapRectTo: function(rect) {
+		this.baseRect = rect;
+		this.update(true);
+	},
+
 	getNextPositionAdjustment: function() {
 		var dx = this.adj[0], dy = this.adj[1];
 		var n = this.stack.length;
@@ -562,6 +567,9 @@ var DuelUI = Class.extend({
 		this.makeTable();
 		this.makePiles();
 		this.makeDetailView();
+
+		this.resize = this.resize.bind(this);
+		$(window).resize(this.resize);
 	},
 
 	destroy: function() {
@@ -680,6 +688,26 @@ var DuelUI = Class.extend({
 		this.detailNonName = $('#duel-detail-nonname');
 		this.detailInfo = $('#duel-detail-info');
 		this.detailText = $('#duel-detail-text');
+	},
+
+	resize: function() {
+		// Snap every card into its correct position instantly, as a hack.
+		this.calculateSizes();
+		var duel = this.duel;
+		duel.allLocations(function(loc) {
+			if (loc instanceof FieldCardLocation) {
+				loc.cards.forEach(function(card) {
+					duel.refreshLocation(loc, card, 0);
+				});
+			}
+			else if (loc instanceof CardPileLocation) {
+				var rect = this.getLocRect(loc, false);
+				loc.uiPile.snapRectTo(rect);
+			}
+			else {
+				duel.refreshLocation(loc, null, 0);
+			}
+		}.bind(this));
 	},
 
 	detailCard: function(card) {
@@ -1226,12 +1254,12 @@ var Duel = Class.extend({
 		return this.locations[pl].deck.top();
 	},
 
-	refreshLocation: function(loc, card) {
+	refreshLocation: function(loc, card, delay) {
 		// Refresh an individual card's location, after it has moved to/from
 		// there. (For hands, other cards need to rearrange, etc.)
 		// 'card' can be null if no particular card is designated, or if the
 		// card is no longer there.
-		var ui = this.ui, delay = 500;
+		var ui = this.ui;
 		if (loc instanceof HandCardLocation) {
 			loc.cards.forEach(function(c) {
 				ui.moveCard(c, delay);
@@ -1286,8 +1314,8 @@ var Duel = Class.extend({
 			this.ui.detailCard(card);
 
 		if (fromLoc !== toLoc)
-			this.refreshLocation(fromLoc, null);
-		this.refreshLocation(toLoc, card);
+			this.refreshLocation(fromLoc, null, 500);
+		this.refreshLocation(toLoc, card, 500);
 	},
 
 	overlayCard: function(card, target, defense) {
@@ -1314,7 +1342,7 @@ var Duel = Class.extend({
 		card.faceup = true;
 		card.defense = defense;
 		toLoc.addCard(card, fieldPosition);
-		this.refreshLocation(toLoc, card);
+		this.refreshLocation(toLoc, card, 500);
 	},
 
 	addToken: function(id, owner, loc, fieldPosition) {
@@ -1330,7 +1358,7 @@ var Duel = Class.extend({
 	destroyCard: function(card) {
 		var loc = card.location;
 		loc.removeCard(card);
-		this.refreshLocation(loc, null);
+		this.refreshLocation(loc, null, 500);
 		this.ui.destroyCard(card);
 	},
 
