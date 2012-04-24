@@ -39,15 +39,17 @@ var Chat = SidebarWidget.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
 	sendF: null,
+	maxlen: 0,
 
 	holder: null,
 	cont: null,
 	chatField: null,
 
-	init: function(title, order, importance, sendF) {
+	init: function(title, order, importance, maxlen, sendF) {
 		this.title = title;
 		this.order = order;
 		this.importance = importance;
+		this.maxlen = maxlen;
 		this.sendF = sendF;
 
 		this.ui = $('<div>').addClass('chat');
@@ -64,7 +66,8 @@ var Chat = SidebarWidget.extend({
 					if (e.which === 13) self.send(this);
 				})
 				.appendTo(this.holder);
-
+			if (maxlen)
+				this.chatField.attr('maxlength', maxlen);
 		}
 		else {
 			this.holder.css('padding-bottom', 0);
@@ -138,7 +141,7 @@ window.ChatManager = {
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
-		this.globalChat = new Chat("Global chat", 'a', 5, function(msg) {
+		this.globalChat = new Chat("Global chat", 'a', 5, 200, function(msg) {
 			Communicator.send(['Global message', msg]);
 		});
 		this.globalChat.open(false);
@@ -156,13 +159,13 @@ window.ChatManager = {
 	},
 
 	openDuelLog: function(sendF) {
-		var chat = new Chat("Duel log", 'b2', 10, sendF);
+		var chat = new Chat("Duel log", 'b2', 10, 200, sendF);
 		chat.open(true);
 		return chat;
 	},
 
 	openWatchChat: function(sendF) {
-		var chat = new Chat("Watch chat", 'b1', 9, sendF);
+		var chat = new Chat("Watch chat", 'b1', 9, 200, sendF);
 		chat.open(false);
 		var btn = chat.box.find('.sidebar-minimize-button');
 		var count = $('<span>').addClass('watch-count').insertBefore(btn);
