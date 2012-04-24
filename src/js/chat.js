@@ -140,6 +140,7 @@ var Chat = SidebarWidget.extend({
 window.ChatManager = {
 	locked: true,
 	globalChat: null,
+	userChats: {},
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
@@ -154,10 +155,24 @@ window.ChatManager = {
 		this.globalChat.close();
 		this.globalChat.destroy();
 		this.globalChat = null;
+		var uc = this.userChats;
+		for (var a in this.userChats) {
+			uc[a].close();
+			uc[a].destroy();
+			delete uc[a];
+		}
 	},
 
 	openUserChat: function(user) {
-		return;
+		var ch = this.userChats[user.id];
+		if (!ch) {
+			ch = new Chat(user.name, 'a-' + user.name, 15, 200, function(msg) {
+				Communicator.send(['Private message', user.name, msg]);
+			});
+			this.userChats[user.id] = ch;
+		}
+		ch.open(true);
+		return ch;
 	},
 
 	openDuelLog: function(sendF) {
@@ -187,6 +202,16 @@ window.ChatManager = {
 			var user = Users.getUser(from);
 			console.assert(user);
 			this.globalChat.addMessage(from, message, user.getColor());
+			return true;
+		}
+		if (ev === 'Private message') {
+			var from = data[0], to = data[1], message = data[2];
+			from = Users.getUser(from);
+			to = Users.getUser(to);
+			console.assert(from);
+			console.assert(to);
+			var chat = this.openUserChat(from.name === myUserName ? to : from);
+			chat.addMessage(from.name, message, from.getColor());
 			return true;
 		}
 		if (ev === 'Chat error') {

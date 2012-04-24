@@ -182,6 +182,15 @@ window.addUserContextMenu = function(el, name) {
 			}).appendTo(menu);
 		}
 
+		if (Users.getUser(name)) {
+			$('<menuitem>').attr('label', "Chat With \"" + name + "\"").click(function() {
+				var user = Users.getUser(name);
+				if (user) {
+					ChatManager.openUserChat(user).focus();
+				}
+			}).appendTo(menu);
+		}
+
 		if (Friends.isFriend(name)) {
 			$('<menuitem>').attr('label', "Remove From Friend List").click(function() {
 				Friends.removeFriend(name);
