@@ -349,6 +349,7 @@ var UICard = Class.extend({
 	card: null,
 	hasCardInfo: false,
 	detailTimeout: null,
+	movementCallback: undefined,
 	faceup: undefined,
 	rotation: 0,
 	frontSide: null,
@@ -448,6 +449,17 @@ var UICard = Class.extend({
 		return {x: x + w/2, y: y + h/2};
 	},
 
+	stopMovement: function() {
+		// Stop current movement and run associated animation callbacks, if any.
+		// (See DuelUI.moveCard for the reason.)
+		this.el.stop();
+		if (this.movementCallback) {
+			var cb = this.movementCallback;
+			this.movementCallback = null;
+			cb();
+		}
+	},
+
 	move: function(x, y, w, h, faceup, rotation, delay, finished) {
 		// z is the z-index for the card, set to:
 		// - 200+ for moving cards
@@ -465,8 +477,11 @@ var UICard = Class.extend({
 
 		var loc = {left: x, top: y, width: w, height: h};
 		if (delay) {
-			this.el.stop();
-			this.el.animate(loc, delay, finished);
+			this.movementCallback = finished;
+			this.el.animate(loc, delay, finished && function() {
+				this.movementCallback = null;
+				finished();
+			}.bind(this));
 		}
 		else {
 			this.el.css(loc);
@@ -947,6 +962,14 @@ var DuelUI = Class.extend({
 		var rect = this.getCardRect(card);
 		var thing = this.map[card.id], uiCard;
 
+		// Stop previous movement of the card. If it was moving towards a card
+		// pile, it is snapped into it (so fetch 'thing' again); otherwise, it
+		// just stops dead so we can make the motion smoother.
+		if (thing instanceof UICard) {
+			thing.stopMovement();
+			thing = this.map[card.id];
+		}
+
 		if (thing instanceof UIPile) {
 			// Extract the card from its pile (automatically adjusts z-index).
 			var oldClone = thing.remove(card);
@@ -985,7 +1008,6 @@ var DuelUI = Class.extend({
 				uiCard.setZ(rect.z);
 			}
 			// Reset z-index of piles referred to.
-			// TODO: Delay queue callbacks to after this.
 			if (thing instanceof UIPile)
 				thing.setZ(100);
 		});
