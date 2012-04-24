@@ -176,13 +176,15 @@ window.addUserContextMenu = function(el, name) {
 		}
 		catch(e) {}
 
-		if (!IgnoreList.has(name)) {
+		var isSelf = (name === myUserName);
+
+		if (!isSelf && !IgnoreList.has(name)) {
 			$('<menuitem>').attr('label', "Add \"" + name + "\" to Ignore List").click(function() {
 				IgnoreList.add(name);
 			}).appendTo(menu);
 		}
 
-		if (Users.getUser(name)) {
+		if (!isSelf && Users.getUser(name)) {
 			$('<menuitem>').attr('label', "Chat With \"" + name + "\"").click(function() {
 				var user = Users.getUser(name);
 				if (user) {
