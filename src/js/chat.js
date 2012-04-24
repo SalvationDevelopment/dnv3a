@@ -40,17 +40,20 @@ var Chat = SidebarWidget.extend({
 	ignoreHandle: null,
 	maxlen: 0,
 	sendF: null,
+	closer: null,
 
 	holder: null,
 	cont: null,
 	chatField: null,
 
-	init: function(title, order, importance, maxlen, shouldIgnore, sendF) {
+	init: function(title, order, importance, maxlen, shouldIgnore, closeable, sendF, closer) {
 		this.title = title;
 		this.order = order;
 		this.importance = importance;
 		this.maxlen = maxlen;
+		this.closeable = closeable;
 		this.sendF = sendF;
+		this.closer = closer;
 
 		this.ui = $('<div>').addClass('chat');
 		this.holder = $('<div>').addClass('sidebar-box-holder border-box')
@@ -77,9 +80,12 @@ var Chat = SidebarWidget.extend({
 			this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
 
-	destroy: function() {
+	close: function() {
+		this._super();
 		if (this.ignoreHandle !== null)
 			IgnoreList.unlisten(this.ignoreHandle);
+		if (this.closer)
+			this.closer();
 	},
 
 	send: function(field) {
@@ -146,7 +152,7 @@ window.ChatManager = {
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
-		this.globalChat = new Chat("Global chat", 'a', 5, 200, true, function(msg) {
+		this.globalChat = new Chat("Global chat", 'a', 5, 200, true, false, function(msg) {
 			Communicator.send(['Global message', msg]);
 		});
 		this.globalChat.open(false);
@@ -155,13 +161,10 @@ window.ChatManager = {
 	removeAllChats: function() {
 		console.assert(this.globalChat);
 		this.globalChat.close();
-		this.globalChat.destroy();
 		this.globalChat = null;
 		var uc = this.userChats;
 		for (var a in this.userChats) {
 			uc[a].close();
-			uc[a].destroy();
-			delete uc[a];
 		}
 	},
 
@@ -170,9 +173,11 @@ window.ChatManager = {
 		if (!ch) {
 			if (!forceNew)
 				return null;
-			ch = new Chat(user.name, 'a-' + user.name, 15, 200, false, function(msg) {
+			ch = new Chat(user.name, 'a-' + user.name, 15, 200, false, true, function(msg) {
 				Communicator.send(['Private message', user.name, msg]);
-			});
+			}, function() {
+				delete this.userChats[user.id];
+			}.bind(this));
 			this.userChats[user.id] = ch;
 		}
 		ch.open(true);
@@ -180,13 +185,13 @@ window.ChatManager = {
 	},
 
 	openDuelLog: function(sendF) {
-		var chat = new Chat("Duel log", 'b2', 10, 200, false, sendF);
+		var chat = new Chat("Duel log", 'b2', 10, 200, false, false, sendF);
 		chat.open(true);
 		return chat;
 	},
 
 	openWatchChat: function(sendF) {
-		var chat = new Chat("Watch chat", 'b1', 9, 200, true, sendF);
+		var chat = new Chat("Watch chat", 'b1', 9, 200, true, false, sendF);
 		chat.open(false);
 		var btn = chat.box.find('.sidebar-minimize-button');
 		var count = $('<span>').addClass('watch-count').insertBefore(btn);

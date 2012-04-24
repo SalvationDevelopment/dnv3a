@@ -1554,9 +1554,7 @@ window.DuelView = View.extend({
 			this.duel.destroy();
 		this.queue.destroy();
 		this.duelLog.close();
-		this.duelLog.destroy();
 		this.watchChat.close();
-		this.watchChat.destroy();
 		Sidebar.uncollapseUnimportant(this.collapseInfo);
 	},
 

@@ -6,6 +6,7 @@ window.SidebarWidget = Class.extend({
 	order: '',
 	importance: 0,
 	title: '',
+	closeable: false,
 	ui: null,
 	box: null,
 	handle: null,
@@ -80,6 +81,10 @@ window.Sidebar = {
 			var widget = $(this).parents('.sidebar-box').data('widget');
 			widget.toggleVisibility();
 		});
+		$('#sidebar').on('click', '.sidebar-close-button', function() {
+			var widget = $(this).parents('.sidebar-box').data('widget');
+			widget.close();
+		});
 	},
 
 	show: function() {
@@ -110,10 +115,11 @@ window.Sidebar = {
 		var box = widget.box = $('<div>').addClass('sidebar-box border-box');
 		box.data('widget', widget);
 
-		$('<div>').addClass('sidebar-title border-box').text(widget.title)
-			.append(
-				$('<div>').addClass('sidebar-minimize-button')
-			).appendTo(box);
+		var title = $('<div>').addClass('sidebar-title border-box')
+			.text(widget.title).appendTo(box);
+		if (widget.closeable)
+			$('<div>').addClass('sidebar-close-button').appendTo(title);
+		$('<div>').addClass('sidebar-minimize-button').appendTo(title);
 
 		widget.ui.addClass('sidebar-content border-box').appendTo(box);
 

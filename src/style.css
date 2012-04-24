@@ -87,7 +87,7 @@ body {
 	border-bottom-left-radius: 0;
 	border-bottom-right-radius: 0;
 }
-.sidebar-minimize-button {
+.sidebar-minimize-button, .sidebar-close-button {
 	background-image: url(img/unminimize.png);
 	float: right;
 	width: 16px;
@@ -97,6 +97,9 @@ body {
 }
 .sidebar-box.open .sidebar-minimize-button {
 	background-image: url(img/minimize.png);
+}
+.sidebar-close-button {
+	background-image: url(img/close.png);
 }
 
 .sidebar-content {
