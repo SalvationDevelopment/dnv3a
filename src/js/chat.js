@@ -56,12 +56,13 @@ var Chat = SidebarWidget.extend({
 		this.cont = $('<div>').addClass('sidebar-box-cont border-box')
 			.appendTo(this.holder);
 		if (this.sendF) {
+			var self = this;
 			this.chatField = $('<input>')
 				.addClass('sidebar-box-field border-box')
 				.prop('value', '').attr('placeholder', "Reply...")
 				.keydown(function(e) {
-					if (e.which === 13) this.send(this);
-				}.bind(this))
+					if (e.which === 13) self.send(this);
+				})
 				.appendTo(this.holder);
 
 		}

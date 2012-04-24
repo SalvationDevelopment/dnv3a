@@ -1516,7 +1516,7 @@ window.DuelView = View.extend({
 		}.bind(this));
 		this.watchChat = ChatManager.openWatchChat(function(msg) {
 			this.sendWatchMessage(msg);
-		});
+		}.bind(this));
 		this.updateWatchTitle();
 		this.collapseInfo = Sidebar.collapseUnimportant();
 	},
