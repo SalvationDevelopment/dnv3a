@@ -958,7 +958,7 @@ var DuelUI = Class.extend({
 		this.map[card.id] = pile;
 	},
 
-	moveCard: function(card) {
+	moveCard: function(card, delay) {
 		var rect = this.getCardRect(card);
 		var thing = this.map[card.id], uiCard;
 
@@ -994,7 +994,7 @@ var DuelUI = Class.extend({
 
 		var self = this;
 		uiCard.move(rect.left, rect.top, rect.width, rect.height,
-				card.faceup, rotation, 500, function()
+				card.faceup, rotation, delay, function()
 		{
 			// Movement has finished, merge card into pile if applicable.
 			if (toPile) {
@@ -1056,6 +1056,29 @@ var DuelUI = Class.extend({
 				line.remove();
 			}, 300);
 		});
+	},
+
+	handShuffle: function(hand) {
+		var cards = hand.cards;
+		if (!cards.length > 0)
+			return;
+		var visible = cards[0].faceup;
+		var r = this.getHandCardRect(cards[0]);
+		var rlast = this.getHandCardRect(cards[cards.length-1]);
+		r.left = (r.left + rlast.left) / 2;
+		for (var i = 0; i < cards.length; ++i) {
+			var card = cards[i];
+			var thing = this.map[card.id];
+			console.assert(thing instanceof UICard);
+			thing.setZ(200 + (visible ? cards.length - i : i));
+			var rot = (hand.player ? -180 : 0);
+			thing.move(r.left, r.top, r.width, r.height,
+					card.faceup, rot, 450, function(card) {
+				setTimeout(function() {
+					this.moveCard(card, 450);
+				}.bind(this), 70);
+			}.bind(this, card));
+		}
 	},
 
 	setPhase: function(turn, phase) {
@@ -1208,23 +1231,23 @@ var Duel = Class.extend({
 		// there. (For hands, other cards need to rearrange, etc.)
 		// 'card' can be null if no particular card is designated, or if the
 		// card is no longer there.
-		var ui = this.ui;
+		var ui = this.ui, delay = 500;
 		if (loc instanceof HandCardLocation) {
 			loc.cards.forEach(function(c) {
-				ui.moveCard(c);
+				ui.moveCard(c, delay);
 			});
 		}
 		else if (loc instanceof UnderlayCardLocation) {
 			loc.cards.forEach(function(c) {
-				ui.moveCard(c);
+				ui.moveCard(c, delay);
 			});
-			ui.moveCard(loc.base);
+			ui.moveCard(loc.base, delay);
 		}
 		else if (card) {
-			ui.moveCard(card);
+			ui.moveCard(card, delay);
 			if (card.underlay) {
 				card.underlay.cards.forEach(function(c) {
-					ui.moveCard(c);
+					ui.moveCard(c, delay);
 				});
 			}
 		}
@@ -1234,10 +1257,10 @@ var Duel = Class.extend({
 		deck.shuffle(this, base);
 		// TODO: Shuffle animation.
 	},
+
 	handShuffle: function(hand, base, data) {
 		hand.shuffle(this, base, data);
-		this.refreshLocation(hand, null);
-		// TODO: (Better) shuffle animation.
+		this.ui.handShuffle(hand);
 	},
 
 	moveCard: function(card, toLoc, locPosition, faceup, defense, special, reveal) {
@@ -1651,7 +1674,7 @@ window.DuelView = View.extend({
 		if (ev === 'Hand shuffle') {
 			var hand = this.duel.getLocation(data[0]);
 			this.duel.handShuffle(hand, +data[1], data.slice(2));
-			return 500;
+			return 970;
 		}
 		if (ev === 'Status1' || ev === 'Status2') {
 			var pl = ev.slice(-1) - 1, status = data[0];
