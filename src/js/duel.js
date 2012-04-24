@@ -1715,7 +1715,10 @@ window.DuelView = View.extend({
 			return true;
 		}
 		if (ev === 'Player quit') {
-			this.addToDuelLog(data[0] + " has left the duel.");
+			this.queue.push(function() {
+				this.addToDuelLog(data[0] + " has left the duel.");
+				return 0;
+			}.bind(this));
 			return true;
 		}
 		return false;
