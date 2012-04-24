@@ -2,7 +2,12 @@
 ;(function() {
 "use strict";
 
-window.setupLoggedInState = function() {
+window.myUserName = null;
+window.amAdmin = null;
+
+window.setupLoggedInState = function(uname, admin) {
+	myUserName = uname;
+	amAdmin = admin;
 	Sidebar.show();
 	ChatManager.setupGlobalChat();
 	OnlineList.open(true);

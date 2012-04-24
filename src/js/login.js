@@ -7,6 +7,7 @@ window.LoginView = View.extend({
 	loaded: false,
 	first: null,
 	activeAutoLogin: null,
+	userLoggingIn: null,
 
 	init: function(first) {
 		this._super();
@@ -186,10 +187,8 @@ window.LoginView = View.extend({
 
 	handleMessage: function(ev, data) {
 		if (ev === 'Connected' && data.length >= 1) {
-			// TODO: Do something with this?
 			var admin = parseInt(data[0], 10);
-
-			this.loginSuccess();
+			this.loginSuccess(admin);
 		}
 		else {
 			Communicator.closeConnection();
@@ -213,13 +212,14 @@ window.LoginView = View.extend({
 
 	logIn: function(user, token) {
 		this.setStatus(false, 1, "Logging in...");
+		this.userLoggingIn = user;
 		Communicator.openConnection(function() {
 			Communicator.send(['Connect13', user, token, randHex32()]);
 		});
 	},
 
-	loginSuccess: function() {
-		setupLoggedInState();
+	loginSuccess: function(admin) {
+		setupLoggedInState(this.userLoggingIn, admin);
 		setView(new MenuView());
 	}
 });
