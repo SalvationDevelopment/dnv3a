@@ -178,18 +178,18 @@ window.addUserContextMenu = function(el, name) {
 
 		var isSelf = (name === myUserName);
 
-		if (!isSelf && !IgnoreList.has(name)) {
-			$('<menuitem>').attr('label', "Add \"" + name + "\" to Ignore List").click(function() {
-				IgnoreList.add(name);
-			}).appendTo(menu);
-		}
-
 		if (!isSelf && Users.getUser(name)) {
 			$('<menuitem>').attr('label', "Chat With \"" + name + "\"").click(function() {
 				var user = Users.getUser(name);
 				if (user) {
 					ChatManager.openUserChat(user, true).focus();
 				}
+			}).appendTo(menu);
+		}
+
+		if (!isSelf && !IgnoreList.has(name)) {
+			$('<menuitem>').attr('label', "Add \"" + name + "\" to Ignore List").click(function() {
+				IgnoreList.add(name);
 			}).appendTo(menu);
 		}
 
