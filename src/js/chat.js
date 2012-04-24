@@ -85,7 +85,8 @@ var Chat = SidebarWidget.extend({
 		if (ChatManager.locked || !value)
 			return;
 		ChatManager.locked = true;
-		this.sendF(value);
+		var available = (this.maxlen ? this.maxlen - value.length : -1);
+		this.sendF(hideUnicode(value, available));
 		field.value = '';
 	},
 
@@ -124,10 +125,11 @@ var Chat = SidebarWidget.extend({
 		if (IgnoreList.has(from))
 			return;
 
+		var html = linkify(unhideUnicode(message));
 		var line = $('<div>').addClass('chat-line').append(
 			$('<span>').addClass('chat-author').css('color', color).text(from + ": ")
 		).append(
-			$('<span>').addClass('chat-message').html(linkify(message))
+			$('<span>').addClass('chat-message').html(html)
 		);
 		addUserContextMenu(line, from);
 

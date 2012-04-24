@@ -33,6 +33,128 @@ window.randHex32 = function() {
 	return ret;
 };
 
+window.hideUnicode = function(text, avail) {
+	// Trim right-most spaces; they will be used for encoding.
+	var orig = text, olen = orig.length;
+	text = /^(.*?) *$/.exec(text)[1];
+	avail += olen - text.length;
+	if (text === '')
+		return orig;
+
+	// Make space for the two ending spaces.
+	avail -= 2;
+
+	var maxEnc = Infinity;
+	if (avail !== -1) {
+		// Find the largest power-of-two p such that p-1 <= avail, and let
+		// maxEnc be its logarithm.
+		maxEnc = 0;
+		var p = 1;
+		while (p*2-1 <= avail) {
+			++maxEnc;
+			p *= 2;
+		}
+	}
+
+	// Cap maxEnc to 6; we probably don't want to add more than 63 bytes or so.
+	if (maxEnc > 6)
+		maxEnc = 6;
+
+	var bits = [];
+	function pushbits(ar) {
+		if (maxEnc < ar.length) {
+			maxEnc = 0;
+			return;
+		}
+		maxEnc -= ar.length;
+		bits = bits.concat(ar);
+	}
+
+	var ret = "";
+	for (var i = 0; i < text.length; ++i) {
+		var c = text.charAt(i), cc = c.charCodeAt(0);
+
+		// Note some characters as 'normal'.
+		if (c === 'a' || c === 'A') { pushbits([0]); }
+		else if (c === 'o' || c === 'O') { pushbits([0]); }
+		else if (c === 'n' || c === 'N') { pushbits([0]); }
+
+		// Do nothing for other ASCII characters.
+		else if (cc >= 32 && cc < 127) {}
+
+		// Further encode others.
+		else if (cc === 229) { c = 'a'; pushbits([1,0]); }
+		else if (cc === 228) { c = 'a'; pushbits([1,1]); }
+		else if (cc === 197) { c = 'A'; pushbits([1,0]); }
+		else if (cc === 196) { c = 'A'; pushbits([1,1]); }
+		else if (cc === 246) { c = 'o'; pushbits([1]); }
+		else if (cc === 214) { c = 'O'; pushbits([1]); }
+		else if (cc === 241) { c = 'n'; pushbits([1]); }
+		else if (cc === 209) { c = 'N'; pushbits([1]); }
+
+		// If everything else fails, output a question mark.
+		else { c = '?'; }
+
+		ret += c;
+	}
+
+	// Unary-code the coded bits with spaces at the end.
+	var nsp = 0, bit = 1;
+	for (var i = 0; i < bits.length; ++i) {
+		if (bits[i]) nsp |= bit;
+		bit <<= 1;
+	}
+	for (var i = 0; i < nsp; ++i) ret += ' ';
+
+	// Add two more spaces to avoid false positives.
+	if (nsp !== 0) ret += '  ';
+
+	return ret;
+};
+
+window.unhideUnicode = function(text) {
+	var ws = / *$/.exec(text)[0].length, cbit = 1;
+
+	if (ws < 2)
+		return text;
+	ws -= 2;
+
+	function bit() {
+		var r = ws & cbit;
+		cbit <<= 1;
+		return (r ? 1 : 0);
+	}
+
+	var shortMap = {
+		'a': {
+			'0': 229,
+			'1': 228
+		},
+		'A': {
+			'0': 197,
+			'1': 196
+		},
+		'o': 246,
+		'O': 214,
+		'n': 241,
+		'N': 209
+	};
+
+	var t = text.substr(0, text.length - ws - 2), ret = "";
+	for (var i = 0; i < t.length; ++i) {
+		var c = t.charAt(i), m = shortMap[c];
+		if (m && bit()) {
+			while (typeof m !== 'number')
+				m = m[bit()];
+			ret += String.fromCharCode(m);
+		}
+		else
+			ret += c;
+	}
+
+	return ret;
+};
+
 // Calculate a%b, returning something in [0, b) even if a is negative.
 window.modulo = function(a, b) {
 	var res = a%b;
