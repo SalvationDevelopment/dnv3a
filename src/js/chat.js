@@ -38,14 +38,14 @@ function linkify(text) {
 var Chat = SidebarWidget.extend({
 	sidebarHandle: null,
 	ignoreHandle: null,
-	sendF: null,
 	maxlen: 0,
+	sendF: null,
 
 	holder: null,
 	cont: null,
 	chatField: null,
 
-	init: function(title, order, importance, maxlen, sendF) {
+	init: function(title, order, importance, maxlen, shouldIgnore, sendF) {
 		this.title = title;
 		this.order = order;
 		this.importance = importance;
@@ -73,11 +73,13 @@ var Chat = SidebarWidget.extend({
 			this.holder.css('padding-bottom', 0);
 		}
 
-		this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
+		if (shouldIgnore)
+			this.ignoreHandle = IgnoreList.listen(this.ignoreListener.bind(this));
 	},
 
 	destroy: function() {
-		IgnoreList.unlisten(this.ignoreHandle);
+		if (this.ignoreHandle !== null)
+			IgnoreList.unlisten(this.ignoreHandle);
 	},
 
 	send: function(field) {
@@ -122,7 +124,7 @@ var Chat = SidebarWidget.extend({
 	},
 
 	addMessage: function(from, message, color) {
-		if (IgnoreList.has(from))
+		if (this.ignoreHandle !== null && IgnoreList.has(from))
 			return;
 
 		var html = linkify(unhideUnicode(message));
@@ -144,7 +146,7 @@ window.ChatManager = {
 
 	setupGlobalChat: function() {
 		console.assert(!this.globalChat);
-		this.globalChat = new Chat("Global chat", 'a', 5, 200, function(msg) {
+		this.globalChat = new Chat("Global chat", 'a', 5, 200, true, function(msg) {
 			Communicator.send(['Global message', msg]);
 		});
 		this.globalChat.open(false);
@@ -166,7 +168,7 @@ window.ChatManager = {
 	openUserChat: function(user) {
 		var ch = this.userChats[user.id];
 		if (!ch) {
-			ch = new Chat(user.name, 'a-' + user.name, 15, 200, function(msg) {
+			ch = new Chat(user.name, 'a-' + user.name, 15, 200, false, function(msg) {
 				Communicator.send(['Private message', user.name, msg]);
 			});
 			this.userChats[user.id] = ch;
@@ -176,13 +178,13 @@ window.ChatManager = {
 	},
 
 	openDuelLog: function(sendF) {
-		var chat = new Chat("Duel log", 'b2', 10, 200, sendF);
+		var chat = new Chat("Duel log", 'b2', 10, 200, false, sendF);
 		chat.open(true);
 		return chat;
 	},
 
 	openWatchChat: function(sendF) {
-		var chat = new Chat("Watch chat", 'b1', 9, 200, sendF);
+		var chat = new Chat("Watch chat", 'b1', 9, 200, true, sendF);
 		chat.open(false);
 		var btn = chat.box.find('.sidebar-minimize-button');
 		var count = $('<span>').addClass('watch-count').insertBefore(btn);
