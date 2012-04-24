@@ -564,6 +564,24 @@ var DuelUI = Class.extend({
 		this.makeDetailView();
 	},
 
+	destroy: function() {
+		for (var id in this.map) {
+			var thing = this.map[id];
+			if (thing instanceof UICard)
+				thing.destroy();
+		}
+		this.duel.allLocations(function(loc) {
+			if (loc instanceof CardPileLocation)
+				loc.uiPile.destroy();
+		});
+
+		this.ui.empty();
+		if (this.detailUICard)
+			this.detailUICard.destroy();
+		this.detailEl.hide();
+		this.cardHolder.empty();
+	},
+
 	makeTable: function() {
 		this.tableCont = $('<div id="duel-tablecont">').appendTo(this.ui);
 		this.duelTable = $('<table id="duel-table">');
@@ -597,7 +615,11 @@ var DuelUI = Class.extend({
 		this.makeMiddle(midContainer);
 
 		this.duelTable.appendTo(this.tableCont);
+		this.calculateSizes();
+	},
 
+	calculateSizes: function() {
+		var els = this.fieldCells;
 		this.rowY = [];
 		this.rowH = [];
 		for (var row = 0; row < 5; ++row) {
@@ -643,17 +665,13 @@ var DuelUI = Class.extend({
 	},
 
 	makePiles: function() {
-		for (var pl = 0; pl < 2; ++pl) {
-			var locs = this.duel.locations[pl];
-			for (var name in locs) {
-				var loc = locs[name];
-				if (loc instanceof CardPileLocation) {
-					var rect = this.getLocRect(loc, false);
-					var pile = new UIPile(this, this.cardHolder, rect);
-					loc.uiPile = pile;
-				}
+		this.duel.allLocations(function(loc) {
+			if (loc instanceof CardPileLocation) {
+				var rect = this.getLocRect(loc, false);
+				var pile = new UIPile(this, this.cardHolder, rect);
+				loc.uiPile = pile;
 			}
-		}
+		}.bind(this));
 	},
 
 	makeDetailView: function() {
@@ -874,58 +892,33 @@ var DuelUI = Class.extend({
 		}
 	},
 
-	destroy: function() {
-		for (var id in this.map) {
-			var thing = this.map[id];
-			if (thing instanceof UICard)
-				thing.destroy();
-		}
-		for (var pl = 0; pl < 2; ++pl) {
-			var locs = this.duel.locations[pl];
-			for (var name in locs) {
-				var loc = locs[name];
-				if (loc instanceof CardPileLocation)
-					loc.uiPile.destroy();
-			}
-		}
-
-		this.ui.empty();
-		if (this.detailUICard)
-			this.detailUICard.destroy();
-		this.detailEl.hide();
-		this.cardHolder.empty();
-	},
-
 	setUI: function() {
 		var self = this, duel = this.duel;
-		for (var pl = 0; pl < 2; ++pl) {
-			var locs = duel.locations[pl];
-			for (var name in locs) {
-				var loc = locs[name];
-				if (loc instanceof CardPileLocation) {
-					var pile = loc.uiPile;
-					var adj = this.getLoc3DAdj(loc);
-					pile.setUI(loc, adj);
-					loc.cards.forEach(function(c) {
-						self.mapCardPile(pile, c);
-					});
-				}
-				else {
-					loc.cards.forEach(function(c) {
-						if (!c) return;
-						self.makeCard(c);
-						if (!c.underlay) return;
-						c.underlay.cards.forEach(function(c2) {
-							self.makeCard(c2);
-						});
-					});
-				}
+		duel.allLocations(function(loc) {
+			if (loc instanceof CardPileLocation) {
+				var pile = loc.uiPile;
+				var adj = self.getLoc3DAdj(loc);
+				pile.setUI(loc, adj);
+				loc.cards.forEach(function(c) {
+					self.mapCardPile(pile, c);
+				});
 			}
+			else {
+				loc.cards.forEach(function(c) {
+					if (!c) return;
+					self.makeCard(c);
+					if (!c.underlay) return;
+					c.underlay.cards.forEach(function(c2) {
+						self.makeCard(c2);
+					});
+				});
+			}
+		});
 
+		for (var pl = 0; pl < 2; ++pl) {
 			this.setLifePoints(pl, duel.lifepoints[pl], true);
 			this.setStatus(pl, duel.statuses[pl]);
 		}
-
 		this.setPhase(duel.turn, duel.phase);
 	},
 
@@ -1170,12 +1163,9 @@ var Duel = Class.extend({
 			c.underlay.cards.forEach(map);
 		}.bind(this);
 
-		for (var pl = 0; pl < 2; ++pl) {
-			var locs = this.locations[pl];
-			for (var a in locs) {
-				locs[a].cards.forEach(map);
-			}
-		}
+		this.allLocations(function(loc) {
+			loc.cards.forEach(map);
+		});
 	},
 
 	setStatus: function(pl, status) {
@@ -1207,6 +1197,16 @@ var Duel = Class.extend({
 		if (fieldPos > 5)
 			return locs.monsters;
 		return locs.fieldspell;
+	},
+
+	allLocations: function(f) {
+		for (var pl = 0; pl < 2; ++pl) {
+			var locs = this.locations[pl];
+			for (var name in locs) {
+				var loc = locs[name];
+				f(loc);
+			}
+		}
 	},
 
 	verifyLocation: function(card, lname) {
