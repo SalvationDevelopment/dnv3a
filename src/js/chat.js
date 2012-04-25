@@ -93,7 +93,7 @@ var Chat = SidebarWidget.extend({
 		if (ChatManager.locked || !value)
 			return;
 		ChatManager.locked = true;
-		var available = (this.maxlen ? this.maxlen - value.length : -1);
+		var available = (this.maxlen ? this.maxlen - value.length : Infinity);
 		this.sendF(hideUnicode(value, available));
 		field.value = '';
 	},
