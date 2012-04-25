@@ -628,16 +628,17 @@ var DuelUI = Class.extend({
 
 	calculateSizes: function() {
 		var els = this.fieldCells;
+		var baseOffset = this.cardHolder.offset();
 		this.rowY = [];
 		this.rowH = [];
 		for (var row = 0; row < 5; ++row) {
-			this.rowY.push(els[row][0].offset().top);
+			this.rowY.push(els[row][0].offset().top - baseOffset.top);
 			this.rowH.push(els[row][0].height());
 		}
 		this.colX = [];
 		this.colW = [];
 		for (var col = 0; col < 7; ++col) {
-			this.colX.push(els[0][col].offset().left);
+			this.colX.push(els[0][col].offset().left - baseOffset.left);
 			this.colW.push(els[0][col].width());
 		}
 	},
