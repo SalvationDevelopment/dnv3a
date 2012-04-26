@@ -417,13 +417,13 @@ var UICard = Class.extend({
 		this.el.hover(function() {
 			this.detailTimeout = setTimeout(function() {
 				this.detailTimeout = null;
-				duelui.detailCard(this.card.faceup ? this.card : null);
+				duelui.detailCard(this.faceup ? this.card : null);
 			}.bind(this), 300);
 		}.bind(this), function() {
 			this.stopDetailTimeout();
 		}.bind(this)).click(function() {
 			this.stopDetailTimeout();
-			duelui.detailCard(this.card.faceup ? this.card : null);
+			duelui.detailCard(this.faceup ? this.card : null);
 		}.bind(this));
 
 		this.holder.append(this.el);
@@ -468,17 +468,17 @@ var UICard = Class.extend({
 	move: function(x, y, w, h, faceup, rotation, delay, finished) {
 		// z is the z-index for the card, set to:
 		// - 200+ for moving cards
-		// - 100 for cards on field, including piles
+		// - 100 for cards on field
+		// - 150 for piles
 		// - 99- for underlays
 		// - 300 for piles when the a moving card is supposed to be under it
 		// - 400+ for cards in hand
 
-		if (!this.hasCardInfo && this.card.card) {
+		if (!this.hasCardInfo && faceup) {
+			console.assert(this.card.card);
 			this.hasCardInfo = true;
 			this.createCardFront();
 		}
-
-		console.assert(!(faceup && !this.hasCardInfo));
 
 		var loc = {left: x, top: y, width: w, height: h};
 		if (delay) {
@@ -1023,15 +1023,16 @@ var DuelUI = Class.extend({
 				uiCard.destroy();
 				self.map[card.id] = toPile;
 				toPile.updateFromLocation(toLoc);
-				toPile.setZ(100);
+				toPile.setZ(150);
 			}
 			else {
 				// Readjust the z-index to what it is supposed to be.
 				uiCard.setZ(rect.z);
 			}
-			// Reset z-index of piles referred to.
+
+			// Reset z-index of the origin pile.
 			if (thing instanceof UIPile)
-				thing.setZ(100);
+				thing.setZ(150);
 		});
 	},
 
@@ -1078,6 +1079,33 @@ var DuelUI = Class.extend({
 				line.remove();
 			}, 300);
 		});
+	},
+
+	deckShuffle: function(deck) {
+		var r0 = this.getLocRect(deck, false),
+			r1 = Object.clone(r0),
+			r2 = this.getLocRect(deck, true);
+		var pl = deck.player;
+		r0.z = r1.z = 149;
+		r2.z = 151;
+		r0.t = 0;
+		r1.t = r2.t = 250;
+		r1.left += (pl === 0 ? -1 : 1) * (r1.width-1);
+		var uiCard = new UICard(this, this.cardHolder, null);
+		var rotation = (pl === 0 ? 0 : -180);
+		var locs = [r0, r1, r2, r0, r1, r2, r0, r1, r2];
+		var time = 0;
+		locs.forEach(function(loc) {
+			setTimeout(function() {
+				uiCard.move(loc.left, loc.top, loc.width, loc.height,
+						false, rotation, loc.t);
+				uiCard.setZ(loc.z);
+			}, time);
+			time += loc.t;
+		});
+		setTimeout(function() {
+			uiCard.destroy();
+		}, time);
 	},
 
 	handShuffle: function(hand) {
@@ -1284,7 +1312,7 @@ var Duel = Class.extend({
 
 	deckShuffle: function(deck, base) {
 		deck.shuffle(this, base);
-		// TODO: Shuffle animation.
+		this.ui.deckShuffle(deck);
 	},
 
 	handShuffle: function(hand, base, data) {
@@ -1696,7 +1724,7 @@ window.DuelView = View.extend({
 		if (ev === 'Shuffle') {
 			var deck = this.duel.getLocation(data[0]);
 			this.duel.deckShuffle(deck, +data[1]);
-			return 500;
+			return 1500;
 		}
 		if (ev === 'Hand shuffle') {
 			var hand = this.duel.getLocation(data[0]);
