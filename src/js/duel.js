@@ -272,7 +272,7 @@ var UIPile = Class.extend({
 		var ind = this.indexOf(card);
 		console.assert(ind !== -1);
 		var oldClone = this.stack.splice(ind, 1)[0];
-		var wasTop = (oldClone === this.topUICard.card);
+		var wasTop = (ind === this.stack.length);
 		if (!wasTop)
 			this.setZ(300);
 		this.update(wasTop);
