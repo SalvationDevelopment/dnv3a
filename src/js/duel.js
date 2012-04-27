@@ -569,10 +569,11 @@ var DuelUI = Class.extend({
 		this.makeDetailView();
 
 		this.resize = this.resize.bind(this);
-		$(window).resize(this.resize);
+		$(window).on('resize', this.resize);
 	},
 
 	destroy: function() {
+		$(window).off('resize', this.resize);
 		for (var id in this.map) {
 			var thing = this.map[id];
 			if (thing instanceof UICard)
