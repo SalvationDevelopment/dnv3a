@@ -1789,6 +1789,15 @@ window.DuelView = View.extend({
 			this.watchChat.addMessage(from, msg, user.getColor());
 			return true;
 		}
+		if (ev === 'Duel message') {
+			var from = data[0], msg = data[1];
+			var user = Users.getUser(from);
+			this.queue.push(function() {
+				this.duelLog.addMessage(from, msg, user.getColor());
+				return 0;
+			}.bind(this));
+			return true;
+		}
 		if (ev === 'Turn pick') {
 			this.startingPlayer = this.getDuelistFromName(data[0]);
 			return true;
