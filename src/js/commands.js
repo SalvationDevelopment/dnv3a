@@ -18,7 +18,7 @@ function keyToString(key, shift) {
 	else if (key === 38) name = 'up';
 	else if (key === 39) name = 'right';
 	else if (key === 40) name = 'down';
-	else if (key === 191 || key === 109) name = '/'; // or '-'
+	else if (key === 191 || key === 173 || key === 109) name = '/'; // or '-'
 
 	if (name) {
 		if (shift) name = 'shift-' + name;

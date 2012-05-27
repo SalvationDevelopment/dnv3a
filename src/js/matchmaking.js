@@ -583,11 +583,6 @@ window.SearchPanel = Class.extend({
 		if (focused[0] === this.searchField[0])
 			map.push([0, 'force;shift-tab', '', function() {}]);
 
-		map.push(
-			[5, "←/→", "Change tabs"],
-			[0, 'force;left', '', function() { this.view.changeTabRel(-1); }],
-			[0, 'force;right', '', function() { this.view.changeTabRel(1); }]
-		);
 		this.view.addSearchDuelCommands(map);
 
 		Commands.setMap(this, map);
