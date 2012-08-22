@@ -403,14 +403,14 @@ var MatchTab = Tab.extend({
 
 var GlobalMatchTab = MatchTab.extend({
 	mode: null,
-	init: function(view, watch, mode, name) {
+	init: function(view, watch, modes, name) {
 		this._super(view, watch, name);
-		this.mode = mode;
+		this.modes = modes;
 		this.setTabVisibility(true);
 	},
 
 	canHandleDuel: function(duel) {
-		return (this.mode === duel.mode);
+		return ~this.modes.indexOf(duel.mode);
 	}
 });
 
@@ -676,9 +676,9 @@ window.MatchmakingView = View.extend({
 	initTabs: function() {
 		var w = this.watch;
 		var tabs = this.tabs = [];
-		tabs[this.Tabs.AR] = new GlobalMatchTab(this, w, 'ar', "Adv. Rated");
-		tabs[this.Tabs.AU] = new GlobalMatchTab(this, w, 'au', "Adv. Unrated");
-		tabs[this.Tabs.TU] = new GlobalMatchTab(this, w, 'tu', "Traditional");
+		tabs[this.Tabs.AR] = new GlobalMatchTab(this, w, ['ar'], "Adv. Rated");
+		tabs[this.Tabs.AU] = new GlobalMatchTab(this, w, ['au'], "Adv. Unrated");
+		tabs[this.Tabs.TU] = new GlobalMatchTab(this, w, ['tu', 'uu'], "Traditional");
 		tabs[this.Tabs.FRIEND] = new FriendTab(this, w);
 		tabs[this.Tabs.HOST] = new HostTab(this, w);
 
@@ -920,6 +920,7 @@ window.MatchmakingView = View.extend({
 				
 				var duel = {
 					mode: data[i++],
+					matchMode: data[i++],
 					title: data[i++],
 					ratingData: data[i++],
 				    note: data[i++],

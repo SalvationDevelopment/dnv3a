@@ -214,7 +214,7 @@ window.LoginView = View.extend({
 		this.setStatus(false, 1, "Logging in...");
 		this.userLoggingIn = user;
 		Communicator.openConnection(function() {
-			Communicator.send(['Connect13', user, token, randHex32()]);
+			Communicator.send(['Connect15', user, token, randHex32()]);
 		});
 	},
 

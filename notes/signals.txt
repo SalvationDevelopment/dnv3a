@@ -11,7 +11,8 @@ Legend:
 + = we handle it
 ModStatus = 0 for regular users, >0 for mods in increasing order of importance I think
 LoginToken = token gotten from the login, equal to md5(password)
-DuelMode = ar/au/tu (advanced rated, etc.)
+DuelMode = ar/au/tu/uu (first char = advanced/traditional/unlimited, second is rated/unrated)
+MatchMode = s/n/m (single+siding, single, match)
 UserTitle = Username in duel mode, "User1 ({Rating}) | User2 ({Rating})" in watch mode
 Rating = Format "1178/437" or so, or empty
 DuelListToken = 32 random hex-chars
@@ -114,7 +115,7 @@ Incoming:
 
 + Load duel room, Selected Deck, (Deck name, IsAdvanced :bool)*
 
-+ Add duels, ({DuelMode}, {UserTitle}, {Rating}, Duel note, Has password :bool, Allow watch :bool, {DuelListToken})*
++ Add duels, ({DuelMode}, {MatchMode},{UserTitle}, {Rating}, Duel note, Has password :bool, Allow watch :bool, {DuelListToken})*
 
 + Add watches = same format as 'Add duels', see matchmaking.js for details
 
