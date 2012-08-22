@@ -8,6 +8,7 @@
     public class DuelCard extends Sprite
     {
         public var front_mc:Front;
+        public var counter_mc:CounterNumber;
         public var back_mc:Shape;
         public var show_back:Boolean;
         public var loc:String;
@@ -27,6 +28,9 @@
             this.front_mc = new Front();
             this.front_mc.x = -200;
             this.front_mc.y = -290;
+            this.counter_mc = new CounterNumber();
+            this.counter_mc.x = 64;
+            this.counter_mc.y = 131;
             this.back_mc = param1.getBack();
             if (this.back_mc == null)
             {
@@ -34,7 +38,7 @@
                 param1.addEventListener(Event.COMPLETE, this.switchBackE);
             }
             addChild(this.front_mc);
-            mouseChildren = false;
+            addChild(this.counter_mc);
             this.show_back = false;
             this.card_rot_y = 0;
             this.card_rot_z = 0;
@@ -150,6 +154,10 @@
             if (transform.matrix3D == null)
             {
                 rotation = this.card_rot_z;
+                if (this.counter_mc.visible)
+                {
+                    this.counter_mc.rotation = -this.card_rot_z;
+                }
             }
             else
             {
@@ -260,6 +268,85 @@
         public function hasUnderlays() : Boolean
         {
             return this.overlay_next != this;
+        }// end function
+
+        public function get counter() : int
+        {
+            return this.counter_mc.counter;
+        }// end function
+
+        public function set counter(param1:int)
+        {
+            var _loc_2:* = this.counter_mc.visible;
+            this.counter_mc.counter = param1;
+            if (!_loc_2 && this.counter_mc.visible && transform.matrix3D == null)
+            {
+                addChild(this.counter_mc);
+                this.counter_mc.rotation = -this.card_rot_z;
+            }
+            return;
+        }// end function
+
+        public function getFieldNameString()
+        {
+            var _loc_1:* = this.front_mc.card == "token" ? ("token") : ("\"" + this.front_mc.card_name + "\"");
+            return _loc_1 + " in " + this.getPositionString();
+        }// end function
+
+        private function getPositionString() : String
+        {
+            switch(this.position)
+            {
+                case 0:
+                {
+                    return "ST-1";
+                }
+                case 1:
+                {
+                    return "ST-2";
+                }
+                case 2:
+                {
+                    return "ST-3";
+                }
+                case 3:
+                {
+                    return "ST-4";
+                }
+                case 4:
+                {
+                    return "ST-5";
+                }
+                case 5:
+                {
+                    return "F";
+                }
+                case 6:
+                {
+                    return "M-1";
+                }
+                case 7:
+                {
+                    return "M-2";
+                }
+                case 8:
+                {
+                    return "M-3";
+                }
+                case 9:
+                {
+                    return "M-4";
+                }
+                case 10:
+                {
+                    return "M-5";
+                }
+                default:
+                {
+                    return "?";
+                    break;
+                }
+            }
         }// end function
 
     }

@@ -791,6 +791,7 @@
 
         function frame1()
         {
+            mouseChildren = false;
             return;
         }// end function
 

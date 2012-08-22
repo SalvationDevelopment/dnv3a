@@ -20,15 +20,16 @@
     import flash.net.*;
     import flash.system.*;
     import flash.text.*;
+    import flash.ui.*;
     import flash.utils.*;
 
     dynamic public class MainTimeline extends MovieClip
     {
         public var rematch_btn:Button;
+        public var cancel_duel_btn:Button;
         public var content_sp:ScrollPane;
         public var admin_status_mc:MovieClip;
         public var comp_username_txt:TextInput;
-        public var cancel_duel_btn:Button;
         public var back_mc:MovieClip;
         public var avatar_browse_mc:MovieClip;
         public var ranking_txt:TextField;
@@ -39,20 +40,21 @@
         public var deck2_mc:DeckCard;
         public var desc_txt:TextInput;
         public var page_txt:TextField;
-        public var tu_sp:ScrollPane;
         public var watch_chat_tooltip_mc:MovieClip;
         public var calls_mc:MovieClip;
         public var msg_mc:MovieClip;
         public var forgot_password_box_mc:MovieClip;
         public var fp_out_of_date_mc:MovieClip;
         public var rankings_exit_btn:Button;
+        public var match_select_mc:MovieClip;
         public var by_wins_mc:MovieClip;
         public var kick_user_btn:Button;
         public var unban_user_btn:Button;
         public var back_browse_mc:MovieClip;
-        public var delete_friend_btn:SimpleButton;
+        public var ranking2_txt:TextField;
         public var draws_txt:TextField;
         public var key_mc:MovieClip;
+        public var delete_friend_btn:SimpleButton;
         public var search12_mc:SearchCard;
         public var search6_mc:SearchCard;
         public var deck58_mc:DeckCard;
@@ -76,7 +78,7 @@
         public var deck48_mc:DeckCard;
         public var deck33_mc:DeckCard;
         public var deck22_mc:DeckCard;
-        public var sort_btn:Button;
+        public var sort_btn:SimpleButton;
         public var card_cb:ComboBox;
         public var side_area_mc:MovieClip;
         public var online_users_tooltip_mc:MovieClip;
@@ -95,6 +97,7 @@
         public var ip_username_txt:TextInput;
         public var decrement_strikes_cb:CheckBox;
         public var new_txt:TextInput;
+        public var draws2_txt:TextField;
         public var search4_mc:SearchCard;
         public var side15_mc:DeckCard;
         public var side8_mc:DeckCard;
@@ -109,6 +112,7 @@
         public var days_rb:RadioButton;
         public var confirm_txt:TextInput;
         public var my_profile_exit_btn:Button;
+        public var losses2_txt:TextField;
         public var rating_rep_txt:TextField;
         public var avatar_mc:MovieClip;
         public var search5_mc:SearchCard;
@@ -123,6 +127,7 @@
         public var name_txt:TextInput;
         public var host_mc:MovieClip;
         public var watch_rb:RadioButton;
+        public var unl_mc:MovieClip;
         public var au_sp:ScrollPane;
         public var online_users_mc:MovieClip;
         public var screenshot_btn:MovieClip;
@@ -138,6 +143,7 @@
         public var deck10_mc:DeckCard;
         public var deck7_mc:DeckCard;
         public var trap_count_txt:TextField;
+        public var save_as_btn:Button;
         public var rename_btn:Button;
         public var search_btn:Button;
         public var card2_cb:ComboBox;
@@ -145,6 +151,7 @@
         public var profile_btn:SimpleButton;
         public var camera_flash_mc:MovieClip;
         public var title_mc:MovieClip;
+        public var forums_btn:SimpleButton;
         public var die_btn:SimpleButton;
         public var avatar2_mc:SquarePicture;
         public var avatar_back2_mc:MovieClip;
@@ -166,7 +173,6 @@
         public var invalid_load_context_mc:MovieClip;
         public var fade_mc:MovieClip;
         public var field_mc:SquarePicture;
-        public var kick2_btn:Button;
         public var watchers_mc:MovieClip;
         public var avatar_back1_mc:MovieClip;
         public var check_ip_btn:Button;
@@ -182,6 +188,7 @@
         public var deck16_mc:DeckCard;
         public var deck5_mc:DeckCard;
         public var rating_upper_txt:TextInput;
+        public var show_uu_btn:SimpleButton;
         public var online_btn:MovieClip;
         public var call_tooltip_mc:MovieClip;
         public var room_btn:SimpleButton;
@@ -191,6 +198,7 @@
         public var rating_rep1_mc:MovieClip;
         public var status1_mc:MovieClip;
         public var by_reputation_heading_mc:MovieClip;
+        public var by_total_reputation_heading_mc:MovieClip;
         public var back_right_btn:SimpleButton;
         public var icon3_mc:MovieClip;
         public var registered_txt:TextField;
@@ -207,6 +215,7 @@
         public var atkl_txt:TextInput;
         public var lvlh_txt:TextInput;
         public var rep_lower_txt:TextInput;
+        public var show_tu_btn:SimpleButton;
         public var banner_mc:MovieClip;
         public var public_chat_tooltip_mc:MovieClip;
         public var input_mc:MovieClip;
@@ -216,6 +225,7 @@
         public var rating_rep2_mc:MovieClip;
         public var avatar1_mc:SquarePicture;
         public var rps_hidden_mc:MovieClip;
+        public var by_total_reputation_mc:MovieClip;
         public var ban_user_btn:Button;
         public var forever_rb:RadioButton;
         public var ban_username_txt:TextInput;
@@ -227,17 +237,19 @@
         public var deck43_mc:DeckCard;
         public var deck25_mc:DeckCard;
         public var deck14_mc:DeckCard;
-        public var default_btn:Button;
         public var defl_txt:TextInput;
+        public var match_type_cb:ComboBox;
+        public var default_btn:Button;
         public var decklist_cb:ComboBox;
         public var mute_btn:MovieClip;
         public var done_siding_btn:Button;
         public var lp_top_mc:MovieClip;
-        public var kick1_btn:Button;
         public var username1_mc:MovieClip;
         public var by_wins_heading_mc:MovieClip;
         public var reason_txt:TextInput;
         public var icon1_mc:MovieClip;
+        public var rating_rep2_txt:TextField;
+        public var wins2_txt:TextField;
         public var puzzle_mc:MovieClip;
         public var extra2_mc:DeckCard;
         public var side3_mc:DeckCard;
@@ -255,9 +267,9 @@
         public var lp_bottom_mc:MovieClip;
         public var duel_hidden_mc:MovieClip;
         public var duel_quit_btn:Button;
+        public var loss2_btn:Button;
         public var username2_mc:MovieClip;
         public var paper2_mc:MovieClip;
-        public var cancel_username_txt:TextInput;
         public var increment_strikes_cb:CheckBox;
         public var get_ban_status_btn:Button;
         public var password_exit_btn:Button;
@@ -279,7 +291,9 @@
         public var days_txt:TextInput;
         public var left_btn:SimpleButton;
         public var icon7_mc:MovieClip;
+        public var ranking_calc2_btn:SimpleButton;
         public var username_txt:TextInput;
+        public var bypass_card_limit_cb:CheckBox;
         public var search14_mc:SearchCard;
         public var extra10_mc:DeckCard;
         public var side1_mc:DeckCard;
@@ -305,6 +319,7 @@
         public var icon4_mc:MovieClip;
         public var ranking_calc_btn:SimpleButton;
         public var losses_txt:TextField;
+        public var table_mc:MovieClip;
         public var search17_mc:SearchCard;
         public var extra13_mc:DeckCard;
         public var extra1_mc:DeckCard;
@@ -317,10 +332,13 @@
         public var defh_txt:TextInput;
         public var type2_cb:ComboBox;
         public var tot_pages_txt:TextField;
+        public var rules_btn:SimpleButton;
         public var admin_duel_btn:SimpleButton;
         public var admin_admin_btn:SimpleButton;
         public var siding_in_progress_mc:MovieClip;
         public var cards_mc:MovieClip;
+        public var counter_start_mc:Counter;
+        public var loss1_btn:Button;
         public var scissors1_mc:MovieClip;
         public var paper1_mc:MovieClip;
         public var icon5_mc:MovieClip;
@@ -339,6 +357,7 @@
         public var ritual_count_txt:TextField;
         public var delete_btn:Button;
         public var clear_btn:Button;
+        public var order_cb:ComboBox;
         public var attrib_cb:ComboBox;
         public var ar_sp:ScrollPane;
         public var private_chat_mc:MovieClip;
@@ -362,6 +381,7 @@
         public var side4_mc:DeckCard;
         public var deck45_mc:DeckCard;
         public var deck19_mc:DeckCard;
+        public var limit_cb:ComboBox;
         public var room_exit_btn:Button;
         public var public_btn:MovieClip;
         public var swap_btn:Button;
@@ -379,6 +399,7 @@
         public var deck_exit_btn:Button;
         public var next_btn:SimpleButton;
         public var joining_mc:MovieClip;
+        public var trad_mc:MovieClip;
         public var private_btn:MovieClip;
         public var private_chat_tooltip_mc:MovieClip;
         public var news_txt:TextArea;
@@ -391,6 +412,7 @@
         public var AVATAR_START:Object;
         public var BACK_START:Object;
         public var bgmusic:Sound;
+        public var rc_menu:ContextMenu;
         public var display_box_callback:Function;
         public var input_callback:Function;
         public var combo_callback:Function;
@@ -417,6 +439,8 @@
         public var logout_loader:URLLoader;
         public var forgot_password_loader:URLLoader;
         public var news_loader:URLLoader;
+        public var tat_leaderboard:AdLoader;
+        public var tat_banner:AdLoader;
         public var heartbeat_timer:Timer;
         public var got_heartbeat:Boolean;
         public var socket:XMLSocket;
@@ -431,7 +455,6 @@
         public var tuser_start:String;
         public var tuser_end:String;
         public var tuser_current:String;
-        public var tuser_cursor:String;
         public var title_timer:Timer;
         public var room_init:Boolean;
         public var enable_dueling:Boolean;
@@ -457,7 +480,6 @@
         public var current_deck_name:String;
         public var new_deck_name:String;
         public var save_deck_callback:Function;
-        public var picked_up:Object;
         public var saved_deck:Array;
         public var saved_side:Array;
         public var saved_extra:Array;
@@ -495,16 +517,19 @@
         public var browse_loader:Loader;
         public var browse_ba:ByteArray;
         public var ban_username:String;
-        public var bantime_rbg:RadioButtonGroup;
         public var admin_username:String;
         public var rankings_init:Boolean;
+        public var ranking_match:Boolean;
+        public var manual_match_change:Boolean;
         public var duel_starting:Boolean;
         public var duelist:Boolean;
         public var rated_duel:Boolean;
         public var duel_args:Array;
+        public var match_type:String;
         public var watch_chat_mc:WatchChat;
         public var back_loader1:BackLoader;
         public var back_loader2:BackLoader;
+        public var rps_match:Boolean;
         public var duel_over:Boolean;
         public var no_duel_winner:Boolean;
         public var watchHtmlText:String;
@@ -537,6 +562,7 @@
         public var confirm_send_arr:Array;
         public var die_timer:Timer;
         public var reveal_card:DuelCard;
+        public var counter_drag_src_id:String;
         public var siding_deck_orig:Array;
         public var siding_side_orig:Array;
         public var siding_extra_orig:Array;
@@ -687,6 +713,18 @@
             try
             {
                 ExternalInterface.call("track", param1);
+            }
+            catch (e:Error)
+            {
+            }
+            return;
+        }// end function
+
+        public function setAd(param1:Boolean)
+        {
+            try
+            {
+                ExternalInterface.call("setAd", param1);
             }
             catch (e:Error)
             {
@@ -958,6 +996,22 @@
             return;
         }// end function
 
+        public function forumsE(event:MouseEvent)
+        {
+            var _loc_2:* = new URLRequest("http://forum.duelingnetwork.com/");
+            _loc_2.method = URLRequestMethod.GET;
+            navigateToURL(_loc_2, "_blank");
+            return;
+        }// end function
+
+        public function rulesE(event:MouseEvent)
+        {
+            var _loc_2:* = new URLRequest("http://www.duelingnetwork.com/rules");
+            _loc_2.method = URLRequestMethod.GET;
+            navigateToURL(_loc_2, "_blank");
+            return;
+        }// end function
+
         public function loading(event:Event)
         {
             var _loc_2:* = loaderInfo.bytesLoaded;
@@ -1187,6 +1241,8 @@
             this.logged_in_box_mc.logout_btn.addEventListener(MouseEvent.CLICK, this.performLogout);
             this.forgot_password_box_mc.reset_password_btn.addEventListener(MouseEvent.CLICK, this.performForgotPassword);
             this.donate_btn.addEventListener(MouseEvent.CLICK, this.donateClickE);
+            this.forums_btn.addEventListener(MouseEvent.CLICK, this.forumsE);
+            this.rules_btn.addEventListener(MouseEvent.CLICK, this.rulesE);
             return;
         }// end function
 
@@ -1220,6 +1276,7 @@
             {
                 this.login_administrate = e.currentTarget == this.admin_admin_btn;
             }
+            this.setAd(false);
             gotoAndStop("connect_start");
             if (this.bg_tween == null && this.bgchannel != null)
             {
@@ -1589,6 +1646,13 @@
             return;
         }// end function
 
+        public function loadAds()
+        {
+            this.tat_leaderboard.load();
+            this.tat_banner.load();
+            return;
+        }// end function
+
         public function donateClickE(event:MouseEvent)
         {
             var _loc_2:* = new URLRequest("http://www.duelingnetwork.com/donate.html");
@@ -1764,7 +1828,7 @@
 
         public function connectHandler(event:Event)
         {
-            var _loc_2:Array = ["Connect13", this.username, this.password, this.session_id];
+            var _loc_2:Array = ["Connect15", this.username, this.password, this.session_id];
             if (this.login_administrate)
             {
                 _loc_2.push("Administrate");
@@ -2050,7 +2114,6 @@
                 case "Ban user":
                 case "Unban user":
                 case "Kick user":
-                case "Cancel duel":
                 case "Add warning":
                 case "IP check":
                 case "Computer check":
@@ -2639,10 +2702,14 @@
 
         public function addTitle(param1:String)
         {
-            this.removeTitle(param1, false);
+            if (this.title_usernames[param1] != null)
+            {
+                return;
+            }
             var _loc_2:Array = [this.tuser_end, null];
             this.title_usernames[param1] = _loc_2;
-            if (this.tuser_start == null)
+            var _loc_3:* = this.tuser_start == null;
+            if (_loc_3)
             {
                 this.tuser_start = param1;
             }
@@ -2651,52 +2718,9 @@
                 this.title_usernames[this.tuser_end][1] = param1;
             }
             this.tuser_end = param1;
-            this.tuser_cursor = param1;
-            this.setNextTitle();
-            this.title_timer.reset();
-            this.title_timer.start();
-            return;
-        }// end function
-
-        public function removeTitle(param1:String, param2:Boolean = true)
-        {
-            var _loc_3:* = this.title_usernames[param1];
-            if (_loc_3 == null)
+            if (_loc_3)
             {
-                return;
-            }
-            delete this.title_usernames[param1];
-            var _loc_4:* = _loc_3[0];
-            var _loc_5:* = _loc_3[1];
-            if (_loc_4 == null)
-            {
-                this.tuser_start = _loc_5;
-            }
-            else
-            {
-                this.title_usernames[_loc_4][1] = _loc_5;
-            }
-            if (_loc_5 == null)
-            {
-                this.tuser_end = _loc_4;
-            }
-            else
-            {
-                this.title_usernames[_loc_5][0] = _loc_4;
-            }
-            if (param1 == this.tuser_cursor)
-            {
-                if (_loc_5 == null)
-                {
-                    this.tuser_cursor = this.tuser_start;
-                }
-                else
-                {
-                    this.tuser_cursor = _loc_5;
-                }
-            }
-            if (param2 && this.tuser_current == param1)
-            {
+                this.tuser_current = null;
                 this.setNextTitle();
                 this.title_timer.reset();
                 this.title_timer.start();
@@ -2704,15 +2728,64 @@
             return;
         }// end function
 
+        public function removeTitle(param1:String)
+        {
+            var _loc_2:* = this.title_usernames[param1];
+            if (_loc_2 == null)
+            {
+                return;
+            }
+            delete this.title_usernames[param1];
+            var _loc_3:* = _loc_2[0];
+            var _loc_4:* = _loc_2[1];
+            if (_loc_3 == null)
+            {
+                this.tuser_start = _loc_4;
+            }
+            else
+            {
+                this.title_usernames[_loc_3][1] = _loc_4;
+            }
+            if (_loc_4 == null)
+            {
+                this.tuser_end = _loc_3;
+            }
+            else
+            {
+                this.title_usernames[_loc_4][0] = _loc_3;
+            }
+            var _loc_5:* = _loc_3 == null && _loc_4 == null;
+            if (this.tuser_current == param1)
+            {
+                this.tuser_current = _loc_3;
+                this.setNextTitle();
+                if (!_loc_5)
+                {
+                    this.title_timer.reset();
+                    this.title_timer.start();
+                }
+            }
+            if (_loc_5)
+            {
+                this.title_timer.stop();
+            }
+            return;
+        }// end function
+
         public function nextTitle() : String
         {
-            this.tuser_current = this.tuser_cursor;
-            if (this.tuser_cursor == null)
+            if (this.tuser_current == null)
             {
-                this.tuser_cursor = this.tuser_start;
+                this.tuser_current = this.tuser_start;
+            }
+            else
+            {
+                this.tuser_current = this.title_usernames[this.tuser_current][1];
+            }
+            if (this.tuser_current == null)
+            {
                 return "Dueling Network";
             }
-            this.tuser_cursor = this.title_usernames[this.tuser_cursor][1];
             return this.tuser_current + " says...";
         }// end function
 
@@ -2838,33 +2911,29 @@
             var leaderboardClickE:Function;
             leaderboardClickE = function (event:MouseEvent)
             {
-                var _loc_2:String = null;
+                var _loc_2:Array = null;
                 var _loc_3:String = null;
-                switch(event.target.name)
+                var _loc_4:String = null;
+                if (event.currentTarget.tat)
                 {
-                    case "facebook_btn":
-                    {
-                        break;
-                    }
-                    case "buying_btn":
-                    {
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                        break;
-                    }
+                    _loc_2 = tat_leaderboard.getLink(event.target.name);
+                    _loc_3 = _loc_2[0];
+                    _loc_4 = _loc_2[1];
                 }
-                navigateToURL(new URLRequest(_loc_2), "_blank");
+                else
+                {
+                    _loc_3 = "CoretcgLeaderboard";
+                    _loc_4 = "http://www.coretcg.com/";
+                }
+                navigateToURL(new URLRequest(_loc_4), "_blank");
                 trackEvent("Ad", "Click", _loc_3);
                 return;
             }// end function
             ;
             stage.focus = null;
             this.track("main_menu");
-            this.leaderboard_mc.tat = Math.random() <= 0.25;
-            this.leaderboard_mc.addChild(this.leaderboard_mc.tat ? (new TatLeaderboard()) : (new CoretcgLeaderboard()));
+            this.leaderboard_mc.tat = this.tat_leaderboard.hasAd() && Math.random() <= 0.25;
+            this.leaderboard_mc.showAd(this.leaderboard_mc.tat ? (this.tat_leaderboard.getAd()) : (new CoretcgLeaderboard()));
             this.leaderboard_mc.addEventListener(MouseEvent.CLICK, leaderboardClickE);
             this.enter_handler = null;
             this.incoming_handler = null;
@@ -2945,25 +3014,21 @@
 
         public function bannerClickE(event:MouseEvent)
         {
-            var _loc_2:String = null;
+            var _loc_2:Array = null;
             var _loc_3:String = null;
-            switch(event.target.name)
+            var _loc_4:String = null;
+            if (event.currentTarget.tat)
             {
-                case "facebook_btn":
-                {
-                    break;
-                }
-                case "buying_btn":
-                {
-                    break;
-                }
-                default:
-                {
-                    break;
-                    break;
-                }
+                _loc_2 = this.tat_banner.getLink(event.target.name);
+                _loc_3 = _loc_2[0];
+                _loc_4 = _loc_2[1];
             }
-            navigateToURL(new URLRequest(_loc_2), "_blank");
+            else
+            {
+                _loc_3 = "CoretcgBanner";
+                _loc_4 = "http://www.coretcg.com/";
+            }
+            navigateToURL(new URLRequest(_loc_4), "_blank");
             this.trackEvent("Ad", "Click", _loc_3);
             return;
         }// end function
@@ -3003,6 +3068,11 @@
                 case this.hosting_mc.cancel_btn:
                 {
                     this.cancelDuelE();
+                    break;
+                }
+                case this.default_btn:
+                {
+                    this.setDefaultDeckE();
                     break;
                 }
                 case this.room_exit_btn:
@@ -3131,6 +3201,11 @@
                             this.gotoDuel("Rock-paper-scissors", true, this.entering_rated_duel, _loc_3);
                             break;
                         }
+                        case "Set default deck":
+                        {
+                            this.setDefaultDeckResponse(_loc_3);
+                            break;
+                        }
                         default:
                         {
                             break;
@@ -3155,7 +3230,11 @@
                 }
                 case "tu":
                 {
-                    return this.tu_sp;
+                    return this.trad_mc.tu_sp;
+                }
+                case "uu":
+                {
+                    return this.unl_mc.uu_sp;
                 }
                 default:
                 {
@@ -3179,11 +3258,11 @@
                 if (_loc_4 != null)
                 {
                     _loc_5 = JoinList(_loc_4.source);
-                    _loc_5.addJoin(param1[(_loc_3 + 1)], param1[_loc_3 + 2], param1[_loc_3 + 3], param1[_loc_3 + 4], param1[_loc_3 + 5], param1[_loc_3 + 6]);
+                    _loc_5.addJoin(param1[(_loc_3 + 1)], param1[_loc_3 + 2], param1[_loc_3 + 3], param1[_loc_3 + 4], param1[_loc_3 + 5], param1[_loc_3 + 6], param1[_loc_3 + 7]);
                 }
-                _loc_3 = _loc_3 + 7;
+                _loc_3 = _loc_3 + 8;
             }
-            if (param1.length > 7)
+            if (param1.length > 8)
             {
                 this.setFilterE();
             }
@@ -3197,7 +3276,11 @@
             }
             if (_loc_2["tu"] != undefined)
             {
-                this.tu_sp.update();
+                this.trad_mc.tu_sp.update();
+            }
+            if (_loc_2["uu"] != undefined)
+            {
+                this.unl_mc.uu_sp.update();
             }
             if (this.enable_dueling)
             {
@@ -3235,7 +3318,11 @@
             }
             if (_loc_2["tu"] != undefined)
             {
-                this.tu_sp.update();
+                this.trad_mc.tu_sp.update();
+            }
+            if (_loc_2["uu"] != undefined)
+            {
+                this.unl_mc.uu_sp.update();
             }
             return;
         }// end function
@@ -3259,7 +3346,7 @@
             var _loc_2:int = 0;
             var _loc_3:* = undefined;
             var _loc_4:String = null;
-            var _loc_5:Boolean = false;
+            var _loc_5:String = null;
             var _loc_6:Object = null;
             this.unlock();
             this.filter_username_txt.setFocus();
@@ -3273,7 +3360,7 @@
                 {
                     
                     _loc_4 = param1[_loc_3];
-                    _loc_5 = param1[(_loc_3 + 1)] == "true";
+                    _loc_5 = param1[(_loc_3 + 1)];
                     _loc_6 = {label:_loc_4, data:_loc_4, advanced:_loc_5};
                     this.decklist_cb.addItem(_loc_6);
                     _loc_3 = _loc_3 + 2;
@@ -3290,11 +3377,14 @@
                 this.host_mc.ar_rb.enabled = false;
                 this.host_mc.au_rb.enabled = false;
                 this.host_mc.tu_rb.enabled = false;
+                this.host_mc.uu_rb.enabled = false;
                 this.host_mc.duel_note_txt.enabled = false;
                 this.host_mc.duel_password_txt.enabled = false;
                 this.host_mc.watching_cb.enabled = false;
                 this.host_mc.watch_note_txt.enabled = false;
                 this.host_mc.watch_password_txt.enabled = false;
+                this.host_mc.match_type_cb.enabled = false;
+                this.default_btn.enabled = false;
             }
             return;
         }// end function
@@ -3308,8 +3398,8 @@
             var _loc_2:* = this.decklist_cb.dropdown;
             _loc_2.drawNow();
             var _loc_3:* = _loc_2.verticalScrollPosition / 20;
-            var _loc_4:* = _loc_3 + 6;
-            if (_loc_3 + 6 > _loc_2.length)
+            var _loc_4:* = _loc_3 + _loc_2.rowCount + 1;
+            if (_loc_3 + _loc_2.rowCount + 1 > _loc_2.length)
             {
                 _loc_4 = _loc_2.length;
             }
@@ -3321,10 +3411,27 @@
                 _loc_7 = new TextFormat();
                 _loc_7.font = Constants.COMPONENT_FONT;
                 _loc_7.size = Constants.COMPONENT_SIZE;
-                _loc_7.color = 0;
-                if (!_loc_5.advanced)
+                switch(_loc_5.advanced)
                 {
-                    _loc_7.italic = true;
+                    case "adv":
+                    {
+                        _loc_7.color = 32665;
+                        break;
+                    }
+                    case "trad":
+                    {
+                        _loc_7.color = 16724838;
+                        break;
+                    }
+                    case "unl":
+                    {
+                        _loc_7.color = 6710886;
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
                 }
                 _loc_6.setStyle("textFormat", _loc_7);
                 _loc_3++;
@@ -3338,34 +3445,37 @@
             {
                 return;
             }
-            if (this.duel_rb.selected)
+            switch(this.decklist_cb.selectedItem.advanced)
             {
-                if (!this.decklist_cb.selectedItem.advanced)
+                case "unl":
                 {
-                    this.ar_sp.source.setEnabled(false);
-                    this.au_sp.source.setEnabled(false);
                 }
-                this.Send(["Duel mode"]);
+                case "trad":
+                {
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
             }
-            else if (this.watch_rb.selected)
+            if (this.watch_rb.selected)
             {
                 if (!(this.hosting_mc.visible || this.joining_mc.visible))
                 {
-                    this.ar_sp.source.setEnabled(true);
-                    this.au_sp.source.setEnabled(true);
                 }
-                this.Send(["Watch mode"]);
             }
             else
             {
-                return;
             }
             this.ar_sp.source.clear();
             this.ar_sp.update();
             this.au_sp.source.clear();
             this.au_sp.update();
-            this.tu_sp.source.clear();
-            this.tu_sp.update();
+            this.trad_mc.tu_sp.source.clear();
+            this.trad_mc.tu_sp.update();
+            this.unl_mc.uu_sp.source.clear();
+            this.unl_mc.uu_sp.update();
             this.duel_rb.enabled = false;
             this.watch_rb.enabled = false;
             return;
@@ -3384,7 +3494,7 @@
                 this.hostDuel(true);
                 return;
             }
-            var _loc_2:* = "Do you confirm that your duel note contains none of the following?" + "\n- Lurking for girlfriends/boyfriends or other sexual purposes" + "\n- Spam or advertising (YouTube, selling/trading, academies, tournaments, \"hosting to stay on,\" etc.)";
+            var _loc_2:* = "Do you confirm that your duel note contains none of the following?" + "\n- Lurking for girlfriends/boyfriends or other sexual purposes" + "\n- Spam or advertising (YouTube, selling/trading, academies, tournaments, \"hosting to stay on,\" \"PM me for...,\" etc.)";
             if (this.host_mc.ar_rb.selected)
             {
                 _loc_2 = _loc_2 + "\n- Deck restrictions for opponent, other than format (TCG/OCG)";
@@ -3402,13 +3512,13 @@
             }
             if (this.host_mc.watching_cb.selected)
             {
-                _loc_2 = new Array(7);
-                _loc_2[5] = this.host_mc.watch_note_txt.text;
-                _loc_2[6] = this.host_mc.watch_password_txt.text;
+                _loc_2 = new Array(8);
+                _loc_2[6] = this.host_mc.watch_note_txt.text;
+                _loc_2[7] = this.host_mc.watch_password_txt.text;
             }
             else
             {
-                _loc_2 = new Array(5);
+                _loc_2 = new Array(6);
             }
             _loc_2[0] = "Host duel";
             if (this.host_mc.ar_rb.selected)
@@ -3423,14 +3533,19 @@
             {
                 _loc_2[1] = "tu";
             }
+            else if (this.host_mc.uu_rb.selected)
+            {
+                _loc_2[1] = "uu";
+            }
             else
             {
                 this.displayError("Duel type not selected");
                 return;
             }
-            _loc_2[2] = this.decklist_cb.selectedItem.data;
-            _loc_2[3] = this.host_mc.duel_note_txt.text;
-            _loc_2[4] = this.host_mc.duel_password_txt.text;
+            _loc_2[2] = this.host_mc.match_type_cb.selectedItem.data;
+            _loc_2[3] = this.decklist_cb.selectedItem.data;
+            _loc_2[4] = this.host_mc.duel_note_txt.text;
+            _loc_2[5] = this.host_mc.duel_password_txt.text;
             this.Send(_loc_2);
             this.lock();
             return;
@@ -3446,7 +3561,8 @@
             this.decklist_cb.enabled = false;
             this.ar_sp.source.setEnabled(false);
             this.au_sp.source.setEnabled(false);
-            this.tu_sp.source.setEnabled(false);
+            this.trad_mc.tu_sp.source.setEnabled(false);
+            this.unl_mc.uu_sp.source.setEnabled(false);
             return;
         }// end function
 
@@ -3457,12 +3573,33 @@
             this.hosting_mc.visible = false;
             this.hosting_mc.free();
             this.decklist_cb.enabled = true;
-            if (this.decklist_cb.selectedItem.advanced || this.watch_rb.selected)
+            if (this.watch_rb.selected)
             {
                 this.ar_sp.source.setEnabled(true);
                 this.au_sp.source.setEnabled(true);
+                this.trad_mc.tu_sp.source.setEnabled(true);
             }
-            this.tu_sp.source.setEnabled(true);
+            else
+            {
+                switch(this.decklist_cb.selectedItem.advanced)
+                {
+                    case "adv":
+                    {
+                        this.ar_sp.source.setEnabled(true);
+                        this.au_sp.source.setEnabled(true);
+                    }
+                    case "trad":
+                    {
+                        this.trad_mc.tu_sp.source.setEnabled(true);
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+            this.unl_mc.uu_sp.source.setEnabled(true);
             return;
         }// end function
 
@@ -3490,6 +3627,11 @@
                 case "tu":
                 {
                     _loc_7 = "Traditional Unrated";
+                    break;
+                }
+                case "uu":
+                {
+                    _loc_7 = "Unlimited Unrated";
                     break;
                 }
                 default:
@@ -3582,7 +3724,8 @@
             this.decklist_cb.enabled = false;
             this.ar_sp.source.setEnabled(false);
             this.au_sp.source.setEnabled(false);
-            this.tu_sp.source.setEnabled(false);
+            this.trad_mc.tu_sp.source.setEnabled(false);
+            this.unl_mc.uu_sp.source.setEnabled(false);
             return;
         }// end function
 
@@ -3599,12 +3742,33 @@
             this.host_mc.visible = true;
             this.joining_mc.visible = false;
             this.decklist_cb.enabled = true;
-            if (this.decklist_cb.selectedItem.advanced || this.watch_rb.selected)
+            if (this.watch_rb.selected)
             {
                 this.ar_sp.source.setEnabled(true);
                 this.au_sp.source.setEnabled(true);
+                this.trad_mc.tu_sp.source.setEnabled(true);
             }
-            this.tu_sp.source.setEnabled(true);
+            else
+            {
+                switch(this.decklist_cb.selectedItem.advanced)
+                {
+                    case "adv":
+                    {
+                        this.ar_sp.source.setEnabled(true);
+                        this.au_sp.source.setEnabled(true);
+                    }
+                    case "trad":
+                    {
+                        this.trad_mc.tu_sp.source.setEnabled(true);
+                        break;
+                    }
+                    default:
+                    {
+                        break;
+                    }
+                }
+            }
+            this.unl_mc.uu_sp.source.setEnabled(true);
             return;
         }// end function
 
@@ -3629,22 +3793,63 @@
             return;
         }// end function
 
+        public function joinUnlimitedUnratedE(event:MouseEvent)
+        {
+            var _loc_2:* = JoinButton(event.target);
+            this.joinDuel("uu", _loc_2);
+            return;
+        }// end function
+
         public function updateAdvancedE(event:Event = null)
         {
-            if (this.decklist_cb.selectedItem.advanced)
+            var _loc_2:* = this.duel_rb.selected;
+            switch(this.decklist_cb.selectedItem.advanced)
             {
-                this.host_mc.ar_rb.enabled = true;
-                this.host_mc.au_rb.enabled = true;
-                this.ar_sp.source.setEnabled(true);
-                this.au_sp.source.setEnabled(true);
-            }
-            else
-            {
-                this.host_mc.tu_rb.selected = true;
-                this.host_mc.ar_rb.enabled = false;
-                this.host_mc.au_rb.enabled = false;
-                this.ar_sp.source.setEnabled(false);
-                this.au_sp.source.setEnabled(false);
+                case "adv":
+                {
+                    this.host_mc.ar_rb.enabled = true;
+                    this.host_mc.au_rb.enabled = true;
+                    this.host_mc.tu_rb.enabled = true;
+                    this.ar_sp.source.setEnabled(true);
+                    this.au_sp.source.setEnabled(true);
+                    this.trad_mc.tu_sp.source.setEnabled(true);
+                    break;
+                }
+                case "trad":
+                {
+                    if (!this.host_mc.uu_rb.selected)
+                    {
+                        this.host_mc.tu_rb.selected = true;
+                    }
+                    if (_loc_2)
+                    {
+                        this.host_mc.ar_rb.enabled = false;
+                        this.host_mc.au_rb.enabled = false;
+                        this.ar_sp.source.setEnabled(false);
+                        this.au_sp.source.setEnabled(false);
+                    }
+                    this.host_mc.tu_rb.enabled = true;
+                    this.trad_mc.tu_sp.source.setEnabled(true);
+                    break;
+                }
+                case "unl":
+                {
+                    this.host_mc.uu_rb.selected = true;
+                    if (_loc_2)
+                    {
+                        this.host_mc.ar_rb.enabled = false;
+                        this.host_mc.au_rb.enabled = false;
+                        this.host_mc.tu_rb.enabled = false;
+                        this.ar_sp.source.setEnabled(false);
+                        this.au_sp.source.setEnabled(false);
+                        this.trad_mc.tu_sp.source.setEnabled(false);
+                    }
+                    break;
+                }
+                default:
+                {
+                    break;
+                }
             }
             return;
         }// end function
@@ -3724,12 +3929,33 @@
             var _loc_8:* = this.rep_lower_txt.text.length == 0 || _loc_7 == "-" || _loc_7.lastIndexOf("-") > 0 ? (int.MIN_VALUE) : (int(_loc_7));
             var _loc_9:* = this.rep_upper_txt.text;
             var _loc_10:* = this.rep_upper_txt.text.length == 0 || _loc_9 == "-" || _loc_9.lastIndexOf("-") > 0 ? (int.MAX_VALUE) : (int(_loc_9));
-            JoinList(this.ar_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10);
+            var _loc_11:* = this.match_type_cb.selectedItem.data;
+            JoinList(this.ar_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10, _loc_11);
             this.ar_sp.update();
-            JoinList(this.au_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10);
+            JoinList(this.au_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10, _loc_11);
             this.au_sp.update();
-            JoinList(this.tu_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10);
-            this.tu_sp.update();
+            JoinList(this.trad_mc.tu_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10, _loc_11);
+            this.trad_mc.tu_sp.update();
+            JoinList(this.unl_mc.uu_sp.source).setFilter(_loc_2, _loc_4, _loc_6, _loc_8, _loc_10, _loc_11);
+            this.unl_mc.uu_sp.update();
+            return;
+        }// end function
+
+        public function showTradE(event:MouseEvent)
+        {
+            this.show_tu_btn.visible = false;
+            this.show_uu_btn.visible = true;
+            this.trad_mc.visible = true;
+            this.unl_mc.visible = false;
+            return;
+        }// end function
+
+        public function showUnlE(event:MouseEvent)
+        {
+            this.show_tu_btn.visible = true;
+            this.show_uu_btn.visible = false;
+            this.trad_mc.visible = false;
+            this.unl_mc.visible = true;
             return;
         }// end function
 
@@ -3755,11 +3981,6 @@
                     this.deckClearE();
                     break;
                 }
-                case this.sort_btn:
-                {
-                    this.deckSortE();
-                    break;
-                }
                 case this.new_btn:
                 {
                     this.newDeckE();
@@ -3778,6 +3999,11 @@
                 case this.save_btn:
                 {
                     this.saveDeck();
+                    break;
+                }
+                case this.save_as_btn:
+                {
+                    this.saveDeckAs();
                     break;
                 }
                 case this.default_btn:
@@ -3871,11 +4097,12 @@
         public function noDecksDisable()
         {
             this.clear_btn.enabled = false;
-            this.sort_btn.enabled = false;
+            this.sort_btn.visible = false;
             this.decklist_cb.enabled = false;
             this.rename_btn.enabled = false;
             this.delete_btn.enabled = false;
             this.save_btn.enabled = false;
+            this.save_as_btn.enabled = false;
             this.default_btn.enabled = false;
             return;
         }// end function
@@ -3883,11 +4110,12 @@
         public function noDecksEnable()
         {
             this.clear_btn.enabled = true;
-            this.sort_btn.enabled = true;
+            this.sort_btn.visible = true;
             this.decklist_cb.enabled = true;
             this.rename_btn.enabled = true;
             this.delete_btn.enabled = true;
             this.save_btn.enabled = true;
+            this.save_as_btn.enabled = true;
             this.default_btn.enabled = true;
             return;
         }// end function
@@ -3962,8 +4190,7 @@
                 this.deck[_loc_1].visible = false;
                 this.deck[_loc_1].tabEnabled = false;
                 this.deck[_loc_1].buttonMode = true;
-                this.deck[_loc_1].addEventListener(MouseEvent.MOUSE_DOWN, this.pickUp);
-                this.deck[_loc_1].addEventListener(MouseEvent.MOUSE_UP, this.dropIt);
+                DragManager.enableDragging(this.deck[_loc_1], this.pickUp, this.dropIt);
                 this.deck[_loc_1].addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
                 this.deck[_loc_1].addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
                 _loc_1 = _loc_1 + 1;
@@ -3991,8 +4218,7 @@
                 
                 this.side[_loc_1].visible = false;
                 this.side[_loc_1].buttonMode = true;
-                this.side[_loc_1].addEventListener(MouseEvent.MOUSE_DOWN, this.pickUp);
-                this.side[_loc_1].addEventListener(MouseEvent.MOUSE_UP, this.dropIt);
+                DragManager.enableDragging(this.side[_loc_1], this.pickUp, this.dropIt);
                 this.side[_loc_1].addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
                 this.side[_loc_1].addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
                 _loc_1 = _loc_1 + 1;
@@ -4020,8 +4246,7 @@
                 
                 this.extra[_loc_1].visible = false;
                 this.extra[_loc_1].buttonMode = true;
-                this.extra[_loc_1].addEventListener(MouseEvent.MOUSE_DOWN, this.pickUp);
-                this.extra[_loc_1].addEventListener(MouseEvent.MOUSE_UP, this.dropIt);
+                DragManager.enableDragging(this.extra[_loc_1], this.pickUp, this.dropIt);
                 this.extra[_loc_1].addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
                 this.extra[_loc_1].addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
                 _loc_1 = _loc_1 + 1;
@@ -4054,8 +4279,7 @@
                 
                 this.search[_loc_1].visible = false;
                 this.search[_loc_1].buttonMode = true;
-                this.search[_loc_1].addEventListener(MouseEvent.MOUSE_DOWN, this.pickUp);
-                this.search[_loc_1].addEventListener(MouseEvent.MOUSE_UP, this.dropIt);
+                DragManager.enableDragging(this.search[_loc_1], this.pickUp, this.dropIt);
                 this.search[_loc_1].addEventListener(MouseEvent.MOUSE_OVER, this.preview_mc.previewE);
                 this.search[_loc_1].addEventListener(MouseEvent.MOUSE_OUT, this.preview_mc.previewStopE);
                 _loc_1 = _loc_1 + 1;
@@ -4400,6 +4624,10 @@
             {
                 return;
             }
+            if (DragManager.draggedObject() is SearchCard)
+            {
+                return;
+            }
             this.card_search_page = param1;
             var _loc_3:* = (param1 - 1) * 20;
             var _loc_4:int = 20;
@@ -4410,7 +4638,7 @@
             }
             else
             {
-                this.saved_search = ["Card search", this.name_txt.text, this.desc_txt.text, this.card2_cb.selectedItem.data == "" ? (this.card_cb.selectedItem.data) : (this.card2_cb.selectedItem.data), this.type_cb.selectedItem.data, this.type2_cb.selectedItem.data, this.attrib_cb.selectedItem.data, this.lvll_txt.text, this.lvlh_txt.text, this.atkl_txt.text, this.atkh_txt.text, this.defl_txt.text, this.defh_txt.text, "" + _loc_3, "" + _loc_4];
+                this.saved_search = ["Card search", this.name_txt.text, this.desc_txt.text, this.card2_cb.selectedItem.data == "" ? (this.card_cb.selectedItem.data) : (this.card2_cb.selectedItem.data), this.type_cb.selectedItem.data, this.type2_cb.selectedItem.data, this.attrib_cb.selectedItem.data, this.lvll_txt.text, this.lvlh_txt.text, this.atkl_txt.text, this.atkh_txt.text, this.defl_txt.text, this.defh_txt.text, this.limit_cb.selectedItem.data, this.order_cb.selectedItem.data, "" + _loc_3, "" + _loc_4];
             }
             this.Send(this.saved_search);
             this.lock();
@@ -4496,7 +4724,6 @@
             this.clear_btn.addEventListener(MouseEvent.CLICK, this.deckClearE);
             this.clear_btn.useHandCursor = true;
             this.sort_btn.addEventListener(MouseEvent.CLICK, this.deckSortE);
-            this.sort_btn.useHandCursor = true;
             this.decklist_cb.addEventListener(Event.CHANGE, this.getDeckE);
             this.new_btn.addEventListener(MouseEvent.CLICK, this.newDeckE);
             this.new_btn.useHandCursor = true;
@@ -4506,6 +4733,8 @@
             this.delete_btn.useHandCursor = true;
             this.save_btn.addEventListener(MouseEvent.CLICK, this.saveDeckE);
             this.save_btn.useHandCursor = true;
+            this.save_as_btn.addEventListener(MouseEvent.CLICK, this.saveDeckAsE);
+            this.save_as_btn.useHandCursor = true;
             this.default_btn.addEventListener(MouseEvent.CLICK, this.setDefaultDeckE);
             this.default_btn.useHandCursor = true;
             this.deck_exit_btn.addEventListener(MouseEvent.CLICK, this.deckExitE);
@@ -4543,7 +4772,7 @@
             return;
         }// end function
 
-        public function deckSortE(event:MouseEvent = null)
+        public function deckSortE(event:MouseEvent)
         {
             this.sortDeck(this.deck);
             this.sortDeck(this.side);
@@ -4967,31 +5196,58 @@
             return;
         }// end function
 
-        public function saveDeck(param1:Function = null, param2:String = null)
+        public function saveDeckAsE(event:MouseEvent)
         {
-            var _loc_6:int = 0;
-            var _loc_7:* = undefined;
-            var _loc_3:Array = ["Save deck", param2 == null ? (this.decklist_cb.selectedItem.data) : (param2)];
-            var _loc_4:Array = [this.deck, this.side, this.extra];
-            var _loc_5:* = 0;
-            while (_loc_5 < _loc_4.length)
+            this.saveDeckAs();
+            return;
+        }// end function
+
+        public function saveDeckAs()
+        {
+            this.getInput("Save Deck As", "Enter a name for your new deck:", "", 15, this.saveDeckAsCallback);
+            return;
+        }// end function
+
+        public function saveDeckAsCallback(param1:String)
+        {
+            if (param1 == null)
+            {
+                return;
+            }
+            if (param1 == "")
+            {
+                this.displayError("Deck name cannot be blank");
+                return;
+            }
+            this.saveDeck(null, param1, true);
+            return;
+        }// end function
+
+        public function saveDeck(param1:Function = null, param2:String = null, param3:Boolean = false)
+        {
+            var _loc_7:int = 0;
+            var _loc_8:* = undefined;
+            var _loc_4:Array = ["Save deck", param2 == null ? (this.decklist_cb.selectedItem.data) : (param2), param3];
+            var _loc_5:Array = [this.deck, this.side, this.extra];
+            var _loc_6:* = 0;
+            while (_loc_6 < _loc_5.length)
             {
                 
-                switch(_loc_5)
+                switch(_loc_6)
                 {
                     case 0:
                     {
-                        _loc_6 = this.deck_count;
+                        _loc_7 = this.deck_count;
                         break;
                     }
                     case 1:
                     {
-                        _loc_6 = this.side_count;
+                        _loc_7 = this.side_count;
                         break;
                     }
                     case 2:
                     {
-                        _loc_6 = this.extra_count;
+                        _loc_7 = this.extra_count;
                         break;
                     }
                     default:
@@ -4999,17 +5255,17 @@
                         break;
                     }
                 }
-                _loc_3.push(_loc_6);
-                _loc_7 = 0;
-                while (_loc_7 < _loc_6)
+                _loc_4.push(_loc_7);
+                _loc_8 = 0;
+                while (_loc_8 < _loc_7)
                 {
                     
-                    _loc_3.push(_loc_4[_loc_5][_loc_7].front_mc.id);
-                    _loc_7 = _loc_7 + 1;
+                    _loc_4.push(_loc_5[_loc_6][_loc_8].front_mc.id);
+                    _loc_8 = _loc_8 + 1;
                 }
-                _loc_5 = _loc_5 + 1;
+                _loc_6 = _loc_6 + 1;
             }
-            this.Send(_loc_3);
+            this.Send(_loc_4);
             this.save_deck_callback = param1;
             this.lock();
             return;
@@ -5017,7 +5273,25 @@
 
         public function saveDeckResponse(param1:Array)
         {
+            var _loc_2:String = null;
+            var _loc_3:int = 0;
+            var _loc_4:Object = null;
             this.unlock();
+            if (param1.length >= 1)
+            {
+                _loc_2 = param1[0];
+                _loc_3 = this.deckPlacementFind(_loc_2);
+                _loc_4 = {label:_loc_2, data:_loc_2};
+                if (this.default_deck_idx >= _loc_3)
+                {
+                    var _loc_5:String = this;
+                    var _loc_6:* = this.default_deck_idx + 1;
+                    _loc_5.default_deck_idx = _loc_6;
+                }
+                this.decklist_cb.dataProvider.addItemAt(_loc_4, _loc_3);
+                this.decklist_cb.selectedIndex = _loc_3;
+                this.current_deck_name = _loc_2;
+            }
             if (this.default_deck_idx < 0)
             {
                 this.decklist_cb.selectedItem.label = this.decklist_cb.selectedItem.label + " (default)";
@@ -5047,14 +5321,17 @@
         {
             var _loc_2:Object = null;
             this.unlock();
-            if (this.default_deck_idx >= 0)
+            if (currentFrameLabel == "deck_start")
             {
-                _loc_2 = this.decklist_cb.dataProvider.getItemAt(this.default_deck_idx);
-                _loc_2.label = _loc_2.data;
+                if (this.default_deck_idx >= 0)
+                {
+                    _loc_2 = this.decklist_cb.dataProvider.getItemAt(this.default_deck_idx);
+                    _loc_2.label = _loc_2.data;
+                }
+                this.decklist_cb.selectedItem.label = this.decklist_cb.selectedItem.label + " (default)";
+                this.decklist_cb.selectedIndex = this.decklist_cb.selectedIndex;
+                this.default_deck_idx = this.decklist_cb.selectedIndex;
             }
-            this.decklist_cb.selectedItem.label = this.decklist_cb.selectedItem.label + " (default)";
-            this.decklist_cb.selectedIndex = this.decklist_cb.selectedIndex;
-            this.default_deck_idx = this.decklist_cb.selectedIndex;
             this.displayMessage("Deck \"" + this.decklist_cb.selectedItem.data + "\" has been set as default");
             return;
         }// end function
@@ -5075,144 +5352,119 @@
             return;
         }// end function
 
-        public function pickUp(event:MouseEvent)
+        public function pickUp(param1:Sprite) : Object
         {
-            var _loc_3:String = null;
-            var _loc_4:int = 0;
-            var _loc_5:* = undefined;
-            var _loc_6:int = 0;
+            var _loc_2:String = null;
+            var _loc_3:int = 0;
+            var _loc_4:* = undefined;
+            var _loc_5:int = 0;
             if (this.decklist_cb.length == 0)
             {
-                return;
+                return null;
             }
-            var _loc_2:* = event.currentTarget;
-            if (this.picked_up == null)
+            this.deck_hidden_mc.addChild(param1);
+            if (param1 is SearchCard)
             {
-                this.picked_up = _loc_2;
-            }
-            else
-            {
-                return;
-            }
-            this.deck_hidden_mc.addChild(DisplayObject(_loc_2));
-            if (_loc_2 is SearchCard)
-            {
-                _loc_3 = _loc_2.front_mc.treated_as;
+                _loc_2 = SearchCard(param1).front_mc.treated_as;
+                _loc_3 = 0;
                 _loc_4 = 0;
-                _loc_5 = 0;
-                while (_loc_5 < this.deck.length)
+                while (_loc_4 < this.deck.length)
                 {
                     
-                    if (!this.deck[_loc_5].visible)
+                    if (!this.deck[_loc_4].visible)
                     {
                         break;
                     }
-                    if (this.deck[_loc_5].front_mc.treated_as == _loc_3)
+                    if (this.deck[_loc_4].front_mc.treated_as == _loc_2)
                     {
-                        _loc_4++;
+                        _loc_3++;
                     }
-                    _loc_5 = _loc_5 + 1;
+                    _loc_4 = _loc_4 + 1;
                 }
-                _loc_5 = 0;
-                while (_loc_5 < this.side.length)
+                _loc_4 = 0;
+                while (_loc_4 < this.side.length)
                 {
                     
-                    if (!this.side[_loc_5].visible)
+                    if (!this.side[_loc_4].visible)
                     {
                         break;
                     }
-                    if (this.side[_loc_5].front_mc.treated_as == _loc_3)
+                    if (this.side[_loc_4].front_mc.treated_as == _loc_2)
                     {
-                        _loc_4++;
+                        _loc_3++;
                     }
-                    _loc_5 = _loc_5 + 1;
+                    _loc_4 = _loc_4 + 1;
                 }
-                _loc_5 = 0;
-                while (_loc_5 < this.extra.length)
+                _loc_4 = 0;
+                while (_loc_4 < this.extra.length)
                 {
                     
-                    if (!this.extra[_loc_5].visible)
+                    if (!this.extra[_loc_4].visible)
                     {
                         break;
                     }
-                    if (this.extra[_loc_5].front_mc.treated_as == _loc_3)
+                    if (this.extra[_loc_4].front_mc.treated_as == _loc_2)
                     {
-                        _loc_4++;
+                        _loc_3++;
                     }
-                    _loc_5 = _loc_5 + 1;
+                    _loc_4 = _loc_4 + 1;
                 }
-                _loc_6 = _loc_2.front_mc.limit;
-                if (_loc_6 == 0)
+                _loc_5 = SearchCard(param1).front_mc.limit;
+                if (this.bypass_card_limit_cb.selected)
                 {
-                    _loc_6 = 1;
+                    _loc_5 = 3;
                 }
-                if (_loc_4 >= _loc_6)
+                else if (_loc_5 == 0)
                 {
-                    _loc_2.showLimitReached();
-                    addEventListener(MouseEvent.MOUSE_UP, this.hideLimitReachedE);
-                    return;
+                    _loc_5 = 1;
+                }
+                if (_loc_3 >= _loc_5)
+                {
+                    SearchCard(param1).showLimitReached();
+                    return [param1, false];
                 }
             }
-            _loc_2.startDrag(true);
-            this.removeCard(_loc_2);
-            return;
+            this.removeCard(param1);
+            return param1;
         }// end function
 
-        public function hideLimitReachedE(event:MouseEvent)
-        {
-            this.picked_up.hideLimitReached();
-            this.picked_up = null;
-            removeEventListener(MouseEvent.MOUSE_UP, this.hideLimitReachedE);
-            return;
-        }// end function
-
-        public function dropIt(event:MouseEvent)
+        public function dropIt(param1:Sprite, param2:MouseEvent)
         {
             var _loc_7:Front = null;
-            var _loc_2:* = event.currentTarget;
-            var _loc_3:* = _loc_2 is SearchCard;
-            if (_loc_3 && _loc_2.limitReached())
+            var _loc_3:* = param2.stageX;
+            var _loc_4:* = param2.stageY;
+            var _loc_5:* = param1 is SearchCard;
+            if (param1 is SearchCard && SearchCard(param1).limitReached())
             {
-                _loc_2.hideLimitReached();
+                SearchCard(param1).hideLimitReached();
                 return;
             }
-            if (this.picked_up == _loc_2)
+            param1.x = this.restoreX;
+            param1.y = this.restoreY;
+            if (!_loc_5)
             {
-                this.picked_up = null;
+                param1.visible = false;
             }
-            else
-            {
-                return;
-            }
-            _loc_2.stopDrag();
-            var _loc_4:* = event.stageX;
-            var _loc_5:* = event.stageY;
-            _loc_2.x = this.restoreX;
-            _loc_2.y = this.restoreY;
-            if (!_loc_3)
-            {
-                _loc_2.visible = false;
-            }
-            var _loc_6:* = _loc_2.front_mc;
-            if (this.deck_area_mc.hitTestPoint(_loc_4, _loc_5))
+            var _loc_6:* = Object(param1).front_mc;
+            if (this.deck_area_mc.hitTestPoint(_loc_3, _loc_4))
             {
                 if (_loc_6.card == "fusion" || _loc_6.card == "synchro" || _loc_6.card == "xyz")
                 {
                     return;
                 }
-                _loc_7 = this.insertCard(this.deck, _loc_6, _loc_4, _loc_5);
+                _loc_7 = this.insertCard(this.deck, _loc_6, _loc_3, _loc_4);
             }
-            else if (this.side_area_mc.hitTestPoint(_loc_4, _loc_5))
+            else if (this.side_area_mc.hitTestPoint(_loc_3, _loc_4))
             {
-                _loc_7 = this.insertCard(this.side, _loc_6, _loc_4, _loc_5);
+                _loc_7 = this.insertCard(this.side, _loc_6, _loc_3, _loc_4);
             }
-            else if (this.extra_area_mc.hitTestPoint(_loc_4, _loc_5))
+            else if (this.extra_area_mc.hitTestPoint(_loc_3, _loc_4))
             {
                 if (!(_loc_6.card == "fusion" || _loc_6.card == "synchro" || _loc_6.card == "xyz"))
                 {
                     return;
                 }
-                _loc_7 = this.insertCard(this.extra, _loc_6, _loc_4, _loc_5);
+                _loc_7 = this.insertCard(this.extra, _loc_6, _loc_3, _loc_4);
             }
             else
             {
@@ -5220,10 +5472,10 @@
             }
             if (_loc_7 != null)
             {
-                _loc_2.newFront(_loc_7);
-                if (_loc_3)
+                Object(param1).newFront(_loc_7);
+                if (_loc_5)
                 {
-                    _loc_2.copyFront(_loc_6);
+                    SearchCard(param1).copyFront(_loc_6);
                 }
             }
             return;
@@ -5482,6 +5734,11 @@
                         this.getRankingResponse(_loc_3);
                         break;
                     }
+                    case "Ranking2":
+                    {
+                        this.getRanking2Response(_loc_3);
+                        break;
+                    }
                     default:
                     {
                         break;
@@ -5505,23 +5762,22 @@
 
         public function getProfileResponse(param1:Array)
         {
+            this.unlock();
             var _loc_14:* = param1[0];
             this.profile_username = param1[0];
             this.username_txt.text = _loc_14;
-            this.unlock();
             this.avatar_mc.setPicture(this.AVATAR_START, param1[1]);
             var _loc_2:* = this.username == this.profile_username;
             this.avatar_mc.setFrame(_loc_2);
+            this.table_mc.setTable(_loc_2);
             this.ranking_txt.text = "";
             this.ranking_calc_btn.visible = true;
-            this.rating_rep_txt.text = param1[2];
-            this.wins_txt.text = param1[3];
-            this.losses_txt.text = param1[4];
-            this.draws_txt.text = param1[5];
-            var _loc_3:* = param1[6];
+            this.ranking2_txt.text = "";
+            this.ranking_calc2_btn.visible = true;
+            var _loc_3:* = param1[2];
             this.status_txt.text = _loc_3;
-            this.last_seen_txt.text = param1[7];
-            var _loc_4:* = param1[8];
+            this.last_seen_txt.text = param1[3];
+            var _loc_4:* = param1[4];
             var _loc_5:* = new Date();
             new Date().setTime(new Date().time - _loc_4 * 1000);
             var _loc_6:Array = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -5535,9 +5791,17 @@
             var _loc_10:* = _loc_5.minutes < 10 ? ("0" + _loc_9) : ("" + _loc_9);
             var _loc_11:* = _loc_6[_loc_5.month] + " " + _loc_5.date + ", " + _loc_5.fullYear + ", " + _loc_8 + ":" + _loc_10 + " " + (_loc_7 >= 12 ? ("PM") : ("AM"));
             this.registered_txt.text = _loc_11;
-            this.profile_txt.htmlText = StringUtils.escapeHtmlWithLinks(param1[9]);
-            var _loc_12:* = param1[10];
-            if (param1[10] == "yes")
+            this.rating_rep_txt.text = param1[5];
+            this.rating_rep2_txt.text = param1[6];
+            this.wins_txt.text = param1[7];
+            this.wins2_txt.text = param1[8];
+            this.losses_txt.text = param1[9];
+            this.losses2_txt.text = param1[10];
+            this.draws_txt.text = param1[11];
+            this.draws2_txt.text = param1[12];
+            this.profile_txt.htmlText = StringUtils.escapeHtmlWithLinks(param1[13]);
+            var _loc_12:* = param1[14];
+            if (param1[14] == "yes")
             {
                 this.watch_duel_btn.visible = true;
                 this.key_mc.visible = false;
@@ -5552,7 +5816,7 @@
                 this.watch_duel_btn.visible = false;
                 this.key_mc.visible = false;
             }
-            this.showPuzzle(param1[11] == "true");
+            this.showPuzzle(param1[15] == "true");
             this.send_pm_btn.visible = !_loc_2 && _loc_3 == "Online";
             var _loc_13:* = this.online_users_mc.isFriend(this.profile_username);
             this.add_friend_btn.visible = !_loc_13;
@@ -5563,7 +5827,7 @@
         public function getRankingE(event:MouseEvent)
         {
             this.Send(["Ranking", this.profile_username]);
-            this.ranking_txt.text = "Calculating ranking...";
+            this.ranking_txt.text = "Calculating...";
             this.ranking_calc_btn.visible = false;
             return;
         }// end function
@@ -5573,6 +5837,23 @@
             if (this.profile_init)
             {
                 this.ranking_txt.text = param1[0];
+            }
+            return;
+        }// end function
+
+        public function getRanking2E(event:MouseEvent)
+        {
+            this.Send(["Ranking2", this.profile_username]);
+            this.ranking2_txt.text = "Calculating...";
+            this.ranking_calc2_btn.visible = false;
+            return;
+        }// end function
+
+        public function getRanking2Response(param1:Array)
+        {
+            if (this.profile_init)
+            {
+                this.ranking2_txt.text = param1[0];
             }
             return;
         }// end function
@@ -6022,10 +6303,12 @@
 
         public function setGalleryAvatar(param1:MovieClip, param2:String)
         {
+            var _loc_3:int = 0;
+            var _loc_4:Boolean = false;
             var _loc_5:Boolean = false;
             param1.visible = true;
-            var _loc_3:* = int(param2.substr(0, param2.indexOf("/")));
-            var _loc_4:* = _loc_3 > this.num_wins;
+            _loc_3 = int(param2.substr(0, param2.indexOf("/")));
+            _loc_4 = _loc_3 > this.num_wins;
             param1.disable(_loc_4 ? (_loc_3) : (-1));
             param1.setPicture(this.AVATAR_START, param2);
             if (this.new_avatar == "same")
@@ -6064,8 +6347,10 @@
 
         public function avatarClickE(event:MouseEvent)
         {
-            var _loc_2:* = event.target as MovieClip;
-            var _loc_3:* = _loc_2.getPictureString();
+            var _loc_2:MovieClip = null;
+            var _loc_3:String = null;
+            _loc_2 = event.target as MovieClip;
+            _loc_3 = _loc_2.getPictureString();
             if (this.saved_avatar == _loc_3)
             {
                 this.new_avatar = "same";
@@ -6088,7 +6373,8 @@
 
         public function saveAvatarAndProfileE(event:MouseEvent = null)
         {
-            var _loc_2:* = StringUtils.replaceAll(this.profile_txt.text, "\r", "\n");
+            var _loc_2:String = null;
+            _loc_2 = StringUtils.replaceAll(this.profile_txt.text, "\r", "\n");
             this.Send(["Save avatar and profile", this.new_avatar, this.new_avatar2, this.new_back, this.new_back2, this.color1_cp.selectedColor, this.color2_cp.selectedColor, _loc_2]);
             this.my_profile_exiting = false;
             this.lock();
@@ -6097,7 +6383,8 @@
 
         public function saveAvatarAndProfileResponse(param1:Array)
         {
-            var _loc_2:String = "Profile has been saved";
+            var _loc_2:String = null;
+            _loc_2 = "Profile has been saved";
             if (this.my_profile_exiting)
             {
                 this.displayMessage(_loc_2, this.returnToMainE);
@@ -6585,12 +6872,6 @@
                     this.kickUserE();
                     break;
                 }
-                case this.cancel_username_txt.textField:
-                case this.cancel_duel_btn:
-                {
-                    this.adminCancelDuelE();
-                    break;
-                }
                 case this.warning_username_txt.textField:
                 case this.warning_txt.textField:
                 case this.increment_strikes2_cb:
@@ -6643,11 +6924,6 @@
                     case "Kick user":
                     {
                         this.kickUserResponse(_loc_3);
-                        break;
-                    }
-                    case "Cancel duel":
-                    {
-                        this.adminCancelDuelResponse(_loc_3);
                         break;
                     }
                     case "Add warning":
@@ -6735,6 +7011,15 @@
             return;
         }// end function
 
+        public function setBanTimeGroup()
+        {
+            var _loc_1:RadioButtonGroup = null;
+            _loc_1 = new RadioButtonGroup("BanTime");
+            this.days_rb.group = _loc_1;
+            this.forever_rb.group = _loc_1;
+            return;
+        }// end function
+
         public function banTimeChangeE(event:Event)
         {
             if (this.days_txt == null || this.days_rb == null)
@@ -6789,28 +7074,7 @@
         public function kickUserResponse(param1:Array)
         {
             this.unlock();
-            this.trackEvent("Admin Kick", this.username, this.ban_username);
             this.displayMessage(this.ban_username + " has been kicked");
-            return;
-        }// end function
-
-        public function adminCancelDuelE(event:MouseEvent = null)
-        {
-            if (this.cancel_username_txt.text == "")
-            {
-                this.displayError("Username is blank");
-                return;
-            }
-            this.Send(["Cancel duel", this.cancel_username_txt.text]);
-            this.ban_username = this.cancel_username_txt.text;
-            this.lock();
-            return;
-        }// end function
-
-        public function adminCancelDuelResponse(param1:Array)
-        {
-            this.unlock();
-            this.displayMessage(this.ban_username + "\'s duel has been canceled");
             return;
         }// end function
 
@@ -7120,35 +7384,58 @@
                 {
                     case "Ranking by rating":
                     {
+                        this.match_select_mc.visible = true;
                         this.by_rating_mc.setActivated(true);
                         this.by_wins_mc.setActivated(false);
                         this.by_reputation_mc.setActivated(false);
+                        this.by_total_reputation_mc.setActivated(false);
                         this.by_rating_heading_mc.visible = true;
                         this.by_wins_heading_mc.visible = false;
                         this.by_reputation_heading_mc.visible = false;
+                        this.by_total_reputation_heading_mc.visible = false;
                         this.rankingResponse(_loc_3);
                         this.rankings_init = true;
                         break;
                     }
                     case "Ranking by wins":
                     {
+                        this.match_select_mc.visible = true;
                         this.by_rating_mc.setActivated(false);
                         this.by_wins_mc.setActivated(true);
                         this.by_reputation_mc.setActivated(false);
+                        this.by_total_reputation_mc.setActivated(false);
                         this.by_rating_heading_mc.visible = false;
                         this.by_wins_heading_mc.visible = true;
                         this.by_reputation_heading_mc.visible = false;
+                        this.by_total_reputation_heading_mc.visible = false;
                         this.rankingResponse(_loc_3);
                         break;
                     }
                     case "Ranking by reputation":
                     {
+                        this.match_select_mc.visible = true;
                         this.by_rating_mc.setActivated(false);
                         this.by_wins_mc.setActivated(false);
                         this.by_reputation_mc.setActivated(true);
+                        this.by_total_reputation_mc.setActivated(false);
                         this.by_rating_heading_mc.visible = false;
                         this.by_wins_heading_mc.visible = false;
                         this.by_reputation_heading_mc.visible = true;
+                        this.by_total_reputation_heading_mc.visible = false;
+                        this.rankingResponse(_loc_3);
+                        break;
+                    }
+                    case "Ranking by total reputation":
+                    {
+                        this.match_select_mc.visible = false;
+                        this.by_rating_mc.setActivated(false);
+                        this.by_wins_mc.setActivated(false);
+                        this.by_reputation_mc.setActivated(false);
+                        this.by_total_reputation_mc.setActivated(true);
+                        this.by_rating_heading_mc.visible = false;
+                        this.by_wins_heading_mc.visible = false;
+                        this.by_reputation_heading_mc.visible = false;
+                        this.by_total_reputation_heading_mc.visible = true;
                         this.rankingResponse(_loc_3);
                         break;
                     }
@@ -7163,22 +7450,64 @@
 
         public function rankingByRatingE(event:MouseEvent = null)
         {
-            this.Send(["Ranking by rating"]);
+            this.ranking_match = this.match_select_mc.match_rb.selected;
+            this.Send(["Ranking by rating", this.ranking_match]);
             this.lock();
             return;
         }// end function
 
-        public function rankingByWinsE(event:MouseEvent)
+        public function rankingByWinsE(event:MouseEvent = null)
         {
-            this.Send(["Ranking by wins"]);
+            this.ranking_match = this.match_select_mc.match_rb.selected;
+            this.Send(["Ranking by wins", this.ranking_match]);
             this.lock();
             return;
         }// end function
 
-        public function rankingByReputationE(event:MouseEvent)
+        public function rankingByReputationE(event:MouseEvent = null)
         {
-            this.Send(["Ranking by reputation"]);
+            this.ranking_match = this.match_select_mc.match_rb.selected;
+            this.Send(["Ranking by reputation", this.ranking_match]);
             this.lock();
+            return;
+        }// end function
+
+        public function rankingByTotalReputationE(event:MouseEvent = null)
+        {
+            this.ranking_match = this.match_select_mc.match_rb.selected;
+            this.Send(["Ranking by total reputation"]);
+            this.lock();
+            return;
+        }// end function
+
+        public function changeMatchE(event:Event)
+        {
+            if (this.manual_match_change || this.match_select_mc == null)
+            {
+                return;
+            }
+            if (this.by_rating_heading_mc.visible)
+            {
+                this.rankingByRatingE();
+            }
+            else if (this.by_wins_heading_mc.visible)
+            {
+                this.rankingByWinsE();
+            }
+            else if (this.by_reputation_heading_mc.visible)
+            {
+                this.rankingByReputationE();
+            }
+            this.manual_match_change = true;
+            if (this.match_select_mc.match_rb.selected)
+            {
+                this.match_select_mc.single_rb.selected = true;
+            }
+            else
+            {
+                this.match_select_mc.match_rb.selected = true;
+            }
+            this.manual_match_change = false;
             return;
         }// end function
 
@@ -7195,6 +7524,16 @@
                 _loc_2 = _loc_2 + 6;
             }
             this.content_sp.update();
+            this.manual_match_change = true;
+            if (this.ranking_match)
+            {
+                this.match_select_mc.match_rb.selected = true;
+            }
+            else
+            {
+                this.match_select_mc.single_rb.selected = true;
+            }
+            this.manual_match_change = false;
             return;
         }// end function
 
@@ -7296,35 +7635,36 @@
             }
             this.duel_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.clearPicturesE);
             this.duel_starting = false;
-            username1 = this.duel_args[0];
-            avatar1 = this.duel_args[1];
-            back1 = this.duel_args[2];
-            color11 = this.duel_args[3];
-            color21 = this.duel_args[4];
-            rating1 = this.duel_args[5];
-            reputation1 = this.duel_args[6];
-            if (this.duel_args[7] == "true")
+            this.match_type = this.duel_args[0];
+            username1 = this.duel_args[1];
+            avatar1 = this.duel_args[2];
+            back1 = this.duel_args[3];
+            color11 = this.duel_args[4];
+            color21 = this.duel_args[5];
+            rating1 = this.duel_args[6];
+            reputation1 = this.duel_args[7];
+            if (this.duel_args[8] == "true")
             {
                 this.avatar_back1_mc.setDonator();
             }
-            username2 = this.duel_args[8];
-            avatar2 = this.duel_args[9];
-            back2 = this.duel_args[10];
-            color12 = this.duel_args[11];
-            color22 = this.duel_args[12];
-            rating2 = this.duel_args[13];
-            reputation2 = this.duel_args[14];
-            if (this.duel_args[15] == "true")
+            username2 = this.duel_args[9];
+            avatar2 = this.duel_args[10];
+            back2 = this.duel_args[11];
+            color12 = this.duel_args[12];
+            color22 = this.duel_args[13];
+            rating2 = this.duel_args[14];
+            reputation2 = this.duel_args[15];
+            if (this.duel_args[16] == "true")
             {
                 this.avatar_back2_mc.setDonator();
             }
-            watcher_list_str = this.duel_args[16];
+            watcher_list_str = this.duel_args[17];
             watcher_list = watcher_list_str == "" ? ([]) : (StringUtils.stringToArray(watcher_list_str));
-            duel_log_str = this.duel_args[17];
+            duel_log_str = this.duel_args[18];
             duel_log = duel_log_str == "" ? ([]) : (StringUtils.stringToArray(duel_log_str));
             this.calls_mc.log_mc.showLog(duel_log, username1, username2);
             this.duel_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, hideRefreshButtonE);
-            remaining_args = this.duel_args.slice(18);
+            remaining_args = this.duel_args.slice(19);
             this.duel_args = null;
             this.username1_mc.setUsername(username1);
             this.username2_mc.setUsername(username2);
@@ -7387,13 +7727,14 @@
             }
             else if (this.admin)
             {
-                this.kick1_btn.addEventListener(MouseEvent.CLICK, this.kick1E);
-                this.kick1_btn.useHandCursor = true;
-                this.kick2_btn.addEventListener(MouseEvent.CLICK, this.kick2E);
-                this.kick2_btn.useHandCursor = true;
+                this.loss1_btn.addEventListener(MouseEvent.CLICK, this.loss1E);
+                this.loss1_btn.useHandCursor = true;
+                this.loss2_btn.addEventListener(MouseEvent.CLICK, this.loss2E);
+                this.loss2_btn.useHandCursor = true;
                 this.cancel_duel_btn.addEventListener(MouseEvent.CLICK, this.duelCancelDuelE);
                 this.cancel_duel_btn.useHandCursor = true;
             }
+            this.call_admin_btn.visible = this.duelist;
             this.rematch_btn.visible = false;
             this.duel_quit_btn.addEventListener(MouseEvent.CLICK, this.duelQuitE);
             this.duel_quit_btn.useHandCursor = true;
@@ -7406,6 +7747,7 @@
             this.incoming_handler = this.duelIncomingHandler;
             this.duel_over = false;
             this.over_mc.visible = false;
+            this.rps_match = false;
             return remaining_args;
         }// end function
 
@@ -7539,14 +7881,14 @@
                     this.duelQuitE();
                     break;
                 }
-                case this.kick1_btn:
+                case this.loss1_btn:
                 {
-                    this.kick1E();
+                    this.loss1E();
                     break;
                 }
-                case this.kick2_btn:
+                case this.loss2_btn:
                 {
-                    this.kick2E();
+                    this.loss2E();
                     break;
                 }
                 case this.cancel_duel_btn:
@@ -7571,10 +7913,6 @@
                     else if (this.swap_btn != null && stage.focus == this.swap_btn)
                     {
                         this.swapSidingE();
-                    }
-                    else if (this.sort_btn != null && stage.focus == this.sort_btn)
-                    {
-                        this.sortSidingE();
                     }
                     else if (this.reset_btn != null && stage.focus == this.reset_btn)
                     {
@@ -7605,187 +7943,233 @@
             var _loc_4:String = null;
             var _loc_5:String = null;
             var _loc_6:Array = null;
-            if (param1 != null)
+            if (param1 == null)
             {
-                _loc_2 = param1[0];
-                _loc_3 = param1;
-                _loc_3.reverse();
-                _loc_3.pop();
-                _loc_3.reverse();
-                switch(_loc_2)
+                return;
+            }
+            _loc_2 = param1[0];
+            _loc_3 = param1;
+            _loc_3.reverse();
+            _loc_3.pop();
+            _loc_3.reverse();
+            switch(_loc_2)
+            {
+                case "Add watcher":
                 {
-                    case "Add watcher":
+                    this.watchers_mc.addUser(_loc_3[0], _loc_3[1]);
+                    if (this.call_admin_btn.label == "Call Admin")
                     {
-                        this.watchers_mc.addUser(_loc_3[0], _loc_3[1]);
-                        if (this.call_admin_btn.label == "Call Admin")
+                        this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
+                    }
+                    break;
+                }
+                case "Remove watcher":
+                {
+                    this.watchers_mc.removeUser(_loc_3[0]);
+                    if (this.call_admin_btn.label == "Call Admin")
+                    {
+                        this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
+                    }
+                    break;
+                }
+                case "Watch message":
+                {
+                    this.watchChatPrint(_loc_3[0], _loc_3[1], _loc_3[2]);
+                    break;
+                }
+                case "Duel message":
+                {
+                    this.duelChatPrint(_loc_3[0], _loc_3[1], _loc_3[2]);
+                    break;
+                }
+                case "Player quit":
+                {
+                    this.playerQuit(_loc_3);
+                    break;
+                }
+                case "Rock-paper-scissors":
+                {
+                    this.rpsResponse(_loc_3);
+                    break;
+                }
+                case "Turn pick":
+                {
+                    this.tpResponse(_loc_3);
+                    break;
+                }
+                case "Win":
+                {
+                    this.winResponse(_loc_3);
+                    break;
+                }
+                case "Lose":
+                {
+                    this.loseResponse(_loc_3);
+                    break;
+                }
+                case "Offer draw":
+                {
+                    this.offerDrawResponse(_loc_3);
+                    break;
+                }
+                case "Offered draw":
+                {
+                    this.offeredDrawResponse(_loc_3);
+                    break;
+                }
+                case "Revoke draw":
+                {
+                    this.revokeDrawResponse(_loc_3);
+                    break;
+                }
+                case "Revoked draw":
+                {
+                    this.revokedDrawResponse(_loc_3);
+                    break;
+                }
+                case "Draw":
+                {
+                    this.drawResponse(_loc_3);
+                    break;
+                }
+                case "Call admin":
+                {
+                    this.callAdminResponse(_loc_3);
+                    break;
+                }
+                case "Offer rematch":
+                {
+                    this.offerRematchResponse(_loc_3);
+                    break;
+                }
+                case "Offered rematch":
+                {
+                    this.offeredRematchResponse(_loc_3);
+                    break;
+                }
+                case "Revoke rematch":
+                {
+                    this.revokeRematchResponse(_loc_3);
+                    break;
+                }
+                case "Revoked rematch":
+                {
+                    this.revokedRematchResponse(_loc_3);
+                    break;
+                }
+                case "Go to siding":
+                {
+                    this.duelChatAddLine("Siding for next duel has begun (" + _loc_3[0] + ")");
+                    _loc_3.reverse();
+                    _loc_3.pop();
+                    _loc_3.reverse();
+                    this.stopTweensE(null);
+                    this.resetDuel();
+                    this.gotoSiding(_loc_3);
+                    break;
+                }
+                case "Cancel call":
+                {
+                    this.cancelCallResponse(_loc_3);
+                    break;
+                }
+                case "Canceled":
+                {
+                    this.canceledResponse(_loc_3);
+                    break;
+                }
+                case "Duel start":
+                {
+                    this.tpDuelPrep(_loc_3);
+                    break;
+                }
+                case "Duel":
+                {
+                    this.duelAction(_loc_3);
+                    break;
+                }
+                case "Done siding":
+                {
+                    _loc_4 = _loc_3[0];
+                    if (_loc_4 == this.username)
+                    {
+                        this.done_siding_btn.visible = false;
+                    }
+                    if (_loc_4 == this.username1_mc.username_txt.text)
+                    {
+                        this.siding1_mc.visible = true;
+                    }
+                    else if (_loc_4 == this.username2_mc.username_txt.text)
+                    {
+                        this.siding2_mc.visible = true;
+                    }
+                    break;
+                }
+                case "Go to rock-paper-scissors":
+                {
+                    this.rps_match = false;
+                    if (currentFrameLabel == "siding_start")
+                    {
+                        if (this.match_type == "m")
                         {
-                            this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
+                            this.rps_match = true;
                         }
-                        break;
                     }
-                    case "Remove watcher":
+                    else if (this.match_type == "n")
                     {
-                        this.watchers_mc.removeUser(_loc_3[0]);
-                        if (this.call_admin_btn.label == "Call Admin")
-                        {
-                            this.call_admin_btn.enabled = !this.duel_over && this.rated_duel && this.watchers_mc.num_admins_online == 0;
-                        }
-                        break;
+                        this.duelChatAddLine("Starting new single");
                     }
-                    case "Watch message":
+                    else if (this.match_type == "m")
                     {
-                        this.watchChatPrint(_loc_3[0], _loc_3[1], _loc_3[2]);
-                        break;
+                        this.duelChatAddLine("Starting new match");
                     }
-                    case "Duel message":
-                    {
-                        this.duelChatPrint(_loc_3[0], _loc_3[1], _loc_3[2]);
-                        break;
-                    }
-                    case "Player quit":
-                    {
-                        this.playerQuit(_loc_3);
-                        break;
-                    }
-                    case "Rock-paper-scissors":
-                    {
-                        this.rpsResponse(_loc_3);
-                        break;
-                    }
-                    case "Turn pick":
-                    {
-                        this.tpResponse(_loc_3);
-                        break;
-                    }
-                    case "Win":
-                    {
-                        this.winResponse(_loc_3);
-                        break;
-                    }
-                    case "Lose":
-                    {
-                        this.loseResponse(_loc_3);
-                        break;
-                    }
-                    case "Offer draw":
-                    {
-                        this.offerDrawResponse(_loc_3);
-                        break;
-                    }
-                    case "Offered draw":
-                    {
-                        this.offeredDrawResponse(_loc_3);
-                        break;
-                    }
-                    case "Revoke draw":
-                    {
-                        this.revokeDrawResponse(_loc_3);
-                        break;
-                    }
-                    case "Revoked draw":
-                    {
-                        this.revokedDrawResponse(_loc_3);
-                        break;
-                    }
-                    case "Draw":
-                    {
-                        this.drawResponse(_loc_3);
-                        break;
-                    }
-                    case "Call admin":
-                    {
-                        this.callAdminResponse(_loc_3);
-                        break;
-                    }
-                    case "Offer rematch":
-                    {
-                        this.offerRematchResponse(_loc_3);
-                        break;
-                    }
-                    case "Offered rematch":
-                    {
-                        this.offeredRematchResponse(_loc_3);
-                        break;
-                    }
-                    case "Revoke rematch":
-                    {
-                        this.revokeRematchResponse(_loc_3);
-                        break;
-                    }
-                    case "Revoked rematch":
-                    {
-                        this.revokedRematchResponse(_loc_3);
-                        break;
-                    }
-                    case "Rematch":
-                    {
-                        this.rematchResponse(_loc_3);
-                        break;
-                    }
-                    case "Cancel call":
-                    {
-                        this.cancelCallResponse(_loc_3);
-                        break;
-                    }
-                    case "Canceled":
-                    {
-                        this.canceledResponse(_loc_3);
-                        break;
-                    }
-                    case "Duel start":
-                    {
-                        this.tpDuelPrep(_loc_3);
-                        break;
-                    }
-                    case "Duel":
-                    {
-                        this.duelAction(_loc_3);
-                        break;
-                    }
-                    case "Done siding":
-                    {
-                        _loc_4 = _loc_3[0];
-                        if (_loc_4 == this.username)
-                        {
-                            this.done_siding_btn.visible = false;
-                        }
-                        if (_loc_4 == this.username1_mc.username_txt.text)
-                        {
-                            this.siding1_mc.visible = true;
-                        }
-                        else if (_loc_4 == this.username2_mc.username_txt.text)
-                        {
-                            this.siding2_mc.visible = true;
-                        }
-                        break;
-                    }
-                    case "Go to rock-paper-scissors":
-                    {
-                        this.preloadPictures();
-                        this.tweensInit();
-                        gotoAndStop("rps_start");
-                        break;
-                    }
-                    case "Go to turn pick":
-                    {
-                        this.preloadPictures();
-                        this.tweensInit();
-                        this.addTurnPickTweens(_loc_3[0] == this.username);
-                        break;
-                    }
-                    case "Duel log":
-                    {
-                        _loc_5 = _loc_3[0];
-                        _loc_6 = _loc_5 == "" ? ([]) : (StringUtils.stringToArray(_loc_5));
-                        this.calls_mc.log_mc.showLog(_loc_6, this.username1_mc.username_txt.text, this.username2_mc.username_txt.text, true);
-                        break;
-                    }
-                    default:
-                    {
-                        break;
-                    }
+                    this.tweensInit();
+                    this.resetDuel();
+                    this.preloadPictures();
+                    gotoAndStop("rps_start");
+                    break;
+                }
+                case "Go to turn pick":
+                {
+                    this.tweensInit();
+                    this.resetDuel();
+                    this.preloadPictures();
+                    this.addTurnPickTweens(_loc_3[0] == this.username);
+                    break;
+                }
+                case "Duel log":
+                {
+                    _loc_5 = _loc_3[0];
+                    _loc_6 = _loc_5 == "" ? ([]) : (StringUtils.stringToArray(_loc_5));
+                    this.calls_mc.log_mc.showLog(_loc_6, this.username1_mc.username_txt.text, this.username2_mc.username_txt.text, true);
+                    break;
+                }
+                default:
+                {
+                    break;
                 }
             }
+            return;
+        }// end function
+
+        public function resetDuel()
+        {
+            if (!this.duel_over)
+            {
+                return;
+            }
+            this.call_admin_btn.visible = this.duelist;
+            this.rematch_btn.visible = false;
+            this.duel_over = false;
+            this.over_mc.visible = false;
+            this.defeat_btn.enabled = true;
+            this.draw_btn.enabled = true;
+            this.draw_btn.label = "Offer Draw";
+            this.call_admin_btn.enabled = this.rated_duel && this.watchers_mc.num_admins_online == 0;
+            this.call_admin_btn.label = "Call Admin";
+            this.rematch_btn.label = "Offer Rematch";
+            this.status1_mc.status = "";
+            this.status2_mc.status = "";
             return;
         }// end function
 
@@ -7951,8 +8335,9 @@
             var _loc_3:Boolean = false;
             var _loc_4:String = null;
             var _loc_5:* = undefined;
-            var _loc_6:* = undefined;
-            var _loc_7:Sound = null;
+            var _loc_6:Boolean = false;
+            var _loc_7:* = undefined;
+            var _loc_8:Sound = null;
             _loc_2 = param1[0];
             _loc_3 = _loc_2 == this.username2_mc.username_txt.text;
             _loc_4 = _loc_3 ? (this.username1_mc.username_txt.text) : (this.username2_mc.username_txt.text);
@@ -7961,26 +8346,27 @@
                 _loc_5 = param1[1];
                 if (_loc_3)
                 {
-                    _loc_6 = _loc_5 - this.rating_rep1_mc.rating;
+                    _loc_7 = _loc_5 - this.rating_rep1_mc.rating;
                     this.rating_rep1_mc.setRatingRep(_loc_5, this.rating_rep1_mc.reputation);
                 }
                 else
                 {
-                    _loc_6 = _loc_5 - this.rating_rep2_mc.rating;
+                    _loc_7 = _loc_5 - this.rating_rep2_mc.rating;
                     this.rating_rep2_mc.setRatingRep(_loc_5, this.rating_rep2_mc.reputation);
                 }
+                _loc_6 = this.match_type == "m";
                 if (this.duelist)
                 {
-                    this.displayMessageWithTitle("Opponent Quit", "Your opponent quit the duel. You win! Your rating has increased by " + _loc_6 + ".");
-                    _loc_7 = new WinSound();
-                    _loc_7.play();
+                    this.displayMessageWithTitle("Opponent Quit", "Your opponent quit the duel. You win" + (_loc_6 ? (" the match") : ("")) + "! Your rating has increased by " + _loc_7 + ".");
+                    _loc_8 = new WinSound();
+                    _loc_8.play();
                 }
                 else
                 {
-                    _loc_7 = new GameSuccessSound();
-                    _loc_7.play();
+                    _loc_8 = new GameSuccessSound();
+                    _loc_8.play();
                 }
-                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.\n\n" + _loc_4 + " wins!", true);
+                this.setDuelOver("The duel has ended because " + _loc_2 + " quit.\n\n" + _loc_4 + " wins" + (_loc_6 ? (" the match") : ("")) + "!", true);
             }
             else if (!this.duel_over)
             {
@@ -7988,8 +8374,8 @@
                 {
                     this.displayMessageWithTitle("Opponent Quit", "Your opponent quit the duel.");
                 }
-                _loc_7 = new GameFailureSound();
-                _loc_7.play();
+                _loc_8 = new GameFailureSound();
+                _loc_8.play();
                 this.setDuelOver("The duel has ended because " + _loc_2 + " quit.", true);
             }
             if (_loc_3)
@@ -8008,7 +8394,21 @@
         public function admitDefeatE(event:MouseEvent = null)
         {
             var _loc_2:String = null;
-            _loc_2 = this.rated_duel ? (" Doing so will result in a loss and rating reduction.") : ("");
+            if (this.rated_duel)
+            {
+                if (this.match_type == "m")
+                {
+                    _loc_2 = " This is a rated match.";
+                }
+                else
+                {
+                    _loc_2 = " Doing so will result in a loss and rating reduction.";
+                }
+            }
+            else
+            {
+                _loc_2 = "";
+            }
             this.getConfirmation("Admit Defeat", "Are you sure you want to admit defeat?" + _loc_2, this.admitDefeat);
             return;
         }// end function
@@ -8024,63 +8424,147 @@
 
         public function winResponse(param1:Array)
         {
-            var _loc_2:* = undefined;
+            var _loc_2:Boolean = false;
             var _loc_3:String = null;
-            var _loc_4:Sound = null;
-            if (param1.length >= 4)
+            var _loc_4:String = null;
+            var _loc_5:String = null;
+            var _loc_6:String = null;
+            var _loc_7:Boolean = false;
+            var _loc_8:* = undefined;
+            var _loc_9:String = null;
+            var _loc_10:Sound = null;
+            _loc_2 = param1[0] == "true";
+            _loc_3 = param1[1];
+            switch(_loc_3)
             {
-                _loc_2 = param1[0] - this.rating_rep1_mc.rating;
-                _loc_3 = " Your rating has increased by " + _loc_2 + ".";
-                this.rating_rep1_mc.setRatingRep(param1[0], param1[1]);
-                this.rating_rep2_mc.setRatingRep(param1[2], param1[3]);
+                case "game loss":
+                {
+                    _loc_4 = "An admin gave your opponent a game loss.";
+                    _loc_5 = "An admin gave " + this.username2_mc.username_txt.text + " a game loss";
+                    _loc_6 = "The duel has ended because an admin gave " + this.username2_mc.username_txt.text + " a game loss.";
+                    break;
+                }
+                case "match loss":
+                {
+                    _loc_4 = "An admin gave your opponent a match loss.";
+                    _loc_5 = "An admin gave " + this.username2_mc.username_txt.text + " a match loss";
+                    _loc_6 = "The duel has ended because an admin gave " + this.username2_mc.username_txt.text + " a match loss.";
+                    break;
+                }
+                default:
+                {
+                    _loc_4 = "Your opponent admitted defeat.";
+                    _loc_5 = this.username2_mc.username_txt.text + " admitted defeat";
+                    _loc_6 = "The duel has ended because " + this.username2_mc.username_txt.text + " admitted defeat.";
+                    break;
+                    break;
+                }
+            }
+            if (param1.length >= 6)
+            {
+                if (_loc_2)
+                {
+                    _loc_8 = param1[2] - this.rating_rep1_mc.rating;
+                    _loc_9 = " Your rating has increased by " + _loc_8 + ".";
+                }
+                else
+                {
+                    _loc_9 = "";
+                }
+                this.rating_rep1_mc.setRatingRep(param1[2], param1[3]);
+                this.rating_rep2_mc.setRatingRep(param1[4], param1[5]);
             }
             else
             {
-                _loc_3 = "";
+                _loc_9 = "";
             }
+            _loc_7 = this.match_type == "m" && _loc_2;
             if (this.duelist)
             {
-                this.displayMessageWithTitle("You Win!", "Your opponent admitted defeat. You win!" + _loc_3);
-                _loc_4 = new WinSound();
-                _loc_4.play();
+                this.displayMessageWithTitle("You Win!", _loc_4 + " You win" + (_loc_7 ? (" the match") : ("")) + "!" + _loc_9);
+                _loc_10 = new WinSound();
+                _loc_10.play();
             }
             else
             {
-                _loc_4 = new GameSuccessSound();
-                _loc_4.play();
+                _loc_10 = new GameSuccessSound();
+                _loc_10.play();
             }
-            this.setDuelOver("The duel has ended because " + this.username2_mc.username_txt.text + " admitted defeat.\n\n" + this.username1_mc.username_txt.text + " wins!");
+            this.duelChatAddLine(_loc_5);
+            this.setDuelOver(_loc_6 + "\n\n" + this.username1_mc.username_txt.text + " wins" + (_loc_7 ? (" the match") : ("")) + "!");
             return;
         }// end function
 
         public function loseResponse(param1:Array)
         {
-            var _loc_2:* = undefined;
+            var _loc_2:Boolean = false;
             var _loc_3:String = null;
-            var _loc_4:Sound = null;
-            if (param1.length >= 4)
+            var _loc_4:String = null;
+            var _loc_5:String = null;
+            var _loc_6:String = null;
+            var _loc_7:Boolean = false;
+            var _loc_8:* = undefined;
+            var _loc_9:String = null;
+            var _loc_10:Sound = null;
+            _loc_2 = param1[0] == "true";
+            _loc_3 = param1[1];
+            switch(_loc_3)
             {
-                _loc_2 = this.rating_rep1_mc.rating - param1[0];
-                _loc_3 = " Your rating has decreased by " + _loc_2 + ".";
-                this.rating_rep1_mc.setRatingRep(param1[0], param1[1]);
-                this.rating_rep2_mc.setRatingRep(param1[2], param1[3]);
+                case "game loss":
+                {
+                    _loc_4 = "An admin gave you a game loss.";
+                    _loc_5 = "An admin gave " + this.username1_mc.username_txt.text + " a game loss";
+                    _loc_6 = "The duel has ended because an admin gave " + this.username1_mc.username_txt.text + " a game loss.";
+                    break;
+                }
+                case "match loss":
+                {
+                    _loc_4 = "An admin gave you a match loss.";
+                    _loc_5 = "An admin gave " + this.username1_mc.username_txt.text + " a match loss";
+                    _loc_6 = "The duel has ended because an admin gave " + this.username1_mc.username_txt.text + " a match loss.";
+                    break;
+                }
+                default:
+                {
+                    _loc_4 = "You admitted defeat.";
+                    _loc_5 = this.username1_mc.username_txt.text + " admitted defeat";
+                    _loc_6 = "The duel has ended because " + this.username1_mc.username_txt.text + " admitted defeat.";
+                    break;
+                    break;
+                }
+            }
+            if (param1.length >= 6)
+            {
+                if (_loc_2)
+                {
+                    _loc_8 = this.rating_rep1_mc.rating - param1[2];
+                    _loc_9 = " Your rating has decreased by " + _loc_8 + ".";
+                }
+                else
+                {
+                    _loc_9 = "";
+                }
+                this.rating_rep1_mc.setRatingRep(param1[2], param1[3]);
+                this.rating_rep2_mc.setRatingRep(param1[4], param1[5]);
             }
             else
             {
-                _loc_3 = "";
+                _loc_9 = "";
             }
+            _loc_7 = this.match_type == "m" && _loc_2;
             if (this.duelist)
             {
-                this.displayMessageWithTitle("You Lose!", "You admitted defeat. You lose!" + _loc_3);
-                _loc_4 = new LoseSound();
-                _loc_4.play();
+                this.displayMessageWithTitle("You Lose!", _loc_4 + " You lose" + (_loc_7 ? (" the match") : ("")) + "!" + _loc_9);
+                _loc_10 = new LoseSound();
+                _loc_10.play();
             }
             else
             {
-                _loc_4 = new GameSuccessSound();
-                _loc_4.play();
+                _loc_10 = new GameSuccessSound();
+                _loc_10.play();
             }
-            this.setDuelOver("The duel has ended because " + this.username1_mc.username_txt.text + " admitted defeat.\n\n" + this.username2_mc.username_txt.text + " wins!");
+            this.duelChatAddLine(_loc_5);
+            this.setDuelOver(_loc_6 + "\n\n" + this.username2_mc.username_txt.text + " wins" + (_loc_7 ? (" the match") : ("")) + "!");
             return;
         }// end function
 
@@ -8089,7 +8573,21 @@
             var _loc_2:String = null;
             var _loc_3:String = null;
             _loc_2 = this.draw_btn.label;
-            _loc_3 = this.rated_duel ? (" A draw will affect your rating.") : ("");
+            if (this.rated_duel)
+            {
+                if (this.match_type == "m")
+                {
+                    _loc_3 = " This is a rated match.";
+                }
+                else
+                {
+                    _loc_3 = " A draw will affect your rating.";
+                }
+            }
+            else
+            {
+                _loc_3 = "";
+            }
             if (_loc_2 == "Revoke Draw")
             {
                 this.Send(["Revoke draw"]);
@@ -8179,7 +8677,11 @@
             if (param1.length >= 4)
             {
                 _loc_3 = param1[0] - this.rating_rep1_mc.rating;
-                if (_loc_3 > 0)
+                if (this.match_type == "m")
+                {
+                    _loc_4 = "";
+                }
+                else if (_loc_3 > 0)
                 {
                     _loc_4 = " Your rating has increased by " + _loc_3 + ".";
                 }
@@ -8211,6 +8713,7 @@
             }
             _loc_2 = new GameSuccessSound();
             _loc_2.play();
+            this.duelChatAddLine("The players have agreed on a draw");
             this.setDuelOver("The players have agreed on a draw.", false, true);
             return;
         }// end function
@@ -8265,7 +8768,26 @@
             var _loc_2:String = null;
             var _loc_3:String = null;
             _loc_2 = this.rematch_btn.label;
-            _loc_3 = this.rated_duel ? (" Your rematch will be a rated duel.") : ("");
+            switch(this.match_type)
+            {
+                case "s":
+                {
+                    break;
+                }
+                case "n":
+                {
+                    break;
+                }
+                case "m":
+                {
+                    break;
+                }
+                default:
+                {
+                    break;
+                    break;
+                }
+            }
             if (_loc_2 == "Revoke Rematch")
             {
                 this.Send(["Revoke rematch"]);
@@ -8347,36 +8869,21 @@
             return;
         }// end function
 
-        public function rematchResponse(param1:Array)
-        {
-            this.duelChatAddLine("Siding for next duel has begun");
-            this.stopTweensE();
-            this.rematch_btn.visible = false;
-            this.duel_over = false;
-            this.over_mc.visible = false;
-            this.defeat_btn.enabled = true;
-            this.draw_btn.enabled = true;
-            this.draw_btn.label = "Offer Draw";
-            this.call_admin_btn.enabled = this.rated_duel && this.watchers_mc.num_admins_online == 0;
-            this.call_admin_btn.label = "Call Admin";
-            this.rematch_btn.label = "Offer Rematch";
-            this.status1_mc.status = "";
-            this.status2_mc.status = "";
-            this.gotoSiding(param1);
-            this.clearPicturesE();
-            return;
-        }// end function
-
         public function canceledResponse(param1:Array)
         {
-            var _loc_2:Sound = null;
+            var _loc_2:Boolean = false;
+            var _loc_3:String = null;
+            var _loc_4:Sound = null;
+            _loc_2 = param1[0] == "true";
+            _loc_3 = _loc_2 ? ("match") : ("duel");
             if (this.duelist)
             {
-                this.displayMessageWithTitle("Duel Canceled", "The duel has been canceled by an administrator. Ratings and experiences are unaffected.");
+                this.displayMessageWithTitle((_loc_2 ? ("Match") : ("Duel")) + " Canceled", "The " + _loc_3 + " has been canceled by an administrator. Ratings and experiences are unaffected.");
             }
-            _loc_2 = new GameFailureSound();
-            _loc_2.play();
-            this.setDuelOver("The duel has been canceled by an administrator.", false, true);
+            _loc_4 = new GameFailureSound();
+            _loc_4.play();
+            this.duelChatAddLine("The " + _loc_3 + " has been canceled by an administrator");
+            this.setDuelOver("The " + _loc_3 + " has been canceled by an administrator.", false, true);
             return;
         }// end function
 
@@ -8395,13 +8902,20 @@
                 {
                     if (currentFrameLabel == "siding_start")
                     {
-                        _loc_5 = this.no_duel_winner || !this.siding1_mc.visible ? (_loc_2) : (_loc_3);
+                        if (this.match_type == "m")
+                        {
+                            _loc_5 = _loc_4;
+                        }
+                        else
+                        {
+                            _loc_5 = this.no_duel_winner || !this.siding1_mc.visible ? (_loc_2) : (_loc_3);
+                        }
                     }
-                    else if (this.rps_stage == 0)
+                    else if (this.rps_stage == 0 && !this.rps_match)
                     {
                         _loc_5 = _loc_2;
                     }
-                    else if (this.rps_stage == 1)
+                    else if (this.rps_stage == 1 && !this.rps_match)
                     {
                         _loc_5 = _loc_3;
                     }
@@ -8434,6 +8948,7 @@
 
         public function preloadPictures()
         {
+            this.clearPicturesE(null);
             this.pictures_socket = new Socket();
             this.pictures_socket.timeout = 5000;
             this.pictures_socket.addEventListener(Event.CONNECT, this.preloadConnected);
@@ -8475,7 +8990,7 @@
             return;
         }// end function
 
-        public function clearPicturesE(event:Event = null)
+        public function clearPicturesE(event:Event)
         {
             if (this.pictures_socket != null && this.pictures_socket.connected)
             {
@@ -8549,49 +9064,53 @@
             return;
         }// end function
 
-        public function kick1E(event:MouseEvent = null)
+        public function loss1E(event:MouseEvent = null)
         {
-            this.getConfirmation("Kick Host", "Are you sure you want to kick " + this.username1_mc.username_txt.text + "?", this.kick1);
+            var _loc_2:Array = null;
+            _loc_2 = this.match_type == "m" ? (["Game Loss", "Match Loss"]) : (["Game Loss"]);
+            this.getComboInput("Host Loss", "Give loss to " + this.username1_mc.username_txt.text + "?", _loc_2, 0, this.loss1);
             return;
         }// end function
 
-        public function kick1(param1:Boolean)
+        public function loss1(param1:String)
         {
-            if (param1)
+            if (param1 != null)
             {
-                this.Send(["Kick user", this.username1_mc.username_txt.text]);
-                this.trackEvent("Admin Kick", this.username, this.username1_mc.username_txt.text);
+                this.Send(["Duel loss", "host", param1]);
             }
             return;
         }// end function
 
-        public function kick2E(event:MouseEvent = null)
+        public function loss2E(event:MouseEvent = null)
         {
-            this.getConfirmation("Kick Opponent", "Are you sure you want to kick " + this.username2_mc.username_txt.text + "?", this.kick2);
+            var _loc_2:Array = null;
+            _loc_2 = this.match_type == "m" ? (["Game Loss", "Match Loss"]) : (["Game Loss"]);
+            this.getComboInput("Opponent Loss", "Give loss to " + this.username2_mc.username_txt.text + "?", _loc_2, 0, this.loss2);
             return;
         }// end function
 
-        public function kick2(param1:Boolean)
+        public function loss2(param1:String)
         {
-            if (param1)
+            if (param1 != null)
             {
-                this.Send(["Kick user", this.username2_mc.username_txt.text]);
-                this.trackEvent("Admin Kick", this.username, this.username2_mc.username_txt.text);
+                this.Send(["Duel loss", "opponent", param1]);
             }
             return;
         }// end function
 
         public function duelCancelDuelE(event:MouseEvent = null)
         {
-            this.getConfirmation("Cancel Duel", "Are you sure you want to cancel the duel?", this.duelCancelDuel);
+            var _loc_2:Array = null;
+            _loc_2 = this.match_type == "m" ? (["Cancel Game", "Cancel Match"]) : (["Cancel Game"]);
+            this.getComboInput("Cancel", "Cancel?", _loc_2, 0, this.duelCancelDuel);
             return;
         }// end function
 
-        public function duelCancelDuel(param1:Boolean)
+        public function duelCancelDuel(param1:String)
         {
-            if (param1)
+            if (param1 != null)
             {
-                this.Send(["Cancel duel", this.username1_mc.username_txt.text]);
+                this.Send(["Cancel duel", param1]);
             }
             return;
         }// end function
@@ -9053,9 +9572,16 @@
         {
             var _loc_4:Array = null;
             var _loc_5:* = undefined;
+            _loc_4 = [];
             if (this.current_tweens == null)
             {
-                _loc_4 = this.param1(param2);
+                try
+                {
+                    _loc_4 = this.param1(param2);
+                }
+                catch (e:Error)
+                {
+                }
                 if (_loc_4.length > 0)
                 {
                     _loc_5 = 0;
@@ -9072,7 +9598,13 @@
             }
             else if (!this.current_tween_block)
             {
-                _loc_4 = this.param1(param2);
+                try
+                {
+                    _loc_4 = this.param1(param2);
+                }
+                catch (e:Error)
+                {
+                }
                 if (_loc_4.length > 0)
                 {
                     _loc_5 = 0;
@@ -9156,7 +9688,14 @@
                             this.tween_args.reverse();
                             _loc_3 = this.tween_args.pop();
                             this.tween_args.reverse();
-                            _loc_4 = this._loc_2(_loc_3);
+                            _loc_4 = [];
+                            try
+                            {
+                                _loc_4 = this._loc_2(_loc_3);
+                            }
+                            catch (e:Error)
+                            {
+                            }
                             if (_loc_4.length > 0)
                             {
                                 _loc_6 = 0;
@@ -9194,13 +9733,14 @@
 
         public function tweensInit()
         {
+            this.stopTweensE(null);
             this.tween_functions = [];
             this.tween_args = [];
             this.tween_blocks = [];
             return;
         }// end function
 
-        public function stopTweensE(event:Event = null)
+        public function stopTweensE(event:Event)
         {
             var _loc_2:* = undefined;
             this.tween_functions = null;
@@ -9254,16 +9794,6 @@
             this.Send(["Turn pick", this.tp_going_first]);
             this.first_mc.clickHandler = null;
             this.second_mc.clickHandler = null;
-            if (this.tp_going_first)
-            {
-                this.addTweens(this.tpTweenFirst);
-            }
-            else
-            {
-                this.addTweens(this.tpTweenSecond);
-            }
-            this.addPause(2000);
-            this.addTweens(this.tpTweenExit);
             return;
         }// end function
 
@@ -9321,9 +9851,10 @@
             var _loc_10:String = null;
             var _loc_11:Boolean = false;
             var _loc_12:Boolean = false;
-            var _loc_13:Boolean = false;
+            var _loc_13:int = 0;
             var _loc_14:Boolean = false;
-            var _loc_15:DuelCard = null;
+            var _loc_15:Boolean = false;
+            var _loc_16:DuelCard = null;
             _loc_1 = this.duel_args;
             this.duel_args = null;
             _loc_2 = _loc_1[0];
@@ -9351,72 +9882,75 @@
                 _loc_7++;
                 _loc_12 = _loc_1[_loc_7] == "true";
                 _loc_7++;
-                _loc_13 = _loc_1[_loc_7] == "true";
+                _loc_13 = _loc_1[_loc_7];
                 _loc_7++;
                 _loc_14 = _loc_1[_loc_7] == "true";
                 _loc_7++;
-                _loc_15 = new DuelCard(_loc_13 ? (this.back_loader1) : (this.back_loader2));
-                if (_loc_14)
+                _loc_15 = _loc_1[_loc_7] == "true";
+                _loc_7++;
+                _loc_16 = new DuelCard(_loc_14 ? (this.back_loader1) : (this.back_loader2));
+                if (_loc_15)
                 {
-                    this.initDuelCard(_loc_15, _loc_1.slice(_loc_7, _loc_7 + 16));
+                    this.initDuelCard(_loc_16, _loc_1.slice(_loc_7, _loc_7 + 16));
                     _loc_7 = _loc_7 + 16;
                 }
-                _loc_15.id = _loc_9;
+                _loc_16.counter = _loc_13;
+                _loc_16.id = _loc_9;
                 if (_loc_8 == "underlay1" || _loc_8 == "underlay2")
                 {
                     if (_loc_6 == null)
                     {
-                        var _loc_16:* = _loc_15;
-                        _loc_6 = _loc_15;
-                        _loc_5 = _loc_16;
+                        var _loc_17:* = _loc_16;
+                        _loc_6 = _loc_16;
+                        _loc_5 = _loc_17;
                     }
                     else
                     {
-                        _loc_6.overlayLink(_loc_15);
-                        _loc_6 = _loc_15;
+                        _loc_6.overlayLink(_loc_16);
+                        _loc_6 = _loc_16;
                     }
                 }
                 else if (_loc_6 != null)
                 {
-                    _loc_15.overlayLink(_loc_5);
-                    _loc_6.overlayLink(_loc_15);
-                    var _loc_16:String = null;
+                    _loc_16.overlayLink(_loc_5);
+                    _loc_6.overlayLink(_loc_16);
+                    var _loc_17:String = null;
                     _loc_6 = null;
-                    _loc_5 = _loc_16;
+                    _loc_5 = _loc_17;
                 }
-                this.cards_mc.addCard(_loc_15, _loc_8, _loc_10, _loc_11, _loc_12);
+                this.cards_mc.addCard(_loc_16, _loc_8, _loc_10, _loc_11, _loc_12);
                 if (_loc_8 == "field1")
                 {
-                    if (_loc_15.position == 5 && !_loc_15.show_back)
+                    if (_loc_16.position == 5 && !_loc_16.show_back)
                     {
-                        _loc_4[0] = _loc_15;
+                        _loc_4[0] = _loc_16;
                     }
-                    this.cards_mc.finishFieldCard(_loc_15, true, false);
+                    this.cards_mc.finishFieldCard(_loc_16, true, false);
                     continue;
                 }
                 if (_loc_8 == "field2")
                 {
-                    if (_loc_15.position == 5 && !_loc_15.show_back)
+                    if (_loc_16.position == 5 && !_loc_16.show_back)
                     {
-                        _loc_4[1] = _loc_15;
+                        _loc_4[1] = _loc_16;
                     }
-                    this.cards_mc.finishFieldCard(_loc_15, false, false);
+                    this.cards_mc.finishFieldCard(_loc_16, false, false);
                 }
             }
             _loc_7 = _loc_3 ? (0) : (1);
-            _loc_15 = _loc_4[_loc_7];
-            if (_loc_15 == null)
+            _loc_16 = _loc_4[_loc_7];
+            if (_loc_16 == null)
             {
                 _loc_7 = _loc_3 ? (1) : (0);
-                _loc_15 = _loc_4[_loc_7];
-                if (_loc_15 != null)
+                _loc_16 = _loc_4[_loc_7];
+                if (_loc_16 != null)
                 {
-                    this.cards_mc.loadFieldBackground(_loc_15);
+                    this.cards_mc.loadFieldBackground(_loc_16);
                 }
             }
             else
             {
-                this.cards_mc.loadFieldBackground(_loc_15);
+                this.cards_mc.loadFieldBackground(_loc_16);
             }
             this.addTweens(this.duelFadeTween);
             this.addTweens(this.duelInvisibleTween);
@@ -9465,6 +9999,7 @@
                 this.token_btn.addEventListener(MouseEvent.CLICK, this.tokenClickE);
                 this.hand_shuffle_btn.addEventListener(MouseEvent.CLICK, this.handShuffleClickE);
                 this.show_hand_btn.addEventListener(MouseEvent.CLICK, this.showHandClickE);
+                this.enableCounter(this.counter_start_mc);
             }
             else
             {
@@ -9475,8 +10010,9 @@
                 this.auto_draw_cb.visible = false;
                 this.hand_shuffle_btn.visible = false;
                 this.show_hand_btn.visible = false;
+                this.counter_start_mc.visible = false;
             }
-            this.cards_mc.init(this.duelist, this.admin, this.addTweens, this.DUEL_TWEEN_TIME, this.preview_mc, this.cardClickCallback, this.isMyBP, this.Send, this.initDuelCard, this.field_mc);
+            this.cards_mc.init(this.duelist, this.admin, this.addTweens, this.DUEL_TWEEN_TIME, this.preview_mc, this.cardClickCallback, this.isMyBP, this.Send, this.initDuelCard, this.field_mc, this.enableCounter);
             this.phase_mc.init(this.phaseChange, this.duelist);
             this.die_mc.visible = false;
             this.coin_mc.visible = false;
@@ -9652,29 +10188,33 @@
         {
             var _loc_2:String = null;
             var _loc_3:Array = null;
-            var _loc_4:String = null;
-            var _loc_5:int = 0;
-            var _loc_6:* = undefined;
+            var _loc_4:Boolean = false;
+            var _loc_5:Boolean = false;
+            var _loc_6:String = null;
             var _loc_7:int = 0;
-            var _loc_8:Boolean = false;
+            var _loc_8:* = undefined;
             var _loc_9:int = 0;
             var _loc_10:Boolean = false;
-            var _loc_11:Boolean = false;
+            var _loc_11:int = 0;
+            var _loc_12:Boolean = false;
+            var _loc_13:Boolean = false;
             _loc_2 = param1[0];
             _loc_3 = param1;
             _loc_3.reverse();
             _loc_3.pop();
             _loc_3.reverse();
+            _loc_4 = true;
+            _loc_5 = true;
             switch(_loc_2)
             {
                 case "Life points":
                 {
-                    _loc_4 = _loc_3[0];
-                    _loc_5 = _loc_3[1];
-                    _loc_6 = _loc_4 == this.username1_mc.username_txt.text ? (this.lp_bottom_mc) : (this.lp_top_mc);
-                    _loc_7 = _loc_6.points;
-                    this.addTweens(_loc_6.getTweens, _loc_5);
-                    this.addTweens(this.lpDisplayTween, _loc_4);
+                    _loc_6 = _loc_3[0];
+                    _loc_7 = _loc_3[1];
+                    _loc_8 = _loc_6 == this.username1_mc.username_txt.text ? (this.lp_bottom_mc) : (this.lp_top_mc);
+                    _loc_9 = _loc_8.points;
+                    this.addTweens(_loc_8.getTweens, _loc_7);
+                    this.addTweens(this.lpDisplayTween, _loc_6);
                     break;
                 }
                 case "Phase":
@@ -9684,9 +10224,9 @@
                 }
                 case "Die":
                 {
-                    _loc_8 = _loc_3[0] == this.username1_mc.username_txt.text;
-                    _loc_9 = _loc_3[1];
-                    this.addTweens(this.dieTweens1, [_loc_8, _loc_9]);
+                    _loc_10 = _loc_3[0] == this.username1_mc.username_txt.text;
+                    _loc_11 = _loc_3[1];
+                    this.addTweens(this.dieTweens1, [_loc_10, _loc_11]);
                     this.addTweens(this.dieTweens2, _loc_3);
                     this.addPause(2000);
                     this.addTweens(this.dieTweens3);
@@ -9694,10 +10234,10 @@
                 }
                 case "Coin":
                 {
-                    _loc_10 = _loc_3[0] == this.username1_mc.username_txt.text;
-                    _loc_11 = _loc_3[1] == "heads";
-                    this.addTweens(this.coinTweens1, _loc_10);
-                    this.addTweens(this.coinTweens2, [_loc_10, _loc_11]);
+                    _loc_12 = _loc_3[0] == this.username1_mc.username_txt.text;
+                    _loc_13 = _loc_3[1] == "heads";
+                    this.addTweens(this.coinTweens1, _loc_12);
+                    this.addTweens(this.coinTweens2, [_loc_12, _loc_13]);
                     this.addTweens(this.coinTweens3, _loc_3);
                     this.addPause(2000);
                     this.addTweens(this.coinTweens4);
@@ -9709,9 +10249,26 @@
                     this.addTweens(this.cards_mc.tokenFinish, _loc_3);
                     break;
                 }
+                case "MoveNoBlockNoSound":
+                {
+                    _loc_5 = false;
+                }
+                case "MoveNoBlock":
+                {
+                    _loc_4 = false;
+                }
                 case "Move":
                 {
-                    this.addTweens(this.moveTweens, _loc_3);
+                    this.addTweens(_loc_5 ? (this.moveTweens) : (this.moveTweensNoSound), _loc_3, _loc_4);
+                    if (_loc_4)
+                    {
+                        this.addTweens(this.cards_mc.afterMoveTweens, _loc_3);
+                    }
+                    break;
+                }
+                case "MoveNoBlockDone":
+                {
+                    this.addTweens(this.doNothing, null);
                     this.addTweens(this.cards_mc.afterMoveTweens, _loc_3);
                     break;
                 }
@@ -9766,12 +10323,23 @@
                     this.addTweens(this.cards_mc.attackTween2, _loc_3);
                     break;
                 }
+                case "Counter":
+                {
+                    this.addTweens(this.setCounters, _loc_3);
+                    this.addPause(100);
+                    break;
+                }
                 default:
                 {
                     break;
                 }
             }
             return;
+        }// end function
+
+        public function doNothing(param1) : Array
+        {
+            return [];
         }// end function
 
         public function lpDisplayTween(param1:String) : Array
@@ -10030,80 +10598,88 @@
             return _loc_2;
         }// end function
 
-        public function moveTweens(param1:Array) : Array
+        public function moveTweens(param1:Array, param2:Boolean = true) : Array
         {
-            var _loc_2:Array = null;
-            var _loc_3:String = null;
-            var _loc_4:DuelCard = null;
-            var _loc_5:Boolean = false;
+            var _loc_3:Array = null;
+            var _loc_4:String = null;
+            var _loc_5:DuelCard = null;
             var _loc_6:Boolean = false;
-            var _loc_7:String = null;
+            var _loc_7:Boolean = false;
             var _loc_8:String = null;
-            var _loc_9:Boolean = false;
+            var _loc_9:String = null;
             var _loc_10:Boolean = false;
-            var _loc_11:String = null;
-            var _loc_12:Boolean = false;
-            var _loc_13:Sound = null;
-            _loc_2 = [];
-            _loc_3 = param1[0];
-            _loc_4 = this.cards_mc.removeCard(_loc_3, param1[1], _loc_2);
-            _loc_5 = _loc_4.show_back;
+            var _loc_11:Boolean = false;
+            var _loc_12:String = null;
+            var _loc_13:Boolean = false;
+            var _loc_14:Sound = null;
+            _loc_3 = [];
+            _loc_4 = param1[0];
+            _loc_5 = this.cards_mc.removeCard(_loc_4, param1[1], _loc_3);
+            _loc_6 = _loc_5.show_back;
             if (param1.length > 8)
             {
-                this.initDuelCard(_loc_4, param1.slice(8));
+                this.initDuelCard(_loc_5, param1.slice(8));
             }
-            _loc_6 = param1[7] == "special";
-            _loc_7 = param1[2];
-            _loc_8 = param1[3];
-            _loc_9 = param1[4] == "true";
-            _loc_10 = param1[5] == "true";
-            this.cards_mc.addCard(_loc_4, _loc_7, _loc_8, _loc_9, _loc_10, _loc_2, _loc_6);
-            _loc_11 = param1[6];
-            if (_loc_11 != "")
+            _loc_7 = param1[7] == "special";
+            _loc_8 = param1[2];
+            _loc_9 = param1[3];
+            _loc_10 = param1[4] == "true";
+            _loc_11 = param1[5] == "true";
+            this.cards_mc.addCard(_loc_5, _loc_8, _loc_9, _loc_10, _loc_11, _loc_3, _loc_7);
+            _loc_12 = param1[6];
+            if (_loc_12 != "")
             {
-                this.duelChatAddLine(_loc_11);
+                this.duelChatAddLine(_loc_12);
             }
-            _loc_12 = int(_loc_8) < 6;
-            if (_loc_3 == "deck1" && _loc_7 == "hand1" || _loc_3 == "deck2" && _loc_7 == "hand2")
+            if (param2)
             {
-                _loc_13 = new DrawSound();
-                _loc_13.play();
-            }
-            else if (_loc_3 == "hand1" && _loc_7 == "field1" || _loc_3 == "hand2" && _loc_7 == "field2")
-            {
-                if (_loc_9)
+                _loc_13 = int(_loc_9) < 6;
+                if (_loc_4 == "deck1" && _loc_8 == "hand1" || _loc_4 == "deck2" && _loc_8 == "hand2")
                 {
-                    _loc_13 = new SetSound();
+                    _loc_14 = new DrawSound();
+                    _loc_14.play();
                 }
-                else if (_loc_12)
+                else if (_loc_4 == "hand1" && _loc_8 == "field1" || _loc_4 == "hand2" && _loc_8 == "field2")
                 {
-                    _loc_13 = new ActivateSound();
+                    if (_loc_10)
+                    {
+                        _loc_14 = new SetSound();
+                    }
+                    else if (_loc_13)
+                    {
+                        _loc_14 = new ActivateSound();
+                    }
+                    else
+                    {
+                        _loc_14 = new SummonHandSound();
+                    }
+                    _loc_14.play();
                 }
-                else
+                else if (_loc_4 == "field1" && _loc_8 == "field1" || _loc_4 == "field2" && _loc_8 == "field2")
                 {
-                    _loc_13 = new SummonHandSound();
+                    if (_loc_6 && !_loc_10)
+                    {
+                        _loc_14 = _loc_13 ? (new ActivateSound()) : (new FlipSound());
+                        _loc_14.play();
+                    }
                 }
-                _loc_13.play();
-            }
-            else if (_loc_3 == "field1" && _loc_7 == "field1" || _loc_3 == "field2" && _loc_7 == "field2")
-            {
-                if (_loc_5 && !_loc_9)
+                else if (_loc_8 == "grave1" || _loc_8 == "grave2" || _loc_8 == "rfg1" || _loc_8 == "rfg2")
                 {
-                    _loc_13 = _loc_12 ? (new ActivateSound()) : (new FlipSound());
-                    _loc_13.play();
+                    _loc_14 = new DiscardSound();
+                    _loc_14.play();
+                }
+                else if (_loc_7)
+                {
+                    _loc_14 = new SummonSound();
+                    _loc_14.play();
                 }
             }
-            else if (_loc_7 == "grave1" || _loc_7 == "grave2" || _loc_7 == "rfg1" || _loc_7 == "rfg2")
-            {
-                _loc_13 = new DiscardSound();
-                _loc_13.play();
-            }
-            else if (_loc_6)
-            {
-                _loc_13 = new SummonSound();
-                _loc_13.play();
-            }
-            return _loc_2;
+            return _loc_3;
+        }// end function
+
+        public function moveTweensNoSound(param1:Array) : Array
+        {
+            return this.moveTweens(param1, false);
         }// end function
 
         public function removeTweens(param1:Array) : Array
@@ -10190,6 +10766,99 @@
             return;
         }// end function
 
+        public function counterDrag(param1:Sprite) : MovieClip
+        {
+            var _loc_2:DuelCard = null;
+            var _loc_3:Point = null;
+            if (param1 == this.counter_start_mc)
+            {
+                this.counter_drag_src_id = "";
+                this.cards_mc.counter_mc.x = this.counter_start_mc.x;
+                this.cards_mc.counter_mc.y = this.counter_start_mc.y;
+                this.cards_mc.counter_mc.glow = false;
+            }
+            else
+            {
+                _loc_2 = DuelCard(param1.parent);
+                if (_loc_2.counter <= 0 || _loc_2.show_back)
+                {
+                    return null;
+                }
+                this.counter_drag_src_id = _loc_2.id;
+                _loc_3 = param1.parent.localToGlobal(new Point(param1.x, param1.y));
+                this.cards_mc.counter_mc.x = _loc_3.x;
+                this.cards_mc.counter_mc.y = _loc_3.y;
+                this.cards_mc.removeCardMenu();
+                this.cards_mc.counter_mc.glow = true;
+            }
+            this.cards_mc.counter_mc.visible = true;
+            return this.cards_mc.counter_mc;
+        }// end function
+
+        public function counterDrop(param1:Sprite, param2:MouseEvent)
+        {
+            var _loc_3:String = null;
+            var _loc_4:String = null;
+            var _loc_5:DuelCard = null;
+            _loc_3 = this.counter_drag_src_id;
+            this.counter_drag_src_id = null;
+            this.cards_mc.counter_mc.visible = false;
+            _loc_4 = "";
+            if (param2.target.parent is DuelCard)
+            {
+                _loc_5 = DuelCard(param2.target.parent);
+                this.cards_mc.tryMenuCardMouseOver(_loc_5);
+                if (_loc_5.loc == "field1" && !_loc_5.show_back)
+                {
+                    _loc_4 = _loc_5.id;
+                }
+            }
+            if (_loc_3 == "" && _loc_4 == "")
+            {
+                return;
+            }
+            if (_loc_3 == _loc_4)
+            {
+                return;
+            }
+            this.Send(["Duel", "Counter", _loc_3, _loc_4]);
+            return;
+        }// end function
+
+        public function enableCounter(param1:Sprite, param2:Boolean = true)
+        {
+            if (param2)
+            {
+                DragManager.enableDragging(param1, this.counterDrag, this.counterDrop);
+                param1.buttonMode = true;
+                param1.tabEnabled = false;
+            }
+            else
+            {
+                DragManager.disableDragging(param1);
+                param1.buttonMode = false;
+            }
+            return;
+        }// end function
+
+        public function setCounters(param1:Array) : Array
+        {
+            var _loc_2:String = null;
+            var _loc_3:String = null;
+            var _loc_4:String = null;
+            var _loc_5:Sound = null;
+            _loc_2 = param1[0];
+            _loc_3 = _loc_2 == "field1" ? (this.username1_mc.username_txt.text) : (this.username2_mc.username_txt.text);
+            _loc_4 = this.cards_mc.setCounters(_loc_2, _loc_3, param1[1], param1[2], param1[3], param1[4]);
+            if (_loc_4 != null)
+            {
+                this.duelChatAddLine(_loc_4);
+            }
+            _loc_5 = new CounterSound();
+            _loc_5.play();
+            return [];
+        }// end function
+
         public function gotoSiding(param1:Array)
         {
             this.duel_screen_args = param1;
@@ -10213,8 +10882,8 @@
             {
                 this.done_siding_btn.visible = false;
                 this.swap_btn.visible = false;
-                this.sort_btn.visible = false;
                 this.reset_btn.visible = false;
+                this.sort_btn.visible = false;
             }
             this.siding1_mc.visible = false;
             this.siding2_mc.visible = false;
@@ -10330,7 +10999,6 @@
                     this.extra_in = 0;
                     this.extra_out = 0;
                     this.swap_btn.enabled = false;
-                    this.sort_btn.useHandCursor = true;
                     this.sort_btn.addEventListener(MouseEvent.CLICK, this.sortSidingE);
                     this.reset_btn.useHandCursor = true;
                     this.reset_btn.addEventListener(MouseEvent.CLICK, this.resetSidingE);
@@ -10852,7 +11520,7 @@
                 return;
             }
             this.swap_btn.enabled = false;
-            this.sort_btn.enabled = false;
+            this.sort_btn.visible = false;
             this.reset_btn.enabled = false;
             this.done_siding_btn.enabled = false;
             _loc_1 = 0;
@@ -10929,7 +11597,7 @@
             return;
         }// end function
 
-        function __setProp_ar_sp_dn_room_188()
+        function __setProp_ar_sp_dn_boxes_188()
         {
             if (this.__setPropDict[this.ar_sp] == undefined || int(this.__setPropDict[this.ar_sp]) != 189)
             {
@@ -10962,7 +11630,7 @@
             return;
         }// end function
 
-        function __setProp_au_sp_dn_room_188()
+        function __setProp_au_sp_dn_boxes_188()
         {
             if (this.__setPropDict[this.au_sp] == undefined || int(this.__setPropDict[this.au_sp]) != 189)
             {
@@ -10995,31 +11663,80 @@
             return;
         }// end function
 
-        function __setProp_tu_sp_dn_room_188()
+        function __setProp_decklist_cb_dn_room_188()
         {
-            if (this.__setPropDict[this.tu_sp] == undefined || int(this.__setPropDict[this.tu_sp]) != 189)
+            var _loc_1:DataProvider = null;
+            var _loc_2:SimpleCollectionItem = null;
+            var _loc_3:Array = null;
+            var _loc_4:Object = null;
+            var _loc_5:int = 0;
+            var _loc_6:* = undefined;
+            if (this.__setPropDict[this.decklist_cb] == undefined || int(this.__setPropDict[this.decklist_cb]) != 189)
             {
-                this.__setPropDict[this.tu_sp] = 189;
+                this.__setPropDict[this.decklist_cb] = 189;
                 try
                 {
-                    this.tu_sp["componentInspectorSetting"] = true;
+                    this.decklist_cb["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.tu_sp.enabled = true;
-                this.tu_sp.horizontalLineScrollSize = 4;
-                this.tu_sp.horizontalPageScrollSize = 0;
-                this.tu_sp.horizontalScrollPolicy = "off";
-                this.tu_sp.scrollDrag = false;
-                this.tu_sp.source = "";
-                this.tu_sp.verticalLineScrollSize = 4;
-                this.tu_sp.verticalPageScrollSize = 0;
-                this.tu_sp.verticalScrollPolicy = "auto";
-                this.tu_sp.visible = true;
+                _loc_1 = new DataProvider();
+                _loc_3 = [];
+                _loc_5 = 0;
+                while (_loc_5 < _loc_3.length)
+                {
+                    
+                    _loc_2 = new SimpleCollectionItem();
+                    _loc_4 = _loc_3[_loc_5];
+                    for (_loc_6 in _loc_4)
+                    {
+                        
+                        _loc_2[_loc_6] = _loc_4[_loc_6];
+                    }
+                    _loc_1.addItem(_loc_2);
+                    _loc_5++;
+                }
+                this.decklist_cb.dataProvider = _loc_1;
+                this.decklist_cb.editable = false;
+                this.decklist_cb.enabled = true;
+                this.decklist_cb.prompt = "";
+                this.decklist_cb.restrict = "";
+                this.decklist_cb.rowCount = 18;
+                this.decklist_cb.visible = true;
                 try
                 {
-                    this.tu_sp["componentInspectorSetting"] = false;
+                    this.decklist_cb["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_default_btn_dn_room_188()
+        {
+            if (this.__setPropDict[this.default_btn] == undefined || int(this.__setPropDict[this.default_btn]) != 189)
+            {
+                this.__setPropDict[this.default_btn] = 189;
+                try
+                {
+                    this.default_btn["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.default_btn.emphasized = false;
+                this.default_btn.enabled = true;
+                this.default_btn.label = "Set as Default";
+                this.default_btn.labelPlacement = "right";
+                this.default_btn.selected = false;
+                this.default_btn.toggle = false;
+                this.default_btn.visible = true;
+                try
+                {
+                    this.default_btn["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -11230,6 +11947,58 @@
                 try
                 {
                     this.rep_upper_txt["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_match_type_cb_dn_room_188()
+        {
+            var _loc_1:DataProvider = null;
+            var _loc_2:SimpleCollectionItem = null;
+            var _loc_3:Array = null;
+            var _loc_4:Object = null;
+            var _loc_5:int = 0;
+            var _loc_6:* = undefined;
+            if (this.__setPropDict[this.match_type_cb] == undefined || int(this.__setPropDict[this.match_type_cb]) != 189)
+            {
+                this.__setPropDict[this.match_type_cb] = 189;
+                try
+                {
+                    this.match_type_cb["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                _loc_1 = new DataProvider();
+                _loc_3 = [{label:"", data:""}, {label:"Single (with siding)", data:"s"}, {label:"Single (no siding)", data:"n"}, {label:"2 out of 3 Match", data:"m"}];
+                _loc_5 = 0;
+                while (_loc_5 < _loc_3.length)
+                {
+                    
+                    _loc_2 = new SimpleCollectionItem();
+                    _loc_4 = _loc_3[_loc_5];
+                    for (_loc_6 in _loc_4)
+                    {
+                        
+                        _loc_2[_loc_6] = _loc_4[_loc_6];
+                    }
+                    _loc_1.addItem(_loc_2);
+                    _loc_5++;
+                }
+                this.match_type_cb.dataProvider = _loc_1;
+                this.match_type_cb.editable = false;
+                this.match_type_cb.enabled = true;
+                this.match_type_cb.prompt = "";
+                this.match_type_cb.restrict = "";
+                this.match_type_cb.rowCount = 5;
+                this.match_type_cb.visible = true;
+                try
+                {
+                    this.match_type_cb["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -11768,6 +12537,110 @@
             return;
         }// end function
 
+        function __setProp_limit_cb_dn_deck_189()
+        {
+            var _loc_1:DataProvider = null;
+            var _loc_2:SimpleCollectionItem = null;
+            var _loc_3:Array = null;
+            var _loc_4:Object = null;
+            var _loc_5:int = 0;
+            var _loc_6:* = undefined;
+            if (this.__setPropDict[this.limit_cb] == undefined || int(this.__setPropDict[this.limit_cb]) != 190)
+            {
+                this.__setPropDict[this.limit_cb] = 190;
+                try
+                {
+                    this.limit_cb["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                _loc_1 = new DataProvider();
+                _loc_3 = [{label:"", data:""}, {label:0, data:0}, {label:1, data:1}, {label:2, data:2}, {label:3, data:3}];
+                _loc_5 = 0;
+                while (_loc_5 < _loc_3.length)
+                {
+                    
+                    _loc_2 = new SimpleCollectionItem();
+                    _loc_4 = _loc_3[_loc_5];
+                    for (_loc_6 in _loc_4)
+                    {
+                        
+                        _loc_2[_loc_6] = _loc_4[_loc_6];
+                    }
+                    _loc_1.addItem(_loc_2);
+                    _loc_5++;
+                }
+                this.limit_cb.dataProvider = _loc_1;
+                this.limit_cb.editable = false;
+                this.limit_cb.enabled = true;
+                this.limit_cb.prompt = "";
+                this.limit_cb.restrict = "";
+                this.limit_cb.rowCount = 5;
+                this.limit_cb.visible = true;
+                try
+                {
+                    this.limit_cb["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_order_cb_dn_deck_189()
+        {
+            var _loc_1:DataProvider = null;
+            var _loc_2:SimpleCollectionItem = null;
+            var _loc_3:Array = null;
+            var _loc_4:Object = null;
+            var _loc_5:int = 0;
+            var _loc_6:* = undefined;
+            if (this.__setPropDict[this.order_cb] == undefined || int(this.__setPropDict[this.order_cb]) != 190)
+            {
+                this.__setPropDict[this.order_cb] = 190;
+                try
+                {
+                    this.order_cb["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                _loc_1 = new DataProvider();
+                _loc_3 = [{label:"Alpha", data:"alpha"}, {label:"New First", data:"new"}];
+                _loc_5 = 0;
+                while (_loc_5 < _loc_3.length)
+                {
+                    
+                    _loc_2 = new SimpleCollectionItem();
+                    _loc_4 = _loc_3[_loc_5];
+                    for (_loc_6 in _loc_4)
+                    {
+                        
+                        _loc_2[_loc_6] = _loc_4[_loc_6];
+                    }
+                    _loc_1.addItem(_loc_2);
+                    _loc_5++;
+                }
+                this.order_cb.dataProvider = _loc_1;
+                this.order_cb.editable = false;
+                this.order_cb.enabled = true;
+                this.order_cb.prompt = "";
+                this.order_cb.restrict = "";
+                this.order_cb.rowCount = 5;
+                this.order_cb.visible = true;
+                try
+                {
+                    this.order_cb["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
         function __setProp_search_btn_dn_deck_189()
         {
             if (this.__setPropDict[this.search_btn] == undefined || int(this.__setPropDict[this.search_btn]) != 190)
@@ -11828,28 +12701,80 @@
             return;
         }// end function
 
-        function __setProp_sort_btn_dn_deck_189()
+        function __setProp_default_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.sort_btn] == undefined || int(this.__setPropDict[this.sort_btn]) != 190)
+            if (this.__setPropDict[this.default_btn] == undefined || int(this.__setPropDict[this.default_btn]) != 190)
             {
-                this.__setPropDict[this.sort_btn] = 190;
+                this.__setPropDict[this.default_btn] = 190;
                 try
                 {
-                    this.sort_btn["componentInspectorSetting"] = true;
+                    this.default_btn["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.sort_btn.emphasized = false;
-                this.sort_btn.enabled = true;
-                this.sort_btn.label = "Sort Deck";
-                this.sort_btn.labelPlacement = "right";
-                this.sort_btn.selected = false;
-                this.sort_btn.toggle = false;
-                this.sort_btn.visible = true;
+                this.default_btn.emphasized = false;
+                this.default_btn.enabled = true;
+                this.default_btn.label = "Set as Default";
+                this.default_btn.labelPlacement = "right";
+                this.default_btn.selected = false;
+                this.default_btn.toggle = false;
+                this.default_btn.visible = true;
                 try
                 {
-                    this.sort_btn["componentInspectorSetting"] = false;
+                    this.default_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_decklist_cb_dn_deck_189()
+        {
+            var _loc_1:DataProvider = null;
+            var _loc_2:SimpleCollectionItem = null;
+            var _loc_3:Array = null;
+            var _loc_4:Object = null;
+            var _loc_5:int = 0;
+            var _loc_6:* = undefined;
+            if (this.__setPropDict[this.decklist_cb] == undefined || int(this.__setPropDict[this.decklist_cb]) != 190)
+            {
+                this.__setPropDict[this.decklist_cb] = 190;
+                try
+                {
+                    this.decklist_cb["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                _loc_1 = new DataProvider();
+                _loc_3 = [];
+                _loc_5 = 0;
+                while (_loc_5 < _loc_3.length)
+                {
+                    
+                    _loc_2 = new SimpleCollectionItem();
+                    _loc_4 = _loc_3[_loc_5];
+                    for (_loc_6 in _loc_4)
+                    {
+                        
+                        _loc_2[_loc_6] = _loc_4[_loc_6];
+                    }
+                    _loc_1.addItem(_loc_2);
+                    _loc_5++;
+                }
+                this.decklist_cb.dataProvider = _loc_1;
+                this.decklist_cb.editable = false;
+                this.decklist_cb.enabled = true;
+                this.decklist_cb.prompt = "";
+                this.decklist_cb.restrict = "";
+                this.decklist_cb.rowCount = 24;
+                this.decklist_cb.visible = true;
+                try
+                {
+                    this.decklist_cb["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -11978,28 +12903,28 @@
             return;
         }// end function
 
-        function __setProp_default_btn_dn_deck_189()
+        function __setProp_save_as_btn_dn_deck_189()
         {
-            if (this.__setPropDict[this.default_btn] == undefined || int(this.__setPropDict[this.default_btn]) != 190)
+            if (this.__setPropDict[this.save_as_btn] == undefined || int(this.__setPropDict[this.save_as_btn]) != 190)
             {
-                this.__setPropDict[this.default_btn] = 190;
+                this.__setPropDict[this.save_as_btn] = 190;
                 try
                 {
-                    this.default_btn["componentInspectorSetting"] = true;
+                    this.save_as_btn["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.default_btn.emphasized = false;
-                this.default_btn.enabled = true;
-                this.default_btn.label = "Set as Default";
-                this.default_btn.labelPlacement = "right";
-                this.default_btn.selected = false;
-                this.default_btn.toggle = false;
-                this.default_btn.visible = true;
+                this.save_as_btn.emphasized = false;
+                this.save_as_btn.enabled = true;
+                this.save_as_btn.label = "Save Deck As";
+                this.save_as_btn.labelPlacement = "right";
+                this.save_as_btn.selected = false;
+                this.save_as_btn.toggle = false;
+                this.save_as_btn.visible = true;
                 try
                 {
-                    this.default_btn["componentInspectorSetting"] = false;
+                    this.save_as_btn["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -12030,6 +12955,34 @@
                 try
                 {
                     this.deck_exit_btn["componentInspectorSetting"] = false;
+                }
+                catch (e:Error)
+                {
+                }
+            }
+            return;
+        }// end function
+
+        function __setProp_bypass_card_limit_cb_dn_check_189()
+        {
+            if (this.__setPropDict[this.bypass_card_limit_cb] == undefined || int(this.__setPropDict[this.bypass_card_limit_cb]) != 190)
+            {
+                this.__setPropDict[this.bypass_card_limit_cb] = 190;
+                try
+                {
+                    this.bypass_card_limit_cb["componentInspectorSetting"] = true;
+                }
+                catch (e:Error)
+                {
+                }
+                this.bypass_card_limit_cb.enabled = true;
+                this.bypass_card_limit_cb.label = "Bypass Card Limit";
+                this.bypass_card_limit_cb.labelPlacement = "right";
+                this.bypass_card_limit_cb.selected = false;
+                this.bypass_card_limit_cb.visible = true;
+                try
+                {
+                    this.bypass_card_limit_cb["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -12856,66 +13809,6 @@
             return;
         }// end function
 
-        function __setProp_cancel_username_txt_dn_admin_193()
-        {
-            if (this.__setPropDict[this.cancel_username_txt] == undefined || int(this.__setPropDict[this.cancel_username_txt]) != 194)
-            {
-                this.__setPropDict[this.cancel_username_txt] = 194;
-                try
-                {
-                    this.cancel_username_txt["componentInspectorSetting"] = true;
-                }
-                catch (e:Error)
-                {
-                }
-                this.cancel_username_txt.displayAsPassword = false;
-                this.cancel_username_txt.editable = true;
-                this.cancel_username_txt.enabled = true;
-                this.cancel_username_txt.maxChars = 20;
-                this.cancel_username_txt.restrict = " -{}-~";
-                this.cancel_username_txt.text = "";
-                this.cancel_username_txt.visible = true;
-                try
-                {
-                    this.cancel_username_txt["componentInspectorSetting"] = false;
-                }
-                catch (e:Error)
-                {
-                }
-            }
-            return;
-        }// end function
-
-        function __setProp_cancel_duel_btn_dn_admin_193()
-        {
-            if (this.__setPropDict[this.cancel_duel_btn] == undefined || int(this.__setPropDict[this.cancel_duel_btn]) != 194)
-            {
-                this.__setPropDict[this.cancel_duel_btn] = 194;
-                try
-                {
-                    this.cancel_duel_btn["componentInspectorSetting"] = true;
-                }
-                catch (e:Error)
-                {
-                }
-                this.cancel_duel_btn.emphasized = false;
-                this.cancel_duel_btn.enabled = true;
-                this.cancel_duel_btn.label = "Cancel Duel";
-                this.cancel_duel_btn.labelPlacement = "right";
-                this.cancel_duel_btn.selected = false;
-                this.cancel_duel_btn.toggle = false;
-                this.cancel_duel_btn.visible = true;
-                try
-                {
-                    this.cancel_duel_btn["componentInspectorSetting"] = false;
-                }
-                catch (e:Error)
-                {
-                }
-            }
-            return;
-        }// end function
-
         function __setProp_warning_username_txt_dn_admin_193()
         {
             if (this.__setPropDict[this.warning_username_txt] == undefined || int(this.__setPropDict[this.warning_username_txt]) != 194)
@@ -13375,28 +14268,28 @@
             return;
         }// end function
 
-        function __setProp_kick2_btn_dn_abtns_196(param1:int)
+        function __setProp_loss2_btn_dn_abtns_196(param1:int)
         {
-            if (this.kick2_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.kick2_btn] == undefined || !(int(this.__setPropDict[this.kick2_btn]) >= 197 && int(this.__setPropDict[this.kick2_btn]) <= 200)))
+            if (this.loss2_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.loss2_btn] == undefined || !(int(this.__setPropDict[this.loss2_btn]) >= 197 && int(this.__setPropDict[this.loss2_btn]) <= 200)))
             {
-                this.__setPropDict[this.kick2_btn] = param1;
+                this.__setPropDict[this.loss2_btn] = param1;
                 try
                 {
-                    this.kick2_btn["componentInspectorSetting"] = true;
+                    this.loss2_btn["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.kick2_btn.emphasized = false;
-                this.kick2_btn.enabled = true;
-                this.kick2_btn.label = "Kick Opponent";
-                this.kick2_btn.labelPlacement = "right";
-                this.kick2_btn.selected = false;
-                this.kick2_btn.toggle = false;
-                this.kick2_btn.visible = true;
+                this.loss2_btn.emphasized = false;
+                this.loss2_btn.enabled = true;
+                this.loss2_btn.label = "Opponent Loss";
+                this.loss2_btn.labelPlacement = "right";
+                this.loss2_btn.selected = false;
+                this.loss2_btn.toggle = false;
+                this.loss2_btn.visible = true;
                 try
                 {
-                    this.kick2_btn["componentInspectorSetting"] = false;
+                    this.loss2_btn["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -13405,28 +14298,28 @@
             return;
         }// end function
 
-        function __setProp_kick1_btn_dn_abtns_196(param1:int)
+        function __setProp_loss1_btn_dn_abtns_196(param1:int)
         {
-            if (this.kick1_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.kick1_btn] == undefined || !(int(this.__setPropDict[this.kick1_btn]) >= 197 && int(this.__setPropDict[this.kick1_btn]) <= 200)))
+            if (this.loss1_btn != null && param1 >= 197 && param1 <= 200 && (this.__setPropDict[this.loss1_btn] == undefined || !(int(this.__setPropDict[this.loss1_btn]) >= 197 && int(this.__setPropDict[this.loss1_btn]) <= 200)))
             {
-                this.__setPropDict[this.kick1_btn] = param1;
+                this.__setPropDict[this.loss1_btn] = param1;
                 try
                 {
-                    this.kick1_btn["componentInspectorSetting"] = true;
+                    this.loss1_btn["componentInspectorSetting"] = true;
                 }
                 catch (e:Error)
                 {
                 }
-                this.kick1_btn.emphasized = false;
-                this.kick1_btn.enabled = true;
-                this.kick1_btn.label = "Kick Host";
-                this.kick1_btn.labelPlacement = "right";
-                this.kick1_btn.selected = false;
-                this.kick1_btn.toggle = false;
-                this.kick1_btn.visible = true;
+                this.loss1_btn.emphasized = false;
+                this.loss1_btn.enabled = true;
+                this.loss1_btn.label = "Host Loss";
+                this.loss1_btn.labelPlacement = "right";
+                this.loss1_btn.selected = false;
+                this.loss1_btn.toggle = false;
+                this.loss1_btn.visible = true;
                 try
                 {
-                    this.kick1_btn["componentInspectorSetting"] = false;
+                    this.loss1_btn["componentInspectorSetting"] = false;
                 }
                 catch (e:Error)
                 {
@@ -13449,7 +14342,7 @@
                 }
                 this.cancel_duel_btn.emphasized = false;
                 this.cancel_duel_btn.enabled = true;
-                this.cancel_duel_btn.label = "Cancel Duel";
+                this.cancel_duel_btn.label = "Cancel";
                 this.cancel_duel_btn.labelPlacement = "right";
                 this.cancel_duel_btn.selected = false;
                 this.cancel_duel_btn.toggle = false;
@@ -13703,36 +14596,6 @@
             return;
         }// end function
 
-        function __setProp_sort_btn_dn_sbtns_199()
-        {
-            if (this.__setPropDict[this.sort_btn] == undefined || int(this.__setPropDict[this.sort_btn]) != 200)
-            {
-                this.__setPropDict[this.sort_btn] = 200;
-                try
-                {
-                    this.sort_btn["componentInspectorSetting"] = true;
-                }
-                catch (e:Error)
-                {
-                }
-                this.sort_btn.emphasized = false;
-                this.sort_btn.enabled = true;
-                this.sort_btn.label = "Sort Deck";
-                this.sort_btn.labelPlacement = "right";
-                this.sort_btn.selected = false;
-                this.sort_btn.toggle = false;
-                this.sort_btn.visible = true;
-                try
-                {
-                    this.sort_btn["componentInspectorSetting"] = false;
-                }
-                catch (e:Error)
-                {
-                }
-            }
-            return;
-        }// end function
-
         function __setProp_reset_btn_dn_sbtns_199()
         {
             if (this.__setPropDict[this.reset_btn] == undefined || int(this.__setPropDict[this.reset_btn]) != 200)
@@ -13774,8 +14637,8 @@
             this.__lastFrameProp = _loc_2;
             this.__setProp_news_txt_dn_news_1(_loc_2);
             this.__setProp_cin_txt_dn_chat_196(_loc_2);
-            this.__setProp_kick2_btn_dn_abtns_196(_loc_2);
-            this.__setProp_kick1_btn_dn_abtns_196(_loc_2);
+            this.__setProp_loss2_btn_dn_abtns_196(_loc_2);
+            this.__setProp_loss1_btn_dn_abtns_196(_loc_2);
             this.__setProp_cancel_duel_btn_dn_abtns_196(_loc_2);
             this.__setProp_defeat_btn_dn_buttons_196(_loc_2);
             this.__setProp_draw_btn_dn_buttons_196(_loc_2);
@@ -13808,11 +14671,15 @@
                 this.AVATAR_START = this.URL_START + "images/avatars/";
                 this.BACK_START = this.URL_START + "images/backs/";
                 this.bgmusic = new Sound();
-                this.bgmusic.load(new URLRequest(this.URL_START + "clear_mind.mp3"), new SoundLoaderContext());
+                this.bgmusic.load(new URLRequest(this.URL_START + "teardrop.mp3"), new SoundLoaderContext());
                 this.bgmusic.addEventListener(IOErrorEvent.IO_ERROR, this.bufferFailE);
                 addEventListener(Event.ENTER_FRAME, this.doneBufferingE);
             }
             this.setStyleManager();
+            this.rc_menu = new ContextMenu();
+            this.rc_menu.hideBuiltInItems();
+            this.rc_menu.builtInItems.quality = true;
+            contextMenu = this.rc_menu;
             return;
         }// end function
 
@@ -13860,6 +14727,9 @@
             this.hideBoxes();
             this.logged_in();
             this.loadNews();
+            this.tat_leaderboard = new AdLoader("http://www.duelingnetwork.com/trollandtoad/leaderboard/");
+            this.tat_banner = new AdLoader("http://www.duelingnetwork.com/trollandtoad/banner/");
+            this.loadAds();
             return;
         }// end function
 
@@ -13885,6 +14755,8 @@
                 this.progress_mc.visible = false;
                 this.showLoggedIn();
                 this.loadNews();
+                this.loadAds();
+                this.setAd(true);
             }
             return;
         }// end function
@@ -13893,6 +14765,7 @@
         {
             this.camera_flash_mc.visible = false;
             Object(getChildByName("screenshot_btn")).camera_flash_mc = this.camera_flash_mc;
+            Object(getChildByName("screenshot_btn")).username = this.username;
             stage.focus = null;
             this.enter_handler = null;
             this.heartbeat_timer = new Timer(30000);
@@ -13941,7 +14814,7 @@
             this.calls_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.toggleCallsE);
             this.calls_mc.calls_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.answerCallE);
             this.calls_mc.calls_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.callListKeyboardHandlerE);
-            this.calls_mc.tools_mc.init(this.username, this.admin, this.Send, this.lock, this.unlock, this.trackEvent, this.displayError);
+            this.calls_mc.tools_mc.init(this.username, this.admin, this.Send, this.lock, this.unlock, this.displayError);
             this.calls_mc.log_mc.init(this.Send);
             this.private_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
             this.private_chat_mc.minimize_btn.addEventListener(MouseEvent.CLICK, this.togglePrivateE);
@@ -13957,7 +14830,6 @@
             this.tuser_start = null;
             this.tuser_end = null;
             this.tuser_current = null;
-            this.tuser_cursor = null;
             this.title_timer = new Timer(2000);
             this.title_timer.addEventListener(TimerEvent.TIMER, this.setNextTitle);
             this.chat_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.clearChatE);
@@ -14002,6 +14874,7 @@
         function frame189()
         {
             this.__setProp_room_exit_btn_dn_exit_188();
+            this.__setProp_match_type_cb_dn_room_188();
             this.__setProp_rep_upper_txt_dn_room_188();
             this.__setProp_rep_lower_txt_dn_room_188();
             this.__setProp_rating_upper_txt_dn_room_188();
@@ -14009,13 +14882,14 @@
             this.__setProp_filter_username_txt_dn_room_188();
             this.__setProp_watch_rb_dn_room_188();
             this.__setProp_duel_rb_dn_room_188();
-            this.__setProp_tu_sp_dn_room_188();
-            this.__setProp_au_sp_dn_room_188();
-            this.__setProp_ar_sp_dn_room_188();
+            this.__setProp_default_btn_dn_room_188();
+            this.__setProp_decklist_cb_dn_room_188();
+            this.__setProp_au_sp_dn_boxes_188();
+            this.__setProp_ar_sp_dn_boxes_188();
             stage.focus = null;
             this.track("duel_room");
-            this.banner_mc.tat = Math.random() <= 0.75;
-            this.banner_mc.addChild(this.banner_mc.tat ? (new TatBanner()) : (new CoretcgBanner()));
+            this.banner_mc.tat = this.tat_banner.hasAd() && Math.random() <= 0.75;
+            this.banner_mc.showAd(this.banner_mc.tat ? (this.tat_banner.getAd()) : (new CoretcgBanner()));
             this.banner_mc.addEventListener(MouseEvent.CLICK, this.bannerClickE);
             this.enter_handler = this.roomEnterHandler;
             this.incoming_handler = this.roomIncomingHandler;
@@ -14036,10 +14910,12 @@
             this.joining_mc.visible = false;
             this.ar_sp.source = new JoinList();
             this.au_sp.source = new JoinList();
-            this.tu_sp.source = new JoinList();
+            this.trad_mc.tu_sp.source = new JoinList();
+            this.unl_mc.uu_sp.source = new JoinList();
             this.ar_sp.source.setClickHandler(this.joinAdvancedRatedE);
             this.au_sp.source.setClickHandler(this.joinAdvancedUnratedE);
-            this.tu_sp.source.setClickHandler(this.joinTraditionalUnratedE);
+            this.trad_mc.tu_sp.source.setClickHandler(this.joinTraditionalUnratedE);
+            this.unl_mc.uu_sp.source.setClickHandler(this.joinUnlimitedUnratedE);
             this.decklist_cb.addEventListener(Event.CHANGE, this.updateAdvancedE);
             this.hosting_mc.joinlist_mc.addEventListener(MouseEvent.DOUBLE_CLICK, this.joinListDoubleClickE);
             this.hosting_mc.joinlist_mc.addEventListener(KeyboardEvent.KEY_DOWN, this.joinListKeyboardHandlerE);
@@ -14050,21 +14926,33 @@
             this.rating_upper_txt.addEventListener(Event.CHANGE, this.setFilterE);
             this.rep_lower_txt.addEventListener(Event.CHANGE, this.setFilterE);
             this.rep_upper_txt.addEventListener(Event.CHANGE, this.setFilterE);
+            this.match_type_cb.addEventListener(Event.CHANGE, this.setFilterE);
             this.duelRoom();
+            this.default_btn.addEventListener(MouseEvent.CLICK, this.setDefaultDeckE);
+            this.default_btn.useHandCursor = true;
+            this.show_tu_btn.addEventListener(MouseEvent.CLICK, this.showTradE);
+            this.show_uu_btn.addEventListener(MouseEvent.CLICK, this.showUnlE);
+            this.showTradE(null);
+            this.decklist_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.match_type_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
             return;
         }// end function
 
         function frame190()
         {
+            this.__setProp_bypass_card_limit_cb_dn_check_189();
             this.__setProp_deck_exit_btn_dn_deck_189();
-            this.__setProp_default_btn_dn_deck_189();
+            this.__setProp_save_as_btn_dn_deck_189();
             this.__setProp_save_btn_dn_deck_189();
             this.__setProp_delete_btn_dn_deck_189();
             this.__setProp_rename_btn_dn_deck_189();
             this.__setProp_new_btn_dn_deck_189();
-            this.__setProp_sort_btn_dn_deck_189();
+            this.__setProp_decklist_cb_dn_deck_189();
+            this.__setProp_default_btn_dn_deck_189();
             this.__setProp_clear_btn_dn_deck_189();
             this.__setProp_search_btn_dn_deck_189();
+            this.__setProp_order_cb_dn_deck_189();
+            this.__setProp_limit_cb_dn_deck_189();
             this.__setProp_defh_txt_dn_deck_189();
             this.__setProp_defl_txt_dn_deck_189();
             this.__setProp_atkh_txt_dn_deck_189();
@@ -14086,6 +14974,14 @@
             this.initCards();
             this.default_deck_idx = -1;
             this.deck_hidden_mc.addEventListener(Event.REMOVED_FROM_STAGE, this.deckCleanupE);
+            this.decklist_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.card_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.card2_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.type_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.type2_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.attrib_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.limit_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
+            this.order_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
             return;
         }// end function
 
@@ -14100,6 +14996,7 @@
             this.incoming_handler = this.profileIncomingHandler;
             this.profile_init = false;
             this.ranking_calc_btn.addEventListener(MouseEvent.CLICK, this.getRankingE);
+            this.ranking_calc2_btn.addEventListener(MouseEvent.CLICK, this.getRanking2E);
             this.profile_exit_btn.addEventListener(MouseEvent.CLICK, this.returnToMainE);
             this.profile_exit_btn.useHandCursor = true;
             this.tf = new TextFormat();
@@ -14121,6 +15018,7 @@
             this.username_txt.setFocus();
             this.getProfile();
             this.ranking_calc_btn.visible = false;
+            this.ranking_calc2_btn.visible = false;
             return;
         }// end function
 
@@ -14139,8 +15037,10 @@
             this.my_profile_init = false;
             this.left_btn.addEventListener(MouseEvent.MOUSE_DOWN, this.avatarStartLeftE);
             this.left_btn.addEventListener(MouseEvent.MOUSE_UP, this.avatarStopLeftE);
+            this.left_btn.addEventListener(MouseEvent.MOUSE_OUT, this.avatarStopLeftE);
             this.right_btn.addEventListener(MouseEvent.MOUSE_DOWN, this.avatarStartRightE);
             this.right_btn.addEventListener(MouseEvent.MOUSE_UP, this.avatarStopRightE);
+            this.right_btn.addEventListener(MouseEvent.MOUSE_OUT, this.avatarStopRightE);
             this.redeem_donation_btn.addEventListener(MouseEvent.CLICK, this.redeemDonationE);
             this.redeem_donation_btn.useHandCursor = true;
             this.save_profile_btn.addEventListener(MouseEvent.CLICK, this.saveAvatarAndProfileE);
@@ -14193,8 +15093,6 @@
             this.__setProp_increment_strikes2_cb_dn_admin_193();
             this.__setProp_warning_txt_dn_admin_193();
             this.__setProp_warning_username_txt_dn_admin_193();
-            this.__setProp_cancel_duel_btn_dn_admin_193();
-            this.__setProp_cancel_username_txt_dn_admin_193();
             this.__setProp_kick_user_btn_dn_admin_193();
             this.__setProp_kick_username_txt_dn_admin_193();
             this.__setProp_unban_user_btn_dn_admin_193();
@@ -14223,8 +15121,6 @@
             this.unban_user_btn.useHandCursor = true;
             this.kick_user_btn.addEventListener(MouseEvent.CLICK, this.kickUserE);
             this.kick_user_btn.useHandCursor = true;
-            this.cancel_duel_btn.addEventListener(MouseEvent.CLICK, this.adminCancelDuelE);
-            this.cancel_duel_btn.useHandCursor = true;
             this.add_warning_btn.addEventListener(MouseEvent.CLICK, this.addWarningE);
             this.add_warning_btn.useHandCursor = true;
             this.admin_exit_btn.addEventListener(MouseEvent.CLICK, this.returnToMainE);
@@ -14237,14 +15133,12 @@
             {
                 this.next_btn.visible = false;
             }
-            this.bantime_rbg = new RadioButtonGroup("BanTime");
-            this.days_rb.group = this.bantime_rbg;
-            this.forever_rb.group = this.bantime_rbg;
-            this.bantime_rbg = null;
+            this.setBanTimeGroup();
             this.days_rb.selected = true;
             this.days_txt.enabled = true;
-            this.days_rb.addEventListener(Event.CHANGE, this.banTimeChangeE);
+            this.days_rb.group.addEventListener(Event.CHANGE, this.banTimeChangeE);
             this.days_txt.addEventListener(MouseEvent.CLICK, this.daysSwitchE);
+            this.decklist_cb.addEventListener(Event.REMOVED_FROM_STAGE, EventListeners.comboRemoveFromStageE);
             return;
         }// end function
 
@@ -14302,6 +15196,8 @@
             this.by_rating_mc.button_btn.addEventListener(MouseEvent.CLICK, this.rankingByRatingE);
             this.by_wins_mc.button_btn.addEventListener(MouseEvent.CLICK, this.rankingByWinsE);
             this.by_reputation_mc.button_btn.addEventListener(MouseEvent.CLICK, this.rankingByReputationE);
+            this.by_total_reputation_mc.button_btn.addEventListener(MouseEvent.CLICK, this.rankingByTotalReputationE);
+            this.match_select_mc.initRadioButtonGroup().addEventListener(Event.CHANGE, this.changeMatchE);
             this.rankings_exit_btn.addEventListener(MouseEvent.CLICK, this.returnToMainE);
             this.rankings_exit_btn.useHandCursor = true;
             this.content_sp.source = new RankingChart();
@@ -14317,10 +15213,9 @@
             }
             this.defeat_btn.visible = false;
             this.draw_btn.visible = false;
-            this.call_admin_btn.visible = false;
-            this.kick1_btn.visible = !this.duelist && this.admin;
-            this.kick2_btn.visible = !this.duelist && this.admin;
-            this.cancel_duel_btn.visible = !this.duelist && this.admin;
+            this.loss1_btn.visible = false;
+            this.loss2_btn.visible = false;
+            this.cancel_duel_btn.visible = false;
             this.RPS_TWEEN_TIME = 0.5;
             this.RPS_TOUCH_TIME = 0.2;
             this.RPS_CENTER_TIME = 0.2;
@@ -14360,9 +15255,8 @@
             }
             this.defeat_btn.visible = this.duelist;
             this.draw_btn.visible = this.duelist;
-            this.call_admin_btn.visible = this.duelist;
-            this.kick1_btn.visible = !this.duelist && this.admin;
-            this.kick2_btn.visible = !this.duelist && this.admin;
+            this.loss1_btn.visible = !this.duelist && this.admin;
+            this.loss2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
             this.TP_TWEEN_TIME = 0.5;
             return;
@@ -14378,9 +15272,8 @@
             }
             this.defeat_btn.visible = this.duelist;
             this.draw_btn.visible = this.duelist;
-            this.call_admin_btn.visible = this.duelist;
-            this.kick1_btn.visible = !this.duelist && this.admin;
-            this.kick2_btn.visible = !this.duelist && this.admin;
+            this.loss1_btn.visible = !this.duelist && this.admin;
+            this.loss2_btn.visible = !this.duelist && this.admin;
             this.cancel_duel_btn.visible = !this.duelist && this.admin;
             this.DUEL_TWEEN_TIME = 0.5;
             this.COIN_UP_TIME = 1;
@@ -14399,7 +15292,6 @@
         function frame200()
         {
             this.__setProp_reset_btn_dn_sbtns_199();
-            this.__setProp_sort_btn_dn_sbtns_199();
             this.__setProp_swap_btn_dn_sbtns_199();
             this.__setProp_done_siding_btn_dn_deck_199();
             if (this.duel_starting)
@@ -14409,10 +15301,9 @@
             }
             this.defeat_btn.visible = false;
             this.draw_btn.visible = false;
-            this.call_admin_btn.visible = false;
-            this.kick1_btn.visible = !this.duelist && this.admin;
-            this.kick2_btn.visible = !this.duelist && this.admin;
-            this.cancel_duel_btn.visible = !this.duelist && this.admin;
+            this.loss1_btn.visible = false;
+            this.loss2_btn.visible = false;
+            this.cancel_duel_btn.visible = false;
             this.sidingEnter();
             if (this.duelist || this.admin)
             {
