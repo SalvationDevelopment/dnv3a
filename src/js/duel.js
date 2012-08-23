@@ -123,7 +123,7 @@ var GYCardLocation = CardPileLocation.extend({});
 var DeckCardLocation = CardPileLocation.extend({
 	shuffle: function(duel, base) {
 		var id = base;
-		for (var i = this.cards.length; i --> 0; ) {
+		for (var i = 0; i < this.cards.length; ++i) {
 			var oldCard = this.cards[i];
 			var card = new DuelCard(id++, this, this.player);
 			this.cards[i] = card;
@@ -1536,6 +1536,8 @@ window.DuelView = View.extend({
 		var data = this.loadData;
 		this.loadData = null;
 		this.duelState = data[ind++];
+		this.matchMode = data[ind++];
+		if (Debug.replayVersion === 0) --ind;
 
 		this.duelists = [];
 		for (var i = 0; i < 2; ++i) {
@@ -1605,7 +1607,7 @@ window.DuelView = View.extend({
 	},
 
 	handleDuelMessage: function(ev, data) { // runs on queue
-		if (ev === 'Move' || ev === 'Reveal and move') {
+		if (~['Move', 'Reveal and move', 'MoveNoBlock', 'MoveNoBlockNoSound'].indexOf(ev)) {
 			var reveal = (ev === 'Reveal and move');
 			var from = data[0];
 			var id = data[1], card;
@@ -1650,6 +1652,12 @@ window.DuelView = View.extend({
 
 			if (msgToLog)
 				this.addToDuelLog(msgToLog);
+
+			if (ev === 'MoveNoBlock' || ev === 'MoveNoBlockNoSound')
+				return 0;
+			return 500;
+		}
+		if (ev === 'MoveNoBlockDone') {
 			return 500;
 		}
 		if (ev === 'Overlay') {
@@ -1686,7 +1694,7 @@ window.DuelView = View.extend({
 			var phase = data[0];
 			var turn = this.getDuelistFromName(data[1]);
 			this.duel.setPhase(turn, phase);
-			if (data[2]) {
+			if (data[2] === 'true') {
 				// XXX: According to captures, we might need to s/3/2 here.
 				var icard = (data.length > 3 ? createCard(data.slice(3)) : null);
 				this.duel.drawCard(turn, icard);
