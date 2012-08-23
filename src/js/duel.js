@@ -1456,6 +1456,7 @@ var Duel = Class.extend({
 			var fieldPosition = data[ind++];
 			var faceup = (data[ind++] !== 'true');
 			var defense = (data[ind++] === 'true');
+			var counter = +data[ind++];
 			var originalOwner = (data[ind++] === 'true' ? 0 : 1);
 			var isKnown = (data[ind++] === 'true');
 

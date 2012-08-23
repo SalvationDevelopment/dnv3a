@@ -11,6 +11,7 @@ Legend:
 + = we handle it
 ModStatus = 0 for regular users, >0 for mods in increasing order of importance I think
 LoginToken = token gotten from the login, equal to md5(password)
+DeckLegality = adv/trad/unl
 DuelMode = ar/au/tu/uu (first char = advanced/traditional/unlimited, second is rated/unrated)
 MatchMode = s/n/m (single+siding, single, match)
 UserTitle = Username in duel mode, "User1 ({Rating}) | User2 ({Rating})" in watch mode
@@ -57,6 +58,7 @@ OptWatchArgs = (see watchDuelStart)
 			{FieldPosition},
 			Face-down :bool,
 			Defense :bool,
+			Counter :int,
 			originalOwner :bool, (true = player 1)
 			isKnown :bool,
 			{Card} if isKnown
@@ -96,6 +98,8 @@ With duel prefix:
 
 * Close view
 
+* Counter, From Card ID (or ""), To Card ID (or "")
+
 
 Incoming:
 
@@ -113,7 +117,7 @@ Incoming:
 
 + Global message, Name, Message, {ModStatus} -> message in global chat
 
-+ Load duel room, Selected Deck, (Deck name, IsAdvanced :bool)*
++ Load duel room, Selected Deck, (Deck name, {DeckLegality})*
 
 + Add duels, ({DuelMode}, {MatchMode},{UserTitle}, {Rating}, Duel note, Has password :bool, Allow watch :bool, {DuelListToken})*
 
@@ -170,6 +174,8 @@ With Duel prefix:
 
 + Move, From :{Place}, Card ID (or blank for "top"), To :{Place}, {FieldPosition}, Face-down :bool, Defense :bool, (Message to be added to the chat, or blank), ("special" for special summons, else blank), {Card} (sometimes)
 
+* MoveNoBlockNoSound, MoveNoBlock, MoveNoBlockDone (presumably for moving several cards at the same time - Done is the end signal and does block)
+
 + Reveal and move (like move)
 
 + Overlay, From :{Place}, Card ID, To :{Place}, Target ID, Defense :bool, {Card}
@@ -184,11 +190,13 @@ With Duel prefix:
 
 * Card select
 
+* Counter, {Place}, From :{FieldPosition}, From counter value, To :{FieldPosition}, To counter value ("" for no from/to)
+
 + Attack, From :{Place}, Attacker id, Target id (or "" if direct attack)
 
-+ Token, :{Place}, Card ID, :{FieldPosition}
++ Token, {Place}, Card ID, :{FieldPosition}
 
-+ Remove, :{Place}, Card ID
++ Remove, {Place}, Card ID
 
 + Die, From, Result
 

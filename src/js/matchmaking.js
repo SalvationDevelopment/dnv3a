@@ -871,8 +871,8 @@ window.MatchmakingView = View.extend({
 		var deckList = $('#mm-deck');
 		var selectedDeck = data[0]-0;
 		for (var i = 1, ind = 0; i < data.length; i += 2, ++ind) {
-			var deckName = data[i], isAdv = (data[i+1] === 'true');
-			var deck = {'name': deckName, 'advanced': isAdv};
+			var deckName = data[i], legality = data[i+1];
+			var deck = {'name': deckName, 'legality': legality};
 			if (ind === selectedDeck) {
 				this.setDeck(deck);
 			}
