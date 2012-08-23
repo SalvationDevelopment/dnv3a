@@ -169,6 +169,20 @@ Incoming:
 
 * Lose (player 1 wins)
 
+* Call admin, complaint about?
+
+* Go to siding, ? (e.g. "0-1-0")
+
+* Go to turn pick
+
+* Go to rock-paper-scissors
+
+* Rock-paper-scissors, Choice A, Choice B
+
+* Done siding, Username
+
+* Offered rematch
+
 
 With Duel prefix:
 
