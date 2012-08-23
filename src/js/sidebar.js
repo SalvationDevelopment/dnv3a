@@ -105,9 +105,10 @@ window.Sidebar = {
 		boxes.filter(':not(.open)').css('height', '').each(function() {
 			unavailableHeight += $(this).outerHeight();
 		});
-		var calcExpr = 'calc((100% - ' + unavailableHeight + 'px) / ' + nvisible;
+		var calcExpr = 'calc((100% - ' + unavailableHeight + 'px) / ' + nvisible + ')';
 		boxes.filter('.open')
 			.css('height', '-moz-' + calcExpr)
+			.css('height', '-webkit-' + calcExpr)
 			.css('height', calcExpr);
 	},
 
