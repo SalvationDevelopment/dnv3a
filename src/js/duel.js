@@ -1457,6 +1457,7 @@ var Duel = Class.extend({
 			var faceup = (data[ind++] !== 'true');
 			var defense = (data[ind++] === 'true');
 			var counter = +data[ind++];
+			if (Debug.replayVersion === 0) --ind;
 			var originalOwner = (data[ind++] === 'true' ? 0 : 1);
 			var isKnown = (data[ind++] === 'true');
 
