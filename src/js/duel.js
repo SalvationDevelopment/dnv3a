@@ -1427,13 +1427,13 @@ var Duel = Class.extend({
 		return dif;
 	},
 
-	_initFromStart: function(ar) {
+	_initFromStart: function(ar, startingPlayer) {
 		this.locations[0].deck.setup(ar[0]);
 		this.locations[0].extra.setup(ar[1]);
 		this.locations[1].deck.setup(ar[2]);
 		this.locations[1].extra.setup(ar[3]);
 
-		this.turn = 0;
+		this.turn = startingPlayer;
 		this.phase = 'dp';
 		this.lifepoints = [8000, 8000];
 
@@ -1499,9 +1499,9 @@ var Duel = Class.extend({
 	}
 });
 
-Duel.createFromStart = function(view, ar) {
+Duel.createFromStart = function(view, ar, startingPlayer) {
 	var d = new Duel(view);
-	d._initFromStart(ar);
+	d._initFromStart(ar, startingPlayer);
 	return d;
 };
 
