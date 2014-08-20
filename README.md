@@ -10,6 +10,8 @@ Server side changes has broken it, but it's still possible to simulate old duels
 - Open src/index.html over some protocol other than file:///.
 - Log in, press `d` for duel, then click the `+` button in the lower-left corner repeatedly.
 
+Support was implemented for the matchmaking view, and for watching duels (partially). XYZ and later Yo-Gi-Oh! constructs are unsupported.
+
 The `flash/` directory contains a disassembled version of Dueling Network's swf file, created using SoThink SWF Decompiler.
 
 The `ff-ext/` directory contains a defunct Firefox extension that was supposed to be used for network communication. `src/swf-communicator/` replaces it, together with `src/js/communicator.js` (I think this works because of some crossdomain.xml file somewhere).
